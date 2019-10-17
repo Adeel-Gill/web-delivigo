@@ -1,0 +1,91 @@
+@font-face {
+    font-family: Panton-Bold;
+    src: url("../src/assets/fonts/Panton-Bold.eot") /* EOT file for IE */
+   }
+   @font-face {
+    font-family: Panton-Bold;
+    src: url("../src/assets/Panton-Bold.ttf") /* TTF file for CSS3 browsers */
+   }
+
+
+nav.navbar.navbar-dark.bg-info.navbar-expand-lg{
+    background-color: #191919 !important;
+    padding: 0;
+}
+.navbar-brand{
+    padding: 23px 0 !important;
+}
+a#__BVID__7__BV_button_{
+    font-family: Panton-Bold;
+    font-size: 16px;
+    color: #b3b3b3 !important;
+}
+li#__BVID__7{
+    border-right: 3px solid #9c9c9c;
+    padding: 0px 12px;
+}
+a.nav-link{
+    font-family: Panton-Bold;
+    font-size: 14px;
+    color: #ffffff !important;
+}
+.singin{
+    padding: 0 15px 0 23px;
+}
+.singin a{
+    padding: 8px 31px !important;
+    border: 2px solid #df3e03;
+    border-radius: 5px;
+}
+.register a{
+    padding: 9px 27px !important;
+    background: #df3e03;
+    border-radius: 5px;
+}
+.footer{
+    background: #191919;
+}
+.copyright{
+    display: inline-block;
+}
+.copyright p{
+    font-family: Panton;
+    font-weight: normal;
+    font-size: 18px;
+    color: #cccccc;
+    line-height: 43px;
+}
+@media screen and (min-width: 1200px) {
+    .navbar-brand{
+        padding: 17px 0 !important;
+    }
+    .img-width{
+        width: 123px;
+    }
+    li#__BVID__7{
+        padding: 0px;
+        line-height: 0;
+    }
+    a#__BVID__7__BV_button_{
+        font-size: 12px;
+        padding: 13px 15px;
+        line-height: 1;
+    }
+    a.nav-link{
+        font-size: 11px;
+        line-height: 0.8;
+        padding: 11px 21px !important;
+    }
+    .register a {
+        line-height: 1.1;
+    }
+    .singin {
+        padding: 0 10px 0 16px;
+    }
+    }
+    @media screen and (min-width: 1366px) {
+        .container{
+            max-width: 1300px !important;
+        }
+        
+    }
