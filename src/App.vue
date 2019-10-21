@@ -4,8 +4,8 @@
       <app-header></app-header>
       <div class="clear"></div>
     </div>
-    <div class="parrallelx">
-      <div class="contentSection container">
+    <div class="content">
+      <div class="contentSection">
         <router-view></router-view>
       </div>
     </div>

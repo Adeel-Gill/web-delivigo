@@ -1,12 +1,6 @@
-@font-face {
-    font-family: Panton-Bold;
-    src: url("../src/assets/fonts/Panton-Bold.eot") /* EOT file for IE */
-   }
-   @font-face {
-    font-family: Panton-Bold;
-    src: url("../src/assets/Panton-Bold.ttf") /* TTF file for CSS3 browsers */
-   }
-
+.clear{
+    clear: both;
+}
 
 nav.navbar.navbar-dark.bg-info.navbar-expand-lg{
     background-color: #191919 !important;
@@ -42,19 +36,7 @@ a.nav-link{
     background: #df3e03;
     border-radius: 5px;
 }
-.footer{
-    background: #191919;
-}
-.copyright{
-    display: inline-block;
-}
-.copyright p{
-    font-family: Panton;
-    font-weight: normal;
-    font-size: 18px;
-    color: #cccccc;
-    line-height: 43px;
-}
+
 @media screen and (min-width: 1200px) {
     .navbar-brand{
         padding: 17px 0 !important;
