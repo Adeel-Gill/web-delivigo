@@ -5,16 +5,15 @@
       <p>{{subHeading}}</p>
     </div>
     <div class="restaurants">
-      <ul>
-        <li v-for="food in foods" :key="food.id" :food="foods">
-          <div class="foods"></div>
-        </li>
-      </ul>
+      <carosel/>
+
     </div>
   </div>
 </template>
 <script>
+import carosel from '../carosel';
 export default {
+  components: {carosel},
   data(){
     return{
       titleHeading: 'Popular Restaurant',

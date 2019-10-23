@@ -7,10 +7,8 @@
       :interval="0"
       indicators
       background="#ababab"
-      img-width="100%"
-      img-height="auto"
       style="text-shadow: 1px 1px 2px #333;"
-      
+      :visible-slides="3"
     >
       <!-- Text slides with image -->
       <b-carousel-slide v-for="(slide) in slides" :key="slide.imageURL" :img-src="slide.imageURL" >
@@ -58,11 +56,11 @@
   }
 </script>
 <style scoped>
-.carousel-caption {
-    position: absolute !important;
-    top: 40% !important;
-    padding-top: 0;
+#carousel-1.carousel-caption {
+    top: 0 !important;
+    font-size: 10px !important;
 }
+
 .caption-change h1 {
     font-size: 85px;
     letter-spacing: 1px;
