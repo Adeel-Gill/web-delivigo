@@ -35,12 +35,12 @@
             {
                 heading:'ORDER DELIVERY & TAKE OUT',
                 description:'Find restaurants, specials, and coupons for free',
-                imageURL:'https://picsum.photos/1024/480/?image=52'
+                imageURL:'/images/slide1.png'
             },
             {
                 heading:'ORDER DELIVERY & TAKE OUT',
                 description:'Find restaurants, specials, and coupons for free',
-                imageURL:'https://picsum.photos/1024/480/?image=54'
+                imageURL:'/images/slide2.png'
             }
         ]
       }

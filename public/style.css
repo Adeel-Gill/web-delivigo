@@ -1,10 +1,9 @@
 .clear{
     clear: both;
 }
-
-nav.navbar.navbar-dark.bg-info.navbar-expand-lg{
-    background-color: #191919 !important;
-    padding: 0;
+.bg-topbar{
+    background-image: url('/public/images/topbar-bg.png') !important;
+    background-color: transparent;
 }
 .navbar-brand{
     padding: 23px 0 !important;
@@ -35,6 +34,58 @@ a.nav-link{
     padding: 9px 27px !important;
     background: #df3e03;
     border-radius: 5px;
+}
+#carousel-1 .carousel-caption {
+    top: 35%;
+    padding: 0;
+}
+#carousel-2{
+    display: inline-block;
+    position: inherit;
+    background: transparent !important;
+    width: 100%;
+}
+#carousel-2 .carousel-inner {
+    position: inherit !important;
+}
+#carousel-2 .carousel-item {
+    position: inherit !important;
+    background: transparent !important;
+}
+#carousel-2 .carousel-item img {
+    width: 71% !important;
+}
+#carousel-2 .carousel-caption {
+    text-align: left;
+    left: auto;
+    right: 10%;
+    top: 6px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+#carousel-2 .carousel-indicators {
+    top: 7%;
+    right: 22%;
+    left: auto;
+    bottom: auto;
+    margin: 0;
+}
+#carousel-2 .carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}
+#carousel-2 .carousel-control-next-icon{
+    background-image: url("/images/arrow-right.svg");
+}
+#carousel-2 .carousel-control-next{
+    width: 30px;
+    opacity: 1;
+}
+#carousel-2 .carousel-control-prev{
+    display: none;
 }
 
 @media screen and (min-width: 1200px) {

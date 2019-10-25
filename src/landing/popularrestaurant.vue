@@ -4,9 +4,12 @@
       <h2>{{titleHeading}}</h2>
       <p>{{subHeading}}</p>
     </div>
+    <div class="show-more">
+      <!-- <a to="/filter">Show More</a> -->
+      <router-link to="/filter">Show More</router-link>
+    </div>
     <div class="restaurants">
       <carosel/>
-
     </div>
   </div>
 </template>

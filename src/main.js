@@ -8,6 +8,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 
 Vue.use(BootstrapVue);
+Vue.prototype.$eventBus = new Vue() // add this line of code
 
 Vue.use(VueRouter);
 const router = new VueRouter({
