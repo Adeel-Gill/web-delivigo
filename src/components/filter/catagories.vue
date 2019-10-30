@@ -1,14 +1,22 @@
 <template>
 <div>
     <div class="catagories">
-        <div class="gatagory" v-for="catagory in catagories" :catagory="catagories" :key="catagory.id">
-            <img :src="catagory.foodImg" />
-            <div class="catagory-text" :class="catagory.class">
-                <h6>{{catagory.title}}</h6>
-                <p>{{catagory.restaurants}}</p>
-                <p>{{catagory.rating}}</p>
+        <h2>{{titleSection}}</h2>
+        
+            <div class="catagory" v-for="catagory in catagories" :catagory="catagories" :key="catagory.id">
+                <a href="#">
+                <div :class="catagory.card" class="card-image">
+                </div>
+                <div :class="catagory.class" class="catagory-desc">
+                    <div class="catagory-text">
+                        <h5>{{catagory.title}}</h5>
+                        <h6>{{catagory.restaurants}}</h6>
+                        <p><i class="fas fa-star"></i> {{catagory.rating}}</p>
+                    </div>
+                </div>
+                </a>
             </div>
-        </div>
+        
     </div>
 </div>
 </template>
@@ -16,10 +24,11 @@
 export default {
     data(){
         return{
+            titleSection:'Categories',
             catagories:[
                 {
                     id:1,
-                    foodImg:'./images/card1.png',
+                    card:'card1-image',
                     title:'Sushi',
                     restaurants:'7 Restaurants',
                     rating:'4.8 (127)',
@@ -27,7 +36,7 @@ export default {
                 },
                 {
                     id:2,
-                    foodImg:'./images/card2.png',
+                    card:'card2-image',
                     title:'Sushi',
                     restaurants:'7 Restaurants',
                     rating:'4.8 (127)',
@@ -35,7 +44,7 @@ export default {
                 },
                 {
                     id:3,
-                    foodImg:'./images/card3.png',
+                    card:'card3-image',
                     title:'Sushi',
                     restaurants:'7 Restaurants',
                     rating:'4.8 (127)',
@@ -43,7 +52,7 @@ export default {
                 },
                 {
                     id:4,
-                    foodImg:'./images/card4.png',
+                    card:'card4-image',
                     title:'Sushi',
                     restaurants:'7 Restaurants',
                     rating:'4.8 (127)',
@@ -51,7 +60,7 @@ export default {
                 },
                 {
                     id:5,
-                    foodImg:'./images/card1.png',
+                    card:'card1-image',
                     title:'Sushi',
                     restaurants:'7 Restaurants',
                     rating:'4.8 (127)',
@@ -59,7 +68,7 @@ export default {
                 },
                 {
                     id:6,
-                    foodImg:'./images/card2.png',
+                    card:'card2-image',
                     title:'Sushi',
                     restaurants:'7 Restaurants',
                     rating:'4.8 (127)',
@@ -67,7 +76,7 @@ export default {
                 },
                 {
                     id:7,
-                    foodImg:'./images/card3.png',
+                    card:'card3-image',
                     title:'Sushi',
                     restaurants:'7 Restaurants',
                     rating:'4.8 (127)',
@@ -75,7 +84,7 @@ export default {
                 },
                 {
                     id:8,
-                    foodImg:'./images/card4.png',
+                    card:'card4-image',
                     title:'Sushi',
                     restaurants:'7 Restaurants',
                     rating:'4.8 (127)',
@@ -83,7 +92,7 @@ export default {
                 },
                 {
                     id:9,
-                    foodImg:'./images/card3.png',
+                    card:'card1-image',
                     title:'Sushi',
                     restaurants:'7 Restaurants',
                     rating:'4.8 (127)',
@@ -91,7 +100,7 @@ export default {
                 },
                 {
                     id:10,
-                    foodImg:'./images/card4.png',
+                    card:'card2-image',
                     title:'Sushi',
                     restaurants:'7 Restaurants',
                     rating:'4.8 (127)',
@@ -103,15 +112,22 @@ export default {
 }
 </script>
 <style scoped>
-.gatagory{
-    max-width: 170px;
+.catagories{
+    margin-bottom: 50px;
+}
+.catagory{
+    display: inline-block;
+    margin: 25px 21px;
+}
+.catagory a {
+    text-decoration: none;
     display: inline-block;
 }
-.gatagory img{
-    width: 100%;
-    transform: rotate(90deg);
-    display: inline-block;
-    border-radius: 80px 0px 0px 80px;
+.catagory:hover a {
+    opacity: 0.5;
+}
+.catagory-desc{
+    border-radius: 0px 0px 110px 110px;
 }
 .bg-green{
     background-color: #8ba939;
@@ -127,5 +143,51 @@ export default {
 }
 .bg-brown{
     background-color: #a07f4c;
+}
+.card-image{
+    height: 242px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 160px;
+    border-radius: 110px 110px 0 0;
+}
+.card1-image{
+    background-image: url(/images/card1.png);
+}
+.card2-image{
+    background-image: url(/images/card2.png);
+}
+.card3-image{
+    background-image: url(/images/card3.png);
+}
+.card4-image{
+    background-image: url(/images/card4.png);
+}
+.catagory-text {
+    margin: 0 30px;
+    min-height: 165px;
+    color: white;
+}
+.catagory-text h5 {
+    font-family: "Panton";
+    font-weight: bold;
+    font-size: 22px;
+    padding-top: 15px;
+    margin: 0;
+}
+.catagory-text h6 {
+    font-family: "Panton";
+    font-weight: normal;
+    font-size: 13px;
+    margin-bottom: 25px;
+}
+.catagory-text p {
+    font-family: "Roboto";
+    font-size: 17px;
+    font-weight: normal;
+}
+.bg-grey .catagory-text {
+    color: black;
 }
 </style>

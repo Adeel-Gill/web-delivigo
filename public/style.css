@@ -8,14 +8,14 @@
 .navbar-brand{
     padding: 23px 0 !important;
 }
-a#__BVID__7__BV_button_{
+.nav-link.dropdown-toggle{
     font-family: Panton-Bold;
-    font-size: 16px;
+    font-size: 15px;
     color: #b3b3b3 !important;
 }
-li#__BVID__7{
+.dropup, .dropright, .dropdown, .dropleft{
     border-right: 3px solid #9c9c9c;
-    padding: 0px 12px;
+    padding: 0px 0px;
 }
 a.nav-link{
     font-family: Panton-Bold;
@@ -87,7 +87,43 @@ a.nav-link{
 #carousel-2 .carousel-control-prev{
     display: none;
 }
-
+.dropdown-toggle::after {
+    margin-left: 13px !important;
+    vertical-align: 0 !important;
+    border-top: 10px solid !important;
+    border-right: 7px solid transparent !important;
+    border-left: 7px solid transparent !important;
+}
+#dropdown {
+    border: none;
+    margin: 0 !important;
+}
+#dropdown button#dropdown__BV_toggle_ {
+    background: #f2f2f2;
+    color: #999999;
+    border: none;
+    padding: 20px 40px;
+    font-family: "Panton";
+    font-weight: bold;
+    font-size: 21px;
+}
+#dropdown .dropdown-toggle::after{
+    vertical-align: 0 !important;
+    border-top: 13px solid !important;
+    border-right: 10px solid transparent !important;
+    border-left: 10px solid transparent !important;
+    color: #1f1f1f;
+    margin-left: 177px !important;
+}
+#dropdown ul.dropdown-menu {
+    width: 490px;
+}
+#dropdown a.dropdown-item {
+    padding: 0;
+}
+#dropdown a.dropdown-item:hover{
+    background: none;
+}
 @media screen and (min-width: 1200px) {
     .navbar-brand{
         padding: 17px 0 !important;

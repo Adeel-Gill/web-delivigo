@@ -1,30 +1,32 @@
 <template>
      <div class="col-md-4">
          <div class="restaurant">
-            <img :src="restaurant.imageURL" />
-            <div class="restaurants-details">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h6>{{restaurant.name}}</h6>
+            <a href="#">
+                <img :src="restaurant.imageURL" />
+                <div class="restaurants-details">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h6>{{restaurant.name}}</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="padding-top"><i class="fas fa-star"></i> {{restaurant.rating}}</p>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <p class="padding-top"><i class="fas fa-star"></i> {{restaurant.rating}}</p>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p class="font-light">{{restaurant.description}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fas fa-euro-sign"></i>
+                            <i class="fas fa-euro-sign"></i>
+                            <i class="fas fa-euro-sign"></i>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="font-size-9"><i class="far fa-clock"></i> {{restaurant.waiting}}</p>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-5">
-                        <p class="font-light">{{restaurant.description}}</p>
-                    </div>
-                    <div class="col-md-3">
-                        <i class="fas fa-euro-sign"></i>
-                        <i class="fas fa-euro-sign"></i>
-                        <i class="fas fa-euro-sign"></i>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="font-size-9"><i class="far fa-clock"></i> {{restaurant.waiting}}</p>
-                    </div>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
 </template>
@@ -39,7 +41,10 @@ export default {
 }
 </script>
 <style scoped>
-
+.restaurant a{
+    text-decoration: none;
+    color: black;
+}
 .restaurants-list img{
     width: 100%;
     border-radius: 7px;
@@ -60,13 +65,13 @@ export default {
 .restaurants-details p{
     margin: 0;
     font-family: "Roboto";
-    font-size: 11px;
+    font-size: 9px;
 }
 .font-light{
     font-weight: 300;
     color: #424242;
     font-weight: lighter;
-    padding: 0 10px; 
+    padding: 4px 10px; 
 }
 .padding-top{
     padding-top: 8px;

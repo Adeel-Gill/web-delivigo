@@ -1,30 +1,28 @@
 <template>
     <div id="filtered-restaurant">
-       
-            <div class="filter-slider">
-                <b-carousel
-                    id="carousel-2"
-                    fade
-                    v-model="slide"
-                    :interval="0"
-                    controls
-                    indicators
-                    background="#ababab"
-                    style="text-shadow: 1px 1px 2px #333;"
-                    @sliding-start="onSlideStart"
-                    @sliding-end="onSlideEnd"
-                >
-                    <!-- Text slides with image -->
-                    <b-carousel-slide v-for="(slide) in slides" :key="slide.imageURL" :img-src="slide.imageURL" >
-                        <div class="filter-caption">
-                            <h6>{{slide.title}}</h6>
-                            <h3>{{slide.heading}}</h3>
-                            <p>{{slide.description}}</p>
-                        </div>
-                    </b-carousel-slide>
-                </b-carousel>
+      <div class="filter-slider">
+        <b-carousel
+          id="carousel-2"
+          fade
+          v-model="slide"
+          :interval="3000"
+          controls
+          indicators
+          background="#ababab"
+          style="text-shadow: 1px 1px 2px #333;"
+          @sliding-start="onSlideStart"
+          @sliding-end="onSlideEnd"
+        >
+          <!-- Text slides with image -->
+          <b-carousel-slide v-for="(slide) in slides" :key="slide.imageURL" :img-src="slide.imageURL" >
+            <div class="filter-caption">
+              <h6>{{slide.title}}</h6>
+              <h3>{{slide.heading}}</h3>
+              <p>{{slide.description}}</p>
             </div>
-        
+          </b-carousel-slide>
+        </b-carousel>
+      </div>
     </div>
 </template>
 <script>

@@ -11,7 +11,7 @@
           <img class="img-width" src="/images/logo.png" />
         </b-navbar-brand>
         <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
+        <b-navbar-nav class="ml-auto" id="navbar-dropdown">
           <b-nav-item-dropdown text="ENG" right>
             <b-dropdown-item href="#">EN</b-dropdown-item>
             <b-dropdown-item href="#">ES</b-dropdown-item>

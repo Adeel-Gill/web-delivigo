@@ -4,7 +4,7 @@
     <b-carousel
       id="carousel-1"
       v-model="slide"
-      :interval="0"
+      :interval="3000"
       indicators
       background="#ababab"
       style="text-shadow: 1px 1px 2px #333;"
