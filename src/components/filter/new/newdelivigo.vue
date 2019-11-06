@@ -1,27 +1,27 @@
 <template>
-    <div class="col-md-4">
+    <div class="col-md-4 padding-top-botom">
          <div class="restaurant">
              <a href="#">
             <img :src="newRestaurant.imagePath" />
             <div class="restaurants-details">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-8 padding-top-botom">
                         <h6>{{newRestaurant.name}}</h6>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 padding-top-botom">
                         <p class="padding-top"><i class="fas fa-star"></i> {{newRestaurant.rateing}}</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-5 padding-top-botom">
                         <p class="font-light">{{newRestaurant.type}}</p>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 padding-top-botom">
                         <i class="fas fa-euro-sign"></i>
                         <i class="fas fa-euro-sign"></i>
                         <i class="fas fa-euro-sign"></i>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 padding-top-botom">
                         <p class="font-size-9"><i class="far fa-clock"></i> {{newRestaurant.timeing}}</p>
                     </div>
                 </div>

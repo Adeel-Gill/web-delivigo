@@ -1,6 +1,9 @@
 .clear{
     clear: both;
 }
+.container {
+    width: 90% !important;
+}
 .bg-topbar{
     background-image: url('/public/images/topbar-bg.png') !important;
     background-color: transparent;
@@ -102,10 +105,11 @@ a.nav-link{
     background: #f2f2f2;
     color: #999999;
     border: none;
-    padding: 20px 40px;
+    padding: 20px 25px;
     font-family: "Panton";
     font-weight: bold;
     font-size: 21px;
+    width: 320px;
 }
 #dropdown .dropdown-toggle::after{
     vertical-align: 0 !important;
@@ -118,13 +122,31 @@ a.nav-link{
 #dropdown ul.dropdown-menu {
     width: 490px;
 }
+#food-filter #dropdown ul.dropdown-menu{
+    left: -50px !important;
+}
 #dropdown a.dropdown-item {
     padding: 0;
 }
 #dropdown a.dropdown-item:hover{
     background: none;
 }
-@media screen and (min-width: 1200px) {
+.padding-top-botom{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+#price-filter li.dropdown-menu-items {
+    display: block;
+}
+#price-filter ul.dropdown-menu {
+    left: auto !important;
+    right: -100px;
+}
+@media screen and (min-width: 1200px) and (max-width: 1299px) {
+    .container {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
     .navbar-brand{
         padding: 17px 0 !important;
     }
@@ -153,8 +175,6 @@ a.nav-link{
     }
     }
     @media screen and (min-width: 1366px) {
-        .container{
-            max-width: 1300px !important;
-        }
+       
         
     }

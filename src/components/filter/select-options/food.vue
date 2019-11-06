@@ -1,5 +1,5 @@
 <template>
-    <div class="food">
+    <div class="food" id="food-filter">
         <b-dropdown size="lg" :text="text" class="m-2" id="dropdown">
             <b-dropdown-item href="#" class="dropdown-menu-items" v-for="filter in filters" :filter="filters" :key="filter.id" >
                 <div class="dropdown-menu-item">
@@ -23,27 +23,27 @@ export default {
             filters:[
                 {
                     id:1,
-                    imagePath:'./images/recomd.png',
-                    imageHover:'./images/recomd-hover.png',
-                    filterWith:'Recomended'
+                    imagePath:'./images/vegetarian.png',
+                    imageHover:'./images/vegetarian-hover.png',
+                    filterWith:'Vegetarian'
                 },
                 {
                     id:2,
-                    imagePath:'./images/rating.png',
-                    imageHover:'./images/rating-hover.png',
-                    filterWith:'Rating'
+                    imagePath:'./images/gluten.png',
+                    imageHover:'./images/gluten-hover.png',
+                    filterWith:'Gluten-Free'
                 },
                 {
                     id:3,
-                    imagePath:'./images/most.png',
-                    imageHover:'./images/most-hover.png',
-                    filterWith:'Most Popular'
+                    imagePath:'./images/vegan.png',
+                    imageHover:'./images/vegan-hover.png',
+                    filterWith:'vegan'
                 },
                 {
                     id:4,
-                    imagePath:'./images/time.png',
-                    imageHover:'./images/time-hover.png',
-                    filterWith:'Delivery Time'
+                    imagePath:'./images/halal.png',
+                    imageHover:'./images/halal-hover.png',
+                    filterWith:'Halal'
                 }
             ]
         }
@@ -60,6 +60,7 @@ export default {
 .food{
     display: inline-block;
     max-width: 330px;
+    margin: 0 29px;
 }
 .dropdown-menu-items:hover .sort{
     display: none;

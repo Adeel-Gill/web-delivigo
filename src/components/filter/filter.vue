@@ -43,9 +43,11 @@ export default {
     },
     mounted() {
       this.changeHeader();
+      this.changeFooter();
     },
     destroyed() {
         this.unChangeHeader();
+        this.unChangeFooter();
     },
     methods: {
             changeHeader() {
@@ -53,6 +55,12 @@ export default {
         },
             unChangeHeader() {
       this.$eventBus.$emit('checkComponent', 'default');
+        },
+        changeFooter(){
+            this.$eventBus.$emit('checkFooter', 'footer');
+        },
+        unChangeFooter(){
+            this.$eventBus.$emit('checkFooter', 'default');
         }
     },
     computed:{
@@ -68,7 +76,6 @@ export default {
 .container{
     max-width: 1045px;
 }
-
 .featured-restaurants h2{
     text-align: center;
     margin: 50px 0;
