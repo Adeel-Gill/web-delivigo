@@ -142,6 +142,21 @@ a.nav-link{
     left: auto !important;
     right: -100px;
 }
+#tabes-venue .nav-tabs .nav-link {
+    font-family: "Roboto";
+    font-size: 18px;
+    font-weight: normal;
+    color: #040404 !important;
+    border: transparent;
+    padding: 0 !important;
+    margin: 0 45px 0 0;
+}
+#tabes-venue .nav-tabs{
+    border: none;
+}
+#tabes-venue .nav-item .active {
+    border-bottom: 2px solid black;
+}
 @media screen and (min-width: 1200px) and (max-width: 1299px) {
     .container {
         padding-top: 0 !important;

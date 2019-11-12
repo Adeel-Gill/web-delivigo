@@ -58,8 +58,8 @@ export default {
       // do something with the data
       if(data === 'filter') {
           this.isFilter = true;
-      } else if(data === 'default'){
-          this.isFilter = false;
+      } else if(data === 'selected'){
+          this.isFilter = true;
       } else {
           this.isFilter = false;
       }

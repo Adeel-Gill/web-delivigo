@@ -1,7 +1,7 @@
 <template>
     <div class="col-md-4 padding-top-botom">
          <div class="restaurant">
-             <a href="#">
+             <router-link to="/selected">
             <img :src="newRestaurant.imagePath" />
             <div class="restaurants-details">
                 <div class="row">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-             </a>
+             </router-link>
         </div>
     </div>
 </template>
