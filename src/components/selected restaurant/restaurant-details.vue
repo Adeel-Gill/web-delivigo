@@ -3,16 +3,16 @@
         <div class="description-about">
             <div class="resturant-name-review">
                 <div class="name-desc">
-                    <h4>Jean-Georges</h4>
-                    <p>French/New American</p>
+                    <h4>{{name}}</h4>
+                    <p>{{subHeading}}</p>
                 </div>
                 <div class="reviews">
-                    <a href="">All reviews</a>
+                    <a href="#">{{reviews}}</a>
                 </div>
                 <div class="clear"></div>
             </div>
             <div class="restaurnt-address">
-                <p><i class="fas fa-map-marker-alt"></i>8832 Adah Vista South Guido</p>
+                <p><i class="fas fa-map-marker-alt"></i>{{address}}</p>
             </div>
             <div class="rating-times">
                 <div class="row">
@@ -20,8 +20,8 @@
                         <div class="rating">
                             <p>
                                 <i class="fas fa-star"></i>
-                                <span>4.8 </span>
-                                <span class="light">(127)</span>
+                                <span>{{rating}} </span>
+                                <span class="light">{{ratingLight}}</span>
                             </p>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                         <div class="delivery">
                             <p>
                                 <i class="fas fa-euro-sign"></i>
-                                Free delivery
+                                {{delivery}}
                             </p>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         <div class="mints">
                             <p>
                                 <i class="far fa-clock"></i>
-                                35-45 Mins
+                                {{timeing}}
                             </p>
                         </div>
                     </div>
@@ -46,6 +46,22 @@
         </div>
     </div>
 </template>
+<script>
+export default {
+    data(){
+        return{
+            name:'Jean-Georges',
+            subHeading: 'French/New American',
+            reviews:'All reviews',
+            address:'8832 Adah Vista South Guido',
+            rating:'4.8',
+            ratingLight:'(127)',
+            delivery:'Free delivery',
+            timeing:'35-45 Mins'
+        }
+    }
+}
+</script>
 <style scoped>
 .details-restaurant {
     position: relative;

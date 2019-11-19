@@ -6,10 +6,10 @@
         </div>
         <div class="shoping-cart">
             <div class="cart">
-                <a href=""><img src="/images/cart.png" alt=""></a>
+                <a href=""><img :src="cartImg" alt=""></a>
             </div>
             <div class="cart-hover">
-                <a href=""><img src="/images/cart-hover.png" alt=""></a>
+                <a href=""><img :src="cartHover" alt=""></a>
             </div>
         </div>
     </div>
@@ -31,7 +31,9 @@ export default {
                     id:3,
                     type: 'Sushi'
                 }
-            ]
+            ],
+            cartImg:'images/cart.png',
+            cartHover:'images/cart-hover.png'
         }
     }
     

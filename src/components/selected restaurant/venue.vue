@@ -30,7 +30,14 @@
                                 </div>
                             </div>
                         </b-tab>
-                        <b-tab title="Delivery"><p>I'm the second tab</p></b-tab>
+                        <b-tab title="Delivery">
+                            <div class="delivery-time">
+                                <p>
+                                    <span class="float-left">{{venue.delivery}}</span>
+                                    <span class="float-right">{{venue.timeing}}</span>
+                                </p>
+                            </div>
+                        </b-tab>
                     </b-tabs>
                 </div>
             </div>
@@ -41,7 +48,6 @@
 export default {
     data(){
         return{
-            
             venue:{
                 venuInfo:'Venue information',
                 addressHeading:'Address',
@@ -52,7 +58,9 @@ export default {
                 requests:'If you have allergies or other dietary restrictions, please contact the restaurant. The restaurant will provide food-specific information upon request.',
                 phnNum:'+77273132414',
                 moreInfo:'See more information',
-                seeMap:' See Map'
+                seeMap:' See Map',
+                delivery:'Free delivery',
+                timeing:'35-45 Mins'
             }
         }
     },
@@ -130,5 +138,9 @@ export default {
     color: #1c0095;
     font-family: "Roboto";
     margin: 5px 0 30px 0;
+}
+.delivery-time span {
+    display: block;
+    margin-top: 15px;
 }
 </style>

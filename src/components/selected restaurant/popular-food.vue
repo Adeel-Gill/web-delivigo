@@ -1,13 +1,36 @@
 <template>
     <div class="popular-dishes">
-        <h5>Popular</h5>
+        <h5>{{favrtDishes}}</h5>
         <ul>
-            <li>Salads</li>
-            <li>Soups</li>
-            <li>Hot Meals</li>
+            <li v-for="dish in dishes" :key="dish.id" dish="dishes">
+                {{dish.dishType}}
+            </li>
         </ul>
     </div>
 </template>
+<script>
+export default {
+    data(){
+        return{
+            favrtDishes:'Popular',
+            dishes:[
+                {
+                    id:1,
+                    dishType:'Salads'
+                },
+                {
+                    id:2,
+                    dishType:'Soups'
+                },
+                {
+                    id:3,
+                    dishType:'Hot Meals'
+                }
+            ]
+        }
+    }
+}
+</script>
 <style scoped>
 
 .popular-dishes {
