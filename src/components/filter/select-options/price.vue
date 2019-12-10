@@ -3,24 +3,38 @@
         <b-dropdown size="lg" :text="text" class="m-2" id="dropdown">
           <div class="dropdown-menu-item">
             <template>
+              <template>
               <v-card flat color="transparent">
-              <v-card-text>
-                <v-range-slider
-                  v-model="value1"
-                ></v-range-slider>
-              </v-card-text>
+                <v-card-text>
+                  <v-row>
+                    <v-col class="px-4">
+                      <v-range-slider
+                        v-model="range"
+                        :max="max"
+                        :min="min"
+                        hide-details
+                        class="align-center"
+                        thumb-label="always"
+                      >
+                      </v-range-slider>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
               </v-card>
+            </template>
             </template>
           </div>
         </b-dropdown>
-    </div>
+      </div>
 </template>
 <script>
   export default {
     data () {
       return {
         text:'Price',
-        value1: [30, 60]
+        min: 0,
+        max: 250,
+        range: [123, 223],
       }
     },
   }

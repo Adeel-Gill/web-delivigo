@@ -23,5 +23,7 @@ export default {
 }
 </script>
 <style scoped>
-
+.filter-section {
+    padding: 20px 0 80px 0;
+}
 </style>

@@ -157,6 +157,37 @@ a.nav-link{
 #tabes-venue .nav-item .active {
     border-bottom: 2px solid black;
 }
+.v-slider--horizontal .v-slider__thumb-label{
+    transform: translateY(0%) translateY(40px) translateX(-50%) rotate(45deg) !important;
+    color: black !important;
+}
+.v-slider__track-fill.primary {
+    background: #8ba939 !important;
+}
+.v-slider__thumb{
+    width: 22px !important;
+    height: 22px !important;
+    background: #8ba939 !important;
+}
+.v-slider__thumb:before{
+    display: none;
+}
+.v-slider__thumb.primary {
+    box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 0.05);
+}
+.v-slider__track-container{
+    height: 4px !important;
+}
+.v-card__text {
+    padding: 18px 15px !important;
+}
+.v-slider__thumb-label.primary span::before{
+    content: "€";
+    position: absolute;
+    color: black;
+    font-size: 13px;
+    left: -10px;
+}
 @media screen and (min-width: 1200px) and (max-width: 1299px) {
     .container {
         padding-top: 0 !important;
