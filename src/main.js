@@ -5,9 +5,15 @@ import { routes } from './routes'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import vuetify from '@/plugins/vuetify' // path to vuetify export
+
+new Vue({
+  vuetify,
+})
 
 
 Vue.use(BootstrapVue);
+Vue.prototype.$eventBus = new Vue() // add this line of code
 
 Vue.use(VueRouter);
 const router = new VueRouter({

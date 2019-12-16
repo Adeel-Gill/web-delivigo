@@ -1,0 +1,19 @@
+body {
+  font: 13px Roboto, Tahoma, Geneva, sans-serif;
+  color: $main-text;
+}
+
+.application.theme--light,
+.application .theme--light.v-card, .theme--light .v-card {
+  color: inherit;
+}
+
+
+a {
+  text-decoration: none;
+}
+
+p b {
+  color: $darker-text;
+  font-weight: 500;
+}
