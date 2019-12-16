@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <form>
+        <form style="align-content: center">
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <h1>Sign in</h1>
@@ -30,18 +30,18 @@
                         <input
                             type="checkbox"
                             id="stayLoggedIn"
-                            value="userData.login"
-                            checked="userData.login"
-                            v-model="userData.stayLoggedIn"> Remember Me!
+                            value="userData.stayLoggedIn"
+                            checked="userData.stayLoggedIn"
+                            v-model="userData.stayLoggedIn"
+                            @click="changeChecked"> Remember Me!
                     </div>
                 </div>
             </div>
-            <hr>
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <button
                             class="btn btn-primary"
-                            @click.prevent = "submitted">Submit!
+                            @click.prevent="submitted">Submit!
                     </button>
                 </div>
             </div>
@@ -56,14 +56,16 @@
                 userData: {
                     mail: '',
                     pass: '',
-                    login: true,
-                    stayLoggedIn: true,
+                    stayLoggedIn: false,
                 }
             }
         },
         methods: {
             submitted() {
                 alert(this.userData.mail + " " + this.userData.pass)
+            },
+            changeChecked() {
+                this.userData.stayLoggedIn = !this.userData.stayLoggedIn
             }
         }
     }
