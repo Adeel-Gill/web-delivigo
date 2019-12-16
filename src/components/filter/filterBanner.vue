@@ -10,8 +10,8 @@
           indicators
           background="#ababab"
           style="text-shadow: 1px 1px 2px #333;"
-          [@sliding-start]="onSlideStart"
-          [@sliding-end]="onSlideEnd"
+          @sliding-start="onSlideStart"
+          @sliding-end="onSlideEnd"
         >
           <!-- Text slides with image -->
           <b-carousel-slide v-for="(slide) in slides" :key="slide.imageURL" :img-src="slide.imageURL" >
