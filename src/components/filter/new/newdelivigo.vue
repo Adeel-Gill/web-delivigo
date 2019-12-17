@@ -35,7 +35,6 @@ export default {
     props:['newRestaurant'],
     data(){
         return{
-
         }
     }
 }

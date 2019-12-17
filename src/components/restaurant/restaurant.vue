@@ -2,27 +2,29 @@
      <div class="col-md-4 padding-top-botom">
          <div class="restaurant">
             <router-link to="/selected">
-                <img :src="restaurant.imageURL" />
-                <div class="restaurants-details">
-                    <div class="row">
-                        <div class="col-md-8 padding-top-botom">
-                            <h6>{{restaurant.name}}</h6>
+                <div>
+                    <img :src="restaurant.ImageUrl" />
+                    <div class="restaurants-details">
+                        <div class="row">
+                            <div class="col-md-8 padding-top-botom">
+                                <h6>{{restaurant.Name}}</h6>
+                            </div>
+                            <div class="col-md-4 padding-top-botom">
+                                <p class="padding-top"><i class="fas fa-star"></i> {{restaurant.Rating}}</p>
+                            </div>
                         </div>
-                        <div class="col-md-4 padding-top-botom">
-                            <p class="padding-top"><i class="fas fa-star"></i> {{restaurant.rating}}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-5 padding-top-botom">
-                            <p class="font-light">{{restaurant.description}}</p>
-                        </div>
-                        <div class="col-md-3 padding-top-botom">
-                            <i class="fas fa-euro-sign"></i>
-                            <i class="fas fa-euro-sign"></i>
-                            <i class="fas fa-euro-sign"></i>
-                        </div>
-                        <div class="col-md-4 padding-top-botom">
-                            <p class="font-size-9"><i class="far fa-clock"></i> {{restaurant.waiting}}</p>
+                        <div class="row">
+                            <div class="col-md-5 padding-top-botom">
+                                <p class="font-light">{{restaurant.FullAddress}}</p>
+                            </div>
+                            <div class="col-md-3 padding-top-botom">
+                                <i class="fas fa-euro-sign"></i>
+                                <i class="fas fa-euro-sign"></i>
+                                <i class="fas fa-euro-sign"></i>
+                            </div>
+                            <div class="col-md-4 padding-top-botom">
+                                <p class="font-size-9"><i class="far fa-clock"></i> {{restaurant.Time}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -31,13 +33,9 @@
     </div>
 </template>
 <script>
-export default {
-    props: ['restaurant'],
-    data(){
-        return{
 
-        }
-    }
+    export default {
+    props: ['restaurant'],
 }
 </script>
 <style scoped>

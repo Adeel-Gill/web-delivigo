@@ -6,7 +6,7 @@
             </div>
             <div class="restaurants-list">
                 <div class="row">
-                    <restaurantsData v-for= "restaurant in restaurants" :key="restaurant.id" :restaurant='restaurant'></restaurantsData>
+                    <restaurantsData v-for= "restaurant in featureData.slice(0,9)" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
                 </div>
             </div>
         </div>
@@ -14,7 +14,6 @@
 </template>
 <script>
 import Restaurant from '../components/restaurant/restaurant.vue';
-import Restaurants from '../components/restaurant/restaurants'
 export default {
     components: {
         restaurantsData: Restaurant
@@ -22,8 +21,13 @@ export default {
     data(){
         return{
             titleHeading: 'Featured Restautrants',
-            restaurants: Restaurants
+            featureData: []
         }
+    },
+    mounted() {
+        this.$root.$on('featuredData', featuredRestaurants => {
+            this.featureData = featuredRestaurants
+        })
     }
 }
 </script>

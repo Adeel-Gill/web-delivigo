@@ -11,7 +11,7 @@
       <div class="clear"></div>
       <div class="restaurants-list">
         <div class="row">
-          <restaurantsData v-for= "restaurant in restaurantLessThan3" :key="restaurant.id" :restaurant='restaurant'></restaurantsData>
+          <restaurantsData v-for= "restaurant in popularData.slice(0, 3)" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
         </div>
       </div>
     </div>
@@ -19,7 +19,6 @@
 </template>
 <script>
 import Restaurant from '../components/restaurant/restaurant.vue';
-import Restaurants from '../components/restaurant/restaurants.js'
 export default {
   components: {
     restaurantsData: Restaurant
@@ -28,16 +27,18 @@ export default {
     return{
       titleHeading: 'Popular Restaurant',
       subHeading: 'The easiest way to your favourite food',
-      restaurants: Restaurants
+      popularData: []
     }
   },
   computed:{
-        restaurantLessThan3: function() {
-            return this.restaurants.filter(function(restaurant) {
-                return restaurant.id <= 3;
-            })
-        }
-    }
+
+    },
+  mounted() {
+    this.$root.$on('popularData', popularRestaurants => {
+      console.log('inOn'+popularRestaurants);
+      this.popularData = popularRestaurants
+    })
+  }
 }
 </script>
 <style scoped>

@@ -1,20 +1,20 @@
 import axios from 'axios'
 // import {Message} from 'element-ui'
-import store from '@/store'
-import {getToken} from '@/utils/auth'
+// import {store} from 'store'
+// import {getToken} from 'auth'
 
 // create an axios instance
-const service = axios.create({
-  baseURL: 'https://app.speedio.com.br/api/v1/', // Api base_url
+export const service = axios.create({
+  baseURL: 'https://www.foodizza.com/api/', // Api base_url
   timeout: 50000 // request timeout
 })
 
 // request interceptor
 service.interceptors.request.use(config => {
   // Do something before request is sent
-  if (store.getters.token) {
-    config.headers['Authorization'] = getToken()
-  }
+  // if (store.getters.token) {
+  //   config.headers['Authorization'] = getToken()
+  // }
   return config
 }, error => {
   // Do something with request error
@@ -28,13 +28,13 @@ service.interceptors.request.use(config => {
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-
-    if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
-    }
+    //
+    // if (store.getters.token) {
+    //   // let each request carry token
+    //   // ['X-Token'] is a custom headers key
+    //   // please modify it according to the actual situation
+    //   config.headers['X-Token'] = getToken()
+    // }
     return config
   },
   error => {
@@ -57,6 +57,7 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    console.log('response'+response)
     const res = response
     // if the custom code is not 200, it is judged as an error.
     if (res.status != 200) {
