@@ -16,7 +16,8 @@ import Featured from './featuredRestaurants.vue';
 import Download from './appdownload.vue';
 import {fetchResturantsData} from "../components/api/Landing";
 
-    export default {
+
+export default {
     components:{
     landingBanner: Banner,
     popularRestaurant: Popular,

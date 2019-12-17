@@ -3,6 +3,9 @@
         <div class="container">
             <div class="featured-restaurants">
                 <h2><span class="glyphicon glyphicon-euro"></span> {{ titleHeading }}</h2>
+                <div class="show-more" @click="emitFeatured">
+                <router-link :to="{path: '/showAll', query: {type: 'featured'}}" >Show More</router-link>
+                </div>
             </div>
             <div class="restaurants-list">
                 <div class="row">
@@ -14,6 +17,8 @@
 </template>
 <script>
 import Restaurant from '../components/restaurant/restaurant.vue';
+import {EventBus} from "../main";
+
 export default {
     components: {
         restaurantsData: Restaurant
@@ -28,6 +33,11 @@ export default {
         this.$root.$on('featuredData', featuredRestaurants => {
             this.featureData = featuredRestaurants
         })
+    },
+    methods: {
+        emitFeatured() {
+            EventBus.$emit('featuredData',this.featureData);
+        }
     }
 }
 </script>
@@ -35,6 +45,17 @@ export default {
 .featured-restaurants h2{
     text-align: center;
     margin: 50px 0;
+}
+.show-more{
+    float: right;
+}
+.show-more a {
+    color: #0030b4;
+    display: inline-block;
+    margin: 10px 0 20px;
+    font-family: "Panton";
+    font-weight: bold;
+    font-size: 17px;
 }
 .restaurants-list{
     margin-bottom: 40px;

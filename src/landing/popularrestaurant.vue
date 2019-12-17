@@ -5,8 +5,8 @@
         <h2>{{titleHeading}}</h2>
         <p>{{subHeading}}</p>
       </div>
-      <div class="show-more">
-        <router-link to="/filter">Show More</router-link>
+      <div class="show-more" @click="emitPopular">
+        <router-link :to="{path: '/showAll', query: {type: 'popular'}}" >Show More</router-link>
       </div>
       <div class="clear"></div>
       <div class="restaurants-list">
@@ -19,6 +19,7 @@
 </template>
 <script>
 import Restaurant from '../components/restaurant/restaurant.vue';
+import {EventBus} from "../main";
 export default {
   components: {
     restaurantsData: Restaurant
@@ -38,6 +39,11 @@ export default {
       console.log('inOn'+popularRestaurants);
       this.popularData = popularRestaurants
     })
+  },
+  methods: {
+    emitPopular() {
+      EventBus.$emit('popularData',this.popularData);
+    }
   }
 }
 </script>

@@ -11,7 +11,7 @@ new Vue({
   vuetify,
 })
 
-
+export const EventBus = new Vue();
 Vue.use(BootstrapVue);
 Vue.prototype.$eventBus = new Vue() // add this line of code
 
