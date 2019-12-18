@@ -16,7 +16,7 @@
             <h1>{{slide.heading}}</h1>
             <p>{{slide.description}}</p>
             <b-form-input v-model="text" placeholder="I Would like to eat...."></b-form-input>
-            <b-button>Search Food</b-button>
+            <b-button @click="navigateTo">Search Food</b-button>
         </div>
       </b-carousel-slide>
     </b-carousel>
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+  import {EventBus} from "../main";
+
   export default {
     data() {
       return {
@@ -51,7 +53,14 @@
       },
       onSlideEnd() {
         this.sliding = false
-      }
+      },
+        navigateTo() {
+          this.$router.push('filter');
+            this.$root.$on('popularData', popularRestaurants => {
+                console.log('inLandingBannerOn'+popularRestaurants);
+                EventBus.$emit('popularData',popularRestaurants);
+            })
+        }
     }
   }
 </script>

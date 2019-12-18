@@ -2,19 +2,19 @@
     <div class="col-md-4 padding-top-botom">
          <div class="restaurant">
              <router-link to="/selected">
-            <img :src="newRestaurant.imagePath" />
+            <img :src="newRestaurant.ImageUrl" />
             <div class="restaurants-details">
                 <div class="row">
                     <div class="col-md-8 padding-top-botom">
-                        <h6>{{newRestaurant.name}}</h6>
+                        <h6>{{newRestaurant.Name}}</h6>
                     </div>
                     <div class="col-md-4 padding-top-botom">
-                        <p class="padding-top"><i class="fas fa-star"></i> {{newRestaurant.rateing}}</p>
+                        <p class="padding-top"><i class="fas fa-star"></i> {{newRestaurant.Rating}}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-5 padding-top-botom">
-                        <p class="font-light">{{newRestaurant.type}}</p>
+                        <p class="font-light">{{newRestaurant.Tags}}</p>
                     </div>
                     <div class="col-md-3 padding-top-botom">
                         <i class="fas fa-euro-sign"></i>
@@ -22,7 +22,7 @@
                         <i class="fas fa-euro-sign"></i>
                     </div>
                     <div class="col-md-4 padding-top-botom">
-                        <p class="font-size-9"><i class="far fa-clock"></i> {{newRestaurant.timeing}}</p>
+                        <p class="font-size-9"><i class="far fa-clock"></i> {{newRestaurant.Time}}</p>
                     </div>
                 </div>
             </div>

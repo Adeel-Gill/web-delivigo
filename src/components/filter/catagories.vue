@@ -5,9 +5,9 @@
         
             <div class="catagory" v-for="catagory in catagories" :catagory="catagories" :key="catagory.id">
                 <a href="#">
-                <div :class="catagory.card" class="card-image">
+                <div :class="cardImage" class="card-image">
                 </div>
-                <div :class="catagory.class" class="catagory-desc">
+                <div :class="bgClass" class="catagory-desc">
                     <div class="catagory-text">
                         <h5>{{catagory.title}}</h5>
                         <h6>{{catagory.restaurants}}</h6>
@@ -25,6 +25,8 @@ export default {
     data(){
         return{
             titleSection:'Categories',
+            cardImage: 'card1-image',
+            bgClass: 'bg-green',
             catagories:[
                 {
                     id:1,

@@ -8,13 +8,13 @@
             <div class="restaurants-list">
                 <h2>{{titleHeading}}</h2>
                 <div class="row">
-                    <new-delivigo v-for= "newRestaurant in newRestaurants" :key="newRestaurant.id" :newRestaurant='newRestaurant'></new-delivigo>
+                    <new-delivigo v-for= "newRestaurant in newRestaurants" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
                 </div>
             </div>
             <div class="restaurants-list">
                 <h2>{{titleHeading}}</h2>
                 <div class="row">
-                    <new-delivigo v-for= "newRestaurant in newrestaurantLessThan3" :key="newRestaurant.id" :newRestaurant='newRestaurant'></new-delivigo>
+                    <new-delivigo v-for= "newRestaurant in newRestaurants.slice(0,3)" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
                 </div>
             </div>
         </div>
@@ -24,9 +24,10 @@
 import Banner from './filterBanner.vue';
 import Catagories from './catagories.vue';
 import newDelivigo from './new/newdelivigo.vue';
-import data from './new/newRestaurants.js';
 import selectFilter from './select-options/filterSelect';
 import popular from './popular'
+import {fetchAllData} from "../api/Home";
+
 export default {
     components:{
         Banner,
@@ -37,8 +38,10 @@ export default {
     },
     data(){
         return{
-            newRestaurants : data,
+            newRestaurants : [],
+            fetchedData: {},
             titleHeading:'NEW ON DELIVIGO'
+
         }
     },
     mounted() {
@@ -61,14 +64,18 @@ export default {
         },
         unChangeFooter(){
             this.$eventBus.$emit('checkFooter', 'default');
+        },
+        async fetchAllData() {
+                fetchAllData().then(response => {
+                    this.fetchedData = response;
+                    this.newRestaurants = this.fetchedData.NewOpen;
+                    this.$root.$emit('popularData', this.fetchedData.PopularNearYou);
+                    this.$root.$emit('foodCategoriesData', this.fetchedData.FoodCategories);
+                })
         }
     },
-    computed:{
-        newrestaurantLessThan3: function() {
-            return this.newRestaurants.filter(function(newRestaurant) {
-                return newRestaurant.id <= 3;
-            })
-        }
+    created() {
+        this.fetchAllData();
     }
 }
 </script>

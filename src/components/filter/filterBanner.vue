@@ -14,11 +14,11 @@
           @sliding-end="onSlideEnd"
         >
           <!-- Text slides with image -->
-          <b-carousel-slide v-for="(slide) in slides" :key="slide.imageURL" :img-src="slide.imageURL" >
+          <b-carousel-slide v-for="(slide) in restaurants" :key="slide" :img-src="imageURL" >
             <div class="filter-caption">
-              <h6>{{slide.title}}</h6>
-              <h3>{{slide.heading}}</h3>
-              <p>{{slide.description}}</p>
+              <h6>{{slide.Name}}</h6>
+              <h3>{{slide.Tags}}</h3>
+              <p>{{slide.FullAddress +' '+ slide.FullAddress2}}</p>
             </div>
           </b-carousel-slide>
         </b-carousel>
@@ -30,28 +30,14 @@
     data() {
       return {
         text:'',
-        slide: 0,
         sliding: null,
+        imageURL: '/images/pg-2-slide1.png',
         slides:[
             {
-                title:'Restaurant',
-                heading:'Free Delivery',
-                description:'Enjoy your food!',
                 imageURL:'/images/pg-2-slide1.png'
-            },
-            {
-                title:'Restaurant2',
-                heading:'Free Delivery',
-                description:'Enjoy your food!',
-                imageURL:'/images/pg-2-slide2.png'
-            },
-            {
-                title:'Restaurant3',
-                heading:'Free Delivery',
-                description:'Enjoy your food!',
-                imageURL:'/images/pg-2-slide3.png'
             }
-        ]
+        ],
+        restaurants: []
       }
     },
     methods: {
@@ -61,6 +47,12 @@
       onSlideEnd() {
         this.sliding = false
       }
+    },
+    mounted() {
+      this.$root.$on('popularData', popularRestaurants => {
+        console.log('inFilterBannerOn'+popularRestaurants);
+        this.restaurants = popularRestaurants
+      })
     }
   }
 </script>
