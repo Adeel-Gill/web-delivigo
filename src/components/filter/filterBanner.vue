@@ -4,7 +4,6 @@
         <b-carousel
           id="carousel-2"
           fade
-          v-model="slide"
           :interval="3000"
           controls
           indicators
@@ -14,7 +13,7 @@
           @sliding-end="onSlideEnd"
         >
           <!-- Text slides with image -->
-          <b-carousel-slide v-for="(slide) in restaurants" :key="slide" :img-src="imageURL" >
+          <b-carousel-slide v-for="slide in restaurants" :img-src= "baseUrl + slide.ImageUrl" >
             <div class="filter-caption">
               <h6>{{slide.Name}}</h6>
               <h3>{{slide.Tags}}</h3>
@@ -26,17 +25,14 @@
     </div>
 </template>
 <script>
+  import {baseAddress} from "../../main";
+
   export default {
     data() {
       return {
         text:'',
         sliding: null,
-        imageURL: '/images/pg-2-slide1.png',
-        slides:[
-            {
-                imageURL:'/images/pg-2-slide1.png'
-            }
-        ],
+        baseUrl: baseAddress,
         restaurants: []
       }
     },

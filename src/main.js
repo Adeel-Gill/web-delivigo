@@ -10,7 +10,7 @@ import vuetify from '@/plugins/vuetify' // path to vuetify export
 new Vue({
   vuetify,
 })
-
+export const baseAddress = 'https://www.foodizza.com/';
 export const EventBus = new Vue();
 Vue.use(BootstrapVue);
 Vue.prototype.$eventBus = new Vue() // add this line of code

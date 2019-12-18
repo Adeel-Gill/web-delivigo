@@ -2,7 +2,7 @@
     <div class="col-md-4 padding-top-botom">
          <div class="restaurant">
              <router-link to="/selected">
-            <img :src="newRestaurant.ImageUrl" />
+            <img :src="baseUrl + newRestaurant.ImageUrl" />
             <div class="restaurants-details">
                 <div class="row">
                     <div class="col-md-8 padding-top-botom">
@@ -31,10 +31,13 @@
     </div>
 </template>
 <script>
-export default {
+    import {baseAddress} from "../../../main";
+
+    export default {
     props:['newRestaurant'],
     data(){
         return{
+            baseUrl: baseAddress
         }
     }
 }

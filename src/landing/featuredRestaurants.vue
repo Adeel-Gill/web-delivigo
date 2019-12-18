@@ -3,8 +3,8 @@
         <div class="container">
             <div class="featured-restaurants">
                 <h2><span class="glyphicon glyphicon-euro"></span> {{ titleHeading }}</h2>
-                <div class="show-more" @click="emitFeatured">
-                <router-link :to="{path: '/showAll', query: {type: 'featured'}}" >Show More</router-link>
+                <div class="show-more">
+                    <router-link to="/featured" >Show More</router-link>
                 </div>
             </div>
             <div class="restaurants-list">
@@ -17,7 +17,6 @@
 </template>
 <script>
 import Restaurant from '../components/restaurant/restaurant.vue';
-import {EventBus} from "../main";
 
 export default {
     components: {
@@ -25,7 +24,7 @@ export default {
     },
     data(){
         return{
-            titleHeading: 'Featured Restautrants',
+            titleHeading: 'Featured Restaurants',
             featureData: []
         }
     },
@@ -33,11 +32,6 @@ export default {
         this.$root.$on('featuredData', featuredRestaurants => {
             this.featureData = featuredRestaurants
         })
-    },
-    methods: {
-        emitFeatured() {
-            EventBus.$emit('featuredData',this.featureData);
-        }
     }
 }
 </script>

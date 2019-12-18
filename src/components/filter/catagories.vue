@@ -2,118 +2,49 @@
 <div>
     <div class="catagories">
         <h2>{{titleSection}}</h2>
-        
-            <div class="catagory" v-for="catagory in catagories" :catagory="catagories" :key="catagory.id">
-                <a href="#">
-                <div :class="cardImage" class="card-image">
-                </div>
-                <div :class="bgClass" class="catagory-desc">
-                    <div class="catagory-text">
-                        <h5>{{catagory.title}}</h5>
-                        <h6>{{catagory.restaurants}}</h6>
-                        <p><i class="fas fa-star"></i> {{catagory.rating}}</p>
-                    </div>
-                </div>
-                </a>
+        <div class="show-more">
+            <router-link to="/foodCategories">Show More</router-link>
+        </div>
+        <div class="clear"></div>
+            <app-categories v-for="catagory in foodCategories.slice(0,10)"
+                            v-bind:key="catagory.Id"
+                            :foodCategories="catagory"></app-categories>
             </div>
-        
     </div>
-</div>
 </template>
 <script>
-export default {
+
+    import foodCategories from "../foodCategories/foodCategories";
+    export default {
     data(){
         return{
             titleSection:'Categories',
             cardImage: 'card1-image',
-            bgClass: 'bg-green',
-            catagories:[
-                {
-                    id:1,
-                    card:'card1-image',
-                    title:'Sushi',
-                    restaurants:'7 Restaurants',
-                    rating:'4.8 (127)',
-                    class: 'bg-green'
-                },
-                {
-                    id:2,
-                    card:'card2-image',
-                    title:'Sushi',
-                    restaurants:'7 Restaurants',
-                    rating:'4.8 (127)',
-                    class: 'bg-red'
-                },
-                {
-                    id:3,
-                    card:'card3-image',
-                    title:'Sushi',
-                    restaurants:'7 Restaurants',
-                    rating:'4.8 (127)',
-                    class: 'bg-grey'
-                },
-                {
-                    id:4,
-                    card:'card4-image',
-                    title:'Sushi',
-                    restaurants:'7 Restaurants',
-                    rating:'4.8 (127)',
-                    class: 'bg-blue'
-                },
-                {
-                    id:5,
-                    card:'card1-image',
-                    title:'Sushi',
-                    restaurants:'7 Restaurants',
-                    rating:'4.8 (127)',
-                    class: 'bg-brown'
-                },
-                {
-                    id:6,
-                    card:'card2-image',
-                    title:'Sushi',
-                    restaurants:'7 Restaurants',
-                    rating:'4.8 (127)',
-                    class: 'bg-red'
-                },
-                {
-                    id:7,
-                    card:'card3-image',
-                    title:'Sushi',
-                    restaurants:'7 Restaurants',
-                    rating:'4.8 (127)',
-                    class: 'bg-grey'
-                },
-                {
-                    id:8,
-                    card:'card4-image',
-                    title:'Sushi',
-                    restaurants:'7 Restaurants',
-                    rating:'4.8 (127)',
-                    class: 'bg-blue'
-                },
-                {
-                    id:9,
-                    card:'card1-image',
-                    title:'Sushi',
-                    restaurants:'7 Restaurants',
-                    rating:'4.8 (127)',
-                    class: 'bg-brown'
-                },
-                {
-                    id:10,
-                    card:'card2-image',
-                    title:'Sushi',
-                    restaurants:'7 Restaurants',
-                    rating:'4.8 (127)',
-                    class: 'bg-red'
-                }
-            ]
+            foodCategories: []
         }
+    },
+    components: {
+        appCategories: foodCategories
+    },
+    mounted() {
+        this.$root.$on('foodCategoriesData', foodCategoriesData => {
+            this.foodCategories = foodCategoriesData;
+        })
     }
 }
 </script>
 <style scoped>
+    .show-more{
+        float: right;
+    }
+    .show-more a {
+        color: #0030b4;
+        display: inline-block;
+        margin: 10px 0 20px;
+        font-family: "Panton";
+        font-weight: bold;
+        font-size: 17px;
+    }
 .catagories{
     margin-bottom: 50px;
 }
@@ -153,18 +84,6 @@ export default {
     background-size: cover;
     width: 160px;
     border-radius: 110px 110px 0 0;
-}
-.card1-image{
-    background-image: url(/images/card1.png);
-}
-.card2-image{
-    background-image: url(/images/card2.png);
-}
-.card3-image{
-    background-image: url(/images/card3.png);
-}
-.card4-image{
-    background-image: url(/images/card4.png);
 }
 .catagory-text {
     margin: 0 30px;

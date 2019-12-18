@@ -15,7 +15,6 @@ import Process from './delivery.vue';
 import Featured from './featuredRestaurants.vue';
 import Download from './appdownload.vue';
 import {fetchResturantsData} from "../components/api/Landing";
-import {EventBus} from "../main";
 
 
 export default {

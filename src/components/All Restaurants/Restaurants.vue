@@ -16,36 +16,30 @@
 </template>
 
 <script>
-    // import Restaurant from '../components/restaurant/restaurant.vue';
     import Restaurant from '../../components/restaurant/restaurant.vue';
-    import {EventBus} from "../../main";
+    import {fetchAllData} from "../api/Home";
 
     export default {
         name: "allRestaurants",
         data(){
             return{
-                titleHeading: 'Popular Restaurants',
+                titleHeading: 'All Restaurants',
                 subHeading: 'The easiest way to your favourite food',
                 restaurantsData: [],
-                type : ''
             }
         },
         components: {
             restaurantsData: Restaurant
         },
+        methods: {
+          fetchAllData() {
+              fetchAllData().then(response => {
+                  this.restaurantsData = response.Restaurants;
+              })
+          }
+        },
         mounted() {
-            this.type = this.$route.query.type;
-            if(this.type === 'popular') {
-                 EventBus.$on('popularData', popularRestaurants => {
-                     this.restaurantsData = popularRestaurants;
-                })
-            }
-            else if(this.type === 'featured') {
-                this.titleHeading = 'Featured Restaurants';
-                EventBus.$on('featuredData', featuredRestaurants => {
-                    this.restaurantsData = featuredRestaurants;
-                })
-            }
+            this.fetchAllData();
         }
     }
 </script>

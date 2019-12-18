@@ -4,7 +4,7 @@
         <h2>{{popularHeading}}</h2>
       </div>
       <div class="show-more">
-        <router-link to="/filter">Show More</router-link>
+        <router-link to="/populars">Show More</router-link>
       </div>
       <div class="clear"></div>
       <div class="restaurants-list">

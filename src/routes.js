@@ -3,13 +3,20 @@ import Login from './components/login/login.vue';
 import Register from './components/register/register.vue';
 import Filter from './components/filter/filter.vue';
 import Selected from './components/selected restaurant/restaurant-select.vue'
-import allRestaurants from "./components/All Restaurants/allRestaurants";
+import allRestaurants from "./components/All Restaurants/Restaurants";
+import allPopularRestaurants from "./components/All Restaurants/PopularRestaurants";
+import allFeaturedRestaurants from "./components/All Restaurants/FeaturedRestaurants";
+import allNewRestaurants from "./components/All Restaurants/NewRestaurants";
+import allFoodCategories from "./components/All Restaurants/FoodCategories";
 export const routes = [
     { path: '/', component: Home },
     { path: '/login', component: Login },
     { path: '/register', component: Register },
     { path: '/filter', component: Filter },
     { path: '/selected', component: Selected },
-    { path: '/showAll', component: allRestaurants },
-
+    {path: '/populars', component: allPopularRestaurants},
+    {path: '/featured', component: allFeaturedRestaurants},
+    {path: '/newRestaurants', component: allNewRestaurants},
+    {path: '/restaurants', component: allRestaurants},
+    {path: '/foodCategories', component: allFoodCategories},
 ]

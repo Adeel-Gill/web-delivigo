@@ -7,14 +7,22 @@
             <catagories />
             <div class="restaurants-list">
                 <h2>{{titleHeading}}</h2>
+                <div class="show-more">
+                    <router-link to="/newRestaurants">Show More</router-link>
+                </div>
+                <div class="clear"></div>
                 <div class="row">
                     <new-delivigo v-for= "newRestaurant in newRestaurants" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
                 </div>
             </div>
             <div class="restaurants-list">
-                <h2>{{titleHeading}}</h2>
+                <h2>All Restaurants</h2>
+                <div class="show-more">
+                    <router-link to="/restaurants">Show More</router-link>
+                </div>
+                <div class="clear"></div>
                 <div class="row">
-                    <new-delivigo v-for= "newRestaurant in newRestaurants.slice(0,3)" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
+                    <new-delivigo v-for= "newRestaurant in allRestaurants.slice(0,6)" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
                 </div>
             </div>
         </div>
@@ -40,7 +48,8 @@ export default {
         return{
             newRestaurants : [],
             fetchedData: {},
-            titleHeading:'NEW ON DELIVIGO'
+            titleHeading:'NEW ON DELIVIGO',
+            allRestaurants: []
 
         }
     },
@@ -69,6 +78,7 @@ export default {
                 fetchAllData().then(response => {
                     this.fetchedData = response;
                     this.newRestaurants = this.fetchedData.NewOpen;
+                    this.allRestaurants = this.fetchedData.Restaurants;
                     this.$root.$emit('popularData', this.fetchedData.PopularNearYou);
                     this.$root.$emit('foodCategoriesData', this.fetchedData.FoodCategories);
                 })
@@ -80,6 +90,17 @@ export default {
 }
 </script>
 <style scoped>
+    .show-more{
+        float: right;
+    }
+    .show-more a {
+        color: #0030b4;
+        display: inline-block;
+        margin: 10px 0 20px;
+        font-family: "Panton";
+        font-weight: bold;
+        font-size: 17px;
+    }
 .container{
     max-width: 1045px;
 }
