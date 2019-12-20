@@ -2,8 +2,8 @@
     <div class="popular-dishes">
         <h5>{{favrtDishes}}</h5>
         <ul>
-            <li v-for="dish in dishes" :key="dish.id" dish="dishes">
-                {{dish.dishType}}
+            <li v-for="dish in dishes.slice(0,2)" :key="dish.Id" dish="dishes">
+                {{dish.Name}}
             </li>
         </ul>
     </div>
@@ -13,21 +13,13 @@ export default {
     data(){
         return{
             favrtDishes:'Popular',
-            dishes:[
-                {
-                    id:1,
-                    dishType:'Salads'
-                },
-                {
-                    id:2,
-                    dishType:'Soups'
-                },
-                {
-                    id:3,
-                    dishType:'Hot Meals'
-                }
-            ]
+            dishes:[]
         }
+    },
+    mounted() {
+        this.$root.$on('popularFood', response => {
+            this.dishes = response;
+        })
     }
 }
 </script>

@@ -4,6 +4,7 @@
       <app-header></app-header>
       <div class="clear"></div>
     </div>
+    <app-loader></app-loader>
     <div class="content">
       <div class="contentSection">
         <router-view></router-view>
@@ -17,10 +18,12 @@
 <script>
 import Header from './components/header.vue';
 import Footer from './components/footer.vue';
+import Loader from "./components/Loader/Loader";
 export default {
      components:{
         appHeader: Header,
-        appFooter: Footer
+        appFooter: Footer,
+        appLoader: Loader,
       }
     }
 </script>

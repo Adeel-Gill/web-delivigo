@@ -9,7 +9,8 @@
             <div class="catagories">
                 <app-food-categories v-for="catagory in foodCategoriesData"
                                      v-bind:key="catagory.Id"
-                                     :foodCategories="catagory"></app-food-categories>
+                                     :foodCategories="catagory"
+                                    ></app-food-categories>
             </div>
         </div>
     </div>

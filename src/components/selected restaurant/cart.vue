@@ -1,48 +1,48 @@
 <template>
-    <div class="slected-bg">
-        <div class="food-type">
-            <p><span>€</span><span> €</span><span> €</span><span>€</span></p>
-            <a href="#" v-for="foodType in foodTypes" :key="foodType.id" foodType="foodTypes">{{foodType.type}}</a>
-        </div>
-        <div class="shoping-cart">
-            <div class="cart">
-                <a href=""><img :src="cartImg" alt=""></a>
+        <div class="slected-bg" :style="{'background-image': 'url('+image+')'}">
+            <div class="food-type">
+                <p><span>€</span><span> €</span><span> €</span><span>€</span></p>
+                <a href="#" v-for="foodType in foodTypes.slice(0,6)" style="margin-top: 5px" :key="foodType.Id" foodType="foodTypes">{{foodType.Name}}</a>
             </div>
-            <div class="cart-hover">
-                <a href=""><img :src="cartHover" alt=""></a>
+            <div class="shoping-cart">
+                <div class="cart">
+                    <a href=""><img :src="cartImg" alt=""></a>
+                </div>
+                <div class="cart-hover">
+                    <a href=""><img :src="cartHover" alt=""></a>
+                </div>
             </div>
         </div>
-    </div>
 </template>
 <script>
-export default {
+    import {baseAddress} from "../../main";
+
+    export default {
     data(){
         return{
-            foodTypes:[
-                {
-                    id:1,
-                    type: 'Burgers'
-                },
-                {
-                    id:2,
-                    type: 'pizza'
-                },
-                {
-                    id:3,
-                    type: 'Sushi'
-                }
-            ],
+            foodTypes:[],
             cartImg:'images/cart.png',
-            cartHover:'images/cart-hover.png'
+            cartHover:'images/cart-hover.png',
+            baseUrl: baseAddress,
+            restaurant: {},
+            image: ''
         }
+    },
+    mounted() {
+        this.$root.$on('mealMenu', response => {
+            this.foodTypes = response;
+        });
+        this.$root.$on('restaurant', response => {
+            this.restaurant = response;
+            this.image = this.baseUrl+this.restaurant.ImageUrl;
+        })
     }
-    
+
 }
 </script>
 <style scoped>
 .slected-bg {
     position: relative;
-    background-image: url(/images/resturnt-select.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

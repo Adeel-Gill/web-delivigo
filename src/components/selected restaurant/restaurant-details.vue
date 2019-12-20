@@ -3,16 +3,16 @@
         <div class="description-about">
             <div class="resturant-name-review">
                 <div class="name-desc">
-                    <h4>{{name}}</h4>
-                    <p>{{subHeading}}</p>
+                    <h4>{{restaurant.Name}}</h4>
+                    <p>{{restaurant.FullAddress}}</p>
                 </div>
                 <div class="reviews">
-                    <a href="#">{{reviews}}</a>
+                    <a href="#">{{restaurant.ReviewCount}}</a>
                 </div>
                 <div class="clear"></div>
             </div>
             <div class="restaurnt-address">
-                <p><i class="fas fa-map-marker-alt"></i>{{address}}</p>
+                <p><i class="fas fa-map-marker-alt"></i>{{restaurant.FullAddress}}</p>
             </div>
             <div class="rating-times">
                 <div class="row">
@@ -20,8 +20,8 @@
                         <div class="rating">
                             <p>
                                 <i class="fas fa-star"></i>
-                                <span>{{rating}} </span>
-                                <span class="light">{{ratingLight}}</span>
+                                <span>{{restaurant.Rating}} </span>
+                                <span class="light">{{restaurant.ReviewCount}}</span>
                             </p>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                         <div class="delivery">
                             <p>
                                 <i class="fas fa-euro-sign"></i>
-                                {{delivery}}
+                                {{restaurant.DeliveryTime}}
                             </p>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         <div class="mints">
                             <p>
                                 <i class="far fa-clock"></i>
-                                {{timeing}}
+                                {{restaurant.DeliveryTime}}
                             </p>
                         </div>
                     </div>
@@ -50,6 +50,7 @@
 export default {
     data(){
         return{
+            restaurant: {},
             name:'Jean-Georges',
             subHeading: 'French/New American',
             reviews:'All reviews',
@@ -59,6 +60,11 @@ export default {
             delivery:'Free delivery',
             timeing:'35-45 Mins'
         }
+    },
+    mounted() {
+        this.$root.$on('restaurant', response => {
+            this.restaurant = response;
+        })
     }
 }
 </script>

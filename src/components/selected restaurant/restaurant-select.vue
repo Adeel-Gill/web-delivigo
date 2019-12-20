@@ -29,7 +29,15 @@ import Foods from "./popular-food.vue";
 import Name from "./restaurant-details";
 import Dishes from "./dishes.vue";
 import Venue from "./venue.vue";
+import {EventBus} from "../../main";
+import {fetchRestaurantById} from "../api/FilterRestaurants";
+
 export default {
+    data() {
+      return {
+          resId: null
+      }
+    },
     components:{
         Banner,
         popularFoods: Foods,
@@ -41,6 +49,11 @@ export default {
     
     mounted() {
       this.changeHeader();
+      EventBus.$on('resId', response => {
+          this.resId = response;
+          console.log('id'+response+this.resId);
+          this.fetchRestaurantData(this.resId);
+      })
     },
     destroyed() {
         this.unChangeHeader();
@@ -52,6 +65,14 @@ export default {
             unChangeHeader() {
       this.$eventBus.$emit('checkComponent', 'default');
         },
+        async fetchRestaurantData(id) {
+                fetchRestaurantById(id).then(response => {
+                    this.$root.$emit('mealMenu', response.MealMenu);
+                    this.$root.$emit('popularFood', response.Popular);
+                    this.$root.$emit('restaurant', response.Restaurant);
+
+                })
+        }
     },
     
 }

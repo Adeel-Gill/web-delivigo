@@ -1,6 +1,6 @@
 <template>
     <div class="col-md-4 padding-top-botom">
-         <div class="restaurant">
+         <div class="restaurant" @click="emitId">
              <router-link to="/selected">
             <img :src="baseUrl + newRestaurant.ImageUrl" />
             <div class="restaurants-details">
@@ -32,12 +32,19 @@
 </template>
 <script>
     import {baseAddress} from "../../../main";
-
+    import {EventBus} from "../../../main";
+    import newRestaurants from "./newRestaurants";
     export default {
     props:['newRestaurant'],
     data(){
         return{
-            baseUrl: baseAddress
+            baseUrl: baseAddress,
+            restaurants: newRestaurants
+        }
+    },
+    methods: {
+        emitId() {
+            EventBus.$emit('resId', this.restaurants.Id)
         }
     }
 }

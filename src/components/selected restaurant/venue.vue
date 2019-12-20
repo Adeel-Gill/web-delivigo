@@ -4,7 +4,7 @@
             <h3>{{venue.venuInfo}}</h3>
             <div class="address-info">
                 <h3>{{venue.addressHeading}}</h3>
-                <p>{{venue.address}}
+                <p>{{restaurant.FullAddress}}
                     <span>{{venue.seeMap}}</span>
                 </p>
             </div>
@@ -25,7 +25,7 @@
                                     <p>{{venue.requests}}</p>
                                 </div>
                                 <div class="contant-num">
-                                    <p>{{venue.phnNum}}</p>
+                                    <p>{{restaurant.PhoneNumber}}</p>
                                     <a href="#">{{venue.moreInfo}}</a>
                                 </div>
                             </div>
@@ -34,7 +34,7 @@
                             <div class="delivery-time">
                                 <p>
                                     <span class="float-left">{{venue.delivery}}</span>
-                                    <span class="float-right">{{venue.timeing}}</span>
+                                    <span class="float-right">{{restaurant.DeliveryTime}}</span>
                                 </p>
                             </div>
                         </b-tab>
@@ -48,6 +48,7 @@
 export default {
     data(){
         return{
+            restaurant: {},
             venue:{
                 venuInfo:'Venue information',
                 addressHeading:'Address',
@@ -64,6 +65,11 @@ export default {
             }
         }
     },
+    mounted() {
+        this.$root.$on('restaurant', response => {
+            this.restaurant = response;
+        })
+    }
 }
 </script>
 <style scoped>

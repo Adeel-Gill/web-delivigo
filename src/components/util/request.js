@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {EventBus} from "../../main";
 // import {Message} from 'element-ui'
 // import {store} from 'store'
 // import {getToken} from 'auth'
@@ -6,18 +7,21 @@ import axios from 'axios'
 // create an axios instance
 export const service = axios.create({
   baseURL: 'https://www.foodizza.com/api/', // Api base_url
-  timeout: 50000 // request timeout
+  timeout: 50000, // request timeout
 })
 
+// service.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 // request interceptor
 service.interceptors.request.use(config => {
   // Do something before request is sent
   // if (store.getters.token) {
   //   config.headers['Authorization'] = getToken()
-  // }
+  // }*
+  EventBus.$emit('StartOverlay', true);
   return config
 }, error => {
   // Do something with request error
+  EventBus.$emit('StopOverlay', false);
   console.log(error) // for debug
   Promise.reject(error)
 })
@@ -59,6 +63,7 @@ service.interceptors.response.use(
   response => {
     console.log('response'+response)
     const res = response
+    EventBus.$emit('StopOverlay', false);
     // if the custom code is not 200, it is judged as an error.
     if (res.status != 200) {
       // Message({

@@ -1,6 +1,6 @@
 <template>
-    <div class="catagory">
-        <a href="#">
+    <div class="catagory" @click = "emitName()">
+        <router-link to="/foodFilter" >
             <div  class="card-image">
                 <img :src="baseUrl + foodCategories.ImageUrl"/>
             </div>
@@ -11,12 +11,14 @@
                     <p><i class="fas fa-star"></i> {{foodCategories.StatusCode}}</p>
                 </div>
             </div>
-        </a>
+        </router-link>
     </div>
 </template>
 
 <script>
     import {baseAddress} from "../../main";
+    import {EventBus} from "../../main";
+
     export default {
         name: "foodCategories",
         props: ['foodCategories'],
@@ -28,6 +30,11 @@
         },
         created() {
             console.log('categories',this.foodCategories);
+        },
+        methods: {
+            emitName() {
+                EventBus.$emit('foodCategoryName',this.foodCategories.Name);
+            }
         }
     }
 </script>

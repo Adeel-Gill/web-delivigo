@@ -2,40 +2,40 @@
     <div class="restaurnt-dishes">
         <div class="show-dish-details" id="display-dish">
             <div class="dish-detail-image">
-                <img src="/images/clicked-image1.png" alt="">
+                <img :src="baseLink+dishDetail.ImageUrl" alt="">
             </div>
             <div class="dish-detail-about">
                 <div class="dish-name-descp">
-                    <h4>Hyashi wakame</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <h4>{{dishDetail.Name}}</h4>
+                    <p>{{dishDetail.Description}}</p>
                 </div>
                 <div class="extra-order">
                     <h6>GLI EXTRA - FACOLTATING</h6>
                     <div class="extra-checkbox">
                         <div>
-                            <span class="float-left">Bacchette</span>
-                            <span class="float-right"><input type="checkbox" name="extra" value="Bacchette" v-model="selected"></span>
-                        <div class="clear"></div>
+                            <span class="float-left">{{dishDetail.Description}}</span>
+                            <span class="float-right"><input type="checkbox" name="extra" :value="dishDetail.Description" ></span>
+                            <div class="clear"></div>
                         </div>
                         <div>
-                            <span class="float-left">Salsa di sola</span>
+                            <span class="float-left">{{dishDetail.Description}}</span>
                             <span class="float-right">
-                                <input type="checkbox" name="extra" value="Salsa di sola" checked="checked" v-model="selected">
+                                <input type="checkbox" name="extra" :value="dishDetail.Description" checked="checked" >
                             </span>
-                        <div class="clear"></div>
+                            <div class="clear"></div>
                         </div>
                     </div>
                     <h6>GLI EXTRA - FACOLTATING</h6>
                     <div class="extra-checkbox">
                         <div>
-                            <span class="float-left">Coca Cola 33d</span>
-                            <span class="float-right">(+ €3.00)</span>
-                        <div class="clear"></div>
+                            <span class="float-left">{{dishDetail.Name + ' '+ dishDetail.Quantity}}</span>
+                            <span class="float-right">(+ €{{dishDetail.Price}}.00)</span>
+                            <div class="clear"></div>
                         </div>
                         <div>
-                            <span class="float-left">Coca Cola Zero 33cl</span>
-                            <span class="float-right">(+ €3.00)</span>
-                        <div class="clear"></div>
+                            <span class="float-left">{{dishDetail.Name + ' '+ dishDetail.Quantity}}cl</span>
+                            <span class="float-right">(+ €{{dishDetail.Price}}.00)</span>
+                            <div class="clear"></div>
                         </div>
                     </div>
                 </div>
@@ -45,24 +45,23 @@
                     <button @click="increment()">&#xff0b;</button>
                 </div>
                 <div class="add-item-btn">
-                    <a href="#">Add item -  € 4.00</a>
+                    <a href="#">Add item -  € {{dishDetail.Price}}.00</a>
                 </div>
             </div>
         </div>
-        <div class="dishes" v-for="select in selects" :select="select" :key="select.id">
-
-            <div class="dish-selection" @click="displayDish()">
+        <div class="dishes" v-for="select in selected" :select="select" :key="select.Id" @click="displayDish(select)">
+            <div class="dish-selection" >
                 <div class="dish-image">
-                    <img :src="select.dishImage" alt="">
+                    <img :src="baseUrl+select.ImageUrl" alt="">
                 </div>
                 <div class="about-dish">
-                    <div class="descp-about" :class="select.class">
-                        <p>{{select.description}}</p>
+                    <div class="descp-about" >
+                        <p>{{select.Description}}</p>
                         <div class="price-dish">
-                            <p>{{select.price}}</p>
+                            <p>{{select.Price}}</p>
                         </div>
                         <div class="buy-btn">
-                            <a href="#" v-if="select.btn">{{select.btn}}</a>
+                            <a href="#">Buy</a>
                         </div>
                         <div class="clear"></div>
                     </div>
@@ -73,13 +72,16 @@
     </div>
 </template>
 <script>
-import Selects from './select.js';
+import {baseAddress} from "../../main";
+
 export default {
     props:['select'],
     data(){
         return{
-            selects: Selects,
             quantity: 1,
+            dishDetail: {},
+            baseLink: baseAddress,
+            baseUrl: '',
             selected: [], // Must be an array reference!
         }
     },
@@ -91,12 +93,21 @@ export default {
             if(this.quantity === 1) {
                 alert('Negative quantity not allowed')
             } else {
-            this.quantity--
+                this.quantity--
             }
         },
-        displayDish(){
-            document.getElementById("display-dish").style.display = "block"
+        displayDish(dish){
+            this.dishDetail = dish;
+            console.log(dish);
+            document.getElementById("display-dish").style.display = "block";
         }
+    },
+    mounted() {
+        this.$root.$on('popularFood', response => {
+            this.selected = response;
+            this.baseUrl = baseAddress;
+            console.log('dishes',this.selected);
+        })
     }
 }
 </script>
