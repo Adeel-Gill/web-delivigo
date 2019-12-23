@@ -1,6 +1,6 @@
 <template>
     <div class="restaurnt-dishes">
-        <div class="show-dish-details" id="display-dish">
+        <div class="show-dish-details" id="display-dish" >
             <div class="dish-detail-image">
                 <img :src="baseLink+dishDetail.ImageUrl" alt="">
             </div>
@@ -33,11 +33,11 @@
                     <button @click="increment()">&#xff0b;</button>
                 </div>
                 <div class="add-item-btn">
-                    <a href="#">Add item -  € 0.00</a>
+                    <a href="#">Add item -  € {{dishDetail.Price}}.00</a>
                 </div>
             </div>
         </div>
-        <div class="dishes" v-for="select in selected" :select="select" :key="select.Id" @click="displayDish(select.Id)">
+        <div class="dishes"  v-for="select in selected" :select="select" :key="select" @click="displayDish(select.Id)">
             <div class="dish-selection" >
                 <div class="dish-image">
                     <img :src="baseUrl+select.ImageUrl" alt="">
@@ -64,7 +64,6 @@ import {baseAddress} from "../../main";
 import {fetchMealById} from "../api/CustomMeal";
 
 export default {
-    props:['select'],
     data(){
         return{
             quantity: 1,
@@ -94,6 +93,10 @@ export default {
                 this.customOptions = response.CustomOptions;
             })
             document.getElementById("display-dish").style.display = "block";
+        },
+        hideDish() {
+            console.log('here');
+            document.getElementById("display-dish").style.display = "none";
         }
     },
     mounted() {

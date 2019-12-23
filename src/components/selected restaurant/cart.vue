@@ -2,7 +2,9 @@
         <div class="slected-bg" :style="{'background-image': 'url('+image+')'}">
             <div class="food-type">
                 <p><span>€</span><span> €</span><span> €</span><span>€</span></p>
-                <a href="#" v-for="foodType in foodTypes.slice(0,6)" style="margin-top: 5px" :key="foodType.Id" foodType="foodTypes">{{foodType.Name}}</a>
+                <button
+                        v-for="foodType in foodTypes.slice(0,6)"
+                        style="margin-top: 5px" :key="foodType" >{{foodType.Name}}</button>
             </div>
             <div class="shoping-cart">
                 <div class="cart">
@@ -21,8 +23,8 @@
     data(){
         return{
             foodTypes:[],
-            cartImg:'images/cart.png',
-            cartHover:'images/cart-hover.png',
+            cartImg:'../images/cart.png',
+            cartHover:'../images/cart-hover.png',
             baseUrl: baseAddress,
             restaurant: {},
             image: ''
@@ -67,6 +69,18 @@
     text-shadow: 2px 2px 11px #020202;
 }
 .food-type a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 20px;
+    background: red;
+    margin: 0 20px 0 5px;
+    color: white;
+    font-weight: bold;
+    font-family: "Roboto";
+    font-size: 20px;
+    text-transform: uppercase;
+}
+.food-type button {
     text-decoration: none;
     display: inline-block;
     padding: 10px 20px;

@@ -2,7 +2,7 @@
     <div class="popular-dishes">
         <h5>{{favrtDishes}}</h5>
         <ul>
-            <li v-for="dish in dishes.slice(0,2)" :key="dish.Id" dish="dishes">
+            <li v-for="dish in dishes.slice(0,2)" :key="dish" >
                 {{dish.Name}}
             </li>
         </ul>

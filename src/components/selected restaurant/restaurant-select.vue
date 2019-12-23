@@ -1,5 +1,5 @@
 <template>
-    <div class="restaurnt-selected" v-if="!loader">
+    <div class="restaurnt-selected" >
         <banner />
         <div class="container">
             <div class="row">
