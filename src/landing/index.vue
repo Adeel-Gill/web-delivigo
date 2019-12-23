@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="">
         <landing-banner></landing-banner>
         <popular-Restaurant  ></popular-Restaurant>
         <delivery-process></delivery-process>

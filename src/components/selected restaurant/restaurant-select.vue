@@ -1,5 +1,5 @@
 <template>
-    <div class="restaurnt-selected">
+    <div class="restaurnt-selected" v-if="!loader">
         <banner />
         <div class="container">
             <div class="row">
@@ -35,7 +35,8 @@ import {fetchRestaurantById} from "../api/FilterRestaurants";
 export default {
     data() {
       return {
-          resId: null
+          resId: null,
+          loader: false
       }
     },
     components:{
@@ -47,7 +48,12 @@ export default {
 
 
     },
-    
+    created() {
+        EventBus.$on('StartOverlay', response => {
+            this.loader = response;
+            console.log('StartOverlay'+this.loader);
+        })
+    },
     mounted() {
       this.changeHeader();
       // EventBus.$on('resId', response => {

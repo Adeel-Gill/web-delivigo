@@ -20,7 +20,7 @@
           })
         },
         updated() {
-          EventBus.$on('StopOverlay', response => {
+          EventBus.$on('StartOverlay', response => {
               this.overlay = response;
           })
         }
