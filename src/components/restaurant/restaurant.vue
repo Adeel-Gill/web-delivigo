@@ -1,7 +1,7 @@
 <template>
      <div class="col-md-4 padding-top-botom">
          <div class="restaurant" @click="emitId">
-            <router-link to="/selected">
+            <router-link :to="'/restaurant/'+restaurant.Id">
                 <div>
                     <img :src="baseUrl + restaurant.ImageUrl" />
                     <div class="restaurants-details">

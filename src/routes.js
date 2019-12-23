@@ -14,7 +14,7 @@ export const routes = [
     { path: '/login', component: Login },
     { path: '/register', component: Register },
     { path: '/filter', component: Filter },
-    { path: '/selected', component: Selected },
+    { path: '/restaurant/:id', component: Selected },
     {path: '/populars', component: allPopularRestaurants},
     {path: '/featured', component: allFeaturedRestaurants},
     {path: '/newRestaurants', component: allNewRestaurants},

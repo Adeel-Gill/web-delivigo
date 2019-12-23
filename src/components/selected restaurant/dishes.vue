@@ -11,30 +11,18 @@
                 </div>
                 <div class="extra-order">
                     <h6>GLI EXTRA - FACOLTATING</h6>
-                    <div class="extra-checkbox">
-                        <div>
-                            <span class="float-left">{{dishDetail.Description}}</span>
-                            <span class="float-right"><input type="checkbox" name="extra" :value="dishDetail.Description" ></span>
-                            <div class="clear"></div>
-                        </div>
-                        <div>
-                            <span class="float-left">{{dishDetail.Description}}</span>
-                            <span class="float-right">
-                                <input type="checkbox" name="extra" :value="dishDetail.Description" checked="checked" >
-                            </span>
+                    <div class="extra-checkbox" v-for="customOption in customOptions" v-bind:key="customOption">
+                        <div >
+                            <span class="float-left">{{customOption.Name}}</span>
+                            <span class="float-right"><input type="checkbox" name="extra" :value="customOption.Name" ></span>
                             <div class="clear"></div>
                         </div>
                     </div>
                     <h6>GLI EXTRA - FACOLTATING</h6>
-                    <div class="extra-checkbox">
+                    <div class="extra-checkbox" v-for="addon in addOns" v-bind:key="addon">
                         <div>
-                            <span class="float-left">{{dishDetail.Name + ' '+ dishDetail.Quantity}}</span>
-                            <span class="float-right">(+ €{{dishDetail.Price}}.00)</span>
-                            <div class="clear"></div>
-                        </div>
-                        <div>
-                            <span class="float-left">{{dishDetail.Name + ' '+ dishDetail.Quantity}}cl</span>
-                            <span class="float-right">(+ €{{dishDetail.Price}}.00)</span>
+                            <span class="float-left">{{addon.Name}}</span>
+                            <span class="float-right">(+ €{{addon.Price}}.00)</span>
                             <div class="clear"></div>
                         </div>
                     </div>
@@ -45,11 +33,11 @@
                     <button @click="increment()">&#xff0b;</button>
                 </div>
                 <div class="add-item-btn">
-                    <a href="#">Add item -  € {{dishDetail.Price}}.00</a>
+                    <a href="#">Add item -  € 0.00</a>
                 </div>
             </div>
         </div>
-        <div class="dishes" v-for="select in selected" :select="select" :key="select.Id" @click="displayDish(select)">
+        <div class="dishes" v-for="select in selected" :select="select" :key="select.Id" @click="displayDish(select.Id)">
             <div class="dish-selection" >
                 <div class="dish-image">
                     <img :src="baseUrl+select.ImageUrl" alt="">
@@ -73,6 +61,7 @@
 </template>
 <script>
 import {baseAddress} from "../../main";
+import {fetchMealById} from "../api/CustomMeal";
 
 export default {
     props:['select'],
@@ -80,6 +69,8 @@ export default {
         return{
             quantity: 1,
             dishDetail: {},
+            addOns: [],
+            customOptions: [],
             baseLink: baseAddress,
             baseUrl: '',
             selected: [], // Must be an array reference!
@@ -96,9 +87,12 @@ export default {
                 this.quantity--
             }
         },
-        displayDish(dish){
-            this.dishDetail = dish;
-            console.log(dish);
+        async displayDish(dishId){
+            fetchMealById(dishId).then(response => {
+                this.dishDetail = response.Meal;
+                this.addOns = response.AddOns;
+                this.customOptions = response.CustomOptions;
+            })
             document.getElementById("display-dish").style.display = "block";
         }
     },
