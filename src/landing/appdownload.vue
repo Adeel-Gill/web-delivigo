@@ -56,7 +56,7 @@ export default {
 }
 .phone-image img {
     width: 100%;
-    height: 100%; 
+    height: 100%;
 }
 .store-image{
     text-align: center;
