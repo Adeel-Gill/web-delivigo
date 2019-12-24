@@ -6,3 +6,10 @@ export function fetchMealById(id) {
         method: 'get',
     })
 }
+
+export function fetchRestaurantMealsById(resID, mealMenuID) {
+    return service({
+        url: 'RestaurantMeal/'+ resID+ '?mealMainId='+ mealMenuID,
+        method: 'get'
+    })
+}

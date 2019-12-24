@@ -1,10 +1,18 @@
 <template>
         <div class="slected-bg" :style="{'background-image': 'url('+image+')'}">
+<!--            <app-meal-menu v-for="foodType in foodTypes.slice(0,6)"-->
+<!--                           style="margin-top: 5px" :key="foodType" @click="navigateTo(foodType.Id)" :mealMenu = 'foodType'></app-meal-menu>-->
             <div class="food-type">
                 <p><span>€</span><span> €</span><span> €</span><span>€</span></p>
                 <button
                         v-for="foodType in foodTypes.slice(0,6)"
-                        style="margin-top: 5px" :key="foodType" >{{foodType.Name}}</button>
+                        style="margin-top: 5px"
+                        :key="foodType"
+                        @click="navigateTo(foodType.Id)" >{{foodType.Name}}</button>
+<!--                <app-meal-menu v-for="foodType in foodTypes.slice(0,6)"-->
+<!--                               style="margin-top: 5px"-->
+<!--                               :key="foodType"-->
+<!--                               @click="navigateTo(foodType.Id)" :mealMenu = 'foodType'></app-meal-menu>-->
             </div>
             <div class="shoping-cart">
                 <div class="cart">
@@ -18,8 +26,10 @@
 </template>
 <script>
     import {baseAddress} from "../../main";
+    import {fetchRestaurantMealsById} from "../api/CustomMeal";
 
     export default {
+
     data(){
         return{
             foodTypes:[],
@@ -27,17 +37,46 @@
             cartHover:'../images/cart-hover.png',
             baseUrl: baseAddress,
             restaurant: {},
-            image: ''
+            image: '',
+            allImages: [],
+            restaurantImages: [],
+            resID: null,
+            mealID: null
         }
     },
     mounted() {
         this.$root.$on('mealMenu', response => {
             this.foodTypes = response;
         });
+        this.$root.$on('restaurantImages', response => {
+            this.restaurantImages = response;
+            this.restaurantImages.forEach(image => {
+                this.allImages.push(this.baseUrl+image.ImageUrl);
+                console.log('allImages',this.allImages);
+            })
+        });
         this.$root.$on('restaurant', response => {
             this.restaurant = response;
             this.image = this.baseUrl+this.restaurant.ImageUrl;
         })
+    },
+    methods: {
+            navigateTo(id) {
+                console.log('insideNavigateMethod', id);
+                if(id) {
+                    this.$router.push({path:'/restaurant/'+this.$route.params.id,query:{mealID:id}});
+                    this.fetchRestaurantMealById(this.$route.params.id,id);
+                } else {
+                    alert('Please select menu other than popular!');
+                }
+            },
+        async fetchRestaurantMealById(resId, mealId) {
+                console.log('bothIDs'+resId+mealId);
+            fetchRestaurantMealsById(resId, mealId).then(response => {
+                this.$root.$emit('popularFood',response.Meals);
+                this.$root.$emit('isCustomMeal', true);
+            })
+        }
     }
 
 }

@@ -31,12 +31,14 @@ import Dishes from "./dishes.vue";
 import Venue from "./venue.vue";
 import {EventBus} from "../../main";
 import {fetchRestaurantById} from "../api/FilterRestaurants";
+import {fetchRestaurantMealsById} from "../api/CustomMeal";
 
 export default {
     data() {
       return {
           resId: null,
-          loader: false
+          loader: false,
+          mealID: null,
       }
     },
     components:{
@@ -56,15 +58,21 @@ export default {
     },
     mounted() {
       this.changeHeader();
-      // EventBus.$on('resId', response => {
-      //     this.resId = response;
-      //     console.log('id'+response+this.resId);
-      //     this.fetchRestaurantData(this.resId);
-      // })
+      EventBus.$on('resId', response => {
+          this.resId = response;
+          console.log('id'+response+this.resId);
+          this.fetchRestaurantData(this.resId);
+      })
 
         this.resId = this.$route.params.id;
         console.log('queryData'+this.resId);
         this.fetchRestaurantData(this.resId);
+        this.mealID = this.$route.query.mealID;
+        console.log('mealIDQuery',this.mealID)
+        if(this.mealID) {
+            this.resId = this.$route.params.id;
+            this.fetchRestaurantMealById(this.resId, this.mealID);
+        }
     },
     destroyed() {
         this.unChangeHeader();
@@ -81,8 +89,16 @@ export default {
                     this.$root.$emit('mealMenu', response.MealMenu);
                     this.$root.$emit('popularFood', response.Popular);
                     this.$root.$emit('restaurant', response.Restaurant);
+                    this.$root.$emit('restaurantImages', response.RestaurantImagesURL);
+                    this.$root.$emit('isCustomMeal', false);
 
                 })
+        },
+        async fetchRestaurantMealById(resId, mealId) {
+                // fetchRestaurantMealsById(resId, mealId).then(response => {
+                //     this.$root.$emit('mealMenuById',response.Meals);
+                //     this.$root.$emit('isCustomMeal', true);
+                // })
         }
     },
     

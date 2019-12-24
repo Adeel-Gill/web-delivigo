@@ -37,14 +37,14 @@
                 </div>
             </div>
         </div>
-        <div class="dishes"  v-for="select in selected" :select="select" :key="select" @click="displayDish(select.Id)">
+        <div class="dishes"  v-for="select in selected" :select="select" :key="select.Id" @click="displayDish(select.Id)">
             <div class="dish-selection" >
                 <div class="dish-image">
                     <img :src="baseUrl+select.ImageUrl" alt="">
                 </div>
                 <div class="about-dish">
                     <div class="descp-about" >
-                        <p>{{select.Description}}</p>
+                        <p>{{select.Name}}</p>
                         <div class="price-dish">
                             <p>{{select.Price}}</p>
                         </div>
@@ -73,6 +73,7 @@ export default {
             baseLink: baseAddress,
             baseUrl: '',
             selected: [], // Must be an array reference!
+            isCustomMeal: null
         }
     },
     methods: {
@@ -97,6 +98,18 @@ export default {
         hideDish() {
             console.log('here');
             document.getElementById("display-dish").style.display = "none";
+        },
+        addDishes() {
+            this.$root.$on('mealMenuById', response => {
+                console.log('ObjectReceived'+response);
+                console.log('BeforeClearSelectedObject',this.selected);
+                if(response){
+                    this.selected = [];
+                    console.log('AfterClearSelectedObject',this.selected);
+                    this.selected = response;
+                    console.log('ObjectReceived&Selected'+this.selected);
+                }
+            })
         }
     },
     mounted() {
@@ -104,6 +117,24 @@ export default {
             this.selected = response;
             this.baseUrl = baseAddress;
             console.log('dishes',this.selected);
+        })
+        this.$root.$on('isCustomMeal', response => {
+            this.isCustomMeal = response;
+            console.log('isCustomMeal'+response);
+            if(this.isCustomMeal) {
+                console.log('isGotTrue');
+                this.addDishes();
+            }
+        })
+    },
+    updated() {
+        this.$root.$on('isCustomMeal', response => {
+            this.isCustomMeal = response;
+            console.log('isUCustomMeal'+response);
+            if(this.isCustomMeal) {
+                console.log('isUGotTrue');
+                this.addDishes();
+            }
         })
     }
 }
