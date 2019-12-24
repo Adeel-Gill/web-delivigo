@@ -6,23 +6,23 @@
                     <img :src="baseUrl + restaurant.ImageUrl" />
                     <div class="restaurants-details">
                         <div class="row">
-                            <div class="col-md-8 padding-top-botom">
-                                <h6>{{restaurant.Name}}</h6>
+                            <div class="col-8 padding-top-botom">
+                                <h6 style="display: block;" class="text-truncate">{{restaurant.Name}}</h6>
                             </div>
-                            <div class="col-md-4 padding-top-botom">
-                                <p class="padding-top"><i class="fas fa-star"></i> {{restaurant.Rating}}</p>
+                            <div class="col-4 padding-top-botom">
+                                <p class="padding-top font-size-9"><i class="fas fa-star"></i> {{restaurant.Rating}}</p>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-5 padding-top-botom">
-                                <p class="font-light">{{restaurant.FullAddress}}</p>
+                            <div class="col-5 padding-top-botom">
+                                <p style="display: block;" class="font-light text-truncate">{{restaurant.FullAddress}}</p>
                             </div>
-                            <div class="col-md-3 padding-top-botom">
+                            <div class="col-3 padding-top-botom">
                                 <i class="fas fa-euro-sign"></i>
                                 <i class="fas fa-euro-sign"></i>
                                 <i class="fas fa-euro-sign"></i>
                             </div>
-                            <div class="col-md-4 padding-top-botom">
+                            <div class="col-4 padding-top-botom">
                                 <p class="font-size-9"><i class="far fa-clock"></i> {{restaurant.Time}}</p>
                             </div>
                         </div>
@@ -58,7 +58,12 @@ export default {
 }
 .restaurants-list img{
     width: 100%;
+    height: 260px;
     border-radius: 7px;
+}
+.restaurants-details{
+    padding: 5px 0 3px 0;
+    /*height: 90px;*/
 }
 .restaurant{
     background: #d9d9d9;
@@ -81,8 +86,9 @@ export default {
 .font-light{
     font-weight: 300;
     color: #424242;
-    font-weight: lighter;
-    padding: 4px 10px; 
+    /*font-weight: lighter;*/
+    padding: 4px 10px;
+    font-size: 12px !important;
 }
 .padding-top{
     padding-top: 8px;
@@ -95,13 +101,14 @@ i.fas.fa-euro-sign{
     color: #505050;
 }
 .font-size-9{
-    font-size: 9px !important;
+    font-size: 12px !important;
 }
 i.fas.fa-star{
+    font-size: 14px !important;
     color: #8ba939;
 }
 i.far.fa-clock {
-    font-size: 13px !important;
+    font-size: 14px !important;
     color: #8ba939;
 }
 </style>

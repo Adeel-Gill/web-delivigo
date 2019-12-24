@@ -1,14 +1,21 @@
 <template>
     <div class="downloads">
         <div class="container">
-            <div class="download">
-                <div class="app-download">
-                    <h3>{{download.appHeading}}</h3>
-                    <p>{{download.appDescription}}</p>
-                    <a href="#" class="margin-right-10px"><img :src="download.iphone" /></a>
-                    <a href="#"><img :src="download.android" /></a>
-                    <div class="phone-image">
-                        <img :src="phoneimg" />
+            <div class="app-download mx-auto">
+                <div class="row mt-5">
+                    <div class="col-md-8 col-12 ar-head-text">
+                        <h3>{{download.appHeading}}</h3>
+                        <p>{{download.appDescription}}</p>
+
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="phone-image">
+                            <img :src="phoneimg" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 store-image">
+                        <a href="#" class="margin-right-10px"><img :src="download.iphone" /></a>
+                        <a href="#"><img :src="download.android" /></a>
                     </div>
                 </div>
             </div>
@@ -42,9 +49,20 @@ export default {
     align-items: center;
 }
 .phone-image {
-    position: absolute;
-    top: -7px;
-    right: 0;
+    height: 500px;
+    width: 80%;
+    display: block;
+    margin: auto;
+}
+.phone-image img {
+    width: 100%;
+    height: 100%; 
+}
+.store-image{
+    text-align: center;
+}
+.app-download{
+    position: relative;
 }
 .app-download h3 {
     font-family: "Roboto";
@@ -59,7 +77,7 @@ export default {
     font-size: 18px;
     max-width: 327px;
     font-weight: normal;
-    margin: 13px 0 72px 0;
+    /*margin: 13px 0 72px 0;*/
 }
 .app-download a {
     display: inline-block;
@@ -67,5 +85,14 @@ export default {
 .margin-right-10px{
     margin-right: 10px;
 }
-
+@media screen and (min-width: 950px){
+    .ar-head-text{
+        display: inline;
+    }
+    .store-image{
+        display: inline;
+        position: relative;
+        top:-380px;
+    }
+}
 </style>

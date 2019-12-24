@@ -6,11 +6,13 @@
             <router-link to="/foodCategories">Show More</router-link>
         </div>
         <div class="clear"></div>
+        <div class="row">
             <app-categories v-for="catagory in foodCategories.slice(0,10)"
                             v-bind:key="catagory.Id"
                             :foodCategories="catagory"></app-categories>
-            </div>
+        </div>
     </div>
+</div>
 </template>
 <script>
 
@@ -47,10 +49,6 @@
     }
 .catagories{
     margin-bottom: 50px;
-}
-.catagory{
-    display: inline-block;
-    margin: 25px 21px;
 }
 .catagory a {
     text-decoration: none;

@@ -224,3 +224,40 @@ a.nav-link{
        
         
     }
+/* change by arslan */
+@media screen and (max-width: 576px) {
+    #carousel-1 .carousel-caption{
+        top: 6%;
+    }
+    .caption-change h1{
+        font-size: 22px !important;
+    }
+    .caption-change p{
+        font-size: 16px !important;
+        margin-bottom: 10px !important;
+        line-height: 16px !important;
+    }
+    .form-control{
+        font-size:18px !important;
+        width: 287px !important;
+        height: 40px !important;
+    }
+    .carousel-caption{
+        right: 10% !important;
+        left: 10% !important;
+    }
+    button.btn{
+        font-size: 22px !important;
+        line-height: 25px !important;
+        padding: 6px 21px !important;
+        margin: 10px 0 0 0 !important;
+
+    }
+    .catagory{
+        margin: auto !important;
+    }
+    .food{
+        margin: 0 0 !important;
+    }
+
+}
