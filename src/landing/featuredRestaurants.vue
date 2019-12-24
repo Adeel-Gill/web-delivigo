@@ -41,7 +41,7 @@ export default {
     margin: 50px 0;
 }
 .show-more{
-    float: right;
+    text-align: right;
 }
 .show-more a {
     color: #0030b4;

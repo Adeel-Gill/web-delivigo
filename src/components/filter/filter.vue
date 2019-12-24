@@ -101,9 +101,9 @@ export default {
         font-weight: bold;
         font-size: 17px;
     }
-.container{
-    max-width: 1045px;
-}
+/*.container{*/
+/*    max-width: 1045px;*/
+/*}*/
 .featured-restaurants h2{
     text-align: center;
     margin: 50px 0;
