@@ -27,9 +27,12 @@
                     </div>
                     <div class="col-lg-4 col-md-4">
                         <div class="delivery">
-                            <p>
+                            <p v-if="freeDelivery === true">
                                 <i class="fas fa-euro-sign"></i>
                                 {{delivery}}
+                            </p><p v-else>
+                                <i class="fas fa-euro-sign"></i>
+                                No Free Delivery!
                             </p>
                         </div>
                     </div>
@@ -37,7 +40,7 @@
                         <div class="mints">
                             <p>
                                 <i class="far fa-clock"></i>
-                                {{restaurant.DeliveryTime}}
+                                {{restaurant.DeliveryTime}} Mins
                             </p>
                         </div>
                     </div>
@@ -58,12 +61,14 @@ export default {
             rating:'4.8',
             ratingLight:'(127)',
             delivery:'Free delivery',
-            timeing:'35-45 Mins'
+            timeing:'35-45 Mins',
+            freeDelivery: false
         }
     },
     mounted() {
         this.$root.$on('restaurant', response => {
             this.restaurant = response;
+            this.freeDelivery = this.restaurant.IsDeliveryFree;
         })
     }
 }
