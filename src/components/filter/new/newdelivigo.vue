@@ -21,7 +21,7 @@
                         <i class="fas fa-euro-sign"></i>
                         <i class="fas fa-euro-sign"></i>
                     </div>
-                    <div class="col-md-4 padding-top-botom">
+                    <div class="col-4 padding-top-botom">
                         <p class="font-size-9"><i class="far fa-clock"></i> {{newRestaurant.Time}}</p>
                     </div>
                 </div>
