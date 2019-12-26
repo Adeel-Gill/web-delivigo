@@ -9,11 +9,13 @@ import allFeaturedRestaurants from "./components/All Restaurants/FeaturedRestaur
 import allNewRestaurants from "./components/All Restaurants/NewRestaurants";
 import allFoodCategories from "./components/All Restaurants/FoodCategories";
 import SelectedFoodRestaurants from "./components/All Restaurants/SelectedFoodRestaurants";
+import Profile from "./components/User/Profile";
 export const routes = [
     { path: '/', component: Home },
     { path: '/login', component: Login },
     { path: '/register', component: Register },
     { path: '/filter', component: Filter },
+    { path: '/profile', component: Profile},
     { path: '/restaurant/:id', component: Selected },
     {path: '/populars', component: allPopularRestaurants},
     {path: '/featured', component: allFeaturedRestaurants},

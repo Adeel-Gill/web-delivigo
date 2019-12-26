@@ -21,7 +21,7 @@ service.interceptors.request.use(config => {
   return config
 }, error => {
   // Do something with request error
-  EventBus.$emit('StopOverlay', false);
+  EventBus.$emit('StartOverlay', false);
   console.log(error) // for debug
   Promise.reject(error)
 })
@@ -63,7 +63,7 @@ service.interceptors.response.use(
   response => {
     console.log('response'+response)
     const res = response
-    EventBus.$emit('StopOverlay', false);
+    EventBus.$emit('StartOverlay', false);
     // if the custom code is not 200, it is judged as an error.
     if (res.status != 200) {
       // Message({

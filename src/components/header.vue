@@ -20,6 +20,11 @@
               <b-dropdown-item href="#">RU</b-dropdown-item>
               <b-dropdown-item href="#">FA</b-dropdown-item>
             </b-nav-item-dropdown>
+            <b-nav-item to="/profile">
+                  <div class="col-xs-1">
+                    <img src="//placehold.it/50" class="rounded-circle" />
+                  </div>
+            </b-nav-item>
             <b-nav-item to="/login" activClass="active" class="singin">Sign In</b-nav-item>
             <b-nav-item to="/register" activClass="active" class="register">Register</b-nav-item>
           </b-navbar-nav>

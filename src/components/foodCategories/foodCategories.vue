@@ -1,5 +1,5 @@
 <template>
-    <div class=" catagory col-7 col-sm-3 col-md-2" @click = "emitName()">
+    <div class="catagory col-7 col-sm-3 col-md-2" @click = "emitName()">
         <router-link to="/foodFilter" >
             <div  class="card-image">
                 <img :src="baseUrl + foodCategories.ImageUrl"/>
@@ -61,6 +61,7 @@
     }
     .bg-green{
         background-color: #8ba939;
+
     }
     .bg-red{
         background-color: #df6767;

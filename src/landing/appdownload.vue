@@ -1,22 +1,21 @@
 <template>
     <div class="downloads">
         <div class="container">
-                <div class="app-download mx-auto">
-                    <div class="row mt-5">
-                        <div class="col-md-8 col-12 ar-head-text">
-                            <h3>{{download.appHeading}}</h3>
-                            <p>{{download.appDescription}}</p>
+            <div class="app-download mx-auto">
+                <div class="row mt-5">
+                    <div class="col-md-8 col-12 ar-head-text">
+                        <h3>{{download.appHeading}}</h3>
+                        <p>{{download.appDescription}}</p>
 
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="phone-image">
+                            <img :src="phoneimg" />
                         </div>
-                        <div class="col-md-4 col-12">
-                            <div class="phone-image">
-                                <img :src="phoneimg" />
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4 store-image">
-                            <a href="#" class="margin-right-10px"><img :src="download.iphone" /></a>
-                            <a href="#"><img :src="download.android" /></a>
-                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 store-image">
+                        <a href="#" class="margin-right-10px"><img :src="download.iphone" /></a>
+                        <a href="#"><img :src="download.android" /></a>
                     </div>
                 </div>
         </div>
@@ -53,6 +52,16 @@ export default {
     width: 100%;
     height: 100%;
 }
+.phone-image {
+    height: 500px;
+    width: 80%;
+    display: block;
+    margin: auto;
+}
+.phone-image img {
+    width: 100%;
+    height: 100%;
+}
 .store-image{
     text-align: center;
 }
@@ -81,13 +90,13 @@ export default {
     margin-right: 10px;
 }
 @media screen and (min-width: 950px){
- .ar-head-text{
-     display: inline;
- }
- .store-image{
-     display: inline;
-     position: relative;
-     top:-380px;
- }
+    .ar-head-text{
+        display: inline;
+    }
+    .store-image{
+        display: inline;
+        position: relative;
+        top:-380px;
+    }
 }
 </style>

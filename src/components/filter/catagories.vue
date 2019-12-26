@@ -11,8 +11,8 @@
                             v-bind:key="catagory.Id"
                             :foodCategories="catagory"></app-categories>
         </div>
-            </div>
     </div>
+</div>
 </template>
 <script>
 
@@ -50,10 +50,6 @@
 .catagories{
     margin-bottom: 50px;
 }
-/*.catagory{*/
-/*    display: inline-block;*/
-/*    margin: 25px 21px;*/
-/*}*/
 .catagory a {
     text-decoration: none;
     display: inline-block;

@@ -61,6 +61,10 @@ export default {
     height: 260px;
     border-radius: 7px;
 }
+.restaurants-details{
+    padding: 5px 0 3px 0;
+    /*height: 90px;*/
+}
 .restaurant{
     background: #d9d9d9;
     border-radius: 8px;

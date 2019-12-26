@@ -1,6 +1,6 @@
 <template>
     <div class="restaurnt-dishes">
-        <div class="show-dish-details" id="display-dish">
+        <div class="show-dish-details" id="display-dish" >
             <div class="dish-detail-image">
                 <img :src="baseLink+dishDetail.ImageUrl" alt="">
             </div>
@@ -33,18 +33,18 @@
                     <button @click="increment()">&#xff0b;</button>
                 </div>
                 <div class="add-item-btn">
-                    <a href="#">Add item -  € 0.00</a>
+                    <a href="#">Add item -  € {{dishDetail.Price}}.00</a>
                 </div>
             </div>
         </div>
-        <div class="dishes" v-for="select in selected" :select="select" :key="select.Id" @click="displayDish(select.Id)">
+        <div class="dishes"  v-for="select in selected" :select="select" :key="select.Id" @click="displayDish(select.Id)">
             <div class="dish-selection" >
                 <div class="dish-image">
                     <img :src="baseUrl+select.ImageUrl" alt="">
                 </div>
                 <div class="about-dish">
                     <div class="descp-about" >
-                        <p>{{select.Description}}</p>
+                        <p>{{select.Name}}</p>
                         <div class="price-dish">
                             <p>{{select.Price}}</p>
                         </div>
@@ -64,7 +64,6 @@ import {baseAddress} from "../../main";
 import {fetchMealById} from "../api/CustomMeal";
 
 export default {
-    props:['select'],
     data(){
         return{
             quantity: 1,
@@ -74,6 +73,7 @@ export default {
             baseLink: baseAddress,
             baseUrl: '',
             selected: [], // Must be an array reference!
+            isCustomMeal: null
         }
     },
     methods: {
@@ -94,6 +94,22 @@ export default {
                 this.customOptions = response.CustomOptions;
             })
             document.getElementById("display-dish").style.display = "block";
+        },
+        hideDish() {
+            console.log('here');
+            document.getElementById("display-dish").style.display = "none";
+        },
+        addDishes() {
+            this.$root.$on('mealMenuById', response => {
+                console.log('ObjectReceived'+response);
+                console.log('BeforeClearSelectedObject',this.selected);
+                if(response){
+                    this.selected = [];
+                    console.log('AfterClearSelectedObject',this.selected);
+                    this.selected = response;
+                    console.log('ObjectReceived&Selected'+this.selected);
+                }
+            })
         }
     },
     mounted() {
@@ -101,6 +117,24 @@ export default {
             this.selected = response;
             this.baseUrl = baseAddress;
             console.log('dishes',this.selected);
+        })
+        this.$root.$on('isCustomMeal', response => {
+            this.isCustomMeal = response;
+            console.log('isCustomMeal'+response);
+            if(this.isCustomMeal) {
+                console.log('isGotTrue');
+                this.addDishes();
+            }
+        })
+    },
+    updated() {
+        this.$root.$on('isCustomMeal', response => {
+            this.isCustomMeal = response;
+            console.log('isUCustomMeal'+response);
+            if(this.isCustomMeal) {
+                console.log('isUGotTrue');
+                this.addDishes();
+            }
         })
     }
 }

@@ -7,7 +7,7 @@
                     <p>{{restaurant.FullAddress}}</p>
                 </div>
                 <div class="reviews">
-                    <a href="#">{{restaurant.ReviewCount}}</a>
+                    <a href="#">All Reviews</a>
                 </div>
                 <div class="clear"></div>
             </div>
@@ -29,7 +29,7 @@
                         <div class="delivery">
                             <p>
                                 <i class="fas fa-euro-sign"></i>
-                                {{restaurant.DeliveryTime}}
+                                {{delivery}}
                             </p>
                         </div>
                     </div>
