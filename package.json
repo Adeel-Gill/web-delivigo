@@ -12,6 +12,8 @@
     "bootstrap-vue": "^2.0.4",
     "core-js": "^2.6.5",
     "eslint-plugin-vue": "^5.2.3",
+    "mapbox-gl": "^1.6.1",
+    "v-show-slide": "^1.8.3",
     "vue": "^2.6.10",
     "vue-click-outside": "^1.0.7",
     "vue-clickaway": "^2.2.2",

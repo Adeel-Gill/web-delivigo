@@ -1,54 +1,35 @@
 <template>
-    <div class="row">
-    <div class="col-md-3 nav-color">
-        <nav class="navbar">
-            <!-- Links -->
-            <ul class="navbar-nav  m-top nav-pills mx-auto">
-                <li class="nav-item active">
-                    <a class="nav-link"  href="#">My Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile/delivery">Delivery Address</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Diamond Reward</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Support</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-        <div class="col-md-7 pl-5 m-top">
-            <h1 class="profile-heading">My Profile</h1>
-            <div class="row">
+    <div class="pl-5 m-top">
+        <h1 class="profile-heading">My Profile</h1>
+        <div class="row">
             <div class="col-md-8">
-                    <form action="" class="myProfile">
-                        <div class="form-group">
-                            <label for="fullname">Full Name</label>
-                            <input type="text" class="form-control" value="john Doe" id="fullname">
-                        </div>
-                        <div class="form-group">
-                            <label for="number">Mobile Number</label>
-                            <input type="text" class="form-control" value="99199929922" id="number">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" value="abc@mail.com" id="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="npwd">New Password</label>
-                            <input type="password" class="form-control" value="12345654" id="npwd">
-                        </div>
-                        <div class="form-group">
-                            <label for="cpwd">Confirm Password</label>
-                            <input type="password" class="form-control" value="12345654" id="cpwd">
-                        </div>
-                        <div class="button">
+                <!--                    <app-profile></app-profile>-->
+                <form action="" class="myProfile">
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" class="form-control" value="john Doe" id="fullname">
+                    </div>
+                    <div class="form-group">
+                        <label for="number">Mobile Number</label>
+                        <input type="text" class="form-control" value="99199929922" id="number">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" value="abc@mail.com" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="npwd">New Password</label>
+                        <input type="password" class="form-control" value="12345654" id="npwd">
+                    </div>
+                    <div class="form-group">
+                        <label for="cpwd">Confirm Password</label>
+                        <input type="password" class="form-control" value="12345654" id="cpwd">
+                    </div>
+                    <div class="button">
                         <button type="submit" class="btn btn-submit">Save</button>
                         <button type="submit" class="btn btn-cancel">Cancel</button>
-                        </div>
-                    </form>
+                    </div>
+                </form>
             </div>
             <div class="col-md-4 pl-5">
                 <h4>Picture</h4>
@@ -56,35 +37,9 @@
                     <img src="../../../public/images/user-pic.png" class="rounded-circle" alt="userpic"/>
                 </div>
             </div>
-            </div>
         </div>
-        <!-- saved address page-->
-        <div class="col-md-7 pl-5 m-top">
-            <h1 class="profile-heading">Saved Address</h1>
-            <div class="col-md-8">
-                <form action="" class="myProfile">
-                    <div class="form-group">
-                        <label for="home">Full Name</label>
-                        <div class="input-group">
-                        <input type="text" class="form-control" value="john Doe" id="home">
-                        <div class="input-group-append">
-                            <i class="fa fa-pencil-alt"></i>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="office">Full Name</label>
-                        <input type="text" class="form-control" value="john Doe" id="office">
-                    </div>
-                    <div class="form-group">
-                        <label for="home2">Full Name</label>
-                        <input type="text" class="form-control" value="john Doe" id="home2">
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!-- End-->
     </div>
+
 </template>
 
 <script>
@@ -109,8 +64,8 @@
         margin-top: 100px;
     }
     .nav-color{
-    background-color: #f2f2f2;
-}
+        background-color: #f2f2f2;
+    }
     .nav-item a{
         color: #000000;
         font-size: 20px;
@@ -148,7 +103,7 @@
         border: 0;
         border-bottom: 1px solid #e6e6e6;
         border-radius: 0;
-       font-size: 18px;
+        font-size: 18px;
     }
     .myProfile input:focus{
         border-bottom: 1px solid #5860ff;

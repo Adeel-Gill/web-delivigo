@@ -6,12 +6,15 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import vuetify from '@/plugins/vuetify' // path to vuetify export
+import VShowSlide from 'v-show-slide'
+
 
 new Vue({
   vuetify,
 })
 export const baseAddress = 'https://www.foodizza.com/';
 export const EventBus = new Vue();
+Vue.use(VShowSlide)
 Vue.use(BootstrapVue);
 Vue.prototype.$eventBus = new Vue() // add this line of code
 

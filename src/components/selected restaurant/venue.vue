@@ -5,7 +5,10 @@
             <div class="address-info">
                 <h3>{{venue.addressHeading}}</h3>
                 <p>{{restaurant.FullAddress}}
-                    <span>{{venue.seeMap}}</span>
+                    <span @click="navigateTo(restaurant.Longitude, restaurant.Latitude)">
+<!--                        <app-map to="/map"></app-map>-->
+                        <router-link :to="{path: '/map', query: {long: restaurant.Longitude, lat: restaurant.Latitude}}">{{venue.seeMap}}</router-link>
+                    </span>
                 </p>
             </div>
             <div class="opening-info">
@@ -15,18 +18,19 @@
                         <b-tab title="Restaurant" active>
                             <div class="open-days-time">
                                 <div class="open-days">
-                                    <h6>{{venue.openDay}}</h6>
+                                    <h6>{{restaurant.StartDay}} - {{restaurant.EndDay}}</h6>
                                 </div>
                                 <div class="open-time">
-                                    <p>{{venue.openTime}}</p>
+                                    <p>{{restaurant.ServiceStartTime}} - {{restaurant.ServiceEndTime}}</p>
                                 </div>
                                 <div class="clear"></div>
                                 <div class="about-your-health">
-                                    <p>{{venue.requests}}</p>
+                                    <p v-if="showAll">{{restaurant.Description}}</p>
+                                    <p v-else>{{restaurant.Description | truncate}}</p>
                                 </div>
                                 <div class="contant-num">
                                     <p>{{restaurant.PhoneNumber}}</p>
-                                    <a href="#">{{venue.moreInfo}}</a>
+                                    <button class="link" @click="changeShowAll">{{venue.moreInfo}}</button>
                                 </div>
                             </div>
                         </b-tab>
@@ -34,7 +38,7 @@
                             <div class="delivery-time">
                                 <p>
                                     <span class="float-left">{{venue.delivery}}</span>
-                                    <span class="float-right">{{restaurant.DeliveryTime}}</span>
+                                    <span class="float-right">{{restaurant.DeliveryTime}} Mins</span>
                                 </p>
                             </div>
                         </b-tab>
@@ -45,7 +49,11 @@
     </div>
 </template>
 <script>
+    import Map from '../Map/Map'
 export default {
+        components: {
+          appMap: Map
+        },
     data(){
         return{
             restaurant: {},
@@ -61,14 +69,33 @@ export default {
                 moreInfo:'See more information',
                 seeMap:' See Map',
                 delivery:'Free delivery',
-                timeing:'35-45 Mins'
-            }
+                timeing:'35-45 Mins',
+            },
+            showAll: false
         }
     },
     mounted() {
         this.$root.$on('restaurant', response => {
             this.restaurant = response;
         })
+    },
+    methods: {
+            navigateTo(long, lat) {
+                this.$router.push({path:'/map/',query:{long:long, lat: lat}});
+            },
+        changeShowAll() {
+                this.showAll = !this.showAll;
+        }
+    },
+    filters: {
+            truncate(val) {
+                let length = 100;
+                if(val.length <= length) {
+                    return val
+                } else {
+                    return val.substring(0, length)+ '...';
+                }
+            }
     }
 }
 </script>
@@ -148,5 +175,18 @@ export default {
 .delivery-time span {
     display: block;
     margin-top: 15px;
+}
+button.link {
+    background:none;
+    border:none;
+    font-size: 18px;
+    color: #1c0095;
+    font-family: "Roboto";
+    margin: 5px 0 30px 0;}
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 2.5s ease-out;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
 }
 </style>
