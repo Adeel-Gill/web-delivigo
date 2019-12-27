@@ -9,6 +9,7 @@ import allFeaturedRestaurants from "./components/All Restaurants/FeaturedRestaur
 import allNewRestaurants from "./components/All Restaurants/NewRestaurants";
 import allFoodCategories from "./components/All Restaurants/FoodCategories";
 import SelectedFoodRestaurants from "./components/All Restaurants/SelectedFoodRestaurants";
+import DeliveryAddress from "./components/User/DeliveryAddress";
 import Profile from "./components/User/Profile";
 export const routes = [
     { path: '/', component: Home },
@@ -16,6 +17,7 @@ export const routes = [
     { path: '/register', component: Register },
     { path: '/filter', component: Filter },
     { path: '/profile', component: Profile},
+    { path: '/profile/delivery', component: DeliveryAddress},
     { path: '/restaurant/:id', component: Selected },
     {path: '/populars', component: allPopularRestaurants},
     {path: '/featured', component: allFeaturedRestaurants},

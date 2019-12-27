@@ -18,6 +18,7 @@
                         <a href="#"><img :src="download.android" /></a>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 </template>
