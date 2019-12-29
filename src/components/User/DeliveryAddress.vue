@@ -1,27 +1,71 @@
 @@ -0,0 +1,15 @@
 <template>
-    <div class="pl-5 m-top">
-        <h1 class="profile-heading">Saved Address</h1>
+    <div class="pl-5 m-top m-bottom">
+        <div class="row">
         <div class="col-md-8">
-            <form action="" class="myProfile">
+        <h1 class="profile-heading">Saved Address</h1>
+        </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Address</button>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="address-block">
+                <h6 class="address-heading">Home</h6>
+                <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
+            </div>
+
+            <div class="address-block">
+                <h6 class="address-heading">Home</h6>
+                <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
+            </div>
+            <div class="address-block">
+                <h6 class="address-heading">Home</h6>
+                <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
+            </div>
+            <div class="address-block">
+                <h6 class="address-heading">Home</h6>
+                <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
+            </div>
+
+            <!--<form action="" class="myProfile">
                 <div class="form-group">
-                    <label for="home">Full Name</label>
+                    <label for="home">Home</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" value="john Doe" id="home">
+                        <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home">
                         <div class="input-group-append">
                             <i class="fa fa-pencil-alt"></i>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="office">Full Name</label>
-                    <input type="text" class="form-control" value="john Doe" id="office">
+                    <label for="office">Office</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="office">
+                        <div class="input-group-append">
+                            <i class="fa fa-pencil-alt"></i>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="home2">Full Name</label>
-                    <input type="text" class="form-control" value="john Doe" id="home2">
+                    <label for="home2">Home2</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home2">
+                        <div class="input-group-append">
+                            <i class="fa fa-pencil-alt"></i>
+                        </div>
+                    </div>
                 </div>
-            </form>
+                <div class="form-group">
+                    <label for="home3">Home3</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home3">
+                        <div class="input-group-append">
+                            <i class="fa fa-pencil-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </form>-->
         </div>
     </div>
 </template>
@@ -33,5 +77,67 @@
 </script>
 
 <style scoped>
+    @font-face {
+        font-family: pantonb;
+        src:url("../../assets/fonts/Panton-Bold.ttf");
+    }
+    .row{
+        font-family:pantonb ;
+    }
+    .m-top{
+        margin-top: 100px;
+    }
+    .m-bottom{
+        margin-bottom: 100px;
+    }
+    .col-md-4{
+        padding: 0;
+    }
+    .profile-heading{
+        color: #5860ff;
+        font-size: 38px;
+        margin-bottom: 50px;
+    }
+    .address-block{
+        border-bottom: 1px solid #e6e6e6;
+        margin-bottom: 30px;
+    }
+    .address-block h6{
+        font-size: 21px;
+        margin-top: 20px;
+    }
+    .address-block p{
+        font-size: 18px;
+        padding-left: 5px;
+    }
+    /*.input-group-append{*/
+    /*    !*color: #1c0095;*!*/
+    /*    margin-right: 30px;*/
+    /*}*/
+    .button .btn-submit{
+        margin-right: 50px;
+        background-color: #5860ff;
+        color: white;
 
+    }
+    .button .btn-cancel{
+        border: 2px solid #5860ff;
+        color: #5860ff;
+    }
+    .button{
+        margin-top: 50px;
+        margin-bottom: 100px;
+    }
+    .button button{
+        border-radius: 30px;
+        width: 150px;
+    }
+    .btn-submit{
+        background-color: #5860ff;
+        color: white;
+        border-radius: 30px;
+        /*width: 150px;*/
+        padding-right: 25px;
+        padding-left: 25px;
+    }
 </style>

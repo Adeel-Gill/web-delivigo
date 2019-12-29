@@ -47,17 +47,12 @@
         font-family: pantonb;
         src:url("../../assets/fonts/Panton-Bold.ttf");
     }
-    .row{
-        font-family:pantonb ;
-    }
+
     a.nav-link{
         font-family: pantonb;
     }
     .m-top{
         margin-top: 100px;
-    }
-    .nav-color{
-        background-color: #f2f2f2;
     }
     .nav-item a{
         color: #000000;
@@ -80,47 +75,5 @@
     .nav-item a:hover{
         /*border-right: 2px solid blue;*/
         color: #5860ff;
-    }
-    .profile-heading{
-        color: #5860ff;
-        font-size: 38px;
-        margin-bottom: 50px;
-    }
-    /*.myProfile{*/
-    /*    margin-top: 50px;*/
-    /*}*/
-    .form-group label{
-        font-size: 21px;
-    }
-    .myProfile input{
-        border: 0;
-        border-bottom: 1px solid #e6e6e6;
-        border-radius: 0;
-        font-size: 18px;
-    }
-    .myProfile input:focus{
-        border-bottom: 1px solid #5860ff;
-    }
-    .button .btn-submit{
-        margin-right: 50px;
-        background-color: #5860ff;
-        color: white;
-
-    }
-    .button .btn-cancel{
-        border: 2px solid #5860ff;
-        color: #5860ff;
-    }
-    .button{
-        margin-top: 50px;
-        margin-bottom: 100px;
-    }
-    .button button{
-        border-radius: 30px;
-        width: 150px;
-    }
-    .form-control:focus{
-        box-shadow: none;
-        -webkit-box-shadow: none;
     }
 </style>
