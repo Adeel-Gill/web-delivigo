@@ -34,37 +34,21 @@
     </b-navbar>
   </div>
 </template>
-<style scoped>
-.bg-info {
-  background-color: black !important;
-}
-.filter-header {
-    background-image: url(/images/topbar-bg.png);
-    border: none;
-    width: 100%;
-    height: 65px;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-.filter-header div#nav-collapse li.nav-item.singin a.nav-link {
-    border: 2px solid transparent
-}
-.profile-link a{
-  padding: 0;
-  margin-left:5px ;
-}
-a.nav-link{
-  color: #ffffff !important;
-}
-</style>
 
 <script>
+  import {isLogin} from '../main'
 export default {
     data() {
         return {
-            isFilter:false
-    }
+            isFilter:false,
+          user: {}
+        }
     },
+  mounted() {
+      if(!isLogin) {
+
+      }
+  },
     created() {
         this.isFilter = false;
         this.$eventBus.$on('checkComponent', (data) => {
@@ -80,3 +64,26 @@ export default {
     },
 }
 </script>
+<style scoped>
+  .bg-info {
+    background-color: black !important;
+  }
+  .filter-header {
+    background-image: url(/images/topbar-bg.png);
+    border: none;
+    width: 100%;
+    height: 65px;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .filter-header div#nav-collapse li.nav-item.singin a.nav-link {
+    border: 2px solid transparent
+  }
+  .profile-link a{
+    padding: 0;
+    margin-left:5px ;
+  }
+  a.nav-link{
+    color: #ffffff !important;
+  }
+</style>

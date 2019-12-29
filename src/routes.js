@@ -14,7 +14,8 @@ import DeliveryAddress from "./components/User/DeliveryAddress";
 import DiamondAward from "./components/User/DiamondAward";
 import Support from "./components/User/Support";
 import Profile from "./components/User/Profile";
-import Map from "./components/Map/Map"
+import Map from "./components/Map/Map";
+import BillingAndPayments from "./components/User/BillingAndPayments";
 export const routes = [
     { path: '/', component: Home },
     { path: '/login', component: Login },
@@ -24,9 +25,9 @@ export const routes = [
             {path: '/profile', component: Profile},
             { path: '/delivery', component: DeliveryAddress},
             { path: '/diamond', component: DiamondAward},
+            { path: '/billing', component: BillingAndPayments},
             { path: '/support', component: Support},
         ]},
-
     { path: '/map/', component: Map},
     { path: '/restaurant/:id', component: Selected },
     {path: '/populars', component: allPopularRestaurants},
