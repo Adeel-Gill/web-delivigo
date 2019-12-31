@@ -26,8 +26,8 @@
                 <!--                    <img src="//placehold.it/50" />-->
                   </div>
             </b-nav-item>
-            <b-nav-item to="/login" activClass="active" class="singin mt-2">Sign In</b-nav-item>
-            <b-nav-item to="/register" activClass="active" class="register mt-2">Register</b-nav-item>
+            <b-nav-item to="/signin" activClass="active" class="singin mt-2">Sign In</b-nav-item>
+            <b-nav-item to="/signup" activClass="active" class="register mt-2">Register</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </div>
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-  import {isLogin} from '../main'
 export default {
     data() {
         return {
@@ -45,9 +44,7 @@ export default {
         }
     },
   mounted() {
-      if(!isLogin) {
 
-      }
   },
     created() {
         this.isFilter = false;

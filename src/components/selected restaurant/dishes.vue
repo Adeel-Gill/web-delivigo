@@ -1,7 +1,8 @@
 <template>
     <div class="restaurnt-dishes">
         <div class="show-dish-details" id="display-dish" >
-            <div class="dish-detail-image">
+            <a  class="close" @click="hideDish"></a>
+            <div class="dish-detail-image" style="margin-top: 25px">
                 <img :src="baseLink+dishDetail.ImageUrl" alt="">
             </div>
             <div class="dish-detail-about">
@@ -311,4 +312,31 @@ export default {
     color: white;
     text-decoration: none;
 }
+/*    close button classes*/
+.close {
+    position: absolute;
+    right: 32px;
+    top: 32px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+}
+.close:hover {
+    opacity: 1;
+}
+.close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #000;
+}
+.close:before {
+    transform: rotate(45deg);
+}
+.close:after {
+    transform: rotate(-45deg);
+}
+
 </style>

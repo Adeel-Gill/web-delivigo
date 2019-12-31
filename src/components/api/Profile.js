@@ -6,3 +6,18 @@ export function fetchUserProfile() {
         method: 'get'
     })
 }
+export function checkCredentials(data) {
+    return service({
+        url: 'Customer',
+        method: 'post',
+        data
+    })
+}
+export function registerUser(data) {
+    console.log(data);
+    return service({
+        url: 'Customer',
+        method: 'post',
+        data
+    })
+}
