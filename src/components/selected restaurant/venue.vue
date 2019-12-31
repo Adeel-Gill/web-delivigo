@@ -5,9 +5,13 @@
             <div class="address-info">
                 <h3>{{venue.addressHeading}}</h3>
                 <p>{{restaurant.FullAddress}}
-                    <span @click="navigateTo(restaurant.Longitude, restaurant.Latitude)">
+                    <span >
 <!--                        <app-map to="/map"></app-map>-->
-                        <router-link :to="{path: '/map', query: {long: restaurant.Longitude, lat: restaurant.Latitude}}">{{venue.seeMap}}</router-link>
+                        <router-link :to="{path: '/map',
+                        query: {long: restaurant.Longitude,
+                        lat: restaurant.Latitude,resaddress: restaurant.FullAddress,
+                        name: restaurant.Name,
+                        }}">{{venue.seeMap}}</router-link>
                     </span>
                 </p>
             </div>
@@ -85,6 +89,9 @@ export default {
             },
         changeShowAll() {
                 this.showAll = !this.showAll;
+        },
+        emitRestaurant() {
+                this.$root.$emit('resDetail',this.restaurant);
         }
     },
     filters: {

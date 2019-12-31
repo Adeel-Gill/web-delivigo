@@ -26,45 +26,26 @@
 <!--                    <img src="//placehold.it/50" />-->
                   </div>
             </b-nav-item>
-            <b-nav-item to="/login" activClass="active" class="singin mt-2">Sign In</b-nav-item>
-            <b-nav-item to="/register" activClass="active" class="register mt-2">Register</b-nav-item>
+            <b-nav-item to="/signin" activClass="active" class="singin mt-2">Sign In</b-nav-item>
+            <b-nav-item to="/signup" activClass="active" class="register mt-2">Register</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </div>
     </b-navbar>
   </div>
 </template>
-<style scoped>
-.bg-info {
-  background-color: black !important;
-}
-.filter-header {
-    background-image: url(/images/topbar-bg.png);
-    border: none;
-    width: 100%;
-    height: 65px;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-.filter-header div#nav-collapse li.nav-item.singin a.nav-link {
-    border: 2px solid transparent
-}
-  .profile-link a{
-    padding: 0;
-    margin-left:5px ;
-  }
-a.nav-link{
- color: #ffffff !important;
-}
-</style>
 
 <script>
 export default {
     data() {
         return {
-            isFilter:false
-    }
+            isFilter:false,
+          user: {}
+        }
     },
+  mounted() {
+
+  },
     created() {
         this.isFilter = false;
         this.$eventBus.$on('checkComponent', (data) => {
@@ -80,3 +61,26 @@ export default {
     },
 }
 </script>
+<style scoped>
+  .bg-info {
+    background-color: black !important;
+  }
+  .filter-header {
+    background-image: url(/images/topbar-bg.png);
+    border: none;
+    width: 100%;
+    height: 65px;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .filter-header div#nav-collapse li.nav-item.singin a.nav-link {
+    border: 2px solid transparent
+  }
+  .profile-link a{
+    padding: 0;
+    margin-left:5px ;
+  }
+  a.nav-link{
+    color: #ffffff !important;
+  }
+</style>

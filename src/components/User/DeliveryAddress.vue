@@ -2,19 +2,15 @@
 <template>
     <div class="pl-5 m-top m-bottom">
         <div class="row">
+            <div class="col-md-8">
+            <h1 class="profile-heading">Saved Address</h1>
+            </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Address</button>
+                </div>
+        </div>
         <div class="col-md-8">
-        <h1 class="profile-heading">Saved Address</h1>
-        </div>
-            <div class="col-md-4">
-                <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Address</button>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="address-block">
-                <h6 class="address-heading">Home</h6>
-                <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
-            </div>
-
+<!--                <form action="" class="myProfile">-->
             <div class="address-block">
                 <h6 class="address-heading">Home</h6>
                 <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
@@ -27,46 +23,45 @@
                 <h6 class="address-heading">Home</h6>
                 <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
             </div>
-
-            <!--<form action="" class="myProfile">
-                <div class="form-group">
-                    <label for="home">Home</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home">
-                        <div class="input-group-append">
-                            <i class="fa fa-pencil-alt"></i>
+            <div class="address-block">
+                <h6 class="address-heading">Home</h6>
+                <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
+            </div>
+            <div class="form-group">
+<!--                        <label for="home">Full Name</label>-->
+                <label for="office">Office</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="office">
+<!--                            <input type="text" class="form-control" value="john Doe" id="home">-->
+                            <div class="input-group-append">
+                                <i class="fa fa-pencil-alt"></i>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="office">Office</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="office">
-                        <div class="input-group-append">
-                            <i class="fa fa-pencil-alt"></i>
+                    <div class="form-group">
+                        <label for="home2">Home2</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home2">
+                            <div class="input-group-append">
+                                <i class="fa fa-pencil-alt"></i>
+                            </div>
                         </div>
+<!--                        <label for="office">Full Name</label>-->
+<!--                        <input type="text" class="form-control" value="john Doe" id="office">-->
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="home2">Home2</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home2">
-                        <div class="input-group-append">
-                            <i class="fa fa-pencil-alt"></i>
+                    <div class="form-group">
+                        <label for="home3">Home3</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home3">
+                            <div class="input-group-append">
+                                <i class="fa fa-pencil-alt"></i>
+                            </div>
                         </div>
+<!--                        <label for="home2">Full Name</label>-->
+<!--                        <input type="text" class="form-control" value="john Doe" id="home2">-->
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="home3">Home3</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home3">
-                        <div class="input-group-append">
-                            <i class="fa fa-pencil-alt"></i>
-                        </div>
-                    </div>
-                </div>
-            </form>-->
-        </div>
+<!--                </form>-->
+            </div>
     </div>
 </template>
 

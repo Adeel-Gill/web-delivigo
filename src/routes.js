@@ -1,6 +1,4 @@
 import Home from './landing/index.vue';
-import Login from './components/login/login.vue';
-import Register from './components/register/register.vue';
 import Filter from './components/filter/filter.vue';
 import Selected from './components/selected restaurant/restaurant-select.vue'
 import allRestaurants from "./components/All Restaurants/Restaurants";
@@ -14,11 +12,21 @@ import DeliveryAddress from "./components/User/DeliveryAddress";
 import DiamondAward from "./components/User/DiamondAward";
 import Support from "./components/User/Support";
 import Profile from "./components/User/Profile";
-import Map from "./components/Map/Map"
+import Map from "./components/Map/Map";
+import BillingAndPayments from "./components/User/BillingAndPayments";
+import LoginAndRegister from "./components/LoginAndRegister/LoginAndRegister";
+import Login from "./components/LoginAndRegister/Login";
+import Register from "./components/LoginAndRegister/Register";
 export const routes = [
     { path: '/', component: Home },
-    { path: '/login', component: Login },
-    { path: '/register', component: Register },
+    {
+        path: '/loginandreg',
+        component: LoginAndRegister,
+        children: [
+            { path: '/signin', component: Login },
+            { path: '/signup', component: Register },
+        ]
+    },
     { path: '/filter', component: Filter },
     {
         path: '/user',
@@ -27,10 +35,10 @@ export const routes = [
             { path: '/profile', component: Profile },
             { path: '/delivery', component: DeliveryAddress },
             { path: '/diamond', component: DiamondAward },
+            { path: '/billing', component: BillingAndPayments },
             { path: '/support', component: Support },
         ]
     },
-
     { path: '/map/', component: Map },
     { path: '/restaurant/:id', component: Selected },
     { path: '/populars', component: allPopularRestaurants },
