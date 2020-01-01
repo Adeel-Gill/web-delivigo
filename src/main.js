@@ -19,9 +19,19 @@ Vue.use(BootstrapVue);
 Vue.prototype.$eventBus = new Vue(); // add this line of code
 Vue.prototype.$store = UserInfo;
 Vue.use(VueRouter);
+// Vue.forceUpdate();
 const router = new VueRouter({
   mode: 'history',
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if(savedPosition) {
+      return savedPosition;
+    }
+    if(to.hash) {
+      return {selector: to.hash};
+    }
+    return {x: 0, y: 0};
+  }
 });
 new Vue({
   render: h => h(App),

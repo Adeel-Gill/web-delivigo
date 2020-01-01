@@ -1,6 +1,7 @@
 .clear{
     clear: both;
 }
+
 .container {
     width: 90% !important;
 }
@@ -259,5 +260,7 @@ a.nav-link{
     .food{
         margin: 0 0 !important;
     }
-
+    html {
+        overflow-x: hidden;
+    }
 }

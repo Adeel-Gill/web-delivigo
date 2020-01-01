@@ -8,15 +8,16 @@ export const UserInfo = new Vuex.Store({
         isLogin: false,
         TOKEN: '',
         stripeKeys: [],
-        userData: null,
+        userData: {},
     },
     mutations: {
-        storeToken: (state, payload, user) => {
-            state.TOKEN = payload;
-            state.userData = user;
+        storeToken: (state, payload) => {
+            state.TOKEN = payload.AuthToken;
+            state.userData = payload;
             state.isLogin = true;
             localStorage.setItem('token', state.TOKEN);
             localStorage.setItem('isLogin', state.isLogin);
+            localStorage.setItem('id', payload.Id);
         },
         cleanToken: state => {
             state.TOKEN = null;

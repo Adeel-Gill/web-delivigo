@@ -68,7 +68,8 @@
                 }
             },
             async fetchUserProfile() {
-                fetchUserProfile().then(response => {
+                fetchUserProfile(localStorage.getItem('id')).then(response => {
+                    console.log('profile',response);
                     this.userData = response
                 })
             }

@@ -1,8 +1,8 @@
 import service from "../util/request";
 
-export function fetchUserProfile() {
+export function fetchUserProfile(id) {
     return service({
-        url: 'Profile?customerId=1',
+        url: 'Profile?customerId='+id,
         method: 'get'
     })
 }

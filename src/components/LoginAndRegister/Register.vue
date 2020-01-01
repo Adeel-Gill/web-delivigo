@@ -53,6 +53,8 @@
 
 <script>
     import {registerUser} from "../api/Profile";
+    import {baseAddress} from "../../main";
+    import {EventBus} from "../../main";
 
     export default {
         name: "Register",
@@ -78,10 +80,12 @@
             async registerUser() {
                 this.userData.firstName = this.userData.fullName.substr(0,this.userData.fullName.indexOf(' '));
                 this.userData.lastName = this.userData.fullName.substr(this.userData.fullName.indexOf(' ')+1);
+                console.log('reg',this.userData);
                 if(this.checkObject()) {
                     registerUser(this.userData).then(response => {
                         this.result = response.HasErrors;
                         this.message = response.ResultMessages[0].Message;
+                       EventBus.$emit('userImage',baseAddress+response.ImageUrl)
                         alert(this.message);
                     })
                 } else {

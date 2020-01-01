@@ -22,7 +22,7 @@
             </b-nav-item-dropdown>
             <b-nav-item to="/profile" v-if="isLogin" class="profile-link">
               <div>
-                <img src="../../public/images/user-pic.png" class="rounded-circle" height="50" width="50"/>
+                <img :src="image" alt="userPic" class="rounded-circle" height="50" width="50"/>
                 <!--                    <img src="//placehold.it/50" />-->
                   </div>
             </b-nav-item>
@@ -36,26 +36,54 @@
 </template>
 
 <script>
-export default {
+  import {EventBus} from "../main";
+
+  export default {
     data() {
         return {
             isFilter:false,
           isLogin: false,
-          user: {}
+          user: {},
+          image: ''
         }
     },
+  methods: {
+    checkIsLogin() {
+
+      if(this.$store.state.isLogin !== '' || !(localStorage.getItem('isLogin'))) {
+        console.log('state',this.$store.state.isLogin);
+        this.isLogin = localStorage.getItem('isLogin');
+      }
+      else {
+        this.isLogin = localStorage.getItem('isLogin')
+      }
+      // this.$forceUpdate();
+      EventBus.$on('userImage', responce => {
+        if(!responce) {
+          this.image = responce;
+        }
+      })
+    }
+  },
   mounted() {
-      console.log(localStorage.getItem('isLogin'));
-    this.isLogin=localStorage.getItem('isLogin');
+      console.log('m',localStorage.getItem('isLogin'),localStorage.getItem('token'));
+      this.checkIsLogin();
+
+    // this.isLogin=localStorage.getItem('isLogin');
   },
   updated() {
+    console.log('u',localStorage.getItem('isLogin'),localStorage.getItem('token'));
     console.log(localStorage.getItem('isLogin'));
-    this.isLogin=localStorage.getItem('isLogin');
+    // this.isLogin=localStorage.getItem('isLogin');
+    this.checkIsLogin();
   },
+
     created() {
         this.isFilter = false;
+      console.log('c',localStorage.getItem('isLogin'),localStorage.getItem('token'));
       console.log(localStorage.getItem('isLogin'));
-      this.isLogin=localStorage.getItem('isLogin');
+      // this.isLogin=localStorage.getItem('isLogin');
+      this.checkIsLogin();
         this.$eventBus.$on('checkComponent', (data) => {
       // do something with the data
       if(data === 'filter') {

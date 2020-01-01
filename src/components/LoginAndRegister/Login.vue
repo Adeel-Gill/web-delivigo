@@ -50,7 +50,8 @@
                     checkCredentials(this.userData).then(response => {
                         if(response.HasErrors === false) {
                             alert('Sign In success...!');
-                            this.$store.dispatch('storeToken',response.AuthToken, response);
+                            console.log('id',response.Id);
+                            this.$store.dispatch('storeToken',response);
                             this.$router.push({path:'/'});
                             // this.storeToken('storeToken',response.AuthToken, response)
 
