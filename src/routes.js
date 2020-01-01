@@ -8,6 +8,7 @@ import allNewRestaurants from "./components/All Restaurants/NewRestaurants";
 import allFoodCategories from "./components/All Restaurants/FoodCategories";
 import SelectedFoodRestaurants from "./components/All Restaurants/SelectedFoodRestaurants";
 import User from "./components/User/User";
+import {UserInfo} from "./components/store/UserInfo";
 import DeliveryAddress from "./components/User/DeliveryAddress";
 import DiamondAward from "./components/User/DiamondAward";
 import Support from "./components/User/Support";
@@ -20,17 +21,45 @@ import Register from "./components/LoginAndRegister/Register";
 export const routes = [
     { path: '/', component: Home },
     { path: '/loginandreg', component: LoginAndRegister, children: [
-            { path: '/signin', component: Login },
-            { path: '/signup', component: Register },
-        ]},
+            { path: '/signin', component: Login, beforeEnter(to, from, next) {
+                    console.log('signin',localStorage.getItem('token'));
+                    if(localStorage.getItem('token') === null || localStorage.getItem('token') === '' ) {
+
+                        next();
+                    } else {
+                        next('/')
+                    }
+                } },
+            { path: '/signup', component: Register, beforeEnter(to, from, next) {
+                    console.log('signup',localStorage.getItem('token'));
+                    if(localStorage.getItem('token') === null || localStorage.getItem('token') === '') {
+                        next();
+                    } else {
+                        next('/');
+                    }
+                }},
+        ], beforeEnter(to, from, next) {
+            console.log('loginandreg',localStorage.getItem('token'));
+            if(localStorage.getItem('token') === null || localStorage.getItem('token') === '') {
+                next();
+            } else {
+                next('/')
+            }
+        }},
     { path: '/filter', component: Filter },
     { path: '/user', component: User, children: [
-            {path: '/profile', component: Profile},
+            { path: '/profile', component: Profile},
             { path: '/delivery', component: DeliveryAddress},
             { path: '/diamond', component: DiamondAward},
             { path: '/billing', component: BillingAndPayments},
             { path: '/support', component: Support},
-        ]},
+        ], beforeEnter(to, from, next) {
+            if(localStorage.getItem('token') !== null || localStorage.getItem('token') !== '') {
+                next();
+            } else {
+                next('/');
+            }
+        }},
     { path: '/map/', component: Map},
     { path: '/restaurant/:id', component: Selected },
     {path: '/populars', component: allPopularRestaurants},

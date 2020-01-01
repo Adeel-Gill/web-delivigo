@@ -1,7 +1,7 @@
 <template>
     <div class="pl-5 m-top">
         <div class="row">
-            <form action="" v-on:submit.prevent="onSubmit" class="myProfile">
+            <form action="" v-on:submit.prevent class="myProfile">
                 <div class="form-group">
                     <label for="fullname">Full Name</label>
                     <input type="text"
@@ -81,7 +81,7 @@
                 if(this.checkObject()) {
                     registerUser(this.userData).then(response => {
                         this.result = response.HasErrors;
-                        this.message = response.ResultMessages.Message;
+                        this.message = response.ResultMessages[0].Message;
                         alert(this.message);
                     })
                 } else {

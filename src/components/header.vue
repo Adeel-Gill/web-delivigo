@@ -20,14 +20,14 @@
               <b-dropdown-item href="#">RU</b-dropdown-item>
               <b-dropdown-item href="#">FA</b-dropdown-item>
             </b-nav-item-dropdown>
-            <b-nav-item to="/profile" class="profile-link">
+            <b-nav-item to="/profile" v-if="isLogin" class="profile-link">
               <div>
                 <img src="../../public/images/user-pic.png" class="rounded-circle" height="50" width="50"/>
                 <!--                    <img src="//placehold.it/50" />-->
                   </div>
             </b-nav-item>
-            <b-nav-item to="/signin" activClass="active" class="singin mt-2">Sign In</b-nav-item>
-            <b-nav-item to="/signup" activClass="active" class="register mt-2">Register</b-nav-item>
+            <b-nav-item to="/signin" activClass="active" v-if="!isLogin" class="singin mt-2">Sign In</b-nav-item>
+            <b-nav-item to="/signup" activClass="active" v-if="!isLogin" class="register mt-2">Register</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </div>
@@ -40,14 +40,22 @@ export default {
     data() {
         return {
             isFilter:false,
+          isLogin: false,
           user: {}
         }
     },
   mounted() {
-
+      console.log(localStorage.getItem('isLogin'));
+    this.isLogin=localStorage.getItem('isLogin');
+  },
+  updated() {
+    console.log(localStorage.getItem('isLogin'));
+    this.isLogin=localStorage.getItem('isLogin');
   },
     created() {
         this.isFilter = false;
+      console.log(localStorage.getItem('isLogin'));
+      this.isLogin=localStorage.getItem('isLogin');
         this.$eventBus.$on('checkComponent', (data) => {
       // do something with the data
       if(data === 'filter') {

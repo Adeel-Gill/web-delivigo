@@ -8,7 +8,7 @@ export function fetchUserProfile() {
 }
 export function checkCredentials(data) {
     return service({
-        url: 'Customer',
+        url: 'Login',
         method: 'post',
         data
     })

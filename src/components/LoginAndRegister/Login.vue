@@ -1,17 +1,24 @@
 <template>
     <div class="pl-5 m-top">
         <div class="row">
-            <form action="" class="myProfile">
+            <form action="" v-on:submit.prevent class="myProfile">
                 <div class="form-group">
                     <label for="email">EMAIL ADDRESS</label>
-                    <input type="email" class="form-control" placeholder="abc@mail.com" :disabled = "validated" id="email">
+                    <input type="email"
+                           class="form-control"
+                           v-model="userData.email"
+                           placeholder="abc@mail.com"
+                           id="email">
                 </div>
                 <div class="form-group">
                     <label for="npwd">PASSWORD</label>
-                    <input type="password" class="form-control" placeholder="Password Here...!" :disabled = "validated" id="npwd">
+                    <input type="password"
+                           class="form-control"
+                           placeholder="Password Here...!"
+                           v-model="userData.password" id="npwd">
                 </div>
                 <div class="button">
-                    <button type="submit" class="btn btn-submit">SIGN IN</button>
+                    <button type="submit" @click="checkCredentials" class="btn btn-submit">SIGN IN</button>
                 </div>
             </form>
         </div>
@@ -19,8 +26,52 @@
 </template>
 
 <script>
+    import {checkCredentials} from "../api/Profile";
+    import {mapActions} from "vuex";
+
     export default {
-        name: "Login"
+        name: "Login",
+        data() {
+            return {
+                userData: {
+                    password: '',
+                    email: '',
+                    DeviceUniqueCode: "web",
+                    DeviceToken: "web",
+                }
+            }
+        },
+        methods: {
+            ...mapActions([
+                'storeToken'
+            ]),
+            async checkCredentials() {
+                if(this.checkObject()) {
+                    checkCredentials(this.userData).then(response => {
+                        if(response.HasErrors === false) {
+                            alert('Sign In success...!');
+                            this.$store.dispatch('storeToken',response.AuthToken, response);
+                            this.$router.push({path:'/'});
+                            // this.storeToken('storeToken',response.AuthToken, response)
+
+                        } else {
+                            console.log('Error: '+ response.ResultMessages[0].Message);
+                            alert('Sign In failed...!')
+                        }
+                    })
+                } else {
+                    alert('Please fill require fields...!');
+                }
+            },
+            checkObject() {
+                if(this.userData.password != '' && this.userData.email != '') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
     }
 </script>
 
