@@ -18,18 +18,18 @@
                     <a class="nav-link" >Delivery Address</a>
                 </router-link>
                 <router-link class="nav-item"
-                             to="/diamond"
-                             tag="li"
-                             active-class="active"
-                             exact>
-                    <a class="nav-link">Diamond Reward</a>
-                </router-link>
-                <router-link class="nav-item"
                              to="/billing"
                              tag="li"
                              active-class="active"
                              exact>
                     <a class="nav-link">Billing And Payments</a>
+                </router-link>
+                <router-link class="nav-item"
+                             to="/diamond"
+                             tag="li"
+                             active-class="active"
+                             exact>
+                    <a class="nav-link">Diamond Reward</a>
                 </router-link>
                 <router-link class="nav-item"
                              to="/support"
@@ -68,7 +68,7 @@
     /*}*/
     a.nav-link{
         font-family: pantonb;
-        color: #5860ff !important;
+        color: #000000;
     }
     .m-top{
         margin-top: 100px;
@@ -80,15 +80,16 @@
         color: #000000;
         font-size: 20px;
         text-align: left;
-        margin-left: 40px;
+        /*margin-left: 60px;*/
     }
     .col-md-4{
         padding: 0;
     }
     .nav-item{
-        width: 319px;
+        width: 280px;
         /*margin: 0 auto;*/
         text-align: center;
+        margin-left: 77px;
     }
     .active{
         border-right: 3px solid blue;

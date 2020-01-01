@@ -9,57 +9,96 @@
                     <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Address</button>
                 </div>
         </div>
-        <div class="col-md-8">
-<!--                <form action="" class="myProfile">-->
-            <div class="address-block">
+        <div class="col-md-10">
+            <div class="address-block row">
+                <div class="col-md-8">
                 <h6 class="address-heading">Home</h6>
                 <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
-            </div>
-            <div class="address-block">
-                <h6 class="address-heading">Home</h6>
-                <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
-            </div>
-            <div class="address-block">
-                <h6 class="address-heading">Home</h6>
-                <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
-            </div>
-            <div class="address-block">
-                <h6 class="address-heading">Home</h6>
-                <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
-            </div>
-            <div class="form-group">
-<!--                        <label for="home">Full Name</label>-->
-                <label for="office">Office</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="office">
-<!--                            <input type="text" class="form-control" value="john Doe" id="home">-->
-                            <div class="input-group-append">
-                                <i class="fa fa-pencil-alt"></i>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-2 icon">
+                    <a href="#"><i class="fas fa-pencil-alt edit"></i></a>
+                    <a href="#"><i class="fas fa-times-circle cancel"></i></a>
+                    <div class="radio">
+                        <input type="radio">
+                        <label>Default</label>
                     </div>
-                    <div class="form-group">
-                        <label for="home2">Home2</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home2">
-                            <div class="input-group-append">
-                                <i class="fa fa-pencil-alt"></i>
-                            </div>
-                        </div>
-<!--                        <label for="office">Full Name</label>-->
-<!--                        <input type="text" class="form-control" value="john Doe" id="office">-->
+                </div>
+            </div>
+            <div class="address-block row">
+                <div class="col-md-8">
+                    <h6 class="address-heading">Office1</h6>
+                    <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
+                </div>
+                <div class="col-md-2 icon">
+                    <a href="#"><i class="fas fa-pencil-alt edit"></i></a>
+                    <a href="#"><i class="fas fa-times-circle cancel"></i></a>
+                    <div class="radio">
+                        <input type="radio">
+                        <label>Default</label>
                     </div>
-                    <div class="form-group">
-                        <label for="home3">Home3</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home3">
-                            <div class="input-group-append">
-                                <i class="fa fa-pencil-alt"></i>
-                            </div>
-                        </div>
-<!--                        <label for="home2">Full Name</label>-->
-<!--                        <input type="text" class="form-control" value="john Doe" id="home2">-->
+                </div>
+            </div>
+            <div class="address-block row">
+                <div class="col-md-8">
+                    <h6 class="address-heading">Home2</h6>
+                    <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
+                </div>
+                <div class="col-md-2 icon">
+                    <a href="#"><i class="fas fa-pencil-alt edit"></i></a>
+                    <a href="#"><i class="fas fa-times-circle cancel"></i></a>
+                    <div class="radio">
+                        <input type="radio">
+                        <label>Default</label>
                     </div>
+                </div>
+            </div>
+            <div class="address-block row">
+                <div class="col-md-8">
+                    <h6 class="address-heading">Office</h6>
+                    <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
+                </div>
+                <div class="col-md-2 icon">
+                    <a href="#"><i class="fas fa-pencil-alt edit"></i></a>
+                    <a href="#"><i class="fas fa-times-circle cancel"></i></a>
+                    <div class="radio">
+                        <input type="radio">
+                        <label>Default</label>
+                    </div>
+                </div>
+            </div>
+<!--            <div class="form-group">-->
+<!--&lt;!&ndash;                        <label for="home">Full Name</label>&ndash;&gt;-->
+<!--                <label for="office">Office</label>-->
+<!--                        <div class="input-group">-->
+<!--                            <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="office">-->
+<!--&lt;!&ndash;                            <input type="text" class="form-control" value="john Doe" id="home">&ndash;&gt;-->
+<!--                            <div class="input-group-append">-->
+<!--                                <i class="fa fa-pencil-alt"></i>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="home2">Home2</label>-->
+<!--                        <div class="input-group">-->
+<!--                            <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home2">-->
+<!--                            <div class="input-group-append">-->
+<!--                                <i class="fa fa-pencil-alt"></i>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--&lt;!&ndash;                        <label for="office">Full Name</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <input type="text" class="form-control" value="john Doe" id="office">&ndash;&gt;-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="home3">Home3</label>-->
+<!--                        <div class="input-group">-->
+<!--                            <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home3">-->
+<!--                            <div class="input-group-append">-->
+<!--                                <i class="fa fa-pencil-alt"></i>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--&lt;!&ndash;                        <label for="home2">Full Name</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <input type="text" class="form-control" value="john Doe" id="home2">&ndash;&gt;-->
+<!--                    </div>-->
 <!--                </form>-->
             </div>
     </div>
@@ -94,16 +133,18 @@
         margin-bottom: 50px;
     }
     .address-block{
-        border-bottom: 1px solid #e6e6e6;
-        margin-bottom: 30px;
+        border-bottom: 1px solid #9C9C9C;
+        margin-bottom: 10px;
     }
     .address-block h6{
         font-size: 21px;
-        margin-top: 20px;
+        /*margin-top: 20px;*/
     }
     .address-block p{
         font-size: 18px;
         padding-left: 5px;
+        display: inline-block;
+        margin-bottom: 0;
     }
     /*.input-group-append{*/
     /*    !*color: #1c0095;*!*/
@@ -134,5 +175,35 @@
         /*width: 150px;*/
         padding-right: 25px;
         padding-left: 25px;
+    }
+    .icon{
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        text-align: right;
+        /*margin-top: 20px;*/
+    }
+    .icon i{
+        margin: 0 10px 0 0;
+        font-size: 20px;
+    }
+    .icon .cancel{
+        color: red;
+    }
+    .edit{
+        color: #5860ff;
+    }
+    .radio{
+        display: flex;
+        margin-top: 10px;
+    }
+    .radio input{
+        margin-top: 1px;
+        height:20px;
+        width: 20px;
+        margin-right: 10px;
+    }
+    .radio label{
+        font-size: 17px;
     }
 </style>
