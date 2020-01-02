@@ -86,10 +86,11 @@
         padding: 0;
     }
     .nav-item{
-        width: 280px;
+        width: 100%;
         /*margin: 0 auto;*/
         text-align: center;
-        margin-left: 77px;
+        margin-left: 40px;
+        padding-right: 28px;
     }
     .active{
         border-right: 3px solid blue;

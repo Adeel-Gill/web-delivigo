@@ -7,7 +7,7 @@
                 <h1 class="profile-heading">Billing and Payments</h1>
             </div>
             <div class="col-md-4">
-                <b-button class="btn btn-submit" v-b-modal.modal-1><i class="fas fa-plus mr-3"></i>Add Card</b-button>
+                <button class="btn btn-submit" v-b-modal.modal-1><i class="fas fa-plus mr-3"></i>Add Card</button>
                 <!--                <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Card</button>-->
             </div>
         </div>
@@ -63,7 +63,7 @@
         </div>
 <!-- Modal -->
     </div>
-    <b-modal hide-footer class="my-modal" id="modal-1" title="BootstrapVue">
+    <b-modal hide-footer size="lg" class="my-modal" id="modal-1" title="Add New Card">
         <div class="row">
         <div class="col-md-12">
             <div class="form-group">
@@ -107,7 +107,7 @@
             </div>
         </div>
         <div class="btn-modal">
-            <button class="btn btn-submit">Continue</button>
+            <button @click="$bvModal.hide('modal-1')" class="btn btn-submit">Continue</button>
         </div>
     </b-modal>
 </div>
@@ -135,9 +135,9 @@
     .m-bottom{
         margin-bottom: 100px;
     }
-    .col-md-4{
-        padding: 0;
-    }
+    /*.col-md-4{*/
+    /*    padding: 0;*/
+    /*}*/
     .profile-heading{
         color: #5860ff;
         font-size: 38px;
@@ -157,6 +157,10 @@
         background-color: #5860ff;
         color: white;
 
+    }
+    .btn-submit:hover{
+        background-color: #4F55C2;
+        color: white;
     }
     .button{
         margin-top: 50px;
@@ -190,31 +194,37 @@
         text-align: right;
     }
     .icon i{
-        margin: 0 20px 0 0;
-        font-size: 20px;
+        margin: 0 15px 0 0;
+        font-size: 18px;
     }
     .icon .cancel{
         color: red;
     }
+    .cancel:hover{
+        color: #9C0000;
+    }
     .edit{
         color: #5860ff;
+    }
+    .edit:hover{
+        color: #4F55C2;
     }
     .radio{
         display: flex;
         margin-top: 10px;
     }
     .radio input{
-        margin-top: 1px;
-        height:20px;
-        width: 20px;
-        margin-right: 10px;
+        margin-top: 3px;
+        height:18px;
+        width: 18px;
+        margin-right: 5px;
     }
     .radio label{
-        font-size: 17px;
-    }
-    .modal-dialog {
-        width: 700px !important;
+        font-size: 16px;
     }
     .btn-modal{
+        display: flex;
+        justify-content: flex-end;
+        margin: 10px 0 20px 0;
     }
 </style>

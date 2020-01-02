@@ -1,22 +1,25 @@
 @@ -0,0 +1,15 @@
 <template>
+    <div>
     <div class="pl-5 m-top m-bottom">
         <div class="row">
             <div class="col-md-8">
             <h1 class="profile-heading">Saved Address</h1>
             </div>
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Address</button>
+                    <b-button class="btn btn-submit" v-b-modal.modal-1><i class="fas fa-plus mr-3"></i>Add Card</b-button>
+
+                    <!--                    <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Address</button>-->
                 </div>
         </div>
         <div class="col-md-10">
             <div class="address-block row">
-                <div class="col-md-8">
+                <div class="col-md-9">
                 <h6 class="address-heading">Home</h6>
                 <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
                 </div>
                 <div class="col-md-2 icon">
-                    <a href="#"><i class="fas fa-pencil-alt edit"></i></a>
+                    <a href="#" v-b-modal.modal-1><i class="fas fa-pencil-alt edit"></i></a>
                     <a href="#"><i class="fas fa-times-circle cancel"></i></a>
                     <div class="radio">
                         <input type="radio">
@@ -25,12 +28,12 @@
                 </div>
             </div>
             <div class="address-block row">
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <h6 class="address-heading">Office1</h6>
                     <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
                 </div>
                 <div class="col-md-2 icon">
-                    <a href="#"><i class="fas fa-pencil-alt edit"></i></a>
+                    <a href="#" v-b-modal.modal-1><i class="fas fa-pencil-alt edit"></i></a>
                     <a href="#"><i class="fas fa-times-circle cancel"></i></a>
                     <div class="radio">
                         <input type="radio">
@@ -39,12 +42,12 @@
                 </div>
             </div>
             <div class="address-block row">
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <h6 class="address-heading">Home2</h6>
                     <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
                 </div>
                 <div class="col-md-2 icon">
-                    <a href="#"><i class="fas fa-pencil-alt edit"></i></a>
+                    <a href="#" v-b-modal.modal-1><i class="fas fa-pencil-alt edit"></i></a>
                     <a href="#"><i class="fas fa-times-circle cancel"></i></a>
                     <div class="radio">
                         <input type="radio">
@@ -53,12 +56,12 @@
                 </div>
             </div>
             <div class="address-block row">
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <h6 class="address-heading">Office</h6>
                     <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
                 </div>
                 <div class="col-md-2 icon">
-                    <a href="#"><i class="fas fa-pencil-alt edit"></i></a>
+                    <a href="#" v-b-modal.modal-1><i class="fas fa-pencil-alt edit"></i></a>
                     <a href="#"><i class="fas fa-times-circle cancel"></i></a>
                     <div class="radio">
                         <input type="radio">
@@ -66,41 +69,42 @@
                     </div>
                 </div>
             </div>
-<!--            <div class="form-group">-->
-<!--&lt;!&ndash;                        <label for="home">Full Name</label>&ndash;&gt;-->
-<!--                <label for="office">Office</label>-->
-<!--                        <div class="input-group">-->
-<!--                            <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="office">-->
-<!--&lt;!&ndash;                            <input type="text" class="form-control" value="john Doe" id="home">&ndash;&gt;-->
-<!--                            <div class="input-group-append">-->
-<!--                                <i class="fa fa-pencil-alt"></i>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="home2">Home2</label>-->
-<!--                        <div class="input-group">-->
-<!--                            <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home2">-->
-<!--                            <div class="input-group-append">-->
-<!--                                <i class="fa fa-pencil-alt"></i>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--&lt;!&ndash;                        <label for="office">Full Name</label>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <input type="text" class="form-control" value="john Doe" id="office">&ndash;&gt;-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="home3">Home3</label>-->
-<!--                        <div class="input-group">-->
-<!--                            <input type="text" class="form-control" value="2 E Broadway #200, New York, NY 10038, USA" id="home3">-->
-<!--                            <div class="input-group-append">-->
-<!--                                <i class="fa fa-pencil-alt"></i>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--&lt;!&ndash;                        <label for="home2">Full Name</label>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <input type="text" class="form-control" value="john Doe" id="home2">&ndash;&gt;-->
-<!--                    </div>-->
-<!--                </form>-->
+
             </div>
+    </div>
+        <b-modal size="lg" hide-footer class="my-modal" id="modal-1" title="Add new Address">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="zipCode">Zip Code</label>
+                        <input type="text" class="form-control" id="zipCode">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" class="form-control" id="city">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" class="form-control" id="state">
+                    </div>
+                </div>
+            </div>
+            <div class="btn-modal">
+                <b-button @click="$bvModal.hide('modal-1')" class="btn btn-submit">Continue</b-button>
+            </div>
+        </b-modal>
     </div>
 </template>
 
@@ -124,9 +128,9 @@
     .m-bottom{
         margin-bottom: 100px;
     }
-    .col-md-4{
-        padding: 0;
-    }
+    /*.col-md-4{*/
+    /*    padding: 0;*/
+    /*}*/
     .profile-heading{
         color: #5860ff;
         font-size: 38px;
@@ -160,6 +164,10 @@
         border: 2px solid #5860ff;
         color: #5860ff;
     }
+    .btn-submit:hover{
+        background-color: #4F55C2;
+        color: white;
+    }
     .button{
         margin-top: 50px;
         margin-bottom: 100px;
@@ -184,26 +192,37 @@
         /*margin-top: 20px;*/
     }
     .icon i{
-        margin: 0 10px 0 0;
-        font-size: 20px;
+        margin: 0 15px 0 0;
+        font-size: 18px;
     }
     .icon .cancel{
         color: red;
     }
+    .cancel:hover{
+        color: #9C0000;
+    }
     .edit{
         color: #5860ff;
+    }
+    .edit:hover{
+        color: #4F55C2;
     }
     .radio{
         display: flex;
         margin-top: 10px;
     }
     .radio input{
-        margin-top: 1px;
-        height:20px;
-        width: 20px;
-        margin-right: 10px;
+        margin-top: 3px;
+        height:18px;
+        width: 18px;
+        margin-right: 5px;
     }
     .radio label{
-        font-size: 17px;
+        font-size: 16px;
+    }
+    .btn-modal{
+        display: flex;
+        justify-content: flex-end;
+        margin: 10px 0 20px 0;
     }
 </style>
