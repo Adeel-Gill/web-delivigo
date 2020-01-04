@@ -4,7 +4,7 @@
         <div class="col-md-3 nav-color">
             <app-side-nav></app-side-nav>
         </div>
-        <div  class="col-md-7">
+        <div  class="col-md-9">
             <router-view></router-view>
         </div>
     </div>

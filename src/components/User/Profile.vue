@@ -36,7 +36,7 @@
             <div class="col-md-4 pl-5">
                 <h4>Picture</h4>
                 <div class="profile-pic">
-                    <img :src="baseUrl + userData.UrlImage" class="rounded-circle" alt="userpic"/>
+                    <img :src="baseUrl + userData.UrlImage" class="rounded-circle img-fluid" alt="userpic"/>
                 </div>
             </div>
         </div>
@@ -88,45 +88,18 @@
     .row{
         font-family:pantonb ;
     }
-    /*a.nav-link{*/
-    /*    font-family: pantonb;*/
-    /*}*/
     .m-top{
         margin-top: 100px;
     }
-    /*.nav-color{*/
-    /*    background-color: #f2f2f2;*/
-    /*}*/
-    /*.nav-item a{*/
-    /*    color: #000000;*/
-    /*    font-size: 20px;*/
-    /*}*/
+
     .col-md-4{
         padding: 0;
     }
-    /*.nav-item{*/
-    /*    width: 319px;*/
-    /*    !*margin: 0 auto;*!*/
-    /*    text-align: center;*/
-    /*}*/
-    /*.active{*/
-    /*    border-right: 3px solid blue;*/
-    /*}*/
-    /*.active a{*/
-    /*    color: #5860ff;*/
-    /*}*/
-    /*.nav-item a:hover{*/
-    /*    !*border-right: 2px solid blue;*!*/
-    /*    color: #5860ff;*/
-    /*}*/
     .profile-heading{
         color: #5860ff;
         font-size: 38px;
         margin-bottom: 50px;
     }
-    /*.myProfile{*/
-    /*    margin-top: 50px;*/
-    /*}*/
     .form-group label{
         font-size: 21px;
         margin-top: 20px;
@@ -140,6 +113,14 @@
     }
     .myProfile input:focus{
         border-bottom: 1px solid #5860ff;
+    }
+    .profile-pic{
+        height: 200px;
+        width: 200px;
+    }
+    .profile-pic img{
+        height: 100%;
+        width: 100%;
     }
     .button .btn-submit{
         margin-right: 50px;

@@ -7,7 +7,7 @@
             <h1 class="profile-heading">Saved Address</h1>
             </div>
                 <div class="col-md-4">
-                    <b-button class="btn btn-submit" v-b-modal.modal-1><i class="fas fa-plus mr-3"></i>Add Card</b-button>
+                    <button class="btn btn-submit" v-b-modal.modal-1><i class="fas fa-plus mr-3"></i>Add Card</button>
 
                     <!--                    <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Address</button>-->
                 </div>
@@ -73,6 +73,15 @@
             </div>
     </div>
         <b-modal size="lg" hide-footer class="my-modal" id="modal-1" title="Add new Address">
+            <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <input type="text" class="form-control" id="type">
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
@@ -102,7 +111,8 @@
                 </div>
             </div>
             <div class="btn-modal">
-                <b-button @click="$bvModal.hide('modal-1')" class="btn btn-submit">Continue</b-button>
+                <button @click="$bvModal.hide('modal-1')" class="btn btn-submit">Save</button>
+            </div>
             </div>
         </b-modal>
     </div>
@@ -156,16 +166,16 @@
     /*}*/
     .button .btn-submit{
         margin-right: 50px;
-        background-color: #5860ff;
+        background-color: #007bff;
         color: white;
 
     }
     .button .btn-cancel{
-        border: 2px solid #5860ff;
-        color: #5860ff;
+        border: 2px solid #007bff;
+        color: #007bff;
     }
     .btn-submit:hover{
-        background-color: #4F55C2;
+        background-color: #0056b3;
         color: white;
     }
     .button{
@@ -177,7 +187,7 @@
         width: 150px;
     }
     .btn-submit{
-        background-color: #5860ff;
+        background-color: #007bff;
         color: white;
         border-radius: 30px;
         /*width: 150px;*/
@@ -202,10 +212,10 @@
         color: #9C0000;
     }
     .edit{
-        color: #5860ff;
+        color: #007bff;
     }
     .edit:hover{
-        color: #4F55C2;
+        color: #0056b3;
     }
     .radio{
         display: flex;
@@ -224,5 +234,9 @@
         display: flex;
         justify-content: flex-end;
         margin: 10px 0 20px 0;
+    }
+    .btn:focus{
+        box-shadow: none;
+        -webkit-box-shadow: none;
     }
 </style>

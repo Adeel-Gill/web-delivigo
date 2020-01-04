@@ -64,6 +64,7 @@
 <!-- Modal -->
     </div>
     <b-modal hide-footer size="lg" class="my-modal" id="modal-1" title="Add New Card">
+        <div class="container">
         <div class="row">
         <div class="col-md-12">
             <div class="form-group">
@@ -107,7 +108,8 @@
             </div>
         </div>
         <div class="btn-modal">
-            <button @click="$bvModal.hide('modal-1')" class="btn btn-submit">Continue</button>
+            <button @click="$bvModal.hide('modal-1')" class="btn btn-submit">Save</button>
+        </div>
         </div>
     </b-modal>
 </div>
