@@ -6,3 +6,9 @@ export function fetchAllData() {
         method: 'get',
     })
 }
+export function fetchNewIOpenRestaurantsData(pageNumber=1,pageSize=10) {
+    return service({
+        url: `NewOpenRestaurant?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        method: 'get',
+    })
+}

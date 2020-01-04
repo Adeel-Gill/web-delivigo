@@ -17,7 +17,7 @@
 
 <script>
     import Restaurant from '../../components/restaurant/restaurant.vue';
-    import {fetchAllData} from "../api/Home";
+    import {fetchNewIOpenRestaurantsData} from "../api/Home";
     export default {
         name: "allNewRestaurants",
         data(){
@@ -32,8 +32,8 @@
         },
         methods: {
             fetchAllData() {
-                fetchAllData().then(response => {
-                    this.restaurantsData = response.NewOpen;
+                fetchNewIOpenRestaurantsData().then(response => {
+                    this.restaurantsData = response.Restaurants;
                 })
             }
         },

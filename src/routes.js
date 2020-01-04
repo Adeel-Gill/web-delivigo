@@ -23,38 +23,73 @@ export const routes = [
     { path: '/loginandreg', component: LoginAndRegister, children: [
             { path: '/signin', component: Login, beforeEnter(to, from, next) {
                     console.log('signin',localStorage.getItem('token'));
-                    if(localStorage.getItem('token') === null || localStorage.getItem('token') === '' ) {
-
-                        next();
+                    if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
+                        next('/');
                     } else {
-                        next('/')
+                        next()
                     }
                 } },
             { path: '/signup', component: Register, beforeEnter(to, from, next) {
                     console.log('signup',localStorage.getItem('token'));
-                    if(localStorage.getItem('token') === null || localStorage.getItem('token') === '') {
+                    if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
+                        next('/');
+                    } else {
+                        next();
+                    }
+                }},
+        ], beforeEnter(to, from, next) {
+            console.log('loginandreg',localStorage.getItem('token'));
+            if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
+                next('/');
+            } else {
+                next()
+            }
+        }},
+    { path: '/filter', component: Filter },
+    { path: '/user', component: User, children: [
+            { path: '/profile', component: Profile,
+                beforeEnter(to, from, next) {
+                console.log('routeResult', localStorage.getItem('token'));
+                    if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
+                        next();
+                    } else {
+                        next('/');
+                    }
+                } },
+            { path: '/delivery', component: DeliveryAddress ,
+                beforeEnter(to, from, next) {
+                    if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
+                        next();
+                    } else {
+                        next('/');
+                    }
+                }},
+            { path: '/diamond', component: DiamondAward ,
+                beforeEnter(to, from, next) {
+                    if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
+                        next();
+                    } else {
+                        next('/');
+                    }
+                }},
+            { path: '/billing', component: BillingAndPayments ,
+                beforeEnter(to, from, next) {
+                    if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
+                        next();
+                    } else {
+                        next('/');
+                    }
+                }},
+            { path: '/support', component: Support ,
+                beforeEnter(to, from, next) {
+                    if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
                         next();
                     } else {
                         next('/');
                     }
                 }},
         ], beforeEnter(to, from, next) {
-            console.log('loginandreg',localStorage.getItem('token'));
-            if(localStorage.getItem('token') === null || localStorage.getItem('token') === '') {
-                next();
-            } else {
-                next('/')
-            }
-        }},
-    { path: '/filter', component: Filter },
-    { path: '/user', component: User, children: [
-            { path: '/profile', component: Profile},
-            { path: '/delivery', component: DeliveryAddress},
-            { path: '/diamond', component: DiamondAward},
-            { path: '/billing', component: BillingAndPayments},
-            { path: '/support', component: Support},
-        ], beforeEnter(to, from, next) {
-            if(localStorage.getItem('token') !== null || localStorage.getItem('token') !== '') {
+            if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
                 next();
             } else {
                 next('/');
@@ -69,3 +104,18 @@ export const routes = [
     {path: '/foodCategories', component: allFoodCategories},
     {path: '/foodFilter', component: SelectedFoodRestaurants}
 ]
+function checkLoginRoute() {
+    if(localStorage.getItem('token') !== null || localStorage.getItem('token') !== '') {
+        return true;
+    } else {
+       return false;
+    }
+}
+function checkLogoutRoute() {
+    if(localStorage.getItem('token') === null || localStorage.getItem('token') === '') {
+        return true;
+    } else {
+       return false;
+    }
+}
+

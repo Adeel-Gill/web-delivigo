@@ -3,7 +3,7 @@
          <div class="restaurant" @click="emitId">
             <router-link :to="'/restaurant/'+restaurant.Id">
                 <div>
-                    <img :src="baseUrl + restaurant.ImageUrl" />
+                    <img :src="this.image" @error="loadAltImage" />
                     <div class="restaurants-details">
                         <div class="row">
                             <div class="col-8 padding-top-botom">
@@ -41,13 +41,23 @@ export default {
     data() {
         return {
             baseUrl: baseAddress,
+            image: baseAddress + this.restaurant.ImageUrl
         }
     },
     methods: {
         emitId() {
             console.log('IdFromREs'+this.restaurant.Id);
             EventBus.$emit('resId', this.restaurant.Id)
+        },
+        loadAltImage(event) {
+
+            this.src = "../../../public/images/restauranticon.png"
+        },
+        getImage() {
         }
+    },
+    mounted() {
+        console.log(baseAddress,'::',this.baseUrl,'::',this.image);
     }
 }
 </script>

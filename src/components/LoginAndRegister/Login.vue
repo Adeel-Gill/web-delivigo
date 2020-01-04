@@ -52,6 +52,7 @@
                             alert('Sign In success...!');
                             console.log('id',response.Id);
                             this.$store.dispatch('storeToken',response);
+                            this.$router.go();
                             this.$router.push({path:'/'});
                             // this.storeToken('storeToken',response.AuthToken, response)
 

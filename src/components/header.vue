@@ -20,14 +20,15 @@
               <b-dropdown-item href="#">RU</b-dropdown-item>
               <b-dropdown-item href="#">FA</b-dropdown-item>
             </b-nav-item-dropdown>
-            <b-nav-item to="/profile" v-if="isLogin" class="profile-link">
+            <b-nav-item to="/profile" v-if="isLogin === 'true'? true: false" class="profile-link">
               <div>
                 <img :src="image" alt="userPic" class="rounded-circle" height="50" width="50"/>
                 <!--                    <img src="//placehold.it/50" />-->
                   </div>
             </b-nav-item>
-            <b-nav-item to="/signin" activClass="active" v-if="!isLogin" class="singin mt-2">Sign In</b-nav-item>
-            <b-nav-item to="/signup" activClass="active" v-if="!isLogin" class="register mt-2">Register</b-nav-item>
+            <b-nav-item to="/signin" activClass="active" v-if="isLoggedOut === 'true'? true: false" class="singin mt-2">Sign In</b-nav-item>
+            <b-nav-item to="/signup" activClass="active" v-if="isLoggedOut === 'true'? true: false" class="register mt-2">Register</b-nav-item>
+            <b-nav-item  activClass="active" v-if="isLogin === 'true'? true: false" class="register mt-2" @click="signOut">Sign Out</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </div>
@@ -37,25 +38,29 @@
 
 <script>
   import {EventBus} from "../main";
-
+  import {mapActions} from "vuex";
+  import {mapGetters} from "vuex";
   export default {
     data() {
         return {
             isFilter:false,
-          isLogin: false,
+          isLogin: this.$store.getters.getLogin,
+          isLoggedOut: this.$store.getters.getLoggedOut,
           user: {},
           image: ''
         }
     },
   methods: {
+    ...mapActions([
+      'cleanToken'
+    ]),
     checkIsLogin() {
-
-      if(this.$store.state.isLogin !== '' || !(localStorage.getItem('isLogin'))) {
+      if(this.$store.state.isLogin !== '' || (localStorage.getItem('isLogin') !== false)) {
         console.log('state',this.$store.state.isLogin);
-        this.isLogin = localStorage.getItem('isLogin');
+        this.isLogin = this.$store.state.isLogin;
       }
       else {
-        this.isLogin = localStorage.getItem('isLogin')
+        this.isLogin = false;
       }
       // this.$forceUpdate();
       EventBus.$on('userImage', responce => {
@@ -63,27 +68,32 @@
           this.image = responce;
         }
       })
+    },
+    signOut() {
+      this.$store.dispatch('cleanToken');
+      this.$router.go();
     }
   },
   mounted() {
-      console.log('m',localStorage.getItem('isLogin'),localStorage.getItem('token'));
-      this.checkIsLogin();
+      console.log('m',this.isLogin === 'true'? true: false,this.isLoggedOut === 'true'? true: false);
 
     // this.isLogin=localStorage.getItem('isLogin');
   },
   updated() {
     console.log('u',localStorage.getItem('isLogin'),localStorage.getItem('token'));
     console.log(localStorage.getItem('isLogin'));
-    // this.isLogin=localStorage.getItem('isLogin');
-    this.checkIsLogin();
   },
-
+    computed: {
+      ...mapGetters([
+               'getLogin',
+              'getLoggedOut'
+      ])
+    },
     created() {
         this.isFilter = false;
-      console.log('c',localStorage.getItem('isLogin'),localStorage.getItem('token'));
+      console.log('c',this.isLogin,this.isLoggedOut);
       console.log(localStorage.getItem('isLogin'));
       // this.isLogin=localStorage.getItem('isLogin');
-      this.checkIsLogin();
         this.$eventBus.$on('checkComponent', (data) => {
       // do something with the data
       if(data === 'filter') {
