@@ -7,7 +7,7 @@
             <div :class="bgClass" class="catagory-desc">
                 <div class="catagory-text">
                     <h5>{{foodCategories.Name}}</h5>
-                    <h6>{{foodCategories.Count}}</h6>
+                    <h6>{{foodCategories.Count}} Restaurants</h6>
                     <p><i class="fas fa-star"></i> {{foodCategories.StatusCode}}</p>
                 </div>
             </div>

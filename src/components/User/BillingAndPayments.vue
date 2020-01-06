@@ -105,7 +105,6 @@
     import {markDefaultCard} from "../api/CardAndPayments";
     import {retrieveCustomerAllCards} from "../api/CardAndPayments";
     import {EventBus} from "../../main";
-    import CardModal from "./CardModal";
     import VueLoadingButton from 'vue-loading-button';
     let stripe = Stripe(`pk_test_TYPazNES7wQJ4WyN83oLTlEa`),
         elements = stripe.elements(),
@@ -115,7 +114,6 @@
         name: "BillingAndPayments",
         components: {
             buttonSpinner: VueLoadingButton,
-            cardModal: CardModal
         },
         data() {
             return {
