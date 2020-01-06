@@ -30,6 +30,11 @@
         font-family: pantonb;
         src:url("../../assets/fonts/Panton-Bold.ttf");
     }
+    @font-face {
+        font-family: pantonl;
+        src:url("../../assets/fonts/PantonNarrowDemo-Light.otf");
+        font-weight: 300;
+    }
     .row{
         font-family:pantonb ;
     }

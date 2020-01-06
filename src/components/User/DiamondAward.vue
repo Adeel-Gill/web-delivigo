@@ -14,7 +14,7 @@
         <div class="container fade show d-block" id="currentOrder">
             <div class="card mb-5">
                 <div class="card-body">
-                    <div class="row m-3">
+                    <div class="row mx-3 mt-3">
                         <div class="col-md-6">
                             <div class="sec1">
                                 <h6>Burger Point</h6>
@@ -30,6 +30,8 @@
                                     <span class="fa fa-star"></span>
                                     <span class="fa fa-star"></span>
                                     <span class="fa fa-star"></span>
+
+<!--                                    <star-rating :increment="0.5"></star-rating>-->
                                 </div>
                                 <div class="form-group">
                                     <textarea  class="form-control review" placeholder="your review"></textarea>
@@ -37,14 +39,14 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div role="tablist">
+                            <div class="collapse-tab" role="tablist">
                                 <div class="line">
-                                    <div class="px-1 ml-1" role="tab">
+                                    <div class="px-1 ml-1 collapse-head" role="tab">
                                         <a v-b-toggle.accordion-1><div class="numberCircle">1</div>FarmHouse</a>
                                         <span class="float-right">$33</span>
                                     </div>
                                     <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
-                                        <div class="pl-3 sub-catg">
+                                        <div class="pl-3 sub-catg pb-3">
                                             <p class="text-muted">thin Crust</p>
                                             <p class="text-muted">Spicy</p>
                                             <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
@@ -53,12 +55,12 @@
                                 </div>
 
                                 <div class="line">
-                                    <div class="px-1 ml-1" role="tab">
-                                        <a v-b-toggle.accordion-2><div class="numberCircle">1</div>FarmHouse</a>
+                                    <div class="px-1 ml-1 collapse-head" role="tab">
+                                        <a v-b-toggle.accordion-2><div class="numberCircle">2</div>FarmHouse</a>
                                         <span class="float-right">$33</span>
                                     </div>
                                     <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
-                                        <div class="pl-3 sub-catg">
+                                        <div class="pl-3 sub-catg pb-3">
                                         <p class="text-muted">thin Crust</p>
                                         <p class="text-muted">Spicy</p>
                                         <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
@@ -67,12 +69,12 @@
                                 </div>
 
                                 <div class="line">
-                                    <div class="px-1 ml-1" role="tab">
-                                        <a v-b-toggle.accordion-3><div class="numberCircle">1</div>FarmHouse</a>
+                                    <div class="px-1 ml-1 collapse-head" role="tab">
+                                        <a v-b-toggle.accordion-3><div class="numberCircle">3</div>FarmHouse</a>
                                         <span class="float-right">$33</span>
                                     </div>
                                     <b-collapse id="accordion-3" visible accordion="my-accordion" role="tabpanel">
-                                        <div class="pl-3 sub-catg">
+                                        <div class="pl-3 sub-catg pb-3">
                                             <p class="text-muted">thin Crust</p>
                                             <p class="text-muted">Spicy</p>
                                             <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
@@ -80,26 +82,254 @@
                                     </b-collapse>
                                 </div>
                             </div>
+                            <div class="total">
+                                <span class="float-right">$90</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card mb-5">
+                <div class="card-body">
+                    <div class="row mx-3 mt-3">
+                        <div class="col-md-6">
+                            <div class="sec1">
+                                <h6>Burger Point</h6>
+                                <p class="text-muted">22nd jan 2019</p>
+                            </div>
+                            <div class="sec1">
+                                <p class="mt-4">2 E Broadway #200, New York, NY 10038, USA</p>
+                            </div>
+                            <div class="">
+                                <div class="rating mt-4 mb-3">
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+
+                                    <!--                                    <star-rating :increment="0.5"></star-rating>-->
+                                </div>
+                                <div class="form-group">
+                                    <textarea  class="form-control review" placeholder="your review"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="collapse-tab" role="tablist">
+                                <div class="line">
+                                    <div class="px-1 ml-1 collapse-head" role="tab">
+                                        <a v-b-toggle.accordion-1><div class="numberCircle">1</div>FarmHouse</a>
+                                        <span class="float-right">$33</span>
+                                    </div>
+                                    <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+                                        <div class="pl-3 sub-catg pb-3">
+                                            <p class="text-muted">thin Crust</p>
+                                            <p class="text-muted">Spicy</p>
+                                            <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
+                                        </div>
+                                    </b-collapse>
+                                </div>
+
+                                <div class="line">
+                                    <div class="px-1 ml-1 collapse-head" role="tab">
+                                        <a v-b-toggle.accordion-2><div class="numberCircle">2</div>FarmHouse</a>
+                                        <span class="float-right">$33</span>
+                                    </div>
+                                    <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
+                                        <div class="pl-3 sub-catg pb-3">
+                                            <p class="text-muted">thin Crust</p>
+                                            <p class="text-muted">Spicy</p>
+                                            <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
+                                        </div>
+                                    </b-collapse>
+                                </div>
+
+                                <div class="line">
+                                    <div class="px-1 ml-1 collapse-head" role="tab">
+                                        <a v-b-toggle.accordion-3><div class="numberCircle">3</div>FarmHouse</a>
+                                        <span class="float-right">$33</span>
+                                    </div>
+                                    <b-collapse id="accordion-3" visible accordion="my-accordion" role="tabpanel">
+                                        <div class="pl-3 sub-catg pb-3">
+                                            <p class="text-muted">thin Crust</p>
+                                            <p class="text-muted">Spicy</p>
+                                            <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
+                                        </div>
+                                    </b-collapse>
+                                </div>
+                            </div>
+                            <div class="total">
+                                <span class="float-right">$90</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="container fade show d-none" id="previousOrder">
+            <div class="card mb-5">
+                <div class="card-body">
+                    <div class="row mx-3 mt-3">
+                        <div class="col-md-6">
+                            <div class="sec1">
+                                <h6>Burger Point</h6>
+                                <p class="text-muted">22nd jan 2019</p>
+                            </div>
+                            <div class="sec1">
+                                <p class="mt-4">2 E Broadway #200, New York, NY 10038, USA</p>
+                            </div>
+                            <div class="">
+                                <div class="rating mt-4 mb-3">
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+
+                                    <!--                                    <star-rating :increment="0.5"></star-rating>-->
+                                </div>
+                                <div class="form-group">
+                                    <textarea  class="form-control review" placeholder="your review"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="collapse-tab" role="tablist">
+                                <div class="line">
+                                    <div class="px-1 ml-1 collapse-head" role="tab">
+                                        <a v-b-toggle.accordion-1><div class="numberCircle">1</div>FarmHouse</a>
+                                        <span class="float-right">$33</span>
+                                    </div>
+                                    <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+                                        <div class="pl-3 sub-catg pb-3">
+                                            <p class="text-muted">thin Crust</p>
+                                            <p class="text-muted">Spicy</p>
+                                            <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
+                                        </div>
+                                    </b-collapse>
+                                </div>
+
+                                <div class="line">
+                                    <div class="px-1 ml-1 collapse-head" role="tab">
+                                        <a v-b-toggle.accordion-2><div class="numberCircle">2</div>FarmHouse</a>
+                                        <span class="float-right">$33</span>
+                                    </div>
+                                    <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
+                                        <div class="pl-3 sub-catg pb-3">
+                                            <p class="text-muted">thin Crust</p>
+                                            <p class="text-muted">Spicy</p>
+                                            <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
+                                        </div>
+                                    </b-collapse>
+                                </div>
+
+                                <div class="line">
+                                    <div class="px-1 ml-1 collapse-head" role="tab">
+                                        <a v-b-toggle.accordion-3><div class="numberCircle">3</div>FarmHouse</a>
+                                        <span class="float-right">$33</span>
+                                    </div>
+                                    <b-collapse id="accordion-3" visible accordion="my-accordion" role="tabpanel">
+                                        <div class="pl-3 sub-catg pb-3">
+                                            <p class="text-muted">thin Crust</p>
+                                            <p class="text-muted">Spicy</p>
+                                            <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
+                                        </div>
+                                    </b-collapse>
+                                </div>
+                            </div>
+                            <div class="total">
+                                <span class="float-right">$90</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card mb-5">
+                <div class="card-body">
+                    <div class="row mx-3 mt-3">
+                        <div class="col-md-6">
+                            <div class="sec1">
+                                <h6>Burger Point</h6>
+                                <p class="text-muted">22nd jan 2019</p>
+                            </div>
+                            <div class="sec1">
+                                <p class="mt-4">2 E Broadway #200, New York, NY 10038, USA</p>
+                            </div>
+                            <div class="">
+                                <div class="rating mt-4 mb-3">
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+
+                                    <!--                                    <star-rating :increment="0.5"></star-rating>-->
+                                </div>
+                                <div class="form-group">
+                                    <textarea  class="form-control review" placeholder="your review"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="collapse-tab" role="tablist">
+                                <div class="line">
+                                    <div class="px-1 ml-1 collapse-head" role="tab">
+                                        <a v-b-toggle.accordion-1><div class="numberCircle">1</div>FarmHouse</a>
+                                        <span class="float-right">$33</span>
+                                    </div>
+                                    <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+                                        <div class="pl-3 sub-catg pb-3">
+                                            <p class="text-muted">thin Crust</p>
+                                            <p class="text-muted">Spicy</p>
+                                            <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
+                                        </div>
+                                    </b-collapse>
+                                </div>
+
+                                <div class="line">
+                                    <div class="px-1 ml-1 collapse-head" role="tab">
+                                        <a v-b-toggle.accordion-2><div class="numberCircle">2</div>FarmHouse</a>
+                                        <span class="float-right">$33</span>
+                                    </div>
+                                    <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
+                                        <div class="pl-3 sub-catg pb-3">
+                                            <p class="text-muted">thin Crust</p>
+                                            <p class="text-muted">Spicy</p>
+                                            <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
+                                        </div>
+                                    </b-collapse>
+                                </div>
+
+                                <div class="line">
+                                    <div class="px-1 ml-1 collapse-head" role="tab">
+                                        <a v-b-toggle.accordion-3><div class="numberCircle">3</div>FarmHouse</a>
+                                        <span class="float-right">$33</span>
+                                    </div>
+                                    <b-collapse id="accordion-3" visible accordion="my-accordion" role="tabpanel">
+                                        <div class="pl-3 sub-catg pb-3">
+                                            <p class="text-muted">thin Crust</p>
+                                            <p class="text-muted">Spicy</p>
+                                            <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
+                                        </div>
+                                    </b-collapse>
+                                </div>
+                            </div>
+                            <div class="total">
+                                <span class="float-right">$90</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container fade show d-none" id="previousOrder">
-            <p style="color: black;">
-                absddksjd233 232323
-            </p>
-        </div>
     </div>
-
-
-
-<!--        <div class="container-fluid">-->
-<!--            <b-tabs content-class="row text-center my-5" fill>-->
-<!--                <b-tab title="First" active><p>I'm the first tab</p></b-tab>-->
-<!--                <b-tab title="Second"><p>I'm the second tab</p></b-tab>-->
-<!--            </b-tabs>-->
-<!--        </div>-->
     </div>
 </template>
 
@@ -107,6 +337,27 @@
     export default {
         name: "DiamondAward"
     }
+    /*Vue.component('star-rating', VueStarRating.default)
+    new Vue({
+        el: '#app',
+        methods: {
+            setRating: function(rating) {
+                this.rating = "You have Selected: " + rating + " stars";
+            },
+            showCurrentRating: function(rating) {
+                this.currentRating = (rating === 0) ? this.currentSelectedRating : "Click to select " + rating + " stars"
+            },
+            setCurrentSelectedRating: function(rating) {
+                this.currentSelectedRating = "You have Selected: " + rating + " stars";
+            }
+        },
+        data: {
+            rating: "No Rating Selected",
+            currentRating: "No Rating",
+            currentSelectedRating: "No Current Rating",
+            boundRating: 3,
+        }
+    });*/
     $(document).ready(function() {
         $("#cOrder").click(function (e) {
             e.preventDefault();
@@ -176,6 +427,17 @@
     }
 /* end*/
 
+/*.custom-text {*/
+/*    font-weight: bold;*/
+/*    font-size: 1.9em;*/
+/*    border: 1px solid #cfcfcf;*/
+/*    padding-left: 10px;*/
+/*    padding-right: 10px;*/
+/*    border-radius: 5px;*/
+/*    color: #999;*/
+/*    background: #fff;*/
+/*}*/
+
 .numberCircle {
     border-radius: 50%;
     width: 15px;
@@ -196,8 +458,26 @@
         margin-left: 10px;
         padding-left: 10px;
     }
-    .sub-catg p,span{
+    .sub-catg p,.sub-catg span{
+        font-family: pantonl;
+        text-transform: capitalize;
         margin-bottom: 0;
-        font-size: 14px;
+        font-size: 16px;
+        /*font-weight: lighter;*/
     }
+    .collapse-head{
+        font-size: 19px;
+    }
+    .collapse-tab{
+        padding-bottom: 10px;
+        border-bottom: 1px solid #9C9C9C;
+    }
+    .total span{
+        font-size: 19px;
+        padding-top: 15px;
+    }
+    .card{
+        box-shadow: 4px 1px 10px 1px #DEDEDE;
+    }
+
 </style>
