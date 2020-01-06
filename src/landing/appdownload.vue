@@ -23,7 +23,9 @@
     </div>
 </template>
 <script>
+import Dishes from "../components/selected restaurant/dishes";
 export default {
+    components: {Dishes},
     data(){
         return{
             download: {
@@ -41,12 +43,15 @@ export default {
 .downloads{
     background: #ff2e32;
 }
-.download {
-    display: flex;
-    position: relative;
+.phone-image{
+    height: 500px;
+    width: 80%;
+    display: block;
+    margin: auto;
+}
+.phone-image img{
     width: 100%;
-    height: 518px;
-    align-items: center;
+    height: 100%;
 }
 .phone-image {
     height: 500px;

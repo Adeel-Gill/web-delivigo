@@ -13,11 +13,11 @@
           @sliding-end="onSlideEnd"
         >
           <!-- Text slides with image -->
-          <b-carousel-slide v-for="slide in restaurants" :img-src= "baseUrl + slide.ImageUrl" >
-            <div class="filter-caption">
-              <h6>{{slide.Name}}</h6>
-              <h3>{{slide.Tags}}</h3>
-              <p>{{slide.FullAddress +' '+ slide.FullAddress2}}</p>
+          <b-carousel-slide v-for="slide in mockData" :key="slide" :img-src= "slide.imageURL" >
+            <div class="filter-caption" style="right: 0;">
+              <h6>slide.name</h6>
+              <h3>slide.description</h3>
+              <p>slide.rating</p>
             </div>
           </b-carousel-slide>
         </b-carousel>
@@ -26,6 +26,7 @@
 </template>
 <script>
   import {baseAddress} from "../../main";
+  import restaurants from "../restaurant/restaurants.js"
 
   export default {
     data() {
@@ -33,7 +34,8 @@
         text:'',
         sliding: null,
         baseUrl: baseAddress,
-        restaurants: []
+        restaurants: [],
+        mockData: restaurants
       }
     },
     methods: {
@@ -47,7 +49,8 @@
     mounted() {
       this.$root.$on('popularData', popularRestaurants => {
         console.log('inFilterBannerOn'+popularRestaurants);
-        this.restaurants = popularRestaurants
+        this.restaurants = popularRestaurants;
+        console.log('mockData'+this.mockData);
       })
     }
   }
@@ -87,6 +90,4 @@
     align-items: center;
     position: relative;
 }
-
-
 </style>

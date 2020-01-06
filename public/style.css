@@ -24,7 +24,7 @@
 a.nav-link{
     font-family: Panton-Bold;
     font-size: 14px;
-    color: #ffffff !important;
+    /*color: #ffffff !important;*/
 }
 .singin{
     padding: 0 15px 0 23px;

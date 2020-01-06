@@ -80,6 +80,10 @@ export default {
     border-radius: 8px;
     margin-bottom: 25px;
 }
+.restaurants-details{
+    padding: 5px 0 3px 0;
+    /*height: 90px;*/
+}
 .restaurants-details h6{
     font-family: "Roboto";
     font-size: 17px;

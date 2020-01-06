@@ -101,6 +101,56 @@
             </b-modal>
         </div>
     </div>
+    <b-modal hide-footer size="lg" class="my-modal" id="modal-1" title="Add New Card">
+        <div class="container">
+        <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="cNumber">Card Number</label>
+                <input type="text" class="form-control" id="cNumber">
+            </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fName">First Name</label>
+                    <input type="text" class="form-control" id="fName">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="lName">Last Name</label>
+                    <input type="text" class="form-control" id="lName">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="expDate">Expires On</label>
+                    <input type="text" class="form-control" placeholder="MM" id="expDate">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="year">&nbsp;</label>
+                    <input type="text" class="form-control" placeholder="YY" id="year">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="security">Security Code</label>
+                    <input type="text" class="form-control" id="security">
+                </div>
+            </div>
+        </div>
+        <div class="btn-modal">
+            <button @click="$bvModal.hide('modal-1')" class="btn btn-submit">Save</button>
+        </div>
+        </div>
+    </b-modal>
+</div>
 </template>
 
 <script>
@@ -374,9 +424,9 @@
     .m-bottom{
         margin-bottom: 100px;
     }
-    .col-md-4{
-        padding: 0;
-    }
+    /*.col-md-4{*/
+    /*    padding: 0;*/
+    /*}*/
     .profile-heading{
         color: #5860ff;
         font-size: 38px;
@@ -396,6 +446,10 @@
         background-color: #5860ff;
         color: white;
 
+    }
+    .btn-submit:hover{
+        background-color: #4F55C2;
+        color: white;
     }
     .button{
         margin-top: 50px;
@@ -429,31 +483,37 @@
         text-align: right;
     }
     .icon i{
-        margin: 0 20px 0 0;
-        font-size: 20px;
+        margin: 0 15px 0 0;
+        font-size: 18px;
     }
     .icon .cancel{
         color: red;
     }
+    .cancel:hover{
+        color: #9C0000;
+    }
     .edit{
         color: #5860ff;
+    }
+    .edit:hover{
+        color: #4F55C2;
     }
     .radio{
         display: flex;
         margin-top: 10px;
     }
     .radio input{
-        margin-top: 1px;
-        height:20px;
-        width: 20px;
-        margin-right: 10px;
+        margin-top: 3px;
+        height:18px;
+        width: 18px;
+        margin-right: 5px;
     }
     .radio label{
-        font-size: 17px;
-    }
-    .modal-dialog {
-        width: 700px !important;
+        font-size: 16px;
     }
     .btn-modal{
+        display: flex;
+        justify-content: flex-end;
+        margin: 10px 0 20px 0;
     }
 </style>
