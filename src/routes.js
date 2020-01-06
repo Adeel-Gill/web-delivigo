@@ -14,6 +14,7 @@ import DiamondAward from "./components/User/DiamondAward";
 import Support from "./components/User/Support";
 import Profile from "./components/User/Profile";
 import Map from "./components/Map/Map";
+import checkout from "./components/selected restaurant/checkout";
 import BillingAndPayments from "./components/User/BillingAndPayments";
 import LoginAndRegister from "./components/LoginAndRegister/LoginAndRegister";
 import Login from "./components/LoginAndRegister/Login";
@@ -102,7 +103,8 @@ export const routes = [
     {path: '/newRestaurants', component: allNewRestaurants},
     {path: '/restaurants', component: allRestaurants},
     {path: '/foodCategories', component: allFoodCategories},
-    {path: '/foodFilter', component: SelectedFoodRestaurants}
+    {path: '/foodFilter', component: SelectedFoodRestaurants},
+    {path: '/checkout', component: checkout}
 ]
 function checkLoginRoute() {
     if(localStorage.getItem('token') !== null || localStorage.getItem('token') !== '') {

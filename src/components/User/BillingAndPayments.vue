@@ -100,56 +100,6 @@
 <!--                </div>-->
             </b-modal>
         </div>
-    </div>
-    <b-modal hide-footer size="lg" class="my-modal" id="modal-1" title="Add New Card">
-        <div class="container">
-        <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label for="cNumber">Card Number</label>
-                <input type="text" class="form-control" id="cNumber">
-            </div>
-        </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="fName">First Name</label>
-                    <input type="text" class="form-control" id="fName">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="lName">Last Name</label>
-                    <input type="text" class="form-control" id="lName">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="expDate">Expires On</label>
-                    <input type="text" class="form-control" placeholder="MM" id="expDate">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="year">&nbsp;</label>
-                    <input type="text" class="form-control" placeholder="YY" id="year">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="security">Security Code</label>
-                    <input type="text" class="form-control" id="security">
-                </div>
-            </div>
-        </div>
-        <div class="btn-modal">
-            <button @click="$bvModal.hide('modal-1')" class="btn btn-submit">Save</button>
-        </div>
-        </div>
-    </b-modal>
 </div>
 </template>
 
