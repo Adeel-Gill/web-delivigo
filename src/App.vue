@@ -1,5 +1,6 @@
 <template>
   <div>
+    <notifications group="foo" position="bottom right"></notifications>
     <app-loader></app-loader>
     <div class="headerSection">
       <app-header></app-header>

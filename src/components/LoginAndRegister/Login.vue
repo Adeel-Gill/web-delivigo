@@ -45,24 +45,34 @@
             ...mapActions([
                 'storeToken'
             ]),
+            showNotification(type, title, message) {
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
+                })
+            },
             async checkCredentials() {
                 if(this.checkObject()) {
-                    checkCredentials(this.userData).then(response => {
+                     checkCredentials(this.userData).then(response => {
                         if(response.HasErrors === false) {
-                            alert('Sign In success...!');
                             console.log('id',response.Id);
                             this.$store.dispatch('storeToken',response);
-                            this.$router.go();
+                            this.showNotification('success', 'Success', 'Sign in successfully');
                             this.$router.push({path:'/'});
+                            this.$router.go();
+
                             // this.storeToken('storeToken',response.AuthToken, response)
 
                         } else {
                             console.log('Error: '+ response.ResultMessages[0].Message);
-                            alert('Sign In failed...!')
+                            this.showNotification('error', 'Error', 'Sign in failed');
                         }
                     })
                 } else {
-                    alert('Please fill require fields...!');
+                    this.showNotification('warn', 'Warning', 'Please fill all the fields');
                 }
             },
             checkObject() {

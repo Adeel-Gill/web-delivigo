@@ -21,6 +21,12 @@ export function retrieveCustomerAllCards(id) {
         method: 'get'
     })
 }
+export function deleteCustomerCard(id) {
+    return service({
+        url: 'DeleteCustomerCard?customerCardId='+id,
+        method: 'get'
+    })
+}
 
 // import {EventBus} from "../../main";
 // import ProxyAgent from 'http-proxy-agent';

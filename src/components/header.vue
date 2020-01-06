@@ -42,38 +42,48 @@
   import {mapGetters} from "vuex";
   export default {
     data() {
-        return {
-            isFilter:false,
-          isLogin: this.$store.getters.getLogin,
-          isLoggedOut: this.$store.getters.getLoggedOut,
-          user: {},
-          image: ''
-        }
-    },
-  methods: {
-    ...mapActions([
-      'cleanToken'
-    ]),
-    checkIsLogin() {
-      if(this.$store.state.isLogin !== '' || (localStorage.getItem('isLogin') !== false)) {
-        console.log('state',this.$store.state.isLogin);
-        this.isLogin = this.$store.state.isLogin;
+      return {
+        isFilter: false,
+        isLogin: this.$store.getters.getLogin,
+        isLoggedOut: this.$store.getters.getLoggedOut,
+        user: {},
+        image: ''
       }
-      else {
-        this.isLogin = false;
-      }
-      // this.$forceUpdate();
-      EventBus.$on('userImage', responce => {
-        if(!responce) {
-          this.image = responce;
-        }
-      })
     },
-    signOut() {
-      this.$store.dispatch('cleanToken');
-      this.$router.go();
-    }
-  },
+    methods: {
+      ...mapActions([
+        'cleanToken'
+      ]),
+      checkIsLogin() {
+        if (this.$store.state.isLogin !== '' || (localStorage.getItem('isLogin') !== false)) {
+          console.log('state', this.$store.state.isLogin);
+          this.isLogin = this.$store.state.isLogin;
+        } else {
+          this.isLogin = false;
+        }
+        // this.$forceUpdate();
+        EventBus.$on('userImage', responce => {
+          if (!responce) {
+            this.image = responce;
+          }
+        })
+      },
+      signOut() {
+        this.$store.dispatch('cleanToken');
+        this.showNotification('success','Success','Sign out successfully');
+        this.$router.go();
+      },
+      showNotification(type, title, message) {
+        this.$notify({
+          group: 'foo',
+          type: type,
+          title: title,
+          text: message,
+          duration: 2000,
+
+        })
+      }
+    },
   mounted() {
       console.log('m',this.isLogin === 'true'? true: false,this.isLoggedOut === 'true'? true: false);
 

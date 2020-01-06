@@ -15,21 +15,27 @@
                 </div>
             </div>
             <div class="col-md-10" v-if="isAvailable">
-                <div class="address-block row" v-for="card in allCards" :key="card.Id">
-                    <div class="col-md-8" >
-                        <div class="card-image">
-                            <img :src="getImgUrl(card.Brand.toLowerCase())">
+                <div v-if="allCards.length > 0">
+                    <div class="address-block row" v-for="card in allCards" :key="card.Id">
+                        <div class="col-md-8" >
+                            <div class="card-image">
+                                <img :src="getImgUrl(card.Brand.toLowerCase())">
+                            </div>
+                            <p class="address-par text-muted">{{card.Brand}} .... .... {{card.CardNumber}}</p>
+                            <p class="address-par text-muted">Expires in {{card.Month}}/{{card.Year}}</p>
                         </div>
-                        <p class="address-par text-muted">{{card.Brand}} .... .... {{card.CardNumber}}</p>
-                        <p class="address-par text-muted">Expires in {{card.Month}}/{{card.Year}}</p>
+                        <div class="col-md-2 icon">
+                            <button @click="deleteCard(card.Id)" :disabled ="card.IsDefault"><i class="fas fa-times-circle cancel"></i></button>
+                            <div class="radio">
+                                <input type="radio" :checked = card.IsDefault @click="markDefaultCard(card)" >
+                                <label>Default</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-2 icon">
-                        <a href="#" v-b-modal.modal-1><i class="fas fa-pencil-alt edit"></i></a>
-                        <a href="#"><i class="fas fa-times-circle cancel"></i></a>
-                        <div class="radio">
-                            <input type="radio" :checked = card.IsDefault @click="markDefaultCard(card)" >
-                            <label>Default</label>
-                        </div>
+                </div>
+                <div v-else class="address-block row">
+                    <div class="col-md-8">
+
                     </div>
                 </div>
             </div>
@@ -38,9 +44,6 @@
         <div>
             <b-modal hide-footer refs="modal" class="my-modal"  @exit="close" id="modal-1" title="Create Card">
                 <div ref="card" :disabled = "isLoading"></div>
-                <hr>
-                <input type="checkbox" id="checkbox" v-model="checked" required>
-                <label for="checkbox">Set Default</label>
                 <hr>
                 <buttonSpinner
                         :loading="isLoading"
@@ -105,6 +108,7 @@
     import {markDefaultCard} from "../api/CardAndPayments";
     import {retrieveCustomerAllCards} from "../api/CardAndPayments";
     import {EventBus} from "../../main";
+    import {deleteCustomerCard} from "../api/CardAndPayments";
     import VueLoadingButton from 'vue-loading-button';
     let stripe = Stripe(`pk_test_TYPazNES7wQJ4WyN83oLTlEa`),
         elements = stripe.elements(),
@@ -172,11 +176,34 @@
             closeModal() {
               // return true;
             },
+            deleteCard(id) {
+                this.$dialog.confirm('Card will be deleted permanently. Continue?', {
+                    loader: true
+                })
+                .then(dialog => {
+                    dialog.loading(true);
+                    deleteCustomerCard(id).then(response => {
+                        if(response.HasErrors) {
+                            dialog.loading(false);
+                            dialog.close();
+                            this.showNotification('error', 'Error', 'Card deletion failed!');
+                        } else {
+                            dialog.loading(false);
+                            dialog.close();
+                            this.showNotification('success', 'Success', 'Card Successfully Deleted');
+                            this.fetchCustomerCards();
+                        }
+                    })
+                }).catch(() => {
+                    this.showNotification('info', 'Info', 'Card Deletion Cancelled');
+                });
+            },
             fetchCustomerCards() {
                 retrieveCustomerAllCards(localStorage.getItem('id')).then(response => {
                     if(response.HasErrors) {
-                        alert('card retrieval failed...!')
+                        this.showNotification('error','Error','card retrieval failed!');
                     } else {
+                        this.showNotification('success','Success', 'All cards are fetched and shown');
                         this.allCards = response;
                         this.isAvailable = true;
                     }
@@ -188,9 +215,9 @@
                 this.card.CardId = response.Id;
                 markDefaultCard(this.card).then(response => {
                     if(response.HasErrors) {
-                        alert('Error occured please try later!');
+                        this.showNotification('error', 'Error', 'Error occurred please try again later!');
                     } else {
-                        alert('Card set as default!');
+                        this.showNotification('success','Success', 'Card is now set as default!');
                         this.fetchCustomerCards();
                     }
                 })
@@ -202,7 +229,7 @@
             SaveAndShowCards() {
                 saveCardData(this.cardData).then(response => {
                     if(response.HasErrors) {
-                        alert('Card Created But Not Saved...!');
+                       this.showNotification('error','Error','Card is created but not saved');
                     } else {
                         if(this.checked) {
                             this.card.CustomerId = response.CustomerId;
@@ -210,9 +237,9 @@
                             this.card.CardId = response.Id;
                             markDefaultCard(this.card).then(response => {
                                 if(response.HasErrors) {
-                                    alert('set card default failed');
+                                    this.showNotification('error', 'Error', 'Error occurred please try again later!');
                                 } else {
-                                    alert('Card is successfully saved...!');
+                                    this.showNotification('success','Success', 'Card is now set as default!');
                                     this.fetchCustomerCards();
                                     this.$bvModal.hide('modal-1');
                                     this.isAvailable = true;
@@ -239,7 +266,7 @@
                 console.log('cardOwnerData', card);
                    await stripe.createSource(card).then(response => {
                         if(response.error) {
-                            alert('card creation failed...!');
+                            this.showNotification('error','Error', 'Card creation failed!');
                         } else {
                             this.cardData.CardNumber = response.source.card.last4;
                             this.cardData.Brand  = response.source.card.brand;
@@ -282,12 +309,16 @@
                 setTimeout(()=> {
                     if(this.setOnce) {
                         card.mount(this.$refs.card);
+                        this.showNotification('info','Info','Card is setted as once');
                     } else {
                         if(localStorage.getItem('creationCounter') === '0') {
+                            this.showNotification('info','Info','Card is not created firstly');
                             card = elements.create('card');
                             card.mount(this.$refs.card);
                             localStorage.setItem('creationCounter', '1');
                         } else {
+                            this.showNotification('info','Info','Card is not creation counter already started');
+                            card = elements.create('card');
                             card.mount(this.$refs.card);
                         }
                         localStorage.setItem('setOnce', true);
@@ -298,7 +329,16 @@
             destroyCard() {
                 // console.log('method Called');
                 // card.destroy();
-            }
+            },
+            showNotification(type, title, message) {
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
+                })
+            },
         },
         created() {
             localStorage.setItem('setOnce', false);
@@ -307,8 +347,7 @@
         mounted() {
             localStorage.setItem('setOnce', false);
            this.fetchCustomerCards();
-            console.log('here')
-            card = elements.create('card');
+            console.log('here');
             // card.mount(this.$refs.card);
         },
         updated() {

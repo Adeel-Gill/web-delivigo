@@ -14,20 +14,39 @@
 <!--                               :key="foodType"-->
 <!--                               @click="navigateTo(foodType.Id)" :mealMenu = 'foodType'></app-meal-menu>-->
             </div>
-            <div class="shoping-cart">
-                <div class="cart">
-                    <a href=""><img :src="cartImg" alt=""></a>
+            <vue-drawer-layout :drawer-width="800" ref="drawer" @mask-click="handleMaskClick">
+                <div class="drawer" slot="drawer">
+                    <div class="text"> drawer </div>
                 </div>
-                <div class="cart-hover">
-                    <a href=""><img :src="cartHover" alt=""></a>
-                </div>
+            </vue-drawer-layout>
+            <div @click = "handleToggleDrawer">
+                <fab style="margin-top: 5px;"
+                     position="top-right"
+                     position-type="absolute"
+                     ripple-show="true"
+                     ripple-color="dark"
+                     bg-color="#8ba939"
+                     main-tooltip="Cart"
+                     main-icon="shopping_cart"
+                     enable-rotation="false"
+                > </fab>
             </div>
+
+
+<!--            <div class="shoping-cart">-->
+<!--                <div class="cart">-->
+<!--                    <a href=""><img :src="cartImg" alt=""></a>-->
+<!--                </div>-->
+<!--                <div class="cart-hover">-->
+<!--                    <a href=""><img :src="cartHover" alt=""></a>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
 </template>
 <script>
     import {baseAddress} from "../../main";
     import {fetchRestaurantMealsById} from "../api/CustomMeal";
-
+    import fab from 'vue-fab';
     export default {
 
     data(){
@@ -38,12 +57,19 @@
             baseUrl: baseAddress,
             restaurant: {},
             image: '',
+            fabActions: [{
+                name: 'cache',
+                icon: 'cached'
+            }],
             allImages: [],
             restaurantImages: [],
             resID: null,
             mealID: null
         }
     },
+        components: {
+        fab,
+        },
     mounted() {
         this.$root.$on('mealMenu', response => {
             this.foodTypes = response;
@@ -61,6 +87,14 @@
         })
     },
     methods: {
+        handleToggleDrawer() {
+            console.log('insideToggle',this.$refs.drawer.toggle());
+            this.$refs.drawer.toggle();
+        },
+        handleMaskClick() {
+            console.info('mask-click');
+            this.$refs.drawer.toggle(false);
+        },
             navigateTo(id) {
                 console.log('insideNavigateMethod', id);
                 if(id) {
@@ -146,6 +180,9 @@
     position: absolute;
     top: 10px;
     right: 15px;
+}
+.new-cart{
+    top: 10px;
 }
 .shoping-cart a{
     display: inline-block;
