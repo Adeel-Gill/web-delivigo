@@ -113,7 +113,6 @@
     let stripe = Stripe(`pk_test_TYPazNES7wQJ4WyN83oLTlEa`),
         elements = stripe.elements(),
         card = undefined;
-    let stripe2=Stripe('pk_test_TYPazNES7wQJ4WyN83oLTlEa');
     export default {
         name: "BillingAndPayments",
         components: {

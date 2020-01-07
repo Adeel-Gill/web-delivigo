@@ -21,9 +21,8 @@
         <vue-drawer-layout
                 ref="drawer"
                 drawer-position="right"
-                reverse="true"
-                drawer-width="100"
-                drawer-height="100"
+                :drawer-width="800"
+                :drawable-distance="Math.floor(800/3)"
                 @mask-click="handleMaskClick">
             <div class="drawer" slot="drawer">
                 <div @click = "handleToggleDrawer" style="margin-top: 60px; margin-right: 50px" >
@@ -38,10 +37,10 @@
                          main-icon="shopping_cart"
                          enable-rotation="false"
                     ></fab>
-                    <router-link to="/checkout"><button btn btn-submit>Proceed to checkout</button></router-link>
+
                 </div>
                 <div class="text"  style=" margin-top: 50px">
-
+here
                 </div>
             </div>
         </vue-drawer-layout>
