@@ -26,8 +26,9 @@
                 drawer-height="100"
                 @mask-click="handleMaskClick">
             <div class="drawer" slot="drawer">
-                <div @click = "handleToggleDrawer" >
-                    <fab style="margin-top: 60px; margin-right: 50px"
+                <div @click = "handleToggleDrawer" style="margin-top: 60px; margin-right: 50px" >
+                    <fab
+                            style="margin-top: 60px; margin-right: 50px"
                          position="top-right"
                          position-type="absolute"
                          ripple-show="true"
@@ -37,8 +38,11 @@
                          main-icon="shopping_cart"
                          enable-rotation="false"
                     ></fab>
+                    <router-link to="/checkout"><button btn btn-submit>Proceed to checkout</button></router-link>
                 </div>
-                <div class="text"  style=" margin-top: 50px"> drawer ashdashjd asdjhasdsjhdg ajsdhasgd text </div>
+                <div class="text"  style=" margin-top: 50px">
+
+                </div>
             </div>
         </vue-drawer-layout>
     </div>
