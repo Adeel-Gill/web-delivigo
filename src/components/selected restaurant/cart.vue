@@ -9,25 +9,15 @@
                         :key="foodType"
                         @click="navigateTo(foodType.Id)" >{{foodType.Name}}</button>
             </div>
- <!--            <div class="shoping-cart">-->
-            <!--                <div class="cart">-->
-            <!--                    <a href=""><img :src="cartImg" alt=""></a>-->
-            <!--                </div>-->
-            <!--                <div class="cart-hover">-->
-            <!--                    <a href=""><img :src="cartHover" alt=""></a>-->
-            <!--                </div>-->
-            <!--            </div>-->
-        </div>
-        <vue-drawer-layout
-                ref="drawer"
-                drawer-position="right"
-                reverse="true"
-                drawer-width="100"
-                drawer-height="100"
-                @mask-click="handleMaskClick">
-            <div class="drawer" slot="drawer">
-                <div @click = "handleToggleDrawer" >
-                    <fab style="margin-top: 60px; margin-right: 50px"
+            <vue-drawer-layout :drawer-width="800" ref="drawer" @mask-click="handleMaskClick">
+                <div class="drawer" slot="drawer">
+                    <div class="text"> drawer </div>
+                </div>
+            </vue-drawer-layout>
+
+            <div @click = "handleToggleDrawer">
+                <router-link to="/checkout">
+                    <fab style="margin-top: 5px;"
                          position="top-right"
                          position-type="absolute"
                          ripple-show="true"
