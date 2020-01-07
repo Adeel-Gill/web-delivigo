@@ -86,6 +86,9 @@
     },
   mounted() {
       console.log('m',this.isLogin === 'true'? true: false,this.isLoggedOut === 'true'? true: false);
+      if(this.isLogin === 'null' || this.isLoggedOut === 'null') {
+        this.$store.dispatch('cleanToken');
+      }
 
     // this.isLogin=localStorage.getItem('isLogin');
   },

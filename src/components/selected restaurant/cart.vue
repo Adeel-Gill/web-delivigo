@@ -18,33 +18,36 @@
             <!--                </div>-->
             <!--            </div>-->
         </div>
-        <vue-drawer-layout
-                ref="drawer"
-                drawer-position="right"
-                reverse="true"
-                drawer-width="100"
-                drawer-height="100"
-                @mask-click="handleMaskClick">
-            <div class="drawer" slot="drawer">
-                <div @click = "handleToggleDrawer" style="margin-top: 60px; margin-right: 50px" >
-                    <fab
-                            style="margin-top: 60px; margin-right: 50px"
-                         position="top-right"
-                         position-type="absolute"
-                         ripple-show="true"
-                         ripple-color="dark"
-                         bg-color="#8ba939"
-                         main-tooltip="Cart"
-                         main-icon="shopping_cart"
-                         enable-rotation="false"
-                    ></fab>
-                    <router-link to="/checkout"><button btn btn-submit>Proceed to checkout</button></router-link>
+        <div>
+            <div @click = "handleToggleDrawer" style="margin-top: 60px; margin-right: 50px">
+                <fab
+                        style="margin-top: 60px; margin-right: 50px"
+                        position="top-right"
+                        position-type="absolute"
+                        ripple-show="true"
+                        ripple-color="dark"
+                        bg-color="#8ba939"
+                        main-tooltip="Cart"
+                        main-icon="shopping_cart"
+                        enable-rotation="false"
+                ></fab>
+            </div>
+            <vue-drawer-layout
+                    ref="drawer"
+                    drawer-position="right"
+                    :reverse="false"
+                    :drawer-width="600"
+                    @mask-click="handleMaskClick">
+                <div class="drawer" slot="drawer" style="margin-top: 120px; ">
+                        <router-link to="/checkout"><button btn btn-submit>Proceed to checkout</button></router-link>
+                    <div class="text"  style=" margin-top: 50px">
+                    </div>
                 </div>
-                <div class="text"  style=" margin-top: 50px">
+                <div class="content" slot="content" >
 
                 </div>
-            </div>
-        </vue-drawer-layout>
+            </vue-drawer-layout>
+        </div>
     </div>
 
 </template>
