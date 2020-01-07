@@ -34,7 +34,7 @@
                     <button @click="increment()">&#xff0b;</button>
                 </div>
                 <div class="add-item-btn">
-                    <a href="#">Add item -  € {{dishDetail.Price}}.00</a>
+                    <a>Add item -  € {{dishDetail.Price * quantity}}.00</a>
                 </div>
             </div>
         </div>

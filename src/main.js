@@ -10,7 +10,7 @@ import VShowSlide from 'v-show-slide'
 import {UserInfo} from "./components/store/UserInfo";
 import Notification from 'vue-notification';
 import VuejsDialog from 'vuejs-dialog';
-import DrawerLayout from 'vue-drawer-layout'
+import {DrawerLayout} from 'vue-drawer-layout'
 import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js';
 import 'vuejs-dialog/dist/vuejs-dialog.min.css';
 
@@ -23,7 +23,7 @@ Vue.use(VuejsDialog);
 Vue.use(VShowSlide);
 Vue.use(BootstrapVue);
 Vue.use(Notification);
-Vue.use(DrawerLayout);
+Vue.component(DrawerLayout.name, DrawerLayout);
 Vue.prototype.$eventBus = new Vue(); // add this line of code
 Vue.prototype.$store = UserInfo;
 Vue.use(VueRouter);

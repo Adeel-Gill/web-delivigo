@@ -1,28 +1,33 @@
 <template>
+    <div>
         <div class="slected-bg" :style="{'background-image': 'url('+image+')'}">
-<!--            <app-meal-menu v-for="foodType in foodTypes.slice(0,6)"-->
-<!--                           style="margin-top: 5px" :key="foodType" @click="navigateTo(foodType.Id)" :mealMenu = 'foodType'></app-meal-menu>-->
-            <div class="food-type">
+           <div class="food-type">
                 <p><span>€</span><span> €</span><span> €</span><span>€</span></p>
                 <button
                         v-for="foodType in foodTypes.slice(0,6)"
                         style="margin-top: 5px"
                         :key="foodType"
                         @click="navigateTo(foodType.Id)" >{{foodType.Name}}</button>
-<!--                <app-meal-menu v-for="foodType in foodTypes.slice(0,6)"-->
-<!--                               style="margin-top: 5px"-->
-<!--                               :key="foodType"-->
-<!--                               @click="navigateTo(foodType.Id)" :mealMenu = 'foodType'></app-meal-menu>-->
             </div>
-            <vue-drawer-layout :drawer-width="800" ref="drawer" @mask-click="handleMaskClick">
-                <div class="drawer" slot="drawer">
-                    <div class="text"> drawer </div>
-                </div>
-            </vue-drawer-layout>
-
-            <div @click = "handleToggleDrawer" to="/checkout">
-                <router-link to="/checkout">
-                    <fab style="margin-top: 5px;"
+ <!--            <div class="shoping-cart">-->
+            <!--                <div class="cart">-->
+            <!--                    <a href=""><img :src="cartImg" alt=""></a>-->
+            <!--                </div>-->
+            <!--                <div class="cart-hover">-->
+            <!--                    <a href=""><img :src="cartHover" alt=""></a>-->
+            <!--                </div>-->
+            <!--            </div>-->
+        </div>
+        <vue-drawer-layout
+                ref="drawer"
+                drawer-position="right"
+                reverse="true"
+                drawer-width="100"
+                drawer-height="100"
+                @mask-click="handleMaskClick">
+            <div class="drawer" slot="drawer">
+                <div @click = "handleToggleDrawer" >
+                    <fab style="margin-top: 60px; margin-right: 50px"
                          position="top-right"
                          position-type="absolute"
                          ripple-show="true"
@@ -32,26 +37,18 @@
                          main-icon="shopping_cart"
                          enable-rotation="false"
                     ></fab>
-                </router-link>
+                </div>
+                <div class="text"  style=" margin-top: 50px"> drawer ashdashjd asdjhasdsjhdg ajsdhasgd text </div>
             </div>
+        </vue-drawer-layout>
+    </div>
 
-
-<!--            <div class="shoping-cart">-->
-<!--                <div class="cart">-->
-<!--                    <a href=""><img :src="cartImg" alt=""></a>-->
-<!--                </div>-->
-<!--                <div class="cart-hover">-->
-<!--                    <a href=""><img :src="cartHover" alt=""></a>-->
-<!--                </div>-->
-<!--            </div>-->
-        </div>
 </template>
 <script>
     import {baseAddress} from "../../main";
     import {fetchRestaurantMealsById} from "../api/CustomMeal";
     import fab from 'vue-fab';
     export default {
-
     data(){
         return{
             foodTypes:[],
@@ -91,7 +88,7 @@
     },
     methods: {
         handleToggleDrawer() {
-            console.log('insideToggle',this.$refs.drawer.toggle());
+            console.log('insideToggle',this.$refs.drawer);
             this.$refs.drawer.toggle();
         },
         handleMaskClick() {
@@ -171,6 +168,9 @@
 .food-type p span {
     display: inline-block;
     margin: 0 25px 0 0;
+}
+.drawer{
+    background-color: #f8f8f8;
 }
 .shoping-cart {
     background: #8ba939;
