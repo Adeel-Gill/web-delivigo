@@ -20,7 +20,7 @@
                 </div>
             </vue-drawer-layout>
 
-            <div @click = "handleToggleDrawer" to="/checkout">
+            <div @click = "handleToggleDrawer">
                 <router-link to="/checkout">
                     <fab style="margin-top: 5px;"
                          position="top-right"
