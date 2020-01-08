@@ -204,7 +204,7 @@
                         this.showNotification('error','Error','card retrieval failed!');
                     } else {
                         this.showNotification('success','Success', 'All cards are fetched and shown');
-                        this.allCards = response;
+                        this.allCards = response.CustomerCards;
                         this.isAvailable = true;
                     }
                 })

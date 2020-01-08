@@ -15,6 +15,8 @@
         <div class="caption-change">
             <h1>{{slide.heading}}</h1>
             <p>{{slide.description}}</p>
+            <div id="map" style="display: none;"></div>
+            <div id="geocoder" class="geocoder" @select="showValues"></div>
             <b-form-input v-model="text" placeholder="I Would like to eat...."></b-form-input>
             <b-button @click="navigateTo">Search Food</b-button>
         </div>
@@ -26,13 +28,17 @@
 
 <script>
   import {EventBus} from "../main";
-
+  import mapboxgl from "mapbox-gl/dist/mapbox-gl";
+  import 'mapbox-gl/dist/mapbox-gl.css'
+  import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
   export default {
     data() {
       return {
         text:'',
         slide: 0,
         sliding: null,
+          map: null,
+          geocoder: null,
         slides:[
             {
                 heading:'ORDER DELIVERY & TAKE OUT',
@@ -54,6 +60,9 @@
       onSlideEnd() {
         this.sliding = false
       },
+        showValues() {
+            console.log('query',this.geocoder.inputString,'lastSelected',this.geocoder.lastSelected);
+        },
         navigateTo() {
           this.$router.push('filter');
             this.$root.$on('popularData', popularRestaurants => {
@@ -61,7 +70,25 @@
                 EventBus.$emit('popularData',popularRestaurants);
             })
         }
-    }
+    },
+      mounted() {
+          mapboxgl.accessToken = 'pk.eyJ1IjoiYXFpYmphdmVkMSIsImEiOiJjazRtZ3Z5YXUwNG9vM21wNTRoODFicnZtIn0.UjSkEQkYpVOmS0QUYpXoHg';
+          this.map =  new mapboxgl.Map({
+              container: 'map',
+              style: 'mapbox://styles/mapbox/streets-v11',
+              zoom: 9
+          });
+          let MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
+          this.geocoder = new MapboxGeocoder({
+              accessToken: mapboxgl.accessToken,
+              mapboxgl: mapboxgl
+          });
+          document.getElementById("geocoder").appendChild(this.geocoder.onAdd(this.map));
+          console.log('map',this.map,'geo',this.geocoder,'Map',MapboxGeocoder);
+      },
+      updated() {
+        console.log('query',this.geocoder.inputString,'lastSelected',this.geocoder.lastSelected);
+      }
   }
 </script>
 <style scoped>
@@ -104,5 +131,15 @@ button.btn {
     color: #ffffff;
     background: #df3e03;
 }
-
+.geocoder {
+    position: absolute;
+    z-index: 1;
+    width: 360px;
+    left: 50%;
+    margin-left: -25%;
+    top: 200px;
+}
+.mapboxgl-ctrl-geocoder {
+    min-width: 100%;
+}
 </style>
