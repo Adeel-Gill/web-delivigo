@@ -93,24 +93,24 @@
     </div>
 </template>
 
-                                <script>
-                                    export default {
-                                        name: "checkout"
-                                    }
-                                </script>
+<script>
+    export default {
+        name: "checkout"
+    }
+</script>
 
-                                <style scoped>
-                                    .map-add img{
-                                        width: 30px;
-                                        height: 30px;
-                                    }
-                                    .dot i{
-                                        font-size: 8px;
-                                        color: #C2C2C3;
-                                        margin: 0 9px;
-                                    }
-                                    .map-marker{
-                                        font-size: 18px;
-                                        color: #C2C2C3;
-                                    }
-                                </style>
+<style scoped>
+    .map-add img{
+        width: 30px;
+        height: 30px;
+    }
+    .dot i{
+        font-size: 8px;
+        color: #C2C2C3;
+        margin: 0 9px;
+    }
+    .map-marker{
+        font-size: 18px;
+        color: #C2C2C3;
+    }
+</style>
