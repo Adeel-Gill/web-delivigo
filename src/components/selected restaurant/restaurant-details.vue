@@ -67,9 +67,25 @@ export default {
     },
     mounted() {
         this.$root.$on('restaurant', response => {
-            this.restaurant = response;
-            this.freeDelivery = this.restaurant.IsDeliveryFree;
+            if(response.isEmpty()) {
+                this.showNotification('error','Error','No restaurant detail is available to show!');
+            } else {
+                this.restaurant = response;
+                this.freeDelivery = this.restaurant.IsDeliveryFree;
+            }
+
         })
+    },
+    methods: {
+        showNotification(type, title, message) {
+            this.$notify({
+                group: 'foo',
+                type: type,
+                title: title,
+                text: message,
+                duration: 2000
+            })
+        }
     }
 }
 </script>

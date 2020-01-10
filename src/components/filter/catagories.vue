@@ -28,9 +28,24 @@
     components: {
         appCategories: foodCategories
     },
+    methods: {
+        showNotification(type, title, message) {
+            this.$notify({
+                group: 'foo',
+                type: type,
+                title: title,
+                text: message,
+                duration: 2000
+            })
+        }
+    },
     mounted() {
         this.$root.$on('foodCategoriesData', foodCategoriesData => {
-            this.foodCategories = foodCategoriesData;
+            if(foodCategoriesData.length>0) {
+                this.foodCategories = foodCategoriesData;
+            } else {
+                this.showNotification('error','Error','No food categories available to show!');
+            }
         })
     }
 }

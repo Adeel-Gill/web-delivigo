@@ -16,9 +16,24 @@ export default {
             dishes:[]
         }
     },
+    methods: {
+        showNotification(type, title, message) {
+            this.$notify({
+                group: 'foo',
+                type: type,
+                title: title,
+                text: message,
+                duration: 2000
+            })
+        }
+    },
     mounted() {
         this.$root.$on('popularFood', response => {
-            this.dishes = response;
+            if(response.length>0) {
+                this.dishes = response;
+            } else {
+                this.showNotification('error','Error','No popular food is available to show!');
+            }
         })
     }
 }

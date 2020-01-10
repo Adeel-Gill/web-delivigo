@@ -32,9 +32,24 @@ export default {
   },
   mounted() {
     this.$root.$on('popularData', popularRestaurants => {
-      this.popularData = popularRestaurants
+      if(popularRestaurants.length>0) {
+        this.popularData = popularRestaurants
+      } else {
+        this.showNotification('error','Error','No popular restaurants available to show!');
+      }
     })
-   }
+   },
+  methods: {
+    showNotification(type, title, message) {
+      this.$notify({
+        group: 'foo',
+        type: type,
+        title: title,
+        text: message,
+        duration: 2000
+      })
+    }
+  }
   }
 </script>
 <style scoped>

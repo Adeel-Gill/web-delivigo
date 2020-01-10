@@ -33,7 +33,24 @@
         methods: {
             fetchAllData() {
                 fetchNewIOpenRestaurantsData().then(response => {
-                    this.restaurantsData = response.Restaurants;
+                    if(response.Restaurants.length>0) {
+                        this.restaurantsData = response.Restaurants;
+                    } else {
+                        this.showNotification('error','Error','No new restaurants available to show!');
+                    }
+
+                }, error => {
+                    console.log(error);
+                    this.showNotification('error','Error','Error occurred please try later!');
+                })
+            },
+            showNotification(type, title, message) {
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
                 })
             }
         },

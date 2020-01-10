@@ -33,7 +33,24 @@
         methods: {
             fetchAllData() {
                 fetchResturantsData().then(response => {
-                    this.restaurantsData = response.FeaturedRestaurants;
+                    if(response.FeaturedRestaurants.length > 0) {
+                        this.restaurantsData = response.FeaturedRestaurants;
+                    } else {
+                        this.showNotification('error','Error','No featured restaurants available to show!');
+                    }
+
+                }, error => {
+                    console.log(error);
+                    this.showNotification('error','Error','Error occurred please try later!');
+                })
+            },
+            showNotification(type, title, message) {
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
                 })
             }
         },

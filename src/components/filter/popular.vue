@@ -27,10 +27,25 @@ export default {
             restaurants: []
         }
     },
+  methods: {
+    showNotification(type, title, message) {
+      this.$notify({
+        group: 'foo',
+        type: type,
+        title: title,
+        text: message,
+        duration: 2000
+      })
+    }
+  },
   mounted() {
     this.$root.$on('popularData', popularRestaurants => {
       console.log('inFilterPopularOn'+popularRestaurants);
-      this.restaurants = popularRestaurants
+      if(popularRestaurants.length>0) {
+        this.restaurants = popularRestaurants
+      } else {
+        this.showNotification('error','Error','No popular restaurants available to show!');
+      }
     })
   }
 }

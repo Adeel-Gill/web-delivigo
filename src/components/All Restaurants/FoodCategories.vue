@@ -36,7 +36,24 @@
         methods: {
             async fetchAllData() {
                 fetchAllData().then(response => {
-                    this.foodCategoriesData = response.FoodCategories;
+                    if(response.FoodCategories.length>0) {
+                        this.foodCategoriesData = response.FoodCategories;
+                    } else {
+                        this.showNotification('error','Error','No food categories available to show!');
+                    }
+
+                }, error => {
+                    console.log(error);
+                    this.showNotification('error','Error','Error occurred please try later');
+                })
+            },
+            showNotification(type, title, message) {
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
                 })
             }
         },

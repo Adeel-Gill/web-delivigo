@@ -41,6 +41,16 @@ export default {
                 this.$root.$emit('featuredData', this.featuredRestaurants);
             }, error =>{
                 console.log(error);
+                this.showNotification('error','Error','Error occurred please try later!');
+            })
+        },
+        showNotification(type, title, message) {
+            this.$notify({
+                group: 'foo',
+                type: type,
+                title: title,
+                text: message,
+                duration: 2000
             })
         }
     },

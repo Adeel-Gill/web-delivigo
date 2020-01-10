@@ -199,13 +199,13 @@
             },
             fetchCustomerCards() {
                 retrieveCustomerAllCards(localStorage.getItem('id')).then(response => {
-                    if(response.HasErrors) {
+                    if(response.CustomerCards.HasErrors) {
                         this.showNotification('error','Error','card retrieval failed!');
                     } else {
-                        console.log('length',response.length)
-                        if(response.length>0) {
+                        console.log('length',response.CustomerCards.length)
+                        if(response.CustomerCards.length>0) {
                             this.showNotification('success','Success', 'All cards are fetched and shown');
-                            this.allCards = response;
+                            this.allCards = response.CustomerCards;
                             this.isAvailable = true;
                         } else {
                             this.showNotification('error','Error', 'No cards available to show! Please add cards first');
