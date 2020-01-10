@@ -6,65 +6,70 @@
         <p>{{subHeading}}</p>
       </div>
       <div class="show-more">
-        <router-link to="/filter">Show More</router-link>
+        <router-link to="/all.restaurants">Show More</router-link>
       </div>
       <div class="clear"></div>
       <div class="restaurants-list">
         <div class="row">
-          <restaurantsData v-for= "restaurant in restaurantLessThan3" :key="restaurant.id" :restaurant='restaurant'></restaurantsData>
+          <restaurantsData
+            v-for="restaurant in restaurants"
+            :key="restaurant._id"
+            :restaurant="restaurant"
+          ></restaurantsData>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import Restaurant from '../components/restaurant/restaurant.vue';
-import Restaurants from '../components/restaurant/restaurants.js'
+import Restaurant from "../components/restaurant/restaurant.vue";
+import Popular from '../api.services/restaurants';
 export default {
   components: {
     restaurantsData: Restaurant
   },
-  data(){
-    return{
-      titleHeading: 'Popular Restaurant',
-      subHeading: 'The easiest way to your favourite food',
-      restaurants: Restaurants
-    }
+  data() {
+    return {
+      titleHeading: "Popular Restaurant",
+      subHeading: "The easiest way to your favourite food",
+      restaurants: []
+    };
   },
-  computed:{
-        restaurantLessThan3: function() {
-            return this.restaurants.filter(function(restaurant) {
-                return restaurant.id <= 3;
-            })
-        }
-    }
-}
+  created() {
+    Popular.getTopThreePopular().then((response) => {
+      console.log(response.data);
+      this.restaurants = response.data;
+    }).catch((error) => {
+      console.log(error.response.data);
+    });
+  }
+};
 </script>
 <style scoped>
 .popular {
-    margin: 50px 0;
+  margin: 50px 0;
 }
-.show-more{
+.show-more {
   float: right;
 }
 .show-more a {
-    color: #0030b4;
-    display: inline-block;
-    margin: 10px 0 20px;
-    font-family: "Panton";
-    font-weight: bold;
-    font-size: 17px;
+  color: #0030b4;
+  display: inline-block;
+  margin: 10px 0 20px;
+  font-family: "Panton";
+  font-weight: bold;
+  font-size: 17px;
 }
-.title{
+.title {
   text-align: center;
   font-family: "Roboto";
   color: #080808;
 }
-.title h2{
+.title h2 {
   font-size: 35px;
   text-transform: uppercase;
 }
-.title p{
+.title p {
   font-size: 23px;
 }
 </style>

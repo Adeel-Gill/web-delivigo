@@ -16,7 +16,7 @@
             <h1>{{slide.heading}}</h1>
             <p>{{slide.description}}</p>
             <b-form-input v-model="text" placeholder="I Would like to eat...."></b-form-input>
-            <b-button>Search Food</b-button>
+            <router-link to="/filter"><b-button>Search Food</b-button></router-link>
         </div>
       </b-carousel-slide>
     </b-carousel>

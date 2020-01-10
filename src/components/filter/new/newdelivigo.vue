@@ -1,96 +1,65 @@
 <template>
-    <div class="col-md-4 padding-top-botom">
-         <div class="restaurant">
-             <router-link to="/selected">
-            <img :src="newRestaurant.imagePath" />
-            <div class="restaurants-details">
-                <div class="row">
-                    <div class="col-md-8 padding-top-botom">
-                        <h6>{{newRestaurant.name}}</h6>
-                    </div>
-                    <div class="col-md-4 padding-top-botom">
-                        <p class="padding-top"><i class="fas fa-star"></i> {{newRestaurant.rateing}}</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 padding-top-botom">
-                        <p class="font-light">{{newRestaurant.type}}</p>
-                    </div>
-                    <div class="col-md-3 padding-top-botom">
-                        <i class="fas fa-euro-sign"></i>
-                        <i class="fas fa-euro-sign"></i>
-                        <i class="fas fa-euro-sign"></i>
-                    </div>
-                    <div class="col-md-4 padding-top-botom">
-                        <p class="font-size-9"><i class="far fa-clock"></i> {{newRestaurant.timeing}}</p>
-                    </div>
-                </div>
-            </div>
-             </router-link>
+    <div class="popular">
+      <div class="clear"></div>
+      <div class="restaurants-list">
+        <div class="row">
+          <restaurantsData
+            v-for="restaurant in restaurants"
+            :key="restaurant._id"
+            :restaurant="restaurant"
+          ></restaurantsData>
         </div>
+      </div>
     </div>
 </template>
 <script>
+import Restaurant from "../../restaurant/restaurant";
+import Popular from '../../../api.services/restaurants';
 export default {
-    props:['newRestaurant'],
-    data(){
-        return{
-
-        }
-    }
-}
+  components: {
+    restaurantsData: Restaurant
+  },
+  data() {
+    return {
+      titleHeading: "NEW ON DELIVIGO",
+      restaurants: []
+    };
+  },
+  created() {
+    Popular.getTopThreePopular().then((response) => {
+      console.log(response.data);
+      this.restaurants = response.data;
+    }).catch((error) => {
+      console.log(error.response.data);
+    });
+  }
+};
 </script>
 <style scoped>
-.restaurant a {
-    text-decoration: none;
-    color: black;
-    display: inline-block;
+.popular {
+  margin: 50px 0;
 }
-.restaurants-list img{
-    width: 100%;
-    border-radius: 7px;
+.show-more {
+  float: right;
 }
-.restaurant{
-    background: #d9d9d9;
-    border-radius: 8px;
-    margin-bottom: 25px;
+.show-more a {
+  color: #0030b4;
+  display: inline-block;
+  margin: 10px 0 20px;
+  font-family: "Panton";
+  font-weight: bold;
+  font-size: 17px;
 }
-.restaurants-details h6{
-    font-family: "Roboto";
-    font-size: 17px;
-    font-weight: bold;
-    margin: 0;
-    display: inline-block;
-    padding: 0 10px;
+.title {
+  text-align: center;
+  font-family: "Roboto";
+  color: #080808;
 }
-.restaurants-details p{
-    margin: 0;
-    font-family: "Roboto";
-    font-size: 9px;
+.title h2 {
+  font-size: 35px;
+  text-transform: uppercase;
 }
-.font-light{
-    color: #424242;
-    font-weight: lighter;
-    padding: 4px 10px 0; 
-}
-.padding-top{
-    padding-top: 8px;
-}
-i.fas.fa-euro-sign{
-    font-size: 15px;
-    display: inline-block;
-    vertical-align: top;
-    padding: 1px 1px;
-    color: #505050;
-}
-.font-size-9{
-    font-size: 9px !important;
-}
-i.fas.fa-star{
-    color: #8ba939;
-}
-i.far.fa-clock {
-    font-size: 13px !important;
-    color: #8ba939;
+.title p {
+  font-size: 23px;
 }
 </style>
