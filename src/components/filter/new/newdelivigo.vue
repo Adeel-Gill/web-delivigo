@@ -2,7 +2,7 @@
     <div class="col-md-4 padding-top-botom">
          <div class="restaurant" @click="emitId">
              <router-link :to="'/restaurant/'+newRestaurant.Id">
-            <img :src="baseUrl + newRestaurant.ImageUrl" />
+            <img :src="getImage(newRestaurant.ImageUrl)" @error="getImage('')" />
             <div class="restaurants-details">
                 <div class="row">
                     <div class="col-8 padding-top-botom">
@@ -33,18 +33,27 @@
 <script>
     import {baseAddress} from "../../../main";
     import {EventBus} from "../../../main";
+    import {defaultRestaurantPic} from "../../../main";
     import newRestaurants from "./newRestaurants";
     export default {
     props:['newRestaurant'],
     data(){
         return{
             baseUrl: baseAddress,
-            restaurants: newRestaurants
+            restaurants: newRestaurants,
+            image : ''
         }
     },
     methods: {
         emitId() {
             EventBus.$emit('resId', this.restaurants.Id)
+        },
+        getImage(img) {
+            if(img === '' || img === 'null') {
+                this.image = defaultRestaurantPic;
+            } else {
+                this.image = baseAddress + img;
+            }
         }
     }
 }

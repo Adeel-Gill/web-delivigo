@@ -3,7 +3,7 @@
         <div class="show-dish-details" id="display-dish" >
             <a  class="close" @click="hideDish"></a>
             <div class="dish-detail-image" style="margin-top: 25px">
-                <img :src="baseLink+dishDetail.ImageUrl" alt="">
+                <img :src="getImage(dishDetail.ImageUrl)" @error="getImage('')">
             </div>
             <div class="dish-detail-about">
                 <div class="dish-name-descp">
@@ -41,7 +41,7 @@
         <div class="dishes"  v-for="select in selected" :select="select" :key="select.Id" @click="displayDish(select.Id)">
             <div class="dish-selection" >
                 <div class="dish-image">
-                    <img :src="baseUrl+select.ImageUrl" alt="">
+                    <img :src="getImage(select.ImageUrl)" @error="getImage('')">
                 </div>
                 <div class="about-dish">
                     <div class="descp-about" >
@@ -63,6 +63,7 @@
 <script>
 import {baseAddress} from "../../main";
 import {fetchMealById} from "../api/CustomMeal";
+import {defaultDishPic} from "../../main";
 
 export default {
     data(){
@@ -72,6 +73,7 @@ export default {
             addOns: [],
             customOptions: [],
             baseLink: baseAddress,
+            image: '',
             baseUrl: '',
             selected: [], // Must be an array reference!
             isCustomMeal: null
@@ -135,6 +137,13 @@ export default {
         hideDish() {
             console.log('here');
             document.getElementById("display-dish").style.display = "none";
+        },
+        getImage(img) {
+          if(img === '' || img === 'null') {
+              return this.image = defaultDishPic;
+          } else {
+              return this.image = baseAddress + img;
+          }
         },
         addDishes() {
             this.$root.$on('mealMenuById', response => {

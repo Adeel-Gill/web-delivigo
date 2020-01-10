@@ -18,6 +18,9 @@ new Vue({
   vuetify,
 })
 export const baseAddress = 'https://www.foodizza.com/';
+export const defaultUserPic = 'images/userpic.png';
+export const defaultRestaurantPic = 'images/restauranticon.png';
+export const defaultDishPic = 'images/dish.png';
 export const EventBus = new Vue();
 Vue.use(VuejsDialog);
 Vue.use(VShowSlide);

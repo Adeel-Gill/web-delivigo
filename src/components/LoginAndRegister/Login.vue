@@ -28,6 +28,7 @@
 <script>
     import {checkCredentials} from "../api/Profile";
     import {mapActions} from "vuex";
+    import {EventBus} from "../../main";
 
     export default {
         name: "Login",
@@ -39,6 +40,11 @@
                     DeviceUniqueCode: "web",
                     DeviceToken: "web",
                 }
+            }
+        },
+        mounted() {
+            if(localStorage.getItem('userProfile') === 'null') {
+                localStorage.setItem('userProfile','');
             }
         },
         methods: {
@@ -58,9 +64,10 @@
                 if(this.checkObject()) {
                      checkCredentials(this.userData).then(response => {
                         if(response.HasErrors === false) {
-                            console.log('id',response.Id);
-                            this.$store.dispatch('storeToken',response);
                             this.showNotification('success', 'Success', 'Sign in successfully');
+                            console.log('id',response.Id);
+                            localStorage.setItem('userProfile',response.UrlImage);
+                            this.$store.dispatch('storeToken',response);
                             this.$router.push({path:'/'});
                             this.$router.go();
 
@@ -70,9 +77,12 @@
                             console.log('Error: '+ response.ResultMessages[0].Message);
                             this.showNotification('error', 'Error', 'Sign in failed');
                         }
-                    })
+                    }, error => {
+                         console.log(error);
+                         this.showNotification('error','Error','Error occurred please try later!');
+                     })
                 } else {
-                    this.showNotification('warn', 'Warning', 'Please fill all the fields');
+                    this.showNotification('warn', 'Warning', 'Please fill all the fields!');
                 }
             },
             checkObject() {

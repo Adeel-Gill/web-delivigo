@@ -3,7 +3,7 @@
          <div class="restaurant" @click="emitId">
             <router-link :to="'/restaurant/'+restaurant.Id">
                 <div>
-                    <img :src="this.image" @error="loadAltImage" />
+                    <img :src="getImage(this.restaurant.ImageUrl)" @error="getImage('')" />
                     <div class="restaurants-details">
                         <div class="row">
                             <div class="col-8 padding-top-botom">
@@ -35,13 +35,14 @@
 <script>
 import {baseAddress} from "../../main";
 import {EventBus} from "../../main";
+import {defaultRestaurantPic} from "../../main";
 
 export default {
     props: ['restaurant'],
     data() {
         return {
             baseUrl: baseAddress,
-            image: baseAddress + this.restaurant.ImageUrl
+            image: ''
         }
     },
     methods: {
@@ -53,7 +54,12 @@ export default {
 
             this.src = "../../../public/images/restauranticon.png"
         },
-        getImage() {
+        getImage(img) {
+            if(img === '' || img === 'null') {
+                this.image = defaultRestaurantPic;
+            } else {
+                this.image = baseAddress + img;
+            }
         }
     },
     mounted() {

@@ -36,7 +36,7 @@
             <div class="col-md-4 pl-5">
                 <h4>Picture</h4>
                 <div class="profile-pic">
-                    <img :src="baseUrl + userData.UrlImage" class="rounded-circle img-fluid" alt="userpic"/>
+                    <img :src="getImage(userData.UrlImage)" @error="getImage('')" class="rounded-circle img-fluid"/>
                 </div>
             </div>
         </div>
@@ -46,14 +46,15 @@
 
 <script>
     import {fetchUserProfile} from "../api/Profile";
-    import {baseAddress} from "../../main";
+    import {baseAddress, defaultUserPic} from "../../main";
     export default {
         name: "Profile",
         data() {
             return {
                 validated: true,
                 baseUrl: baseAddress,
-                userData: {}
+                userData: {},
+                image: ''
             }
         },
         methods: {
@@ -70,8 +71,28 @@
             async fetchUserProfile() {
                 fetchUserProfile(localStorage.getItem('id')).then(response => {
                     console.log('profile',response);
-                    this.userData = response
+                    this.userData = response;
+                }, error => {
+                    console.log(error);
+                    this.showNotification('error','Error','Error occurred please try later!');
                 })
+            },
+            showNotification(type, title, message) {
+                console.log('after Fail',message);
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
+                })
+            },
+            getImage(img) {
+                if(img === '' || img === 'null') {
+                    return this.image = defaultUserPic;
+                } else {
+                    return this.image = baseAddress + img;
+                }
             }
         },
         mounted() {
