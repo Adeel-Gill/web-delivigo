@@ -22,7 +22,7 @@
             </b-nav-item-dropdown>
             <b-nav-item to="/profile" v-if="isLogin === 'true'? true: false" class="profile-link">
               <div>
-                <img :src="image" alt="userPic" class="rounded-circle" height="50" width="50"/>
+                <img :src="getImage()" @error="getImage('noImage')" class="rounded-circle" height="50" width="50"/>
                 <!--                    <img src="//placehold.it/50" />-->
                   </div>
             </b-nav-item>
@@ -40,6 +40,9 @@
   import {EventBus} from "../main";
   import {mapActions} from "vuex";
   import {mapGetters} from "vuex";
+  import {baseAddress} from "../main";
+  import {defaultUserPic} from "../main";
+
   export default {
     data() {
       return {
@@ -67,6 +70,14 @@
             this.image = responce;
           }
         })
+      },
+      getImage(img) {
+        img = localStorage.getItem('userProfile')
+        if(img === '' || img === 'null') {
+          return this.image = defaultUserPic;
+        } else {
+          return this.image =  baseAddress + img;
+        }
       },
       signOut() {
         this.$store.dispatch('cleanToken');

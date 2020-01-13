@@ -2,7 +2,7 @@
     <div class="catagory col-7 col-sm-3 col-md-2" @click = "emitName()">
         <router-link to="/foodFilter" >
             <div  class="card-image">
-                <img :src="baseUrl + foodCategories.ImageUrl"/>
+                <img :src="getImage(foodCategories.ImageUrl)" @error="getImage('')"/>
             </div>
             <div :class="bgClass" class="catagory-desc">
                 <div class="catagory-text">
@@ -18,6 +18,7 @@
 <script>
     import {baseAddress} from "../../main";
     import {EventBus} from "../../main";
+    import {defaultDishPic} from "../../main";
 
     export default {
         name: "foodCategories",
@@ -26,6 +27,7 @@
           return {
               baseUrl: baseAddress,
               bgClass: 'bg-green',
+              image: ''
           }
         },
         created() {
@@ -34,6 +36,13 @@
         methods: {
             emitName() {
                 EventBus.$emit('foodCategoryName',this.foodCategories.Name);
+            },
+            getImage(img) {
+                if(img === '' || img === 'null') {
+                    return this.image = defaultDishPic;
+                } else {
+                    return this.image = baseAddress + img;
+                }
             }
         }
     }

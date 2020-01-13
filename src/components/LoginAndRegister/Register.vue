@@ -85,11 +85,19 @@
                     registerUser(this.userData).then(response => {
                         this.result = response.HasErrors;
                         this.message = response.ResultMessages[0].Message;
-                       EventBus.$emit('userImage',baseAddress+response.ImageUrl)
-                        alert(this.message);
+                        if(response.HasErrors === false) {
+                            this.showNotification('success','Success','Signup success!');
+                            EventBus.$emit('userImage',baseAddress+response.ImageUrl);
+                            this.$router.push({path:'/signin'});
+                        } else {
+                            this.showNotification('error','Error','Signup failed!');
+                        }
+                    }, error=> {
+                        console.log(error);
+                        this.showNotification('error','Error','Signup failed!');
                     })
                 } else {
-                    alert('Please fill all the fields');
+                    this.showNotification('error','Error','Please fill all the fields first!');
                 }
 
             },
@@ -104,6 +112,16 @@
                 else {
                     return false;
                 }
+            },
+            showNotification(type, title, message) {
+                console.log('after Fail',message);
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
+                })
             }
         }
     }

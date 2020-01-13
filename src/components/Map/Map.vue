@@ -51,18 +51,8 @@
                      center: [this.longitude, this.latitude],
                  zoom: 9
             });
-
-
              this.map.on('load', () => {
-                     // mapboxgl.resize();
-
-                     // console.log( 'here'+this.geojson.geometry.coordinates);
-                     // console.log('elBefore'+this.el);
-                     // this.el = document.createElement('div');
-                     // console.log('elAfter'+this.el);
-                     // this.el.className = 'marker';
-                     // console.log('elClass'+this.el.className);
-                     let el = document.createElement('div');
+                    let el = document.createElement('div');
                      el.className = 'marker';
                      console.log(el);
                      new mapboxgl.Marker()
@@ -72,46 +62,7 @@
                                      + this.address + '</p>'
                              ))
                              .addTo(this.map);
-                     // this.geojson.features.forEach((marker) => {
-
-                     //
-                     //         new mapboxgl.Marker(this.el)
-                     //                 .setLngLat(marker.geometry.coordinates)
-                     //                 .setPopup(new mapboxgl.Popup({offset: 25}).setHTML(
-                     //                         '<h3>' + marker.properties.title + '</h3><p>'
-                     //                         + marker.properties.description + '</p>'
-                     //                 ))
-                     //                 .addTo(this.map);
-                     // });
              });
-
-            // this.map.on('load', () => {
-            //     this.map.addLayer({
-            //         id: 'points',
-            //         source: 'pointsSource',
-            //         type: 'circle'
-            //     });
-            //     this.map.addSource('pointsSource', {
-            //         type: 'geojson',
-            //         data: {
-            //             'type': 'FeatureCollection',
-            //             'features': [
-            //                 {
-            //                     'type': 'features',
-            //                     'properties': {},
-            //                     'geometry': {
-            //                         'type': 'Point',
-            //                         'coordinates': [
-            //                             37.7510,
-            //                             -97.8220
-            //                         ]
-            //                     }
-            //                 }
-            //             ]
-            //         }
-            //     })
-            // })
-
         }
     }
 </script>

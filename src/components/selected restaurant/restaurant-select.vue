@@ -92,7 +92,19 @@ export default {
                     this.$root.$emit('restaurantImages', response.RestaurantImagesURL);
                     this.$root.$emit('isCustomMeal', false);
 
+                }, error => {
+                    console.log(error);
+                    this.showNotification('error','Error','Error occurred please try later!');
                 })
+        },
+        showNotification(type, title, message) {
+            this.$notify({
+                group: 'foo',
+                type: type,
+                title: title,
+                text: message,
+                duration: 2000
+            })
         },
         async fetchRestaurantMealById(resId, mealId) {
                 // fetchRestaurantMealsById(resId, mealId).then(response => {

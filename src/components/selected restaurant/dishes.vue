@@ -3,7 +3,7 @@
         <div class="show-dish-details" id="display-dish" >
             <a  class="close" @click="hideDish"></a>
             <div class="dish-detail-image" style="margin-top: 25px">
-                <img :src="baseLink+dishDetail.ImageUrl" alt="">
+                <img :src="getImage(dishDetail.ImageUrl)" @error="getImage('')">
             </div>
             <div class="dish-detail-about">
                 <div class="dish-name-descp">
@@ -41,7 +41,7 @@
         <div class="dishes"  v-for="select in selected" :select="select" :key="select.Id" @click="displayDish(select.Id)">
             <div class="dish-selection" >
                 <div class="dish-image">
-                    <img :src="baseUrl+select.ImageUrl" alt="">
+                    <img :src="getImage(select.ImageUrl)" @error="getImage('')">
                 </div>
                 <div class="about-dish">
                     <div class="descp-about" >
@@ -63,6 +63,7 @@
 <script>
 import {baseAddress} from "../../main";
 import {fetchMealById} from "../api/CustomMeal";
+import {defaultDishPic} from "../../main";
 
 export default {
     data(){
@@ -72,6 +73,7 @@ export default {
             addOns: [],
             customOptions: [],
             baseLink: baseAddress,
+            image: '',
             baseUrl: '',
             selected: [], // Must be an array reference!
             isCustomMeal: null
@@ -88,11 +90,47 @@ export default {
                 this.quantity--
             }
         },
+        checkArrayResponse(arr,type) {
+            if(arr.length>0) {
+                return true;
+            } else {
+                this.showNotification('error','Error','No '+type+' available to show!');
+                return false;
+            }
+        },
+        checkObjectResponse(obj,type) {
+            if(obj.isEmpty()) {
+                this.showNotification('error','Error','No '+type+' available to show!');
+                return false;
+            } else {
+                return true;
+            }
+        },
         async displayDish(dishId){
             fetchMealById(dishId).then(response => {
-                this.dishDetail = response.Meal;
-                this.addOns = response.AddOns;
-                this.customOptions = response.CustomOptions;
+                if(this.checkObjectResponse(response.Meal,'dish detail')) {
+                    this.dishDetail = response.Meal;
+                }
+                if(this.checkArrayResponse(response.AddOns,'addons')) {
+                    this.addOns = response.AddOns;
+                }
+                if(this.checkArrayResponse(response.CustomOptions, 'custom options')) {
+                    this.customOptions = response.CustomOptions;
+                }
+                // if(response.AddOns.length>0) {
+                //     this.addOns = response.AddOns;
+                //     if(response.CustomOptions.length>0) {
+                //         this.customOptions = response.CustomOptions;
+                //     } else {
+                //         this.showNotification('error','Error','No custom options available to show!');
+                //     }
+                // } else {
+                //     this.showNotification('error','Error','No addons available to show!');
+                // }
+                // this.dishDetail = response.Meal;
+            }, error => {
+                console.log(error);
+                this.showNotification('error','Error','Error occurred please try later!');
             })
             document.getElementById("display-dish").style.display = "block";
         },
@@ -100,24 +138,46 @@ export default {
             console.log('here');
             document.getElementById("display-dish").style.display = "none";
         },
+        getImage(img) {
+          if(img === '' || img === 'null') {
+              return this.image = defaultDishPic;
+          } else {
+              return this.image = baseAddress + img;
+          }
+        },
         addDishes() {
             this.$root.$on('mealMenuById', response => {
                 console.log('ObjectReceived'+response);
                 console.log('BeforeClearSelectedObject',this.selected);
                 if(response){
-                    this.selected = [];
-                    console.log('AfterClearSelectedObject',this.selected);
-                    this.selected = response;
-                    console.log('ObjectReceived&Selected'+this.selected);
+                    if(this.checkArrayResponse(response,'meals for this menu')){
+                        this.selected = [];
+                        console.log('AfterClearSelectedObject',this.selected);
+                        this.selected = response;
+                        console.log('ObjectReceived&Selected'+this.selected);
+                    }
                 }
+            })
+        },
+        showNotification(type, title, message) {
+            this.$notify({
+                group: 'foo',
+                type: type,
+                title: title,
+                text: message,
+                duration: 2000
             })
         }
     },
     mounted() {
         this.$root.$on('popularFood', response => {
-            this.selected = response;
-            this.baseUrl = baseAddress;
-            console.log('dishes',this.selected);
+            if(response.length>0) {
+                this.selected = response;
+                this.baseUrl = baseAddress;
+                console.log('dishes',this.selected);
+            } else {
+                this.showNotification('error','Error','No popular food is available to show!');
+            }
         })
         this.$root.$on('isCustomMeal', response => {
             this.isCustomMeal = response;

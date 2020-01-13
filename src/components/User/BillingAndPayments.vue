@@ -199,13 +199,21 @@
             },
             fetchCustomerCards() {
                 retrieveCustomerAllCards(localStorage.getItem('id')).then(response => {
-                    if(response.HasErrors) {
+                    if(response.CustomerCards.HasErrors) {
                         this.showNotification('error','Error','card retrieval failed!');
                     } else {
-                        this.showNotification('success','Success', 'All cards are fetched and shown');
-                        this.allCards = response;
-                        this.isAvailable = true;
+                        console.log('length',response.CustomerCards.length)
+                        if(response.CustomerCards.length>0) {
+                            this.showNotification('success','Success', 'All cards are fetched and shown');
+                            this.allCards = response.CustomerCards;
+                            this.isAvailable = true;
+                        } else {
+                            this.showNotification('error','Error', 'No cards available to show! Please add cards first');
+                        }
                     }
+                }, error => {
+                    onsole.log(error);
+                    this.showNotification('error','Error','Card fetching failed!');
                 })
             },
             markDefaultCard(response) {
@@ -243,12 +251,18 @@
                                     this.$bvModal.hide('modal-1');
                                     this.isAvailable = true;
                                 }
+                            }, error => {
+                                onsole.log(error);
+                                this.showNotification('error','Error','Card is not set as default');
                             })
                         } else {
                             this.fetchCustomerCards();
                             this.$bvModal.hide('modal-1');
                         }
                     }
+                }, error => {
+                    console.log(error);
+                    this.showNotification('error','Error','Card is created but not saved');
                 })
             },
             assignResponseToCardObj(response) {
@@ -330,6 +344,7 @@
                 // card.destroy();
             },
             showNotification(type, title, message) {
+                console.log('after Fail',message);
                 this.$notify({
                     group: 'foo',
                     type: type,

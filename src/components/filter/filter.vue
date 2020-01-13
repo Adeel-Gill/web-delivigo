@@ -81,7 +81,19 @@ export default {
                     this.allRestaurants = this.fetchedData.Restaurants;
                     this.$root.$emit('popularData', this.fetchedData.PopularNearYou);
                     this.$root.$emit('foodCategoriesData', this.fetchedData.FoodCategories);
+                }, error => {
+                    console.log(error);
+                    this.showNotification('error','Error','Error occurred please try later!');
                 })
+        },
+        showNotification(type, title, message) {
+            this.$notify({
+                group: 'foo',
+                type: type,
+                title: title,
+                text: message,
+                duration: 2000
+            })
         }
     },
     created() {

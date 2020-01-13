@@ -39,7 +39,24 @@
                 console.log('name1 : '+name);
                 fetchRestaurantsByCategory(name).then(response => {
                     console.log('name2 : '+name);
-                    this.restaurantsData = response.Restaurants;
+                    if(response.Restaurants.length>0) {
+                        this.restaurantsData = response.Restaurants;
+                    } else {
+                        this.showNotification('error','Error','No restaurants available for that food category!');
+                    }
+
+                }, error => {
+                    console.log(error);
+                    this.showNotification('error','Error','Error occurred please try later!');
+                })
+            },
+            showNotification(type, title, message) {
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
                 })
             }
         },

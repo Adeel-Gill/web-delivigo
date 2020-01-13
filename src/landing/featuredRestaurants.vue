@@ -30,8 +30,23 @@ export default {
     },
     mounted() {
         this.$root.$on('featuredData', featuredRestaurants => {
-            this.featureData = featuredRestaurants
+            if(featuredRestaurants.length>0) {
+                this.featureData = featuredRestaurants
+            } else {
+                this.showNotification('error','Error','No featured restaurants available to show!');
+            }
         })
+    },
+    methods: {
+        showNotification(type, title, message) {
+            this.$notify({
+                group: 'foo',
+                type: type,
+                title: title,
+                text: message,
+                duration: 2000
+            })
+        }
     }
 }
 </script>
