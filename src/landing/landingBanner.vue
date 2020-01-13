@@ -12,16 +12,17 @@
     >
       <!-- Text slides with image -->
       <b-carousel-slide v-for="(slide) in slides" :key="slide.imageURL" :img-src="slide.imageURL" >
-        <div class="caption-change">
-            <h1>{{slide.heading}}</h1>
-            <p>{{slide.description}}</p>
-            <div id="map" style="display: none;"></div>
-            <div id="geocoder" class="geocoder" @select="showValues"></div>
-            <b-form-input v-model="text" placeholder="I Would like to eat...."></b-form-input>
-            <b-button @click="navigateTo">Search Food</b-button>
-        </div>
+          <div class="caption-change">
+              <h1>{{slide.heading}}</h1>
+              <p>{{slide.description}}</p>
+              <div id="map" style="display: none;"></div>
+              <div id="geocoder" class="geocoder" @select="showValues"></div>
+              <b-form-input v-model="text" placeholder="I Would like to eat...."></b-form-input>
+              <b-button @click="navigateTo">Search Food</b-button>
+          </div>
       </b-carousel-slide>
     </b-carousel>
+
   </div>
   
 </template>
