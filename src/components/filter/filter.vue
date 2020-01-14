@@ -12,7 +12,7 @@
                 </div>
                 <div class="clear"></div>
                 <div class="row">
-                    <new-delivigo v-for= "newRestaurant in newRestaurants" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
+                    <new-delivigo v-for= "newRestaurant in newRestaurants.slice(0,3)" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
                 </div>
             </div>
             <div class="restaurants-list">
@@ -22,7 +22,7 @@
                 </div>
                 <div class="clear"></div>
                 <div class="row">
-                    <new-delivigo v-for= "newRestaurant in allRestaurants.slice(0,6)" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
+                    <new-delivigo v-for= "newRestaurant in allRestaurants.slice(0,3)" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
                 </div>
             </div>
         </div>

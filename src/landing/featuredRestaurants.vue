@@ -9,7 +9,7 @@
             </div>
             <div class="restaurants-list">
                 <div class="row">
-                    <restaurantsData v-for= "restaurant in featureData.slice(0,9)" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
+                    <restaurantsData v-for= "restaurant in featureData.slice(0,3)" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
                 </div>
             </div>
         </div>
