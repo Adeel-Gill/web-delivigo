@@ -38,10 +38,16 @@
                 EventBus.$emit('foodCategoryName',this.foodCategories.Name);
             },
             getImage(img) {
-                if(img === '' || img === 'null') {
-                    return this.image = defaultDishPic;
+                if(img === '' || img === 'null' || img ==='undefined') {
+                    console.log('imageiff',this.image,'-',img);
+                    this.image = defaultDishPic;
+                    console.log('imageiff',this.image,'-',img);
+                    return this.image
+
                 } else {
+                    console.log('imagefelse',this.image);
                     return this.image = baseAddress + img;
+
                 }
             }
         }

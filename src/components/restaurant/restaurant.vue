@@ -56,10 +56,11 @@ export default {
         },
         getImage(img) {
             if(img === '' || img === 'null') {
-                this.image = defaultRestaurantPic;
+                return this.image = defaultRestaurantPic;
             } else {
-                this.image = baseAddress + img;
+                return this.image = baseAddress + img;
             }
+            console.log('image',this.image);
         }
     },
     mounted() {
@@ -74,7 +75,7 @@ export default {
 }
 .restaurants-list img{
     width: 100%;
-    height: 260px;
+    height: 200px;
     border-radius: 7px;
 }
 .restaurants-details{
