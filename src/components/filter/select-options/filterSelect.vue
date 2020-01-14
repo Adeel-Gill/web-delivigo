@@ -25,5 +25,7 @@ export default {
 <style scoped>
 .filter-section {
     padding: 20px 0 80px 0;
+    width: 90%;
+    margin: auto;
 }
 </style>
