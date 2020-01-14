@@ -88,7 +88,8 @@
                 })
             },
             getImage(img) {
-                if(img === '' || img === 'null') {
+                // console.log('paramImage',img);
+                if(img === '' || img === 'null' || img == null) {
                     return this.image = defaultUserPic;
                 } else {
                     return this.image = baseAddress + img;

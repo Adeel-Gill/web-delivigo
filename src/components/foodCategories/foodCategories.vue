@@ -2,7 +2,7 @@
     <div class="catagory col-7 col-sm-3 col-md-2" @click = "emitName()">
         <router-link to="/foodFilter" >
             <div  class="card-image">
-                <img :src="getImage(foodCategories.ImageUrl)" @error="getImage('')"/>
+                <img :src="`${getImage(foodCategories.ImageUrl)}`" @error="`${getImage('')}`"/>
             </div>
             <div :class="bgClass" class="catagory-desc">
                 <div class="catagory-text">
@@ -38,16 +38,15 @@
                 EventBus.$emit('foodCategoryName',this.foodCategories.Name);
             },
             getImage(img) {
-                if(img === '' || img === 'null' || img ==='undefined') {
-                    console.log('imageiff',this.image,'-',img);
+                console.log('paramImage',img);
+                if(img === '' || img === ' null' || img == null) {
                     this.image = defaultDishPic;
-                    console.log('imageiff',this.image,'-',img);
-                    return this.image
-
+                    console.log('imageinsideIf',this.image,'param',img);
+                    return this.image;
                 } else {
-                    console.log('imagefelse',this.image);
-                    return this.image = baseAddress + img;
-
+                     this.image = baseAddress + img;
+                    console.log('imageinsideelse',this.image,'param',img);
+                    return this.image;
                 }
             }
         }

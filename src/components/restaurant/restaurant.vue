@@ -3,7 +3,7 @@
          <div class="restaurant" @click="emitId">
             <router-link :to="'/restaurant/'+restaurant.Id">
                 <div>
-                    <img :src="getImage(this.restaurant.ImageUrl)" @error="getImage('')" />
+                    <img :src="`${getImage(this.restaurant.ImageUrl)}`" @error="`${getImage('')}`" />
                     <div class="restaurants-details">
                         <div class="row">
                             <div class="col-8 padding-top-botom">
@@ -55,10 +55,14 @@ export default {
             this.src = "../../../public/images/restauranticon.png"
         },
         getImage(img) {
-            if(img === '' || img === 'null') {
-                return this.image = defaultRestaurantPic;
+            if(img === '' || img === 'null' || img == null) {
+                this.image = defaultRestaurantPic;
+                // console.log('imageinsideIf',this.image,'param',img);
+                return this.image;
             } else {
-                return this.image = baseAddress + img;
+                this.image = baseAddress + img;
+                // console.log('imageinsideelse',this.image,'param',img);
+                return this.image;
             }
             console.log('image',this.image);
         }

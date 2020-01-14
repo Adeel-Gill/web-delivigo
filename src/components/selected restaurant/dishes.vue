@@ -139,7 +139,7 @@ export default {
             document.getElementById("display-dish").style.display = "none";
         },
         getImage(img) {
-          if(img === '' || img === 'null') {
+          if(img === '' || img === 'null' || img == null) {
               return this.image = defaultDishPic;
           } else {
               return this.image = baseAddress + img;

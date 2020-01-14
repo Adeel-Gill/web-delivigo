@@ -2,7 +2,7 @@
     <div class="col-md-4 padding-top-botom">
          <div class="restaurant" @click="emitId">
              <router-link :to="'/restaurant/'+newRestaurant.Id">
-            <img :src="getImage(newRestaurant.ImageUrl)" @error="getImage('')" />
+            <img :src="`${getImage(newRestaurant.ImageUrl)}`" @error="`${getImage('')}`" />
             <div class="restaurants-details">
                 <div class="row">
                     <div class="col-8 padding-top-botom">
@@ -49,10 +49,12 @@
             EventBus.$emit('resId', this.restaurants.Id)
         },
         getImage(img) {
-            if(img === '' || img === 'null') {
-                return this.image = defaultRestaurantPic;
+            if(img === '' || img === 'null' || img == null) {
+                this.image = defaultRestaurantPic;
+                return this.image;
             } else {
-                return this.image = baseAddress + img;
+                this.image = baseAddress + img;
+                return this.image;
             }
             console.log('imagen',this.image);
         }
