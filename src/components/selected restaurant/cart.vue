@@ -34,7 +34,7 @@
                     <div class="head">
                         <h3 class="d-inline-block">Basket</h3>
 <!--                        <router-link to="/checkout"></router-link>-->
-                        <button class="btn btn-submit float-right" v-b-modal.checkout>Proceed to checkout</button>
+                        <button type="button" class="btn btn-checkout float-right" v-b-modal.checkout>Proceed to checkout</button>
                     </div>
                     <div class="drawer-body px-3">
                         <!-- card start-->
@@ -109,7 +109,7 @@
 
             </div>
             <div class="container p-4">
-                <h2 class="sec-heading"><i class="far fa-calendar-check"></i> Scheduled order: Today 16:47 <a href="#"><i class="fas fa-plus"></i></a></h2>
+                <h2 class="sec-heading"><i class="far fa-calendar-check"></i> Scheduled order: Today 16:47 <a href="#" class="link-color"><i class="fas fa-plus"></i></a></h2>
                 <p class="text-muted">Desired delivery time + 10 min</p>
                 <div class="row" style="box-sizing: border-box;">
                     <div class="col-6">
@@ -123,7 +123,7 @@
                                     <a src="#" class="float-right"><i class="fas fa-times"></i></a>
                                     <h4>Burger</h4>
                                     <p class="text-muted m-0">Laudiatum consesus</p>
-                                    <p class="m-0 d-inline-block price mr-5">129232.00</p> <span><i class="fas fa-times"></i> 2</span>
+                                    <p class="m-0 d-inline-block price mr-5">129232.00</p> <span> <i class="fas fa-times"></i> 2</span>
                                 </div>
                             </div>
                         </div>
@@ -167,43 +167,12 @@
 
                 </div>
 
-                <a href="#"><h2 class="sec-heading"><i class="fas fa-plus"></i> Add more items</h2></a>
-                <a href="#">
-                    <h2 class="sec-heading"><i class="fas fa-pepper-hot"></i> Add special cooking Intructions</h2></a>
+                <a href="#" class="link-color"><h2><i class="fas fa-plus"></i> Add more items</h2></a>
+                <a href="#" class="link-color">
+                    <h2><i class="fas fa-pepper-hot"></i> Add special cooking Intructions</h2></a>
                 <h2>People Also Added</h2>
 
                 <div class="row">
-<!--                    <section class="card-sec">-->
-<!--                        <div class="card&#45;&#45;content">-->
-<!--                        <div class="card card-block">-->
-<!--                        <div class="card-body">-->
-<!--                            <p class="m-0">Murphy</p>-->
-<!--                            <p class="m-0">$ 33</p>-->
-<!--                            <a class="card-link"><i class="fas fa-plus"></i> Add more</a>-->
-<!--                        </div>-->
-<!--                        </div>-->
-<!--                        </div>-->
-
-<!--                            <div class="card&#45;&#45;content">-->
-<!--                            <div class="card card-block">-->
-<!--                        <div class="card-body">-->
-<!--                            <p class="m-0">Murphy</p>-->
-<!--                            <p class="m-0">$ 33</p>-->
-<!--                            <a class="card-link"><i class="fas fa-plus"></i> Add more</a>-->
-<!--                        </div>-->
-<!--                        </div>-->
-<!--                        </div>-->
-
-<!--                        <div class="card&#45;&#45;content">-->
-<!--                            <div class="card card-block">-->
-<!--                            <div class="card-body">-->
-<!--                            <p class="m-0">Murphy</p>-->
-<!--                            <p class="m-0">$ 33</p>-->
-<!--                            <a class="card-link"><i class="fas fa-plus"></i> Add more</a>-->
-<!--                        </div>-->
-<!--                        </div>-->
-<!--                        </div>-->
-<!--                    </section>-->
 
                     <div class="col-12">
                     <VueSlickCarousel v-bind="settings">
@@ -353,16 +322,59 @@
                 </div>
 
                 <div class="row">
-                    <h2 class="sec-heading p-3">Prices in EUR, Incl. taxes</h2>
-                    <div class="w-100 invoice">
-                    <p>Item Subtotal</p><span>20</span><br>
-                    <p>Small Delivery Order more</p><span>20</span><br>
-                    <p>Item Subtotal</p><span>20</span><br>
-                    <p>Item Subtotal</p><span>20</span><br>
-                    <p>Item Subtotal</p><span>20</span><br>
-                    <p>Item Subtotal</p><span>20</span><br>
-                    <p>Item Subtotal</p><span>20</span><br>
-                    <p>Item Subtotal</p><span>20</span><br>
+                    <div class="col-12">
+                    <h2 class="sec-heading">Prices in EUR, Incl. taxes</h2>
+                    </div>
+                </div>
+                    <div class="row invoice">
+                        <div class="col-8">
+                            <p>Item Subtotal</p>
+                        </div>
+                        <div class="col-4 price">
+                            <p>20.48</p>
+                        </div>
+                    </div>
+                    <div class="row invoice">
+                        <div class="col-8">
+                            <p>Small delivery Order extra </p>
+                        </div>
+                        <div class="col-4 price">
+                            <p>3.56</p>
+                        </div>
+                    </div>
+
+                    <div class="row invoice">
+                        <div class="col-8">
+                            <p>Delivery</p>
+                            <p class="small-text">Address lorem ipsum</p>
+                        </div>
+                        <div class="col-4 price">
+                            <p>3.56</p>
+                        </div>
+                    </div>
+                <div class="row invoice">
+                    <div class="col-8">
+                        <p>Basic Delivery Fee</p>
+                    </div>
+                    <div class="col-4 price">
+                        <p>3.90</p>
+                    </div>
+                </div>
+                <div class="row invoice">
+                    <div class="col-8">
+                        <p>Extra KM Delivery Free</p>
+                        <p class="small-text">Order deliver more than 35km will cost extra to deliver</p>
+                    </div>
+                    <div class="col-4 price">
+                        <p>3.56</p>
+                    </div>
+                </div>
+                <div class="row invoice">
+                    <div class="col-8">
+                        <p>Total</p>
+                    </div>
+                    <div class="col-4 price">
+                        <p>20.89</p>
                     </div>
                 </div>
 
@@ -566,8 +578,19 @@
 
 .drawer{
     background-color: #fff;
-    margin-top: 80px;
+    margin-top: 155px;
+    margin-right: 10px;
     border-radius: 10px;
+}
+
+.btn-checkout{
+    background-color: #6A8623;
+    color: white;
+    font-weight: 500;
+}
+.btn-checkout:hover{
+    background-color: #5F7E32;
+    color: white;
 }
 .head{
     border-bottom: 1px solid #9C9C9C;
@@ -604,29 +627,57 @@
         background-color: #8ba939 !important;
     }
     .invoice{
-        margin: 10px 40px;
+        /*margin: 10px 40px;*/
     }
     .invoice p{
         font-size: 20px;
         font-weight: 600;
-        display: inline-block;
-        padding: 0 20px;
+        /*display: inline-block;*/
+        padding-left:40px;
         margin: 0;
+        padding-bottom: 0;
     }
-    .invoice span{
+    .invoice .price p{
+        text-align: right;
+        font-size: 18px;
+        font-weight: 600;
+        padding-right:20px;
+        padding-bottom: 0;
+    }
+    .invoice .col-8{
+        padding:0;
+    }
+    .invoice .col-4{
+        padding: 0;
+    }
+    .invoice .small-text{
+        font-size:12px;
+        margin-top: -5px;
+    }
+    /*.invoice span{
         float: right;
         font-size: 18px;
         font-weight: 600;
         padding: 0 20px;
-    }
+    }*/
     .sec-heading{
+    color: #8ba939;
+    font-size: 26px;
+}
+a.link-color h2{
+    font-size: 26px;
+}
+    a.link-color{
         color: #8ba939;
-        font-size: 26px;
     }
     .card-block{
-        box-shadow:2px 0px 5px 0px #8f8f90;
+        box-shadow:0px 0px 7px 1px #E8E8E9;
         width: 90%;
-        /*margin-left: 30px;*/
+        border-radius: 15px;
+    }
+    .card-block p{
+        font-size: 18px;
+        font-weight: 400;
     }
     .btn-continue{
         margin: 20px 0;
@@ -643,6 +694,11 @@
     .btn-continue button:hover{
         background-color: #6A8623;
     }
+    a.link-color:hover{
+        text-decoration: none;
+        color: #5F7E32;
+    }
+
     /*.card-sec{
         display: flex;
         flex-wrap: nowrap;

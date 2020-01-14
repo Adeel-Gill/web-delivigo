@@ -1,6 +1,6 @@
 <template>
     <div class="sort">
-        <b-dropdown size="lg" :text="text" class="m-2" id="dropdown">
+        <b-dropdown size="sm" :text="text" class="m-2" id="dropdown">
             <b-dropdown-item href="#" class="dropdown-menu-items" v-for="filter in filters" :filter="filters" :key="filter.id" >
                 <div class="dropdown-menu-item">
                     <div class="sort">
@@ -87,6 +87,5 @@ li.dropdown-menu-items{
 li.dropdown-menu-items a{
     padding: 0 !important;
 }
-
 
 </style>

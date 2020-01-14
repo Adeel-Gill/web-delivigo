@@ -56,6 +56,7 @@
                 this.image = baseAddress + img;
                 return this.image;
             }
+            console.log('imagen',this.image);
         }
     }
 }
@@ -67,7 +68,7 @@
     }
     .restaurants-list img{
         width: 100%;
-        height: 260px;
+        height: 200px;
         border-radius: 7px;
     }
     .restaurant{

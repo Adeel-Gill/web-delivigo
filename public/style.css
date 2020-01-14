@@ -230,10 +230,10 @@ a.nav-link{
     #carousel-1 .carousel-caption{
         top: 6%;
     }
-    .caption-change h1{
+    .banner-caption h1{
         font-size: 22px !important;
     }
-    .caption-change p{
+    .banner-caption p{
         font-size: 16px !important;
         margin-bottom: 10px !important;
         line-height: 16px !important;
@@ -243,16 +243,22 @@ a.nav-link{
         width: 287px !important;
         height: 40px !important;
     }
-    .carousel-caption{
-        right: 10% !important;
-        left: 10% !important;
-    }
-    button.btn{
+    /*.banner-caption{*/
+    /*    right: 10% !important;*/
+    /*    left: 10% !important;*/
+    /*}*/
+    .btn-search{
         font-size: 22px !important;
         line-height: 25px !important;
-        padding: 6px 21px !important;
+        padding: 0px 21px !important;
         margin: 10px 0 0 0 !important;
-
+    }
+    .overlay{
+        margin-left:0px !important;
+    }
+    .btn-overlay{
+        text-align: center !important;
+        padding-left:0px !important;
     }
     .catagory{
         margin: auto !important;

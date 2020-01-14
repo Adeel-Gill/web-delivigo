@@ -64,6 +64,7 @@ export default {
                 // console.log('imageinsideelse',this.image,'param',img);
                 return this.image;
             }
+            console.log('image',this.image);
         }
     },
     mounted() {
@@ -78,7 +79,7 @@ export default {
 }
 .restaurants-list img{
     width: 100%;
-    height: 260px;
+    height: 200px;
     border-radius: 7px;
 }
 .restaurants-details{
