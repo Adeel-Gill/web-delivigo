@@ -1,6 +1,7 @@
 <template>
     <div v-if="">
         <landing-banner></landing-banner>
+        <app-available-cities></app-available-cities>
         <popular-Restaurant  ></popular-Restaurant>
         <delivery-process></delivery-process>
         <featured-restaurants></featured-restaurants>
@@ -15,6 +16,7 @@ import Process from './delivery.vue';
 import Featured from './featuredRestaurants.vue';
 import Download from './appdownload.vue';
 import {fetchResturantsData} from "../components/api/Landing";
+import availableCities from "./availableCities";
 
 
 export default {
@@ -23,7 +25,8 @@ export default {
     popularRestaurant: Popular,
     deliveryProcess: Process,
     featuredRestaurants: Featured,
-    appDownload: Download
+    appAvailableCities: availableCities,
+    appDownload: Download,
     },
     data(){
         return {
