@@ -37,7 +37,7 @@
 
 <style scoped>
     .popular {
-        margin: 50px 0;
+        margin-top: 50px;
     }
     .show-more{
         text-align: right;

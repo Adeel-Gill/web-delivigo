@@ -3,27 +3,12 @@
         <div class="restaurant" >
             <router-link to="/">
                 <div>
-                    <img :src="`${getImage('')}`" @error="`${getImage('')}`" />
+<!--                    <img :src="`${getImage('')}`" @error="`${getImage('')}`" />-->
+                    <img src="../../../public/images/lahore.jpg" alt="lahore">
                     <div class="restaurants-details">
                         <div class="row">
                             <div class="col-8 padding-top-botom">
-                                <h6 style="display: block;" class="text-truncate">City Name</h6>
-                            </div>
-                            <div class="col-4 padding-top-botom">
-                                <p class="padding-top font-size-9"><i class="fas fa-star"></i> 0</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5 padding-top-botom">
-                                <p style="display: block;" class="font-light text-truncate">Address</p>
-                            </div>
-                            <div class="col-3 padding-top-botom">
-                                <i class="fas fa-euro-sign"></i>
-                                <i class="fas fa-euro-sign"></i>
-                                <i class="fas fa-euro-sign"></i>
-                            </div>
-                            <div class="col-4 padding-top-botom">
-                                <p class="font-size-9"><i class="far fa-clock"></i> 11:00</p>
+                                <h6 style="display: block;" class="text-truncate">Lahore</h6>
                             </div>
                         </div>
                     </div>
@@ -56,5 +41,35 @@
 </script>
 
 <style scoped>
-
+    .restaurant a{
+        text-decoration: none;
+        color: black;
+    }
+    .restaurants-list img{
+        width: 100%;
+        height: 200px;
+        border-radius: 7px;
+    }
+    .restaurant{
+        background: #d9d9d9;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+    .restaurants-details{
+        padding: 15px 3px;
+        /*height: 90px;*/
+    }
+    .restaurants-details h6{
+        font-family: "Roboto";
+        font-size: 22px;
+        font-weight: 500;
+        margin: 0;
+        display: inline-block;
+        padding: 0 10px;
+    }
+    .restaurants-details p{
+        margin: 0;
+        font-family: "Roboto";
+        font-size: 9px;
+    }
 </style>

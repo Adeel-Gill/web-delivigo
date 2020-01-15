@@ -54,7 +54,7 @@ export default {
 </script>
 <style scoped>
 .popular {
-    margin: 50px 0;
+    margin: 20px 0;
 }
 .show-more{
   text-align: right;
