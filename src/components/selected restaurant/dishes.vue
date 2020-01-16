@@ -3,7 +3,7 @@
         <div class="show-dish-details" id="display-dish" >
             <a  class="close" @click="hideDish"></a>
             <div class="dish-detail-image" style="margin-top: 25px">
-                <img :src="getImage(dishDetail.ImageUrl)" @error="getImage('')">
+                <img :src="`${getImage(dishDetail.ImageUrl)}`" @error="getImage('')">
             </div>
             <div class="dish-detail-about">
                 <div class="dish-name-descp">
@@ -140,9 +140,11 @@ export default {
         },
         getImage(img) {
           if(img === '' || img === 'null' || img == null) {
-              return this.image = defaultDishPic;
+              this.image = defaultDishPic
+              return this.image;
           } else {
-              return this.image = baseAddress + img;
+              this.image = baseAddress + img;
+              return this.image;
           }
         },
         addDishes() {
