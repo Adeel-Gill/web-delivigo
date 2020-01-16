@@ -97,7 +97,7 @@
     },
   mounted() {
       console.log('m',this.isLogin === 'true'? true: false,this.isLoggedOut === 'true'? true: false);
-      if(this.isLogin === 'null' || this.isLoggedOut === 'null' || (this.isLogin == null || this.isLoggedOut == null)) {
+      if((this.isLogin == null || this.isLoggedOut == null)) {
         this.$store.dispatch('cleanToken');
       }
 
@@ -117,6 +117,9 @@
         this.isFilter = false;
       console.log('c',this.isLogin,this.isLoggedOut);
       console.log(localStorage.getItem('isLogin'));
+      if((this.isLogin == null || this.isLoggedOut == null)) {
+        this.$store.dispatch('cleanToken');
+      }
       // this.isLogin=localStorage.getItem('isLogin');
         this.$eventBus.$on('checkComponent', (data) => {
       // do something with the data
@@ -144,7 +147,7 @@
     background-size: cover;
   }
   .filter-header div#nav-collapse li.nav-item.singin a.nav-link {
-    border: 2px solid transparent
+    border: 2px solid transparent;
   }
   .profile-link a{
     padding: 0;

@@ -1,5 +1,5 @@
 <template>
-    <div class="pl-5 m-top">
+    <div class="pl-5 m-top col-md-8">
         <h1 class="profile-heading d-inline">My Profile</h1>
         <a  class="edit-btn" @click="changeValidated"><i class="fa fa-pencil-alt"></i></a>
 <!--        <h1 class="profile-heading">My Profile</h1>-->

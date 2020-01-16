@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="col-md-9">
     <div class="container-fluid">
     <div class="row text-center my-5">
         <div class="col-md-6 btn-tab active-btn" id="btn1">
@@ -329,6 +330,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     </div>
 </template>

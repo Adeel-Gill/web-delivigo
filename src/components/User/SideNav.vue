@@ -1,7 +1,50 @@
 <template>
     <div>
-        <nav class="navbar">
-            <!-- Links -->
+
+        <Push noOverlay isOpen disableOutsideClick>
+            <nav class="navbar">
+                <!-- Links -->
+                <ul class="navbar-nav  m-top nav-pills mx-auto">
+                    <router-link class="nav-item"
+                                 to="/profile"
+                                 tag="li"
+                                 active-class="active"
+                                 exact>
+                        <a class="nav-link">My Profile</a>
+                    </router-link>
+                    <router-link class="nav-item"
+                                 to="/delivery"
+                                 tag="li"
+                                 active-class="active"
+                                 exact>
+                        <a class="nav-link" >Delivery Address</a>
+                    </router-link>
+                    <router-link class="nav-item"
+                                 to="/billing"
+                                 tag="li"
+                                 active-class="active"
+                                 exact>
+                        <a class="nav-link">Billing And Payments</a>
+                    </router-link>
+                    <router-link class="nav-item"
+                                 to="/diamond"
+                                 tag="li"
+                                 active-class="active"
+                                 exact>
+                        <a class="nav-link">Diamond Reward</a>
+                    </router-link>
+                    <router-link class="nav-item"
+                                 to="/support"
+                                 tag="li"
+                                 active-class="active"
+                                 exact>
+                        <a class="nav-link">Support</a>
+                    </router-link>
+                </ul>
+            </nav>
+        </Push>
+        <!--<nav class="navbar">
+            &lt;!&ndash; Links &ndash;&gt;
             <ul class="navbar-nav  m-top nav-pills mx-auto">
                 <router-link class="nav-item"
                 to="/profile"
@@ -39,13 +82,17 @@
                     <a class="nav-link">Support</a>
                 </router-link>
             </ul>
-        </nav>
+        </nav>-->
     </div>
 </template>
 
 <script>
+    import { Push } from 'vue-burger-menu';
     export default {
         name: "SideNav",
+        components: {
+            Push
+        },
         data() {
             return {
                 path: ''
@@ -73,6 +120,9 @@
     .m-top{
         margin-top: 100px;
     }
+    .navbar{
+        height: 100%;
+    }
     /*.nav-color{*/
     /*    background-color: #f2f2f2;*/
     /*}*/
@@ -86,11 +136,11 @@
         padding: 0;
     }
     .nav-item{
-        width: 100%;
+        width: 121%;
         /*margin: 0 auto;*/
         text-align: center;
-        margin-left: 40px;
-        padding-right: 28px;
+        /*margin-left: 40px;*/
+        /*padding-right: 28px;*/
     }
     .active{
         border-right: 3px solid blue;

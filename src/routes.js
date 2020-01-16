@@ -19,6 +19,7 @@ import BillingAndPayments from "./components/User/BillingAndPayments";
 import LoginAndRegister from "./components/LoginAndRegister/LoginAndRegister";
 import Login from "./components/LoginAndRegister/Login";
 import Register from "./components/LoginAndRegister/Register";
+import OrderTracking from "./components/Order/OrderTracking";
 export const routes = [
     { path: '/', component: Home },
     { path: '/loginandreg', component: LoginAndRegister, children: [
@@ -96,6 +97,7 @@ export const routes = [
                 next('/');
             }
         }},
+    { path : '/track', component: OrderTracking},
     { path: '/map/', component: Map},
     { path: '/restaurant/:id', component: Selected },
     {path: '/populars', component: allPopularRestaurants},

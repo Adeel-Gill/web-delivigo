@@ -100,6 +100,7 @@
     .card-image img{
         width: 100%;
         height: 100%;
+        border-radius: 110px 110px 0 0;
     }
     .catagory-text {
         margin: 0 30px;

@@ -4,7 +4,7 @@
 <!--         </div>-->
 <!--        <button class="btn btn-submit" @click="showToken"> save card-->
 <!--        </button>-->
-        <div class="pl-5 m-top m-bottom">
+        <div class="pl-5 m-top m-bottom col-md-8">
             <div class="row">
                 <div class="col-md-8">
                     <h1 class="profile-heading">Billing and Payments</h1>

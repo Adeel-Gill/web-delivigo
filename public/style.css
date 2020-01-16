@@ -189,6 +189,15 @@ a.nav-link{
     font-size: 13px;
     left: -10px;
 }
+.bm-menu {
+    position: absolute !important;
+    top: unset !important;
+    background-color: #f2f2f2 !important;
+
+}
+.bm-burger-button {
+    position: relative !important;
+}
 @media screen and (min-width: 1200px) and (max-width: 1299px) {
     .container {
         padding-top: 0 !important;

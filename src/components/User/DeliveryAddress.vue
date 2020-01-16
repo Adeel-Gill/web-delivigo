@@ -1,7 +1,7 @@
 @@ -0,0 +1,15 @@
 <template>
     <div>
-    <div class="pl-5 m-top m-bottom">
+    <div class="pl-5 m-top p-bottom col-md-8">
         <div class="row">
             <div class="col-md-8">
             <h1 class="profile-heading">Saved Address</h1>
@@ -135,8 +135,8 @@
     .m-top{
         margin-top: 100px;
     }
-    .m-bottom{
-        margin-bottom: 100px;
+    .p-bottom{
+        padding-bottom: 100px;
     }
     /*.col-md-4{*/
     /*    padding: 0;*/

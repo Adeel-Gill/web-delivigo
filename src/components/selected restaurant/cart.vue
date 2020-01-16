@@ -379,7 +379,8 @@
                 </div>
 
                 <div class="row w-100 btn-continue">
-                    <button type="button" class="btn mx-auto">Place the Order</button>
+
+                    <button type="button" @click="navigateToTrack()" class="btn mx-auto" >Place the Order</button>
                 </div>
             </div>
         </b-modal>
@@ -473,6 +474,9 @@
                 text: message,
                 duration: 2000
             })
+        },
+        navigateToTrack() {
+          this.$router.push('/track');
         },
         async fetchRestaurantMealById(resId, mealId) {
                 console.log('bothIDs'+resId+mealId);
