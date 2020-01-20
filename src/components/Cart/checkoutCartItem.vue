@@ -1,15 +1,17 @@
 <template>
-    <div class="card mb-3" style="width: 100%;">
-        <div class="card-body py-0 pl-2">
-            <div class="row">
-                <div class="col-4 p-0 card-img">
-                    <img :src="item.ImageUrl">
-                </div>
-                <div class="col-8 py-0 pr-1">
-                    <a src="#" class="float-right"><i class="fas fa-times"></i></a>
-                    <h4>{{item.Name}}</h4>
-                    <p class="text-muted m-0">{{item.Description}}</p>
-                    <p class="d-inline-block price m-0 mr-5">{{item.Price}}</p> <span><i class="fas fa-times"></i>{{item.Quantity}}</span>
+    <div class="col-6" >
+        <div class="card p-0 mb-3" style="width: 100%;">
+            <div class="card-body py-0 pl-2">
+                <div class="row">
+                    <div class="col-4 p-0 card-img">
+                        <img :src="item.ImageUrl">
+                    </div>
+                    <div class="col-8 py-0 pr-1">
+                        <a src="#" class="float-right"><i class="fas fa-times"></i></a>
+                        <h4>{{item.Name}}</h4>
+                        <p class="text-muted m-0">{{item.Description}}</p>
+                        <p class="m-0 d-inline-block price mr-5">{{item.Price}}</p> <span><i class="fas fa-times"></i> {{item.Quantity}}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -18,15 +20,8 @@
 
 <script>
     export default {
-        name: "cartItem",
-        props: ['item'],
-        data() {
-            return {
-            }
-        },
-        mounted() {
-            console.log('fromCart',this.$store.state.cartData.Meal);
-        }
+        name: "checkoutCartItem",
+        props: ['item']
     }
 </script>
 

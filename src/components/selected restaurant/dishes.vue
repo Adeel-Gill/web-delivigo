@@ -134,8 +134,36 @@ export default {
                 this.quantity--
             }
         },
+        clearMealObject() {
+            console.log('start',this.meal);
+            this.meal.Meal.MealId = null;
+            this.meal.Meal.Name = null;
+            this.meal.Meal.RestroId = null;
+            this.meal.Meal.Price = null;
+            this.meal.Meal.MealCategoryId = null;
+            this.meal.Meal.ImageUrl = null;
+            this.meal.Meal.IsRecommend = true;
+            this.meal.Meal.IsFeatured = true;
+            this.meal.Meal.IsCustomDish = true;
+            this.meal.Meal.IsAvailable = true;
+            this.meal.Meal.Quantity = null;
+            this.meal.Meal.MealMainId = null;
+            this.meal.Meal.Description = null;
+            this.meal.Meal.Discount = null;
+            this.meal.Meal.Rating = null;
+            this.meal.Meal.TimeDuration = 30;
+            this.meal.Meal.Tags = null;
+            console.log('here1');
+            this.meal.AddOnIds = []
+            console.log('here2');
+            this.meal.CustomOptions = [];
+            this.customOptionObject.Id = this.singleOptionObject.Id = null;
+            this.customOptionObject.Name = this.singleOptionObject.Name =null;
+            console.log('here3');
+        },
         setMealObject(obj) {
             console.log('start',obj);
+            this.clearMealObject();
             this.meal.Meal.MealId = obj.Meal.Id;
             this.meal.Meal.Name = obj.Meal.Name;
             this.meal.Meal.RestroId = obj.Meal.RestroId;
@@ -167,12 +195,39 @@ export default {
             console.log('here3');
         },
         saveToCart() {
-            console.log('received',);
-          this.setMealObject(this.dishObj);
-          console.log('mealObject',this.meal);
-          this.$store.dispatch('saveInCart',this.meal);
-            document.getElementById("display-dish").style.display = "none";
-            this.showNotification('success','Success','Item added in cart...!');
+            if(this.$store.state.cartData.length <= 0) {
+                console.log('received',);
+                this.setMealObject(this.dishObj);
+                console.log('mealObject',this.meal);
+                this.$store.dispatch('saveInCart',this.meal);
+                document.getElementById("display-dish").style.display = "none";
+                this.showNotification('success','Success','Item added in cart...!');
+            }
+            else if(this.dishObj.Meal.RestroId === this.$store.state.cartData[0].Meal.RestroId) {
+                console.log('received',);
+                this.setMealObject(this.dishObj);
+                console.log('mealObject',this.meal);
+                this.$store.dispatch('saveInCart',this.meal);
+                document.getElementById("display-dish").style.display = "none";
+                this.showNotification('success','Success','Item added in cart...!');
+            } else {
+                this.$dialog.confirm('Items of different restaurants are already in the cart. Clear cart to add new item. Continue?', {
+                    loader: true
+                }).then(dialog => {
+                    dialog.loading(false);
+                    this.$store.dispatch('clearCart');
+                    console.log('received',);
+                    this.setMealObject(this.dishObj);
+                    console.log('mealObject',this.meal);
+                    this.$store.dispatch('saveInCart',this.meal);
+                    document.getElementById("display-dish").style.display = "none";
+                    this.showNotification('success','Success','Item added in cart...!');
+                    dialog.close();
+                }).catch(() => {
+                    this.showNotification('info','Info','Place order now to add other restaurant items!');
+                })
+            }
+
         },
         checkArrayResponse(arr,type) {
             if(arr.length>0) {
