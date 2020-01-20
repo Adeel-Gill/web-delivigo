@@ -1,8 +1,7 @@
 <template>
-    <div>
-        <div class="col-md-9">
+    <div class="w-75">
     <div class="container-fluid">
-    <div class="row text-center my-5">
+    <div class="row text-center mb-5 mt-3">
         <div class="col-md-6 btn-tab active-btn" id="btn1">
             <a href="#currentOrder" id="cOrder"><h3>Current Order</h3></a>
         </div>
@@ -332,7 +331,6 @@
         </div>
     </div>
     </div>
-    </div>
 </template>
 
 <script>
@@ -482,4 +480,9 @@
         box-shadow: 4px 1px 10px 1px #DEDEDE;
     }
 
+    @media screen and (max-width: 576px) {
+        .w-75{
+            width: 100% !important;
+        }
+    }
 </style>

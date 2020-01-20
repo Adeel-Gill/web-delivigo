@@ -47,9 +47,6 @@
     .row{
         font-family:pantonb ;
     }
-    .m-top{
-        margin-top: 100px;
-    }
     .nav-color{
         background-color: #f2f2f2;
     }

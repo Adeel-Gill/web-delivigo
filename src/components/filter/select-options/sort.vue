@@ -60,6 +60,7 @@ export default {
 .sort{
     display: inline-block;
     max-width: 330px;
+    margin-bottom: 20px;
 }
 .dropdown-menu-items:hover .sort{
     display: none;

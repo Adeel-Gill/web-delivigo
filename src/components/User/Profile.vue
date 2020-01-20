@@ -1,7 +1,9 @@
 <template>
-    <div class="pl-5 m-top col-md-8">
+    <div class="pad m-top col-md-8">
+        <div class="col-md-8 px-0">
         <h1 class="profile-heading d-inline">My Profile</h1>
         <a  class="edit-btn" @click="changeValidated"><i class="fa fa-pencil-alt"></i></a>
+        </div>
 <!--        <h1 class="profile-heading">My Profile</h1>-->
         <div class="row">
             <div class="col-md-8">
@@ -33,9 +35,9 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-4 pl-5">
-                <h4>Picture</h4>
-                <div class="profile-pic">
+            <div class="col-md-4  order">
+<!--                <h4>Picture</h4>-->
+                <div class="profile-pic mx-auto mt-3">
                     <img :src="getImage(userData.UrlImage)" @error="getImage('')" class="rounded-circle img-fluid"/>
                 </div>
             </div>
@@ -112,9 +114,12 @@
         font-family:pantonb ;
     }
     .m-top{
-        margin-top: 100px;
+        margin-top: 20px;
     }
-
+    .pad{
+        padding-left:50px;
+        padding-right: 50px;
+    }
     .col-md-4{
         padding: 0;
     }
@@ -168,11 +173,26 @@
         -webkit-box-shadow: none;
     }
     .edit-btn i{
-        margin-left:20px ;
         font-size: 25px;
         color: #9c9c9c;
     }
+    .edit-btn{
+        float: right;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
     .edit-btn i:hover{
         color: #5860ff;
+    }
+    @media screen and (max-width: 576px) {
+        .order{
+            order: -1;
+        }
+        .button .btn-submit{
+            margin-right: 10px;
+        }
+        .m-top{
+            margin-top: 50px;
+        }
     }
 </style>

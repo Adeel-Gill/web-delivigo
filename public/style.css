@@ -62,11 +62,12 @@ a.nav-link{
 #carousel-2 .carousel-caption {
     text-align: left;
     left: auto;
-    right: 10%;
+    right: 5%;
     top: 6px;
     display: flex;
     align-items: center;
     height: 100%;
+    width: 22%;
 }
 #carousel-2 .carousel-indicators {
     top: 7%;
@@ -249,7 +250,7 @@ a.nav-link{
     }
     .form-control{
         font-size:18px !important;
-        width: 287px !important;
+        width: 100% !important;
         height: 40px !important;
     }
     /*.banner-caption{*/
@@ -273,7 +274,7 @@ a.nav-link{
         margin: auto !important;
     }
     .food{
-        margin: 0 0 !important;
+        margin: 0 0 20px 0 !important;
     }
     html {
         overflow-x: hidden;

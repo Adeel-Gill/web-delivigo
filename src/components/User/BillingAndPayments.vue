@@ -6,11 +6,9 @@
 <!--        </button>-->
         <div class="pl-5 m-top m-bottom col-md-8">
             <div class="row">
-                <div class="col-md-8">
-                    <h1 class="profile-heading">Billing and Payments</h1>
-                </div>
-                <div class="col-md-4">
-                    <b-button class="btn btn-submit" @click="createCard" v-b-modal.modal-1><i class="fas fa-plus mr-3"></i>Add Card</b-button>
+                <div class="col-md-10">
+                    <h1 class="profile-heading d-inline-block">Billing and Payments</h1>
+                    <b-button class="btn btn-submit float-right" @click="createCard" v-b-modal.modal-1><i class="fas fa-plus mr-3"></i>Add Card</b-button>
                     <!--                <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Card</button>-->
                 </div>
             </div>
@@ -383,7 +381,7 @@
         font-family:pantonb ;
     }
     .m-top{
-        margin-top: 100px;
+        margin-top: 30px;
     }
     .m-bottom{
         margin-bottom: 100px;
@@ -445,6 +443,7 @@
         position: absolute;
         right: 0;
         text-align: right;
+        padding-right: 0;
     }
     .icon i{
         margin: 0 15px 0 0;
@@ -458,6 +457,7 @@
     }
     .edit{
         color: #5860ff;
+        margin-right: 15px;
     }
     .edit:hover{
         color: #4F55C2;
@@ -465,6 +465,7 @@
     .radio{
         display: flex;
         margin-top: 10px;
+        float: right;
     }
     .radio input{
         margin-top: 3px;
@@ -479,5 +480,10 @@
         display: flex;
         justify-content: flex-end;
         margin: 10px 0 20px 0;
+    }
+    @media screen and (max-width: 576px) {
+        .m-top{
+            margin-top: 50px;
+        }
     }
 </style>

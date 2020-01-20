@@ -46,6 +46,8 @@
     display: inline-block;
     max-width: 330px;
     margin: 0;
+  margin-bottom: 20px;
+
 }
 
 ul.dropdown-menu {

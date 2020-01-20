@@ -1,16 +1,14 @@
 @@ -0,0 +1,15 @@
 <template>
     <div>
-    <div class="pl-5 m-top p-bottom col-md-8">
+    <div class="pad m-top p-bottom col-md-8">
         <div class="row">
-            <div class="col-md-8">
-            <h1 class="profile-heading">Saved Address</h1>
-            </div>
-                <div class="col-md-4">
-                    <button class="btn btn-submit" v-b-modal.modal-1><i class="fas fa-plus mr-3"></i>Add Card</button>
+            <div class="col-md-10">
+                <h1 class="profile-heading d-inline-block">Saved Address</h1>
+                <button class="btn btn-submit float-right" v-b-modal.modal-1><i class="fas fa-plus mr-3"></i>Add Card</button>
 
                     <!--                    <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Address</button>-->
-                </div>
+            </div>
         </div>
         <div class="col-md-10">
             <div class="address-block row">
@@ -22,8 +20,9 @@
                     <a href="#" v-b-modal.modal-1><i class="fas fa-pencil-alt edit"></i></a>
                     <a href="#"><i class="fas fa-times-circle cancel"></i></a>
                     <div class="radio">
-                        <input type="radio">
-                        <label>Default</label>
+
+                        <input type="radio" id="rad">
+                        <p class="d-inline-block">Default</p>
                     </div>
                 </div>
             </div>
@@ -133,7 +132,11 @@
         font-family:pantonb ;
     }
     .m-top{
-        margin-top: 100px;
+        margin-top: 30px;
+    }
+    .pad{
+        padding-left:40px;
+        padding-right: 40px;
     }
     .p-bottom{
         padding-bottom: 100px;
@@ -199,11 +202,13 @@
         position: absolute;
         right: 0;
         text-align: right;
+        padding-right: 0;
         /*margin-top: 20px;*/
     }
     .icon i{
-        margin: 0 15px 0 0;
+        /*margin: 0 15px 0 0;*/
         font-size: 18px;
+        text-align: right;
     }
     .icon .cancel{
         color: red;
@@ -213,6 +218,7 @@
     }
     .edit{
         color: #007bff;
+        margin-right: 15px;
     }
     .edit:hover{
         color: #0056b3;
@@ -220,12 +226,15 @@
     .radio{
         display: flex;
         margin-top: 10px;
+        float: right;
+
     }
     .radio input{
         margin-top: 3px;
         height:18px;
         width: 18px;
         margin-right: 5px;
+
     }
     .radio label{
         font-size: 16px;
@@ -238,5 +247,19 @@
     .btn:focus{
         box-shadow: none;
         -webkit-box-shadow: none;
+    }
+    @media screen and (max-width: 576px) {
+        .radio{
+            display: inline-block;
+            margin-left: 15px;
+            margin-top: -6px;
+        }
+        .radio input{
+            position: relative;
+            top: 4px;
+        }
+        .m-top{
+            margin-top: 50px;
+        }
     }
 </style>
