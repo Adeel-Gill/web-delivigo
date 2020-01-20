@@ -1,4 +1,13 @@
 <template>
+    <div class="col-12 p-0" style="min-height: 409px;">
+        <app-side-nav></app-side-nav>
+        <main id="page-wrap">
+        <router-view></router-view>
+        </main>
+    </div>
+</template>
+
+<!--<template>
     <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 nav-color">
@@ -9,7 +18,7 @@
         </div>
     </div>
     </div>
-</template>
+</template>-->
 
 <script>
     import SideNav from "./SideNav";
@@ -37,9 +46,6 @@
     }
     .row{
         font-family:pantonb ;
-    }
-    .m-top{
-        margin-top: 100px;
     }
     .nav-color{
         background-color: #f2f2f2;

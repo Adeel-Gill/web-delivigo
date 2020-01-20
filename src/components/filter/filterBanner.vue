@@ -14,9 +14,9 @@
         >
           <!-- Text slides with image -->
           <b-carousel-slide v-for="slide in mockData" :key="slide" :img-src= "slide.imageURL" >
-            <div class="filter-caption" style="right: 0;">
+            <div class="filter-caption w-100 float-right" style="right: 0;">
               <h6>slide.name</h6>
-              <h3>slide.description</h3>
+              <h3>slide.description </h3>
               <p>slide.rating</p>
             </div>
           </b-carousel-slide>
