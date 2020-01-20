@@ -34,7 +34,7 @@
                     <button @click="increment()">&#xff0b;</button>
                 </div>
                 <div class="add-item-btn">
-                    <a>Add item -  € {{dishDetail.Price * quantity}}.00</a>
+                    <button @click="saveToCart()" >Add item -  € {{dishDetail.Price * quantity}}.00</button>
                 </div>
             </div>
         </div>
@@ -73,10 +73,54 @@ export default {
             addOns: [],
             customOptions: [],
             baseLink: baseAddress,
+            dishObj: {},
             image: '',
             baseUrl: '',
             selected: [], // Must be an array reference!
-            isCustomMeal: null
+            isCustomMeal: null,
+            meal: {
+                "Meal":
+                    {
+                        "MealId": null,
+                        "Name": null,
+                        "RestroId": null,
+                        "Price": null,
+                        "MealCategoryId": null,
+                        "IsRecommend": null,
+                        "IsCustomDish": null,
+                        "ImageUrl": null,
+                        "IsFeatured": null,
+                        "IsAvailable": null,
+                        "MealMainId": null,
+                        "Description": null,
+                        "Quantity": null,
+                        "Discount": null,
+                        "Rating": null,
+                        "TimeDuration": null,
+                        "Tags": null
+                    },
+                "AddOnIds":
+                    [
+                        null
+                    ],
+                "CustomOptions":
+                    [
+                        null
+                    ]
+            },
+            customOptionObject: {
+                "Id": null,
+                "Name": null,
+                "Options":
+                    [
+
+                    ]
+            },
+            singleOptionObject:  {
+                "IsSelected": true,
+                "Id": null,
+                "Name": null
+            }
         }
     },
     methods: {
@@ -90,6 +134,46 @@ export default {
                 this.quantity--
             }
         },
+        setMealObject(obj) {
+            console.log('start',obj);
+            this.meal.Meal.MealId = obj.Meal.Id;
+            this.meal.Meal.Name = obj.Meal.Name;
+            this.meal.Meal.RestroId = obj.Meal.RestroId;
+            this.meal.Meal.Price = this.quantity * obj.Meal.Price;
+            this.meal.Meal.MealCategoryId = obj.Meal.MealCategoryId;
+            this.meal.Meal.ImageUrl = baseAddress + obj.Meal.ImageUrl;
+            this.meal.Meal.IsRecommend = true;
+            this.meal.Meal.IsFeatured = true;
+            this.meal.Meal.IsCustomDish = true;
+            this.meal.Meal.IsAvailable = true;
+            this.meal.Meal.Quantity = this.quantity;
+            this.meal.Meal.MealMainId = obj.Meal.MealMainId;
+            this.meal.Meal.Description = obj.Meal.Description;
+            this.meal.Meal.Discount = obj.Meal.Discount;
+            this.meal.Meal.Rating = obj.Meal.Rating;
+            this.meal.Meal.TimeDuration = 30;
+            this.meal.Meal.Tags = obj.Meal.Tags;
+            console.log('here1');
+            for( let addon of obj.AddOns){
+                this.meal.AddOnIds.push(addon.Id);
+            }
+            console.log('here2');
+            for(let customOption of obj.CustomOptions) {
+                this.customOptionObject.Id = this.singleOptionObject.Id = customOption.Id;
+                this.customOptionObject.Name = this.singleOptionObject.Name = customOption.Name;
+                this.customOptionObject.Options.push(this.singleOptionObject);
+                this.meal.CustomOptions.push(this.customOptionObject);
+            }
+            console.log('here3');
+        },
+        saveToCart() {
+            console.log('received',);
+          this.setMealObject(this.dishObj);
+          console.log('mealObject',this.meal);
+          this.$store.dispatch('saveInCart',this.meal);
+            document.getElementById("display-dish").style.display = "none";
+            this.showNotification('success','Success','Item added in cart...!');
+        },
         checkArrayResponse(arr,type) {
             if(arr.length>0) {
                 return true;
@@ -99,7 +183,7 @@ export default {
             }
         },
         checkObjectResponse(obj,type) {
-            if(obj.isEmpty()) {
+            if(obj == null) {
                 this.showNotification('error','Error','No '+type+' available to show!');
                 return false;
             } else {
@@ -109,6 +193,7 @@ export default {
         async displayDish(dishId){
             fetchMealById(dishId).then(response => {
                 if(this.checkObjectResponse(response.Meal,'dish detail')) {
+                    this.dishObj = response;
                     this.dishDetail = response.Meal;
                 }
                 if(this.checkArrayResponse(response.AddOns,'addons')) {
@@ -151,14 +236,12 @@ export default {
             this.$root.$on('mealMenuById', response => {
                 console.log('ObjectReceived'+response);
                 console.log('BeforeClearSelectedObject',this.selected);
-                if(response){
-                    if(this.checkArrayResponse(response,'meals for this menu')){
+                    if(this.checkObjectResponse(response,'meals for this menu')){
                         this.selected = [];
                         console.log('AfterClearSelectedObject',this.selected);
                         this.selected = response;
                         console.log('ObjectReceived&Selected'+this.selected);
                     }
-                }
             })
         },
         showNotification(type, title, message) {
@@ -284,7 +367,7 @@ export default {
 .add-item-btn{
     text-align: center;
 }
-.add-item-btn a {
+.add-item-btn button {
     background: #8ba939;
     display: inline-block;
     padding: 20px 68px;

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="slected-bg" :style="{'background-image': 'url('+image+')'}">
+        <div class="slected-bg" :style="{'background-image': 'url('+`${getImage()}`+')'}">
            <div class="food-type">
                 <p><span>€</span><span> €</span><span> €</span><span>€</span></p>
                 <button
@@ -34,56 +34,15 @@
                     <div class="head">
                         <h3 class="d-inline-block">Basket</h3>
 <!--                        <router-link to="/checkout"></router-link>-->
-                        <button type="button" class="btn btn-checkout float-right" v-b-modal.checkout>Proceed to checkout</button>
+                        <button type="button" class="btn btn-checkout float-right" :disabled="doProceed" v-b-modal.checkout>Proceed to checkout</button>
                     </div>
                     <div class="drawer-body px-3">
                         <!-- card start-->
-                    <div class="card mb-3" style="width: 100%;">
-                        <div class="card-body py-0 pl-2">
-                            <div class="row">
-                            <div class="col-4 p-0 card-img">
-                            <img src="../../../public/images/select-item1.png">
-                            </div>
-                            <div class="col-8 py-0 pr-1">
-                                <a src="#" class="float-right"><i class="fas fa-times"></i></a>
-                                <h4>Burger</h4>
-                                <p class="text-muted m-0">Laudiatum consesus</p>
-                                <p class="d-inline-block price m-0 mr-5">129232.00</p> <span><i class="fas fa-times"></i> 2</span>
-                            </div>
+                        <div v-if="notEmpty">
+                            <app-cart-items v-for="item in cartItems" :key="item.Meal" :item="item.Meal"></app-cart-items>
                         </div>
-                        </div>
-                    </div>
-
-                        <div class="card mb-3" style="width: 100%;">
-                            <div class="card-body py-0 pl-2">
-                                <div class="row">
-                                    <div class="col-4 p-0 card-img">
-                                        <img src="../../../public/images/select-item1.png">
-                                    </div>
-                                    <div class="col-8 py-0 pr-1">
-                                        <a src="#" class="float-right"><i class="fas fa-times"></i></a>
-                                        <h4>Burger</h4>
-                                        <p class="text-muted m-0">Laudiatum consesus</p>
-                                        <p class="m-0 d-inline-block price mr-5">129232.00</p> <span><i class="fas fa-times"></i> 2</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card mb-3" style="width: 100%;">
-                            <div class="card-body py-0 pl-2">
-                                <div class="row">
-                                    <div class="col-4 p-0 card-img">
-                                        <img src="../../../public/images/select-item1.png">
-                                    </div>
-                                    <div class="col-8 py-0 pr-1">
-                                        <a src="#" class="float-right"><i class="fas fa-times"></i></a>
-                                        <h4>Burger</h4>
-                                        <p class="text-muted m-0">Laudiatum consesus</p>
-                                        <p class="m-0 d-inline-block price mr-5">129232.00</p> <span><i class="fas fa-times"></i> 2</span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div v-else>
+                            <h3>Add items in cart first...!</h3>
                         </div>
                         <!-- end-->
                     </div>
@@ -366,6 +325,7 @@
                         <p class="small-text">Order deliver more than 35km will cost extra to deliver</p>
                     </div>
                     <div class="col-4 price">
+
                         <p>3.56</p>
                     </div>
                 </div>
@@ -393,22 +353,27 @@
     import fab from 'vue-fab';
     import 'vue-slick-carousel/dist/vue-slick-carousel.css'
     import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
-    import VueSlickCarousel from 'vue-slick-carousel'
-
+    import VueSlickCarousel from 'vue-slick-carousel';
+    import {BBadge} from 'bootstrap-vue';
+    import {defaultRestaurantPic} from "../../main";
+    import cartItem from "../Cart/cartItem";
     export default {
     data(){
         return{
             foodTypes:[],
+            doProceed: false,
             cartImg:'../images/cart.png',
             cartHover:'../images/cart-hover.png',
             baseUrl: baseAddress,
             restaurant: {},
+            notEmpty: true,
             image: '',
             fabActions: [{
                 name: 'cache',
                 icon: 'cached'
             }],
             allImages: [],
+            cartItems: [],
             restaurantImages: [],
             resID: null,
             mealID: null,
@@ -428,10 +393,12 @@
         }
     },
         components: {
+        bBage: BBadge,
+        appCartItems: cartItem,
         fab,
             VueSlickCarousel ,
         },
-    mounted() {
+    created() {
         this.$root.$on('mealMenu', response => {
             this.foodTypes = response;
         });
@@ -444,11 +411,31 @@
         });
         this.$root.$on('restaurant', response => {
             this.restaurant = response;
-            this.image = this.baseUrl+this.restaurant.ImageUrl;
+            console.log('insideCartRestaurant',response.ImageUrl);
+            this.image = baseAddress + response.ImageUrl;
+            console.log('imageHere',this.image);
         })
     },
     methods: {
+        checkCart() {
+            if(this.$store.state.cartData.length > 0) {
+                this.doProceed = false;
+                this.notEmpty= true;
+                this.cartItems = this.$store.state.cartData;
+            } else {
+                this.notEmpty = false;
+                this.doProceed = true;
+            }
+        },
+        addToCart() {
+
+        },
+        getImage() {
+            console.log('UrlIS',this.image);
+            return this.image;
+        },
         handleToggleDrawer() {
+            this.checkCart();
             console.log('insideToggle',this.$refs.drawer);
             this.$refs.drawer.toggle();
         },

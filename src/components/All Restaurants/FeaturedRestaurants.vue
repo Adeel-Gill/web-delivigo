@@ -6,10 +6,13 @@
                 <p>{{subHeading}}</p>
             </div>
             <div class="clear"></div>
-            <div class="restaurants-list">
+            <div class="restaurants-list" v-if="notEmpty">
                 <div class="row">
                     <restaurantsData v-for= "restaurant in restaurantsData" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
                 </div>
+            </div>
+            <div class="row" v-else>
+                <app-empty-error></app-empty-error>
             </div>
         </div>
     </div>
@@ -18,6 +21,7 @@
 <script>
     import {fetchResturantsData} from "../api/Landing";
     import Restaurant from '../../components/restaurant/restaurant.vue';
+    import emptyError from "../error/emptyError";
     export default {
         name: "allFeaturedRestaurants",
         data() {
@@ -25,10 +29,12 @@
                 restaurantsData: [],
                 titleHeading: 'All Featured Restaurants',
                 subHeading: 'The easiest way to your favourite food',
+                notEmpty: true,
             }
         },
         components: {
-            restaurantsData: Restaurant
+            restaurantsData: Restaurant,
+            appEmptyError: emptyError
         },
         methods: {
             fetchAllData() {
@@ -36,11 +42,13 @@
                     if(response.FeaturedRestaurants.length > 0) {
                         this.restaurantsData = response.FeaturedRestaurants;
                     } else {
+                        this.notEmpty = false;
                         this.showNotification('error','Error','No featured restaurants available to show!');
                     }
 
                 }, error => {
                     console.log(error);
+                    this.notEmpty = false;
                     this.showNotification('error','Error','Error occurred please try later!');
                 })
             },

@@ -35,6 +35,7 @@
 <script>
   import {EventBus} from "../main";
   import mapboxgl from "mapbox-gl/dist/mapbox-gl";
+  import {map} from "../main";
   import 'mapbox-gl/dist/mapbox-gl.css'
   import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
   export default {
@@ -79,11 +80,13 @@
     },
       mounted() {
           mapboxgl.accessToken = 'pk.eyJ1IjoiYXFpYmphdmVkMSIsImEiOiJjazRtZ3Z5YXUwNG9vM21wNTRoODFicnZtIn0.UjSkEQkYpVOmS0QUYpXoHg';
-          this.map =  new mapboxgl.Map({
+         this.map =  new mapboxgl.Map({
               container: 'map',
               style: 'mapbox://styles/mapbox/streets-v11',
               zoom: 9
           });
+         console.log('maphere',this.map);
+         EventBus.$emit('mapProperty',this.map);
           let MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
           this.geocoder = new MapboxGeocoder({
               accessToken: mapboxgl.accessToken,

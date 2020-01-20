@@ -5,36 +5,47 @@
         <h2>{{titleHeading}}</h2>
         <p>{{subHeading}}</p>
       </div>
-      <div class="show-more">
+      <div class="show-more" v-if="popularMore">
         <router-link to="/populars" >Show More</router-link>
       </div>
       <div class="clear"></div>
-      <div class="restaurants-list">
-        <div class="row">
-          <restaurantsData v-for= "restaurant in popularData.slice(0, 3)" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
+      <div class="restaurants-list" v-if="notEmpty">
+        <div class="row" >
+            <restaurantsData v-for= "restaurant in popularData.slice(0, 3)" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
         </div>
+      </div>
+      <div class="row" v-else>
+        <app-empty-error></app-empty-error>
       </div>
     </div>
   </div>
 </template>
 <script>
 import Restaurant from '../components/restaurant/restaurant.vue';
+import emptyError from "../components/error/emptyError";
 export default {
   components: {
-    restaurantsData: Restaurant
+    restaurantsData: Restaurant,
+    appEmptyError: emptyError,
   },
   data(){
     return{
       titleHeading: 'Popular Restaurant',
       subHeading: 'The easiest way to your favourite food',
-      popularData: []
+      popularData: [],
+      popularMore: false,
+      notEmpty: true,
     }
   },
   mounted() {
     this.$root.$on('popularData', popularRestaurants => {
       if(popularRestaurants.length>0) {
         this.popularData = popularRestaurants
+        if(popularRestaurants.length > 3) {
+          this.popularMore = true;
+        }
       } else {
+        this.noEmpty = false;
         this.showNotification('error','Error','No popular restaurants available to show!');
       }
     })

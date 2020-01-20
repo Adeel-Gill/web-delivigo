@@ -3,28 +3,34 @@
       <div class="title">
         <h2>{{popularHeading}}</h2>
       </div>
-      <div class="show-more">
+      <div class="show-more" v-if="popularMore">
         <router-link to="/populars">Show More</router-link>
       </div>
       <div class="clear"></div>
-      <div class="restaurants-list">
+      <div class="restaurants-list" v-if="popularNotEmpty">
         <div class="row">
           <restaurantsData v-for= "restaurant in restaurants.slice(0,3)" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
         </div>
+      </div>
+      <div class="row" v-else>
+        <app-empty-error></app-empty-error>
       </div>
     </div>
 </template>
 <script>
 import restaurant from '../restaurant/restaurant';
-
+import emptyError from "../error/emptyError";
 export default {
     components: {
-        restaurantsData: restaurant
+        restaurantsData: restaurant,
+      appEmptyError: emptyError
     },
     data(){
         return{
             popularHeading:'POPULAR RESTAURANT',
-            restaurants: []
+            restaurants: [],
+            popularMore: false,
+            popularNotEmpty: true,
         }
     },
   methods: {
@@ -42,8 +48,12 @@ export default {
     this.$root.$on('popularData', popularRestaurants => {
       console.log('inFilterPopularOn'+popularRestaurants);
       if(popularRestaurants.length>0) {
-        this.restaurants = popularRestaurants
+        this.restaurants = popularRestaurants;
+        if(popularRestaurants.length > 3) {
+          this.popularMore = true;
+        }
       } else {
+        this.popularNotEmpty = false;
         this.showNotification('error','Error','No popular restaurants available to show!');
       }
     })

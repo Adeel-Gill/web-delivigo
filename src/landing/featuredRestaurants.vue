@@ -3,36 +3,44 @@
         <div class="container">
             <div class="featured-restaurants">
                 <h2><span class="glyphicon glyphicon-euro"></span> {{ titleHeading }}</h2>
-                <div class="show-more">
+                <div class="show-more" v-if="featureMore">
                     <router-link to="/featured" >Show More</router-link>
                 </div>
             </div>
-            <div class="restaurants-list">
-                <div class="row">
+            <div class="restaurants-list" v-if="notEmpty">
                     <restaurantsData v-for= "restaurant in featureData.slice(0,3)" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
-                </div>
+            </div>
+            <div class="row" v-else>
+                <app-empty-error></app-empty-error>
             </div>
         </div>
     </div>
 </template>
 <script>
 import Restaurant from '../components/restaurant/restaurant.vue';
-
+import emptyError from "../components/error/emptyError";
 export default {
     components: {
-        restaurantsData: Restaurant
+        restaurantsData: Restaurant,
+        appEmptyError: emptyError,
     },
     data(){
         return{
             titleHeading: 'Featured Restaurants',
-            featureData: []
+            featureData: [],
+            featureMore: false,
+            notEmpty: true,
         }
     },
     mounted() {
         this.$root.$on('featuredData', featuredRestaurants => {
             if(featuredRestaurants.length>0) {
-                this.featureData = featuredRestaurants
+                this.featureData = featuredRestaurants;
+                if(featuredRestaurants.length > 3) {
+                    this.featureMore = true;
+                }
             } else {
+                this.notEmpty = false;
                 this.showNotification('error','Error','No featured restaurants available to show!');
             }
         })

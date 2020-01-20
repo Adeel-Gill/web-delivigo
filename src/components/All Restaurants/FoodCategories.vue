@@ -6,13 +6,16 @@
                 <p>{{subHeading}}</p>
             </div>
             <div class="clear"></div>
-            <div class="catagories">
+            <div class="catagories" v-if="notEmpty">
                 <div class="row">
                 <app-food-categories v-for="catagory in foodCategoriesData"
                                      v-bind:key="catagory.Id"
                                      :foodCategories="catagory"
                                     ></app-food-categories>
                 </div>
+            </div>
+            <div class="row" v-else>
+                <app-empty-error></app-empty-error>
             </div>
         </div>
     </div>
@@ -21,6 +24,7 @@
 <script>
     import {fetchAllData} from "../api/Home";
     import foodCategories from "../foodCategories/foodCategories";
+    import emptyError from "../error/emptyError";
     export default {
         name: "allFoodCategories",
         data() {
@@ -28,10 +32,12 @@
               foodCategoriesData: [],
               titleHeading: 'All Food Categories',
               subHeading: 'All your favorite food categories',
+              notEmpty: true,
           }
         },
         components: {
-          appFoodCategories: foodCategories
+          appFoodCategories: foodCategories,
+          appEmptyError: emptyError
         },
         methods: {
             async fetchAllData() {
@@ -39,11 +45,13 @@
                     if(response.FoodCategories.length>0) {
                         this.foodCategoriesData = response.FoodCategories;
                     } else {
+                        this.notEmpty = false;
                         this.showNotification('error','Error','No food categories available to show!');
                     }
 
                 }, error => {
                     console.log(error);
+                    this.notEmpty = false;
                     this.showNotification('error','Error','Error occurred please try later');
                 })
             },

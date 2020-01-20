@@ -10,6 +10,9 @@ export const UserInfo = new Vuex.Store({
         TOKEN: '',
         stripeKeys: [],
         userData: {},
+        cartData: [],
+        mapData: [],
+        addressId: null,
     },
     getters: {
       getLogin: state => {
@@ -21,6 +24,9 @@ export const UserInfo = new Vuex.Store({
               return state.isLogin;
           }
       },
+        getCart: state => {
+          return state.cartData;
+        },
         getLoggedOut: state => {
             console.log('isLoggedOut',localStorage.getItem('isLoggedOut'));
           if(localStorage.getItem('isLoggedOut') !== 'undefined') {
@@ -42,6 +48,15 @@ export const UserInfo = new Vuex.Store({
             localStorage.setItem('id', payload.Id);
             localStorage.setItem('isLoggedOut', state.isLoggedOut);
             localStorage.setItem('creationCounter', '0');
+        },
+        saveInCart: (state, payload) => {
+            state.cartData.push(payload);
+        },
+        saveMapData: (state, payload) => {
+            state.mapData =  payload;
+        },
+        setAddressID: (state, payload) => {
+          state.addressId = payload;
         },
         isLogin: state => {
             state.isLogin = true;
@@ -72,6 +87,16 @@ export const UserInfo = new Vuex.Store({
         },
         cleanToken: ({commit}) => {
             commit('cleanToken')
+        },
+        saveInCart: ({commit}, payload) => {
+            commit('saveInCart',payload);
+        },
+        saveMapData: ({commit}, payload) => {
+            commit('saveMapData', payload);
+        },
+        setAddressID: ({commit}, payload) => {
+            console.log('idAddress',payload);
+            commit('setAddressID',payload);
         }
     }
 })

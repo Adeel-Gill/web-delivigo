@@ -67,7 +67,7 @@ export default {
     },
     mounted() {
         this.$root.$on('restaurant', response => {
-            if(response.isEmpty()) {
+            if(response == null) {
                 this.showNotification('error','Error','No restaurant detail is available to show!');
             } else {
                 this.restaurant = response;

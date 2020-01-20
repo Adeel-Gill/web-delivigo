@@ -1,29 +1,40 @@
 <template>
     <div>
         <div class="container">
-            <banner />
-            <select-filter></select-filter>
-            <popular />
-            <catagories />
-            <div class="restaurants-list">
-                <h2>{{titleHeading}}</h2>
-                <div class="show-more">
-                    <router-link to="/newRestaurants">Show More</router-link>
+            <div v-if="notEmpty">
+                <banner />
+                <select-filter></select-filter>
+                <popular />
+                <catagories />
+                <div class="restaurants-list" v-if="newNotEmpty">
+                    <h2>{{titleHeading}}</h2>
+                    <div class="show-more" v-if="newRestaurantsMore">
+                        <router-link to="/newRestaurants">Show More</router-link>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="row">
+                        <new-delivigo v-for= "newRestaurant in newRestaurants.slice(0,3)" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
+                    </div>
                 </div>
-                <div class="clear"></div>
-                <div class="row">
-                    <new-delivigo v-for= "newRestaurant in newRestaurants.slice(0,3)" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
+                <div class="row" v-else>
+                    <app-empty-error></app-empty-error>
+                </div>
+                <div class="restaurants-list" v-if="allNotEmoty">
+                    <h2>All Restaurants</h2>
+                    <div class="show-more" v-if="allRestaurantsMore">
+                        <router-link to="/restaurants">Show More</router-link>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="row">
+                        <new-delivigo v-for= "newRestaurant in allRestaurants.slice(0,3)" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
+                    </div>
+                </div>
+                <div class="row" v-else>
+                    <app-empty-error></app-empty-error>
                 </div>
             </div>
-            <div class="restaurants-list">
-                <h2>All Restaurants</h2>
-                <div class="show-more">
-                    <router-link to="/restaurants">Show More</router-link>
-                </div>
-                <div class="clear"></div>
-                <div class="row">
-                    <new-delivigo v-for= "newRestaurant in allRestaurants.slice(0,3)" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
-                </div>
+            <div class="row" v-else>
+                <app-empty-error></app-empty-error>
             </div>
         </div>
     </div>
@@ -34,6 +45,7 @@ import Catagories from './catagories.vue';
 import newDelivigo from './new/newdelivigo.vue';
 import selectFilter from './select-options/filterSelect';
 import popular from './popular'
+import emptyError from "../error/emptyError";
 import {fetchAllData} from "../api/Home";
 
 export default {
@@ -42,15 +54,20 @@ export default {
         Catagories,
         newDelivigo,
         selectFilter,
-        popular
+        popular,
+        appEmptyError: emptyError
     },
     data(){
         return{
             newRestaurants : [],
             fetchedData: {},
             titleHeading:'NEW ON DELIVIGO',
-            allRestaurants: []
-
+            allRestaurants: [],
+            newRestaurantsMore: false,
+            allRestaurantsMore: false,
+            notEmpty: true,
+            newNotEmpty: true,
+            allNotEmoty: true,
         }
     },
     mounted() {
@@ -76,13 +93,36 @@ export default {
         },
         async fetchAllData() {
                 fetchAllData().then(response => {
-                    this.fetchedData = response;
-                    this.newRestaurants = this.fetchedData.NewOpen;
-                    this.allRestaurants = this.fetchedData.Restaurants;
-                    this.$root.$emit('popularData', this.fetchedData.PopularNearYou);
-                    this.$root.$emit('foodCategoriesData', this.fetchedData.FoodCategories);
+                    if(response != null) {
+                        this.fetchedData = response;
+                        if(response.NewOpen.length>0) {
+                            this.newRestaurants = this.fetchedData.NewOpen;
+                            if(this.newRestaurants.length > 3) {
+                                this.newRestaurantsMore = true;
+                            }
+                        } else {
+                            this.newNotEmpty = false;
+                            this.showNotification('error','Error','No new restaurants are available to show');
+                        }
+                        if(response.Restaurants.length > 0) {
+                            this.allRestaurants = this.fetchedData.Restaurants;
+                            if(this.allRestaurants.length > 3) {
+                                this.allRestaurantsMore = true;
+                            }
+                        } else {
+                            this.allNotEmoty = false;
+                            this.showNotification('error','Error','No restaurants are available to show');
+                        }
+                        this.$root.$emit('popularData', this.fetchedData.PopularNearYou);
+                        this.$root.$emit('foodCategoriesData', this.fetchedData.FoodCategories);
+                    } else {
+                        this.notEmpty = false;
+                        this.showNotification('error','Error','No data of filter restaurants is available to show!')
+                    }
+
                 }, error => {
                     console.log(error);
+                    this.notEmpty = false;
                     this.showNotification('error','Error','Error occurred please try later!');
                 })
         },

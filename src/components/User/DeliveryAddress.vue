@@ -7,111 +7,65 @@
             <h1 class="profile-heading">Saved Address</h1>
             </div>
                 <div class="col-md-4">
-                    <button class="btn btn-submit" v-b-modal.modal-1><i class="fas fa-plus mr-3"></i>Add Card</button>
-
+                    <button class="btn btn-submit" @click="showModal"><i class="fas fa-plus mr-3"></i>Add Address</button>
                     <!--                    <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Address</button>-->
                 </div>
         </div>
         <div class="col-md-10">
-            <div class="address-block row">
+            <div class="address-block row" v-for="address in allAddresses" :key="address.Id">
                 <div class="col-md-9">
-                <h6 class="address-heading">Home</h6>
-                <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
+                <h6 class="address-heading">{{address.Apartment}}</h6>
+                <p class="address-par text-muted">{{address.AddressLine}}</p>
                 </div>
                 <div class="col-md-2 icon">
-                    <a href="#" v-b-modal.modal-1><i class="fas fa-pencil-alt edit"></i></a>
-                    <a href="#"><i class="fas fa-times-circle cancel"></i></a>
+                    <button @click="deleteAddress(address.Id)" :disabled="address.IsDefault"><i class="fas fa-times-circle cancel"></i></button>
                     <div class="radio">
-                        <input type="radio">
+                        <input type="radio" :checked="address.IsDefault" @click="setDefaultAddress(address.Id)">
                         <label>Default</label>
                     </div>
                 </div>
             </div>
-            <div class="address-block row">
-                <div class="col-md-9">
-                    <h6 class="address-heading">Office1</h6>
-                    <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
-                </div>
-                <div class="col-md-2 icon">
-                    <a href="#" v-b-modal.modal-1><i class="fas fa-pencil-alt edit"></i></a>
-                    <a href="#"><i class="fas fa-times-circle cancel"></i></a>
-                    <div class="radio">
-                        <input type="radio">
-                        <label>Default</label>
-                    </div>
-                </div>
-            </div>
-            <div class="address-block row">
-                <div class="col-md-9">
-                    <h6 class="address-heading">Home2</h6>
-                    <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
-                </div>
-                <div class="col-md-2 icon">
-                    <a href="#" v-b-modal.modal-1><i class="fas fa-pencil-alt edit"></i></a>
-                    <a href="#"><i class="fas fa-times-circle cancel"></i></a>
-                    <div class="radio">
-                        <input type="radio">
-                        <label>Default</label>
-                    </div>
-                </div>
-            </div>
-            <div class="address-block row">
-                <div class="col-md-9">
-                    <h6 class="address-heading">Office</h6>
-                    <p class="address-par text-muted">2 E Broadway #200, New York, NY 10038, USA</p>
-                </div>
-                <div class="col-md-2 icon">
-                    <a href="#" v-b-modal.modal-1><i class="fas fa-pencil-alt edit"></i></a>
-                    <a href="#"><i class="fas fa-times-circle cancel"></i></a>
-                    <div class="radio">
-                        <input type="radio">
-                        <label>Default</label>
-                    </div>
-                </div>
-            </div>
-
-            </div>
+        </div>
     </div>
         <b-modal size="lg" hide-footer class="my-modal" id="modal-1" title="Add new Address">
             <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="type">Type</label>
-                        <input type="text" class="form-control" id="type">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address">
+                        <label>Address</label>
+                        <app-map-nav @mapObj = "setMapData"></app-map-nav>
+<!--                        <div id="map" style="display: none;"></div>-->
+<!--                        <div id="geocoder" class="geocoder col-md-12" @select="showValues"></div>-->
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="zipCode">Zip Code</label>
-                        <input type="text" class="form-control" id="zipCode">
+                        <label for="zipCode">City</label>
+                        <input type="text"  disabled class="form-control" :value="city" id="zipCode">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="city">City</label>
-                        <input type="text" class="form-control" id="city">
+                        <label for="city">State</label>
+                        <input type="text" disabled class="form-control" :value="state" id="city">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="state">State</label>
-                        <input type="text" class="form-control" id="state">
+                        <label for="state">Country</label>
+                        <input type="text" disabled class="form-control" :value="country" id="state">
                     </div>
                 </div>
             </div>
             <div class="btn-modal">
-                <button @click="$bvModal.hide('modal-1')" class="btn btn-submit">Save</button>
+                <buttonSpinner
+                        :loading="isLoading"
+                        :disabled="isLoading"
+                        :styled="true"
+                        @click.native="saveAddress">Save
+                </buttonSpinner>
             </div>
             </div>
         </b-modal>
@@ -119,8 +73,213 @@
 </template>
 
 <script>
+    import mapboxgl from "mapbox-gl/dist/mapbox-gl";
+    import 'mapbox-gl/dist/mapbox-gl.css';
+    import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+    import VueLoadingButton from 'vue-loading-button';
+    import MapNavigation from "../Map/MapNavigation";
+    import {saveAddress, setDefaultAddress, getAllCustomerAddresses, deleteAddress} from "../api/DeliveryAddress";
+    import {EventBus, map} from '../../main'
     export default {
-        name: "DeliveryAddress"
+        name: "DeliveryAddress",
+        components: {
+            buttonSpinner: VueLoadingButton,
+            appMapNav: MapNavigation,
+        },
+        data() {
+            return {
+                map: null,
+                geocoder: null,
+                city: '',
+                state: '',
+                allAddresses: [],
+                country: '',
+                isLoading: false,
+                mapData: {},
+                addressObj: {
+                    "AddressLine": "string",
+                    "Longitude": "string",
+                    "Latitude": "string",
+                    "CustomerId": 0,
+                    "BludingNumber": "string",
+                    "Apartment": "string",
+                    "Floor": "string",
+                    "IsDefault": true,
+                }
+            }
+        },
+        methods: {
+            showValues() {
+                console.log('query',this.geocoder.inputString,'lastSelected',this.geocoder.lastSelected);
+            },
+            setMapData(obj) {
+                this.mapData = JSON.parse(obj);
+                if(this.mapData.place_type[0] === "poi") {
+                    this.city = this.mapData.id;
+                    this.state = this.mapData.text;
+                    this.country = this.mapData.place_name;
+                    console.log(this.mapData,this.city,this.state,this.country);
+                } else {
+                    this.showNotification('error','Error','Please enter nearby address!');
+                    this.mapData = {};
+                    this.city = this.state = this.country = '';
+                }
+
+            },
+            async saveAddress() {
+                if(this.mapData != null || Object.entries(this.mapData).length > 0) {
+                    this.isLoading = true;
+                    this.addressObj.AddressLine = this.mapData.place_name;
+                    this.addressObj.Longitude = this.mapData.geometry.coordinates[0];
+                    this.addressObj.Latitude = this.mapData.geometry.coordinates[1];
+                    this.addressObj.CustomerId = Number(localStorage.getItem('id'));
+                    this.addressObj.Apartment = this.mapData.text;
+                    saveAddress(this.addressObj).then(response => {
+                        if(response.HasErrors ) {
+                            this.showNotification('error','Error','Saving Address failed');
+                            this.isLoading = false;
+                        } else {
+                            this.$store.dispatch('setAddressID', response.Id);
+                            setDefaultAddress(Number(localStorage.getItem('id')), this.$store.state.addressId).then(response => {
+                                if(response.HasError) {
+                                    this.showNotification('error','Error', 'Address is not setted as default');
+                                    this.isLoading = false;
+                                } else {
+                                    getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
+                                        if(response.HasError) {
+                                            this.showNotification('error','Error','Address fetch failed!');
+                                            this.isLoading = false;
+                                        } else {
+                                            if(response.length <= 0) {
+                                                this.isLoading = false;
+                                                this.showNotification('error','Error','No address is available to show please add address');
+                                            } else {
+                                                this.isLoading = false;
+                                                this.allAddresses = response;
+                                                console.log('allAddresses',this.allAddresses);
+                                                this.showNotification('success', 'Success', 'Address saved and setted as default!');
+                                                this.hideModal();
+                                            }
+                                        }
+                                    }, error => {
+                                        console.log(error);
+                                        this.isLoading = false;
+                                        this.showNotification('error','Error','Error occurred while fetching address please try later');
+                                    })
+                                }
+                            }, error => {
+                                console.log(error);
+                                this.isLoading = false;
+                                this.showNotification('error','Error','Address not has been default');
+                            })
+                        }
+                    }, error => {
+                        console.log(error);
+                        this.isLoading = false;
+                        this.showNotification('error','Error','Saving address failed')
+                    })
+                }
+            },
+            setDefaultAddress(id) {
+              setDefaultAddress(Number(localStorage.getItem('id')), id).then(response => {
+                  if(response.HasErrors) {
+                      this.showNotification('error','Error', 'Card is not set as default!');
+                  } else {
+                      getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
+                          if(response.HasErrors) {
+                              this.showNotification('error','Error', 'Address fetching failed!');
+                          } else {
+                              if(response.length <= 0) {
+                                  this.isLoading = false;
+                                  this.showNotification('error','Error','No address is available to show please add address');
+                              } else {
+                                  this.allAddresses = response;
+                                  this.showNotification('success','Success','Address is now default!');
+                              }
+                          }
+                      }, error => {
+                          console.log(error);
+                          this.showNotification('error','Error','Address is default but fetching address failed try later!')
+                      })
+                  }
+              }, error => {
+                  console.log(error);
+                  this.showNotification('error','Error', 'Card is not setted as default!');
+              })
+            },
+            showAllAddresses() {
+                console.log('here');
+              getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
+                  if(response.HasErrors ) {
+                      this.showNotification('error','Error', 'Address fetching failed!');
+                  } else {
+                      if(response.length <= 0) {
+                          this.isLoading = false;
+                          this.showNotification('error','Error','No address is available to show please add address');
+                      } else {
+                          this.showNotification('success','Success', 'All addresses are shown!');
+                          this.allAddresses = response;
+                      }
+                  }
+              }, error => {
+                  console.log(error);
+                  this.showNotification('')
+              })
+            },
+            deleteAddress(id) {
+                this.$dialog.confirm('Address will be deleted permanently. Continue?',{
+                    loader: true
+                }).then(dialog => {
+                    dialog.loading(true);
+                    deleteAddress(id).then(response => {
+                        if(response.HasErrors) {
+                            dialog.loading(false);
+                            dialog.close();
+                            this.showNotification('error','Error','Error occurred deletion of address is failed!');
+                        } else {
+                            dialog.loading(false);
+                            dialog.close();
+                            this.showNotification('success', 'Success', 'Address is successfully deleted!');
+                            this.showAllAddresses();
+                        }
+                    }, error => {
+                        console.log(error);
+                        this.showNotification('error','Error','Error occurred please try later!')
+                    })
+                }).catch(() => {
+                    this.showNotification('info', 'Info', 'Address deletion cancelled');
+                })
+            },
+            showModal() {
+                this.$bvModal.show('modal-1');
+
+            },
+            hideModal() {
+                this.$bvModal.hide('modal-1');
+            },
+            showNotification(type, title, message) {
+                console.log('after Fail',message);
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
+                })
+            }
+        },
+        mounted() {
+            this.showAllAddresses();
+            this.$root.$on('mapData', response => {
+                this.mapData = response;
+            })
+
+        },
+        updated() {
+            this.$root.$on('mapData', response => {
+                this.mapData = response;
+            })
+        }
     }
 </script>
 

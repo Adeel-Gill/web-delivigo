@@ -58,21 +58,9 @@ export default {
     },
     mounted() {
       this.changeHeader();
-      EventBus.$on('resId', response => {
-          this.resId = response;
-          console.log('id'+response+this.resId);
-          this.fetchRestaurantData(this.resId);
-      })
-
         this.resId = this.$route.params.id;
         console.log('queryData'+this.resId);
         this.fetchRestaurantData(this.resId);
-        this.mealID = this.$route.query.mealID;
-        console.log('mealIDQuery',this.mealID)
-        if(this.mealID) {
-            this.resId = this.$route.params.id;
-            this.fetchRestaurantMealById(this.resId, this.mealID);
-        }
     },
     destroyed() {
         this.unChangeHeader();

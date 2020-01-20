@@ -1,8 +1,8 @@
 <template>
 <div>
-    <div class="catagories">
+    <div class="catagories" v-if="categoriesNotEmpty">
         <h2>{{titleSection}}</h2>
-        <div class="show-more">
+        <div class="show-more" v-if="categoriesMore">
             <router-link to="/foodCategories">Show More</router-link>
         </div>
         <div class="clear"></div>
@@ -12,21 +12,28 @@
                             :foodCategories="catagory"></app-categories>
         </div>
     </div>
+    <div class="row" v-else>
+        <app-empty-error></app-empty-error>
+    </div>
 </div>
 </template>
 <script>
 
     import foodCategories from "../foodCategories/foodCategories";
+    import emptyError from "../error/emptyError";
     export default {
     data(){
         return{
             titleSection:'Categories',
             cardImage: 'card1-image',
-            foodCategories: []
+            foodCategories: [],
+            categoriesMore: false,
+            categoriesNotEmpty: true,
         }
     },
     components: {
-        appCategories: foodCategories
+        appCategories: foodCategories,
+        appEmptyError: emptyError
     },
     methods: {
         showNotification(type, title, message) {
@@ -43,7 +50,11 @@
         this.$root.$on('foodCategoriesData', foodCategoriesData => {
             if(foodCategoriesData.length>0) {
                 this.foodCategories = foodCategoriesData;
+                if(foodCategoriesData.length > 3) {
+                    this.categoriesMore = true;
+                }
             } else {
+                this.categoriesNotEmpty = false;
                 this.showNotification('error','Error','No food categories available to show!');
             }
         })
