@@ -27,11 +27,18 @@
                         <a class="nav-link">Billing And Payments</a>
                     </router-link>
                     <router-link class="nav-item"
+                                 to="/orderHistory"
+                                 tag="li"
+                                 active-class="active"
+                                 exact>
+                        <a class="nav-link">Order History</a>
+                    </router-link>
+                    <router-link class="nav-item"
                                  to="/diamond"
                                  tag="li"
                                  active-class="active"
                                  exact>
-                        <a class="nav-link">Diamond Reward</a>
+                        <a class="nav-link">Diamond Award</a>
                     </router-link>
                     <router-link class="nav-item"
                                  to="/support"

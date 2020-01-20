@@ -10,7 +10,7 @@ import SelectedFoodRestaurants from "./components/All Restaurants/SelectedFoodRe
 import User from "./components/User/User";
 import {UserInfo} from "./components/store/UserInfo";
 import DeliveryAddress from "./components/User/DeliveryAddress";
-import DiamondAward from "./components/User/DiamondAward";
+import OrderHistory from "./components/User/Order History";
 import Support from "./components/User/Support";
 import Profile from "./components/User/Profile";
 import Map from "./components/Map/Map";
@@ -20,6 +20,7 @@ import LoginAndRegister from "./components/LoginAndRegister/LoginAndRegister";
 import Login from "./components/LoginAndRegister/Login";
 import Register from "./components/LoginAndRegister/Register";
 import OrderTracking from "./components/Order/OrderTracking";
+import DiamondAward from "./components/User/DiamondAward";
 export const routes = [
     { path: '/', component: Home },
     { path: '/loginandreg', component: LoginAndRegister, children: [
@@ -59,6 +60,14 @@ export const routes = [
                     }
                 } },
             { path: '/delivery', component: DeliveryAddress ,
+                beforeEnter(to, from, next) {
+                    if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
+                        next();
+                    } else {
+                        next('/');
+                    }
+                }},
+            { path: '/orderHistory', component: OrderHistory ,
                 beforeEnter(to, from, next) {
                     if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
                         next();
