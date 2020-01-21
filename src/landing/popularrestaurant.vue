@@ -35,6 +35,7 @@ export default {
       popularData: [],
       popularMore: false,
       notEmpty: true,
+      count: 0,
     }
   },
   mounted() {
@@ -45,8 +46,13 @@ export default {
           this.popularMore = true;
         }
       } else {
-        this.noEmpty = false;
-        this.showNotification('error','Error','No popular restaurants available to show!');
+        if(this.count === 0) {
+          this.notEmpty = false;
+          this.showNotification('error','Error','No popular restaurants available to show!');
+          this.count++;
+        } else {
+          this.count++;
+        }
       }
     })
    },

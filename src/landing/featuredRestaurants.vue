@@ -30,9 +30,11 @@ export default {
             featureData: [],
             featureMore: false,
             notEmpty: true,
+            count: 0,
         }
     },
-    mounted() {
+    created() {
+        console.log('featureCreated');
         this.$root.$on('featuredData', featuredRestaurants => {
             if(featuredRestaurants.length>0) {
                 this.featureData = featuredRestaurants;
@@ -40,13 +42,21 @@ export default {
                     this.featureMore = true;
                 }
             } else {
-                this.notEmpty = false;
-                this.showNotification('error','Error','No featured restaurants available to show!');
+                if(this.count === 0) {
+                    this.notEmpty = false;
+                    console.log('insideShow');
+                    this.showNotification('error','Error','No featured restaurants available to show!');
+                    this.count++;
+                } else {
+                    this.count++;
+                }
+
             }
         })
     },
     methods: {
         showNotification(type, title, message) {
+            console.log('insideShowFunction');
             this.$notify({
                 group: 'foo',
                 type: type,

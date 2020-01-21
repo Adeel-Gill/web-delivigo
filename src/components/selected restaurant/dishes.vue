@@ -78,6 +78,7 @@ export default {
             baseUrl: '',
             selected: [], // Must be an array reference!
             isCustomMeal: null,
+            count: 0,
             meal: {
                 "Meal":
                     {
@@ -316,7 +317,13 @@ export default {
                 this.baseUrl = baseAddress;
                 console.log('dishes',this.selected);
             } else {
-                this.showNotification('error','Error','No popular food is available to show!');
+                if(this.count === 0) {
+                    console.log('dishesNotification');
+                    this.showNotification('error','Error','No dishes are available to show!');
+                    this.count++;
+                } else {
+                    this.count++;
+                }
             }
         })
         this.$root.$on('isCustomMeal', response => {

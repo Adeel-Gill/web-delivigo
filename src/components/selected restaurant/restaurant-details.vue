@@ -4,7 +4,7 @@
             <div class="resturant-name-review">
                 <div class="name-desc">
                     <h4>{{restaurant.Name}}</h4>
-                    <p>{{restaurant.FullAddress}}</p>
+                    <p>{{restaurant.FullAddress | truncate}}</p>
                 </div>
                 <div class="reviews">
                     <a href="#">All Reviews</a>
@@ -12,7 +12,7 @@
                 <div class="clear"></div>
             </div>
             <div class="restaurnt-address">
-                <p><i class="fas fa-map-marker-alt"></i>{{restaurant.FullAddress}}</p>
+                <p><i class="fas fa-map-marker-alt"></i>{{restaurant.FullAddress | truncate}}</p>
             </div>
             <div class="rating-times">
                 <div class="row">
@@ -85,6 +85,16 @@ export default {
                 text: message,
                 duration: 2000
             })
+        }
+    },
+    filters: {
+        truncate(val) {
+            let length = 26;
+            if(val.length <= length) {
+                return val
+            } else {
+                return val.substring(0, length)+ '...';
+            }
         }
     }
 }
