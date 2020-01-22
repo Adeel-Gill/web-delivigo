@@ -34,7 +34,7 @@
                     <div class="head">
                         <h3 class="d-inline-block">Basket</h3>
 <!--                        <router-link to="/checkout"></router-link>-->
-                        <button type="button" class="btn btn-checkout float-right" :disabled="doProceed" @click="startCheckout" v-b-modal.checkout>Proceed to checkout</button>
+                        <button type="button" class="btn btn-checkout float-right" :disabled="doProceed" @click="startCheckout" >Proceed to checkout</button>
                     </div>
                     <div class="drawer-body px-3">
                         <!-- card start-->
@@ -52,6 +52,25 @@
                 </div>
             </vue-drawer-layout>
         </div>
+        <b-modal id="instruction" ref="modal"
+                 @ok="handleOk"
+                 title="Enter Intstructions">
+            <form ref="form" @submit.stop.prevent="handleSubmit">
+                <b-form-group
+                        :state="nameState"
+                        label="Intruction"
+                        label-for="name-input"
+                        invalid-feedback="Instruction is required"
+                >
+                    <b-form-input
+                            id="name-input"
+                            v-model="instruction"
+                            :state="nameState"
+                            required
+                    ></b-form-input>
+                </b-form-group>
+            </form>
+        </b-modal>
         <b-modal size="lg" hide-footer class="my-modal" body-class="p-0" id="checkout" title="Checkout">
             <div class="container--fluid">
                 <div class="map-place">
@@ -59,26 +78,38 @@
                 </div>
                 <div class="row mx-0 btn-main">
                     <div class="col-6 p-0 btn-group">
-                        <button type="button" class="btn btn-lg"><h3 class="m-0">Delivery</h3><h4 class="m-0"> Around 30 Min</h4><p class="m-0"><small>total distance would be 10km</small></p></button>
+                        <button type="button" class="btn btn-lg" @click="forDelivery" :class="[isDelivery ? 'active' : 'notActive']" ><h3 class="m-0">Delivery</h3><h4 class="m-0"> Around 30 Min</h4><p class="m-0"><small>total distance would be 10km</small></p></button>
                     </div>
                     <div class="col-6 p-0 btn-group">
-                        <button type="button" class="btn btn-lg active"><h3 class="m-0">Delivery</h3><h4 class="m-0"> Around 30 Min</h4></button>
+                        <button type="button" class="btn btn-lg " @click="forPickup" :class="[!isDelivery ? 'active' : 'notActive']"><h3 class="m-0">Pickup</h3><h4 class="m-0"></h4></button>
                     </div>
                 </div>
 
             </div>
             <div class="container p-4">
-                <h2 class="sec-heading"><i class="far fa-calendar-check"></i> Scheduled order: Today 16:47 <a href="#" class="link-color"><i class="fas fa-plus"></i></a></h2>
+                <h2 class="sec-heading"><i class="far fa-calendar-check"></i> Scheduled order: Today&nbsp<i class="fas fa-plus"></i>
+                    <VueCtkDateTimePicker
+                            v-model="time"
+                            only-time="true"
+                            label="Select time"
+                            output-format="hh:mm:ss"
+                            format="hh:mm a"></VueCtkDateTimePicker>
+                    <a href="#" class="link-color"></a></h2>
                 <p class="text-muted">Desired delivery time + 10 min</p>
                 <div class="row" style="box-sizing: border-box;">
                     <app-checkout-cart-item v-for="item in cartItems" :key="item.Meal" :item="item.Meal"></app-checkout-cart-item>
                 </div>
 
                 <a href="#" class="link-color"><h2><i class="fas fa-plus"></i> Add more items</h2></a>
-                <a href="#" class="link-color">
-                    <h2><i class="fas fa-pepper-hot"></i> Add special cooking Intructions</h2></a>
+                <div v-if="emptyInstruction">
+                    <a @click="showInstruction" class="link-color" >
+                        <h2><i class="fas fa-pepper-hot"></i> Add special cooking Intructions</h2></a>
+                </div>
+               <div v-else>
+                   <a @click="showInstruction" class="link-color" >
+                       <h2><i class="fas fa-pepper-hot"></i>{{this.instruction | truncate}}</h2></a>
+               </div>
                 <h2>People Also Added</h2>
-
                 <div class="row">
 
                     <div class="col-12">
@@ -126,7 +157,7 @@
                                             <button class="btn btn-primary" @click="newDefaultAddress(address.Id, address.IsDefault)" :checked="address.IsDefault">Set Default</button>
                                         </div>
                                         <div v-else style="display: none">
-                                            {{setAddressID(address.Id)}}
+                                            {{setAddressID(address)}}
                                         </div>
                                         <p class="m-0">{{address.Apartment}}</p>
                                         <p class="m-0">{{address.AddressLine | truncate}}</p>
@@ -223,7 +254,7 @@
                 <div class="row invoice">
                     <div class="col-8">
                         <p>Extra KM Delivery Free</p>
-                        <p class="small-text">Order deliver more than 35km will cost extra to deliver</p>
+                        <p class="small-text">Order deliver more than 10km will cost extra to deliver</p>
                     </div>
                     <div class="col-4 price">
 
@@ -252,6 +283,7 @@
 <script>
     import {baseAddress} from "../../main";
     import {fetchRestaurantMealsById} from "../api/CustomMeal";
+    import {deliveryCharges} from "./charges";
     import fab from 'vue-fab';
     import 'vue-slick-carousel/dist/vue-slick-carousel.css'
     import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
@@ -266,6 +298,9 @@
     import {markDefaultCard} from "../api/CardAndPayments";
     import checkoutCartItem from "../Cart/checkoutCartItem";
     import {placeOrder} from "../api/PlaceOrder";
+    import {calculateDistance} from "../api/CalculateDistance";
+    import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+    import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
     export default {
     data(){
@@ -278,14 +313,25 @@
             cartImg:'../images/cart.png',
             cartHover:'../images/cart-hover.png',
             baseUrl: baseAddress,
+            instruction: '',
+            nameState: null,
             restaurant: {},
+            emptyInstruction: true,
+            time: '',
             notEmpty: true,
             subTotal: 0,
             addID: null,
             cardID: null,
-            smallDeliveryOrderExtra: 3.56,
-            basicDeliveryFee: 3.90,
-            extraKmDeliveryFee: 3.90,
+            lon1: 0,
+            lat1: 0,
+            lon2: 0,
+            lat2: 0,
+            km: 0,
+            smallDeliveryOrderExtra: 0,
+            basicDeliveryFee: 0,
+            extraKmDeliveryFee: 0,
+            isDelivery: true,
+            isSchedule: false,
             totalPrice: 0,
             image: '',
             fabActions: [{
@@ -323,7 +369,8 @@
         bBage: BBadge,
         appCartItems: cartItem,
             appCheckoutCartItem: checkoutCartItem,
-        fab,
+            VueCtkDateTimePicker,
+            fab,
             VueSlickCarousel ,
         },
         filters: {
@@ -334,6 +381,20 @@
                 } else {
                     return val.substring(0, length)+ '...';
                 }
+            }
+        },
+        updated() {
+        console.log('time',this.time);
+            if(this.time === '' || this.time == null) {
+                this.isSchedule = false;
+            } else {
+                this.isSchedule = true;
+            }
+
+            if(this.instruction === '' || this.instruction == null) {
+                this.emptyInstruction = true;
+            } else {
+                this.emptyInstruction = false;
             }
         },
     created() {
@@ -350,40 +411,111 @@
         this.$root.$on('restaurant', response => {
             this.restaurant = response;
             console.log('insideCartRestaurant',response.ImageUrl);
+            this.lon1 = this.restaurant.Longitude;
+            this.lat1 = this.restaurant.Latitude;
             this.image = baseAddress + response.ImageUrl;
             console.log('imageHere',this.image);
         })
     },
     methods: {
+        showInstruction() {
+          this.$bvModal.show('instruction');
+          if(this.instruction !== '' || this.instruction != null) {
+              document.getElementById('name-input').value = this.instruction;
+              this.emptyInstruction = false;
+          } else {
+              this.emptyInstruction = true;
+          }
+        },
+        checkFormValidity() {
+            const valid = this.$refs.form.checkValidity()
+            this.nameState = valid
+            return valid
+        },
+        handleOk(bvModalEvt) {
+            // Prevent modal from closing
+            bvModalEvt.preventDefault()
+            // Trigger submit handler
+            this.handleSubmit()
+        },
+        handleSubmit() {
+            // Exit when the form isn't valid
+            if (!this.checkFormValidity()) {
+                return
+            }
+            // Push the name to submitted names
+
+            // Hide the modal manually
+            this.$nextTick(() => {
+                this.$bvModal.hide('instruction')
+            })
+        },
         setPlaceOrderObject(cartItems) {
             var dateTime = new Date();
-            var currentDateTime = dateTime.getFullYear() + "-"
-                + (dateTime.getMonth() + 1) + "-" +
-                dateTime.getDate() + "T" + dateTime.getHours() + ":" + dateTime.getMinutes() + ":" + dateTime.getSeconds() +
-                ".108Z";
+            if(this.isSchedule) {
+                this.time = dateTime.getFullYear() + "-"
+                    + (dateTime.getMonth() + 1) + "-" +
+                    dateTime.getDate() + "T" + this.time +
+                    ".108Z";
+            } else {
+                this.time = "";
+            }
             this.orderObject = {
                 "RestaurantId" : cartItems[0].Meal.RestroId,
                 "CustomerId": Number(localStorage.getItem('id')),
                 "AddressId": this.addID,
                 "CardId": this.cardID,
                 "VAT": 5,
-                "IsSchedule": true,
-                "ScheduleTime": currentDateTime.toString(),
-                "IsDelivery": true,
+                "IsSchedule": this.isSchedule,
+                "ScheduleTime": this.time,
+                "IsDelivery": this.isDelivery,
                 "ItemSubTotal": this.subTotal,
                 "SmallOrderExtra": this.smallDeliveryOrderExtra,
                 "BasicDeliveryFee": this.basicDeliveryFee,
                 "ExtraKMDeliveryFee": this.extraKmDeliveryFee,
                 "TotalPrice": this.totalPrice,
-                "Notes": "aqib note",
+                "Notes": this.instruction,
                 "Order Items": cartItems,
             }
         },
-        setAddressID(id) {
-          this.addID = id;
+        setAddressID(obj) {
+          this.addID = obj.Id;
+          this.lon2 = obj.Longitude;
+          this.lat2 = obj.Latitude;
+          console.log('here inside calc1');
+            // this.calculateDistance();
+        },
+        calculateDistance() {
+            calculateDistance(this.lon1,this.lat1,this.lon2,this.lat2,'k').then(response => {
+                this.disablePlaceOrder = true;
+                console.log('here inside calc2', response, Number(response),deliveryCharges.allowedKm,'::',response > deliveryCharges.allowedKm);
+                console.log('here inside calc3', response);
+                if(response > deliveryCharges.allowedKm) {
+                    this.extraKmDeliveryFee = (response - deliveryCharges.allowedKm) * deliveryCharges.extraKmDeliveryFee;
+                    this.disablePlaceOrder = false;
+                } else {
+                    console.log('here inside calc4');
+                    this.extraKmDeliveryFee = 0;
+                    this.disablePlaceOrder = false;
+                }
+                this.basicDeliveryFee = deliveryCharges.basicDeliveryFee;
+                this.totalPrice = this.subTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
+                console.log(this.extraKmDeliveryFee);
+            }, error => {
+                console.log(error);
+                this.showNotification('error','Error','Error occurred please try later!');
+                this.disablePlaceOrder = true;
+            })
         },
         setCardID(id) {
           this.cardID = id;
+        },
+        checkSmallOrder() {
+            if(this.subTotal<10) {
+                this.smallDeliveryOrderExtra = 10 - this.subTotal;
+            } else {
+                this.smallDeliveryOrderExtra = 0;
+            }
         },
         async checkCart() {
             if(this.$store.state.cartData.length > 0) {
@@ -397,16 +529,26 @@
                     temp = this.cartItems[i].Meal;
                     this.subTotal += temp.Price;
                 }
-
+                this.checkSmallOrder();
                 // for(let item of this.cartItems) {
                 //     console.log('item',item,'meal',item.Meal,'itemPrice',item.Meal.Price);
                 //     this.subTotal += item.Meal.Price;
                 // }
-                this.totalPrice = this.subTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
+                // this.totalPrice = this.subTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
             } else {
                 this.notEmpty = false;
                 this.doProceed = true;
             }
+        },
+        forDelivery() {
+            this.isDelivery = true;
+            this.calculateDistance();
+        },
+        forPickup() {
+          this.isDelivery = false;
+          this.extraKmDeliveryFee = 0;
+          this.basicDeliveryFee = 0;
+          this.totalPrice = this.subTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
         },
         placeOrder() {
             this.disablePlaceOrder = true;
@@ -481,8 +623,14 @@
                      getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
                          this.allAddresses = [];
                          this.allAddresses = response;
+                         this.setAddressID(this.allAddresses[0]);
                          this.showNotification('success','Success','Address is default and shown!');
-                         this.disablePlaceOrder = false;
+                         console.log('isDelivery',this.isDelivery);
+                         if(this.isDelivery) {
+                             this.calculateDistance();
+                         } else {
+                             this.disablePlaceOrder = false;
+                         }
                      }, error => {
                          console.log(error);
                          this.showNotification('error','Error','Please try later error occurred');
@@ -496,16 +644,22 @@
           }
         },
         async startCheckout() {
+            console.log('start');
+            this.$bvModal.show('checkout');
             if(localStorage.getItem('id') == null|| localStorage.getItem('id') === 'null' || localStorage.getItem('isLogin') === false) {
                 this.showNotification('info','Info','Please login first to place order');
                 this.$router.push('/signin')
             } else {
                 this.cartItems = this.$store.state.cartData;
+                this.basicDeliveryFee = deliveryCharges.basicDeliveryFee;
                 this.hideToggle();
+                console.log('start2');
                 console.log('cartItems',this.cartItems);
                 fetchUserProfile(Number(localStorage.getItem('id'))).then(response => {
+                    console.log('start3');
                     this.userData = response;
                     getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
+                        console.log('start4');
                         if(response.HasErrors) {
                             this.showNotification('Address fetching please try later!');
                             this.disablePlaceOrder = true;
@@ -513,7 +667,12 @@
                             this.allAddresses = response;
                             if(this.allAddresses.length > 0) {
                                 this.allAddresses = response;
+                                this.addID = this.allAddresses[0].Id;
+                                this.lon2 = this.allAddresses[0].Longitude;
+                                this.lat2 = this.allAddresses[0].Latitude;
+                                console.log('start5');
                                 retrieveCustomerAllCards(Number(localStorage.getItem('id'))).then(response => {
+                                    console.log('start5');
                                     if(response.HasErrors) {
                                         this.showNotification('error','Error','Error occurred please try later!');
                                         this.disablePlaceOrder = true;
@@ -523,7 +682,28 @@
                                         if(this.allCards.length > 0) {
                                             console.log('cards',this.allCards);
                                             this.allCards = response.CustomerCards;
-                                            this.disablePlaceOrder = false;
+                                            calculateDistance(this.lon1,this.lat1,this.lon2,this.lat2,'k').then(response => {
+                                                console.log('start6');
+                                                this.disablePlaceOrder = true;
+                                                console.log('here inside calc2', response, Number(response),deliveryCharges.allowedKm,'::',response > deliveryCharges.allowedKm);
+                                                console.log('here inside calc3', response);
+                                                if(response > deliveryCharges.allowedKm) {
+                                                    this.extraKmDeliveryFee = (response - deliveryCharges.allowedKm) * deliveryCharges.extraKmDeliveryFee;
+                                                    this.disablePlaceOrder = false;
+                                                } else {
+                                                    console.log('here inside calc4');
+                                                    this.extraKmDeliveryFee = 0;
+                                                    this.disablePlaceOrder = false;
+                                                }
+                                                this.totalPrice = this.subTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
+                                                console.log('start7');
+                                            }, error => {
+                                                console.log(error);
+                                                this.showNotification('error','Error','Error occurred please try later!');
+                                                this.disablePlaceOrder = true;
+                                            })
+
+
                                         } else {
                                             this.$dialog.confirm('No card found! Please add card to place order. Continue?', {
                                                 loader: true
@@ -534,6 +714,7 @@
                                             }).catch(() => {
                                                 this.showNotification('info','Info','Add card to place order please.');
                                                 this.disablePlaceOrder = true;
+                                                this.hideModal();
                                             })
                                         }
                                     }
@@ -548,6 +729,7 @@
                                     dialog.close();
                                 }).catch(() => {
                                     this.showNotification('info','Info','Add address to place order!');
+                                    this.hideModal();
                                 })
                             }
                         }
@@ -566,6 +748,9 @@
         getImage() {
             console.log('UrlIS',this.image);
             return this.image;
+        },
+        hideModal() {
+          this.$bvModal.hide('checkout');
         },
         handleToggleDrawer() {
             this.checkCart();
@@ -752,6 +937,9 @@
     }
     .active{
         background-color: #8ba939 !important;
+    }
+    .notActive{
+        background-color: #363a4b !important;
     }
     .invoice{
         /*margin: 10px 40px;*/
