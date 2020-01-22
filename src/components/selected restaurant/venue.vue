@@ -34,7 +34,8 @@
                                 </div>
                                 <div class="contant-num">
                                     <p>{{restaurant.PhoneNumber}}</p>
-                                    <button class="link" @click="changeShowAll">{{venue.moreInfo}}</button>
+                                    <button class="link"
+                                            @click="changeShowAll">{{venue.moreInfo}}</button>
                                 </div>
                             </div>
                         </b-tab>
@@ -53,11 +54,7 @@
     </div>
 </template>
 <script>
-    import Map from '../Map/Map'
 export default {
-        components: {
-          appMap: Map
-        },
     data(){
         return{
             restaurant: {},
@@ -81,13 +78,19 @@ export default {
     mounted() {
         this.$root.$on('restaurant', response => {
             this.restaurant = response;
+            console.log('inVenue',this.restaurant);
         })
+        setTimeout(()=> {
+            this.changeShowAll();
+        },1000);
+        this.changeShowAll();
     },
     methods: {
             navigateTo(long, lat) {
                 this.$router.push({path:'/map/',query:{long:long, lat: lat}});
             },
         changeShowAll() {
+                console.log('showAll')
                 this.showAll = !this.showAll;
         },
         emitRestaurant() {
@@ -97,6 +100,14 @@ export default {
     filters: {
             truncate(val) {
                 let length = 100;
+                if(val.length <= length) {
+                    return val
+                } else {
+                    return val.substring(0, length)+ '...';
+                }
+            },
+            truncateAddress(val) {
+                let length = 20;
                 if(val.length <= length) {
                     return val
                 } else {

@@ -80,9 +80,27 @@
         }
       },
       signOut() {
-        this.$store.dispatch('cleanToken');
-        this.showNotification('success','Success','Sign out successfully');
-        this.$router.go();
+        if(localStorage.getItem('cart') === 'null' || localStorage.getItem('cart') == null) {
+          this.$store.dispatch('cleanToken');
+          this.$store.dispatch('clearCart');
+          this.showNotification('success','Success','Sign out successfully');
+          this.$router.go();
+        } else {
+          this.$dialog.confirm('There are items in cart if you proceed the cart will be clear. Continue?', {
+            loader: true
+          }).then(dialog => {
+            dialog.loading(true);
+            this.$store.dispatch('cleanToken');
+            this.$store.dispatch('clearCart');
+            this.showNotification('success','Success','Sign out successfully');
+            dialog.loading(false);
+            dialog.close();
+            this.$router.go();
+          }).catch(() => {
+            this.showNotification('info','Info','Signout cancelled');
+          })
+        }
+
       },
       showNotification(type, title, message) {
         this.$notify({
