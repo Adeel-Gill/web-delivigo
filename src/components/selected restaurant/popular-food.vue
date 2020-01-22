@@ -13,7 +13,8 @@ export default {
     data(){
         return{
             favrtDishes:'Popular',
-            dishes:[]
+            dishes:[],
+            count: 0,
         }
     },
     methods: {
@@ -32,7 +33,13 @@ export default {
             if(response.length>0) {
                 this.dishes = response;
             } else {
-                this.showNotification('error','Error','No popular food is available to show!');
+                if(this.count === 0) {
+                    console.log('popularFoodNotification');
+                    this.showNotification('error','Error','No popular food is available to show!');
+                    this.count++;
+                } else {
+                    this.count++;
+                }
             }
         })
     }

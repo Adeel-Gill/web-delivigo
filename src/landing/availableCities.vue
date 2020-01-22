@@ -5,13 +5,16 @@
                 <h2>{{titleHeading}}</h2>
                 <p>{{subHeading}}</p>
             </div>
-            <div class="show-more">
-                <router-link to="/" >Show More</router-link>
+            <div class="show-more" v-if="allcities.length > 3">
+                <router-link to="/allCities" >Show More</router-link>
             </div>
             <div class="clear"></div>
             <div class="restaurants-list">
-                <div class="row">
-                    <app-city></app-city>
+                <div class="row" v-if="allcities.length>0">
+                    <app-city v-for="city in allcities.slice(0,3)" :key="city.Id" :city="city"></app-city>
+                </div>
+                <div class="row" v-else>
+                    <app-empty-error></app-empty-error>>
                 </div>
             </div>
         </div>
@@ -20,17 +23,47 @@
 
 <script>
     import City from "../components/City/City";
+    import emptyError from "../components/error/emptyError";
     export default {
         name: "availableCities",
-
+        components: {
+          appEmptyError: emptyError,
+        },
         data() {
             return {
                 titleHeading: 'Available Cities',
                 subHeading: 'The easiest way to find us!',
+                count: 0,
+                allcities: [],
+            }
+        },
+        methods: {
+            showNotification(type, title, message) {
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
+                })
             }
         },
         components: {
             appCity: City
+        },
+        created() {
+            this.$root.$on('cities', response => {
+                if(response.length > 0) {
+                    this.allcities = response;
+                } else {
+                    if(this.count === 0) {
+                        this.showNotification('error','Error','No cities are available to show!');
+                        this.count++;
+                    } else {
+                        this.count++;
+                    }
+                }
+            })
         }
     }
 </script>

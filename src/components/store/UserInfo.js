@@ -50,13 +50,19 @@ export const UserInfo = new Vuex.Store({
             localStorage.setItem('creationCounter', '0');
         },
         saveInCart: (state, payload) => {
+            console.log('storeCart',payload);
+            console.log('beforeCart',state.cartData);
             state.cartData.push(payload);
+            console.log('afterSaveCart',state.cartData);
         },
         saveMapData: (state, payload) => {
             state.mapData =  payload;
         },
         setAddressID: (state, payload) => {
           state.addressId = payload;
+        },
+        clearCart: (state) => {
+          state.cartData = [];
         },
         isLogin: state => {
             state.isLogin = true;
@@ -97,6 +103,9 @@ export const UserInfo = new Vuex.Store({
         setAddressID: ({commit}, payload) => {
             console.log('idAddress',payload);
             commit('setAddressID',payload);
+        },
+        clearCart: ({commit}) => {
+            commit('clearCart');
         }
     }
 })

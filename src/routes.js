@@ -21,6 +21,7 @@ import Login from "./components/LoginAndRegister/Login";
 import Register from "./components/LoginAndRegister/Register";
 import OrderTracking from "./components/Order/OrderTracking";
 import DiamondAward from "./components/User/DiamondAward";
+import AllCities from "./components/All Cities/AllCities";
 export const routes = [
     { path: '/', component: Home },
     { path: '/loginandreg', component: LoginAndRegister, children: [
@@ -111,6 +112,7 @@ export const routes = [
     { path: '/restaurant/:id', component: Selected },
     {path: '/populars', component: allPopularRestaurants},
     {path: '/featured', component: allFeaturedRestaurants},
+    {path: '/allCities', component: AllCities},
     {path: '/newRestaurants', component: allNewRestaurants},
     {path: '/restaurants', component: allRestaurants},
     {path: '/foodCategories', component: allFoodCategories},

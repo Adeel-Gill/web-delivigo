@@ -4,11 +4,11 @@
             <router-link to="/">
                 <div>
 <!--                    <img :src="`${getImage('')}`" @error="`${getImage('')}`" />-->
-                    <img src="../../../public/images/lahore.jpg" alt="lahore">
+                    <img :src="`${getImage(city.ImageUrl)}`" @error="getImage('')">
                     <div class="restaurants-details">
                         <div class="row">
                             <div class="col-8 padding-top-botom">
-                                <h6 style="display: block;" class="text-truncate">Lahore</h6>
+                                <h6 style="display: block;" class="text-truncate">{{city.Name}}</h6>
                             </div>
                         </div>
                     </div>
@@ -20,14 +20,14 @@
 
 <script>
     import {baseAddress} from "../../main";
-    import {defaultRestaurantPic} from "../../main";
+    import {defaultCityPic} from "../../main";
     export default {
         name: "City",
-
+        props: ['city'],
         methods: {
             getImage(img) {
                 if(img === '' || img === 'null' || img == null) {
-                    this.image = defaultRestaurantPic;
+                    this.image = defaultCityPic;
                     // console.log('imageinsideIf',this.image,'param',img);
                     return this.image;
                 } else {

@@ -38,8 +38,10 @@ export default {
         async fetchResturantsData() {
             fetchResturantsData().then(response => {
                 this.popularRestaurants = response.PopularNearYou;
+                this.$root.$emit('cities',response.Cities);
                 console.log('popularData'+ this.popularRestaurants);
                 this.$root.$emit('popularData',this.popularRestaurants);
+
                 this.featuredRestaurants = response.FeaturedRestaurants;
                 this.$root.$emit('featuredData', this.featuredRestaurants);
             }, error =>{

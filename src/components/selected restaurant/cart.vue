@@ -34,7 +34,7 @@
                     <div class="head">
                         <h3 class="d-inline-block">Basket</h3>
 <!--                        <router-link to="/checkout"></router-link>-->
-                        <button type="button" class="btn btn-checkout float-right" :disabled="doProceed" v-b-modal.checkout>Proceed to checkout</button>
+                        <button type="button" class="btn btn-checkout float-right" :disabled="doProceed" @click="startCheckout" v-b-modal.checkout>Proceed to checkout</button>
                     </div>
                     <div class="drawer-body px-3">
                         <!-- card start-->
@@ -71,59 +71,7 @@
                 <h2 class="sec-heading"><i class="far fa-calendar-check"></i> Scheduled order: Today 16:47 <a href="#" class="link-color"><i class="fas fa-plus"></i></a></h2>
                 <p class="text-muted">Desired delivery time + 10 min</p>
                 <div class="row" style="box-sizing: border-box;">
-                    <div class="col-6">
-                    <div class="card p-0 mb-3" style="width: 100%;">
-                        <div class="card-body py-0 pl-2">
-                            <div class="row">
-                                <div class="col-4 p-0 card-img">
-                                    <img src="../../../public/images/select-item1.png">
-                                </div>
-                                <div class="col-8 py-0 pr-1">
-                                    <a src="#" class="float-right"><i class="fas fa-times"></i></a>
-                                    <h4>Burger</h4>
-                                    <p class="text-muted m-0">Laudiatum consesus</p>
-                                    <p class="m-0 d-inline-block price mr-5">129232.00</p> <span> <i class="fas fa-times"></i> 2</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="card p-0 mb-3" style="width: 100%;">
-                            <div class="card-body py-0 pl-2">
-                                <div class="row">
-                                    <div class="col-4 p-0 card-img">
-                                        <img src="../../../public/images/select-item1.png">
-                                    </div>
-                                    <div class="col-8 py-0 pr-1">
-                                        <a src="#" class="float-right"><i class="fas fa-times"></i></a>
-                                        <h4>Burger</h4>
-                                        <p class="text-muted m-0">Laudiatum consesus</p>
-                                        <p class="m-0 d-inline-block price mr-5">129232.00</p> <span><i class="fas fa-times"></i> 2</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="card p-0 mb-3" style="width: 100%;">
-                            <div class="card-body py-0 pl-2">
-                                <div class="row">
-                                    <div class="col-4 p-0 card-img">
-                                        <img src="../../../public/images/select-item1.png">
-                                    </div>
-                                    <div class="col-8 py-0 pr-1">
-                                        <a src="#" class="float-right"><i class="fas fa-times"></i></a>
-                                        <h4>Burger</h4>
-                                        <p class="text-muted m-0">Laudiatum consesus</p>
-                                        <p class="m-0 d-inline-block price mr-5">129232.00</p> <span><i class="fas fa-times"></i> 2</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <app-checkout-cart-item v-for="item in cartItems" :key="item.Meal" :item="item.Meal"></app-checkout-cart-item>
                 </div>
 
                 <a href="#" class="link-color"><h2><i class="fas fa-plus"></i> Add more items</h2></a>
@@ -169,32 +117,19 @@
                 <h2 class="d-inline-block sec-heading">Shipping Address</h2>
                 <p class="float-right mt-2"><a href="#">Add New</a></p>
                     </div>
-
                     <div class="col-12">
                         <VueSlickCarousel v-bind="settings">
-                            <div>
+                            <div v-for="address in allAddresses" :key="address.Id">
                                 <div class="card card-block">
                                     <div class="card-body">
-                                        <p class="m-0">Murphy</p>
-                                        <p class="m-0">$ 33</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="card card-block">
-                                    <div class="card-body">
-                                        <p class="m-0">Murphy</p>
-                                        <p class="m-0">$ 33</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="card card-block">
-                                    <div class="card-body">
-                                        <p class="m-0">Murphy</p>
-                                        <p class="m-0">$ 33</p>
+                                        <div v-if="!address.IsDefault">
+                                            <button class="btn btn-primary" @click="newDefaultAddress(address.Id, address.IsDefault)" :checked="address.IsDefault">Set Default</button>
+                                        </div>
+                                        <div v-else style="display: none">
+                                            {{setAddressID(address.Id)}}
+                                        </div>
+                                        <p class="m-0">{{address.Apartment}}</p>
+                                        <p class="m-0">{{address.AddressLine | truncate}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -206,41 +141,18 @@
                 <div class="row">
                     <div class="col-8">
                         <h2 class="d-inline-block sec-heading">Contact Info</h2>
-                        <p class="float-right mt-2"><a href="#">Add New</a></p>
                     </div>
 
                     <div class="col-12">
                         <VueSlickCarousel v-bind="settings">
-                            <div>
                                 <div class="card card-block">
                                     <div class="card-body">
-                                        <p class="m-0">Murphy</p>
-                                        <p class="m-0">$ 33</p>
+                                        <p class="m-0">{{userData.FullName}}</p>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div>
-                                <div class="card card-block">
-                                    <div class="card-body">
-                                        <p class="m-0">Murphy</p>
-                                        <p class="m-0">$ 33</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="card card-block">
-                                    <div class="card-body">
-                                        <p class="m-0">Murphy</p>
-                                        <p class="m-0">$ 33</p>
-                                    </div>
-                                </div>
-                            </div>
                         </VueSlickCarousel>
                     </div>
                 </div>
-
 
                 <div class="row">
                     <div class="col-8">
@@ -250,29 +162,18 @@
 
                     <div class="col-12">
                         <VueSlickCarousel v-bind="settings">
-                            <div>
+                            <div v-for="card in allCards" :key="card.Id">
                                 <div class="card card-block">
                                     <div class="card-body">
-                                        <p class="m-0">Murphy</p>
-                                        <p class="m-0">$ 33</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="card card-block">
-                                    <div class="card-body">
-                                        <p class="m-0">Murphy</p>
-                                        <p class="m-0">$ 33</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="card card-block">
-                                    <div class="card-body">
-                                        <p class="m-0">Murphy</p>
-                                        <p class="m-0">$ 33</p>
+                                        <div v-if="!card.IsDefault">
+                                            <button class="btn btn-primary"  @click="newDefaultCard(card,card.IsDefault)" :checked="(card.IsDefault)">Set Default</button>
+<!--                                            <label class="d-inline-block">Default</label>-->
+                                        </div>
+                                        <div v-else style="display: none">
+                                            {{setCardID(card.Id)}}
+                                        </div>
+                                        <p class="m-0">{{card.Brand}} .... .... {{card.CardNumber}}</p>
+                                        <p class="m-0">Expires in {{card.Month}}/{{card.Year}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -290,7 +191,7 @@
                             <p>Item Subtotal</p>
                         </div>
                         <div class="col-4 price">
-                            <p>20.48</p>
+                            <p>{{subTotal}}</p>
                         </div>
                     </div>
                     <div class="row invoice">
@@ -298,7 +199,7 @@
                             <p>Small delivery Order extra </p>
                         </div>
                         <div class="col-4 price">
-                            <p>3.56</p>
+                            <p>{{smallDeliveryOrderExtra}}</p>
                         </div>
                     </div>
 
@@ -316,7 +217,7 @@
                         <p>Basic Delivery Fee</p>
                     </div>
                     <div class="col-4 price">
-                        <p>3.90</p>
+                        <p>{{basicDeliveryFee}}</p>
                     </div>
                 </div>
                 <div class="row invoice">
@@ -326,7 +227,7 @@
                     </div>
                     <div class="col-4 price">
 
-                        <p>3.56</p>
+                        <p>{{extraKmDeliveryFee}}</p>
                     </div>
                 </div>
                 <div class="row invoice">
@@ -334,13 +235,13 @@
                         <p>Total</p>
                     </div>
                     <div class="col-4 price">
-                        <p>20.89</p>
+                        <p>{{totalPrice}}</p>
                     </div>
                 </div>
 
                 <div class="row w-100 btn-continue">
 
-                    <button type="button" @click="navigateToTrack()" class="btn mx-auto" >Place the Order</button>
+                    <button type="button" :disabled="disablePlaceOrder" @click="placeOrder()" class="btn mx-auto" >Place the Order</button>
                 </div>
             </div>
         </b-modal>
@@ -358,16 +259,34 @@
     import {BBadge} from 'bootstrap-vue';
     import {defaultRestaurantPic} from "../../main";
     import cartItem from "../Cart/cartItem";
+    import {retrieveCustomerAllCards} from "../api/CardAndPayments";
+    import {getAllCustomerAddresses} from "../api/DeliveryAddress";
+    import {fetchUserProfile} from "../api/Profile";
+    import {setDefaultAddress} from "../api/DeliveryAddress";
+    import {markDefaultCard} from "../api/CardAndPayments";
+    import checkoutCartItem from "../Cart/checkoutCartItem";
+    import {placeOrder} from "../api/PlaceOrder";
+
     export default {
     data(){
         return{
             foodTypes:[],
+            allAddresses: [],
+            allCards: [],
             doProceed: false,
+            disablePlaceOrder: true,
             cartImg:'../images/cart.png',
             cartHover:'../images/cart-hover.png',
             baseUrl: baseAddress,
             restaurant: {},
             notEmpty: true,
+            subTotal: 0,
+            addID: null,
+            cardID: null,
+            smallDeliveryOrderExtra: 3.56,
+            basicDeliveryFee: 3.90,
+            extraKmDeliveryFee: 3.90,
+            totalPrice: 0,
             image: '',
             fabActions: [{
                 name: 'cache',
@@ -375,6 +294,7 @@
             }],
             allImages: [],
             cartItems: [],
+            userData: {},
             restaurantImages: [],
             resID: null,
             mealID: null,
@@ -391,13 +311,30 @@
                 "swipeToSlide":true,
                 "touchMove":true
             },
+            orderObject: {},
+            card: {
+                CustomerId: null,
+                SourceId: "",
+                CardId: null,
+            },
         }
     },
         components: {
         bBage: BBadge,
         appCartItems: cartItem,
+            appCheckoutCartItem: checkoutCartItem,
         fab,
             VueSlickCarousel ,
+        },
+        filters: {
+            truncate(val) {
+                let length = 26;
+                if(val.length <= length) {
+                    return val
+                } else {
+                    return val.substring(0, length)+ '...';
+                }
+            }
         },
     created() {
         this.$root.$on('mealMenu', response => {
@@ -418,18 +355,213 @@
         })
     },
     methods: {
-        checkCart() {
+        setPlaceOrderObject(cartItems) {
+            var dateTime = new Date();
+            var currentDateTime = dateTime.getFullYear() + "-"
+                + (dateTime.getMonth() + 1) + "-" +
+                dateTime.getDate() + "T" + dateTime.getHours() + ":" + dateTime.getMinutes() + ":" + dateTime.getSeconds() +
+                ".108Z";
+            this.orderObject = {
+                "RestaurantId" : cartItems[0].Meal.RestroId,
+                "CustomerId": Number(localStorage.getItem('id')),
+                "AddressId": this.addID,
+                "CardId": this.cardID,
+                "VAT": 5,
+                "IsSchedule": true,
+                "ScheduleTime": currentDateTime.toString(),
+                "IsDelivery": true,
+                "ItemSubTotal": this.subTotal,
+                "SmallOrderExtra": this.smallDeliveryOrderExtra,
+                "BasicDeliveryFee": this.basicDeliveryFee,
+                "ExtraKMDeliveryFee": this.extraKmDeliveryFee,
+                "TotalPrice": this.totalPrice,
+                "Notes": "aqib note",
+                "Order Items": cartItems,
+            }
+        },
+        setAddressID(id) {
+          this.addID = id;
+        },
+        setCardID(id) {
+          this.cardID = id;
+        },
+        async checkCart() {
             if(this.$store.state.cartData.length > 0) {
                 this.doProceed = false;
                 this.notEmpty= true;
                 this.cartItems = this.$store.state.cartData;
+                console.log('cartItems',this.cartItems, this.subTotal);
+                this.subTotal = 0;
+                for(var i=0; i<this.cartItems.length; i++) {
+                    var temp = {};
+                    temp = this.cartItems[i].Meal;
+                    this.subTotal += temp.Price;
+                }
+
+                // for(let item of this.cartItems) {
+                //     console.log('item',item,'meal',item.Meal,'itemPrice',item.Meal.Price);
+                //     this.subTotal += item.Meal.Price;
+                // }
+                this.totalPrice = this.subTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
             } else {
                 this.notEmpty = false;
                 this.doProceed = true;
             }
         },
+        placeOrder() {
+            this.disablePlaceOrder = true;
+          this.setPlaceOrderObject(this.cartItems);
+          console.log(this.orderObject);
+          placeOrder(this.orderObject).then(response => {
+              console.log(response);
+              if(response.HasErrors) {
+                  this.showNotification('error','Error','Order placing failed please try later!');
+                  this.disablePlaceOrder = false;
+              } else {
+                  this.$store.dispatch('clearCart');
+                  this.showNotification('success','Success','Order is successfully placed! Thankyou!');
+                  this.$router.push('/orderHistory')
+              }
+          }, error => {
+              console.log(error);
+              this.disablePlaceOrder = false;
+              this.showNotification('error','Error','Error occurred please try later!');
+          })
+        },
         addToCart() {
 
+        },
+        async newDefaultCard(card,isDefault) {
+            if(isDefault) {
+                this.showNotification('info','Info','This card is already default card!');
+            } else {
+                this.disablePlaceOrder = true;
+                this.card.CustomerId = card.CustomerId;
+                this.card.SourceId = card.CardStripeId;
+                this.card.CardId = card.Id;
+                markDefaultCard(this.card).then(response => {
+                    this.disablePlaceOrder = true;
+                    if(response.HasErrors) {
+                        this.disablePlaceOrder = false;
+                        this.showNotification('error','Error','Card is failed to be set as default!');
+                    } else {
+                        retrieveCustomerAllCards(Number(localStorage.getItem('id'))).then(response => {
+                            if(response.HasError) {
+                                this.disablePlaceOrder = false
+                                this.showNotification('error','Error','Error occurred please try later!');
+                            } else {
+                                this.allCards = [];
+                                this.allCards = response.CustomerCards;
+                                this.showNotification('success','Success','Card is default now and shown!');
+                                this.disablePlaceOrder = false;
+                            }
+                        }, error => {
+                            console.log(error);
+                            this.disablePlaceOrder = false;
+                            this.showNotification('error','Error','Error occurred please try later!');
+                        })
+                    }
+                }, error => {
+                    console.log(error);
+                    this.showNotification('error','Error','Default setting failed please try later!');
+                    this.disablePlaceOrder = false;
+                })
+            }
+        },
+        async newDefaultAddress(id, isDefault) {
+          if(isDefault) {
+              this.showNotification('info','Info','This address is already default one!');
+          } else {
+              setDefaultAddress(Number(localStorage.getItem('id')),id).then(response => {
+                 this.disablePlaceOrder = true;
+                 if(response.HasErrors) {
+                     this.disablePlaceOrder = false;
+                     this.showNotification('error','Error','Default setting failed please try later!');
+                 } else {
+                     getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
+                         this.allAddresses = [];
+                         this.allAddresses = response;
+                         this.showNotification('success','Success','Address is default and shown!');
+                         this.disablePlaceOrder = false;
+                     }, error => {
+                         console.log(error);
+                         this.showNotification('error','Error','Please try later error occurred');
+                     })
+                 }
+              }, error=> {
+                  console.log(error);
+                  this.showNotification('error','Error','Default setting failed please try later!');
+                  this.disablePlaceOrder = false;
+              })
+          }
+        },
+        async startCheckout() {
+            if(localStorage.getItem('id') == null|| localStorage.getItem('id') === 'null' || localStorage.getItem('isLogin') === false) {
+                this.showNotification('info','Info','Please login first to place order');
+                this.$router.push('/signin')
+            } else {
+                this.cartItems = this.$store.state.cartData;
+                this.hideToggle();
+                console.log('cartItems',this.cartItems);
+                fetchUserProfile(Number(localStorage.getItem('id'))).then(response => {
+                    this.userData = response;
+                    getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
+                        if(response.HasErrors) {
+                            this.showNotification('Address fetching please try later!');
+                            this.disablePlaceOrder = true;
+                        } else {
+                            this.allAddresses = response;
+                            if(this.allAddresses.length > 0) {
+                                this.allAddresses = response;
+                                retrieveCustomerAllCards(Number(localStorage.getItem('id'))).then(response => {
+                                    if(response.HasErrors) {
+                                        this.showNotification('error','Error','Error occurred please try later!');
+                                        this.disablePlaceOrder = true;
+                                    } else {
+                                        this.allCards = response.CustomerCards;
+                                        console.log(this.allCards,'herehere',response,' break ::',response.CustomerCards);
+                                        if(this.allCards.length > 0) {
+                                            console.log('cards',this.allCards);
+                                            this.allCards = response.CustomerCards;
+                                            this.disablePlaceOrder = false;
+                                        } else {
+                                            this.$dialog.confirm('No card found! Please add card to place order. Continue?', {
+                                                loader: true
+                                            }).then(dialog => {
+                                                dialog.loading(false);
+                                                this.$router.push('/billing');
+                                                dialog.close();
+                                            }).catch(() => {
+                                                this.showNotification('info','Info','Add card to place order please.');
+                                                this.disablePlaceOrder = true;
+                                            })
+                                        }
+                                    }
+                                })
+                            } else {
+                                this.allAddresses = [];
+                                this.$dialog.confirm('No address found add address first to place order. Continue',{
+                                    loader: true
+                                }).then(dialog => {
+                                    dialog.loading(false);
+                                    this.$router.push('/delivery');
+                                    dialog.close();
+                                }).catch(() => {
+                                    this.showNotification('info','Info','Add address to place order!');
+                                })
+                            }
+                        }
+                    }, error => {
+                        console.log(error);
+                        this.disablePlaceOrder = true;
+                        this.showNotification('error','Error','Error occcurred please try later!');
+                    })
+                }, error => {
+                    console.log(error);
+                    this.showNotification('error','Error','Error occurred please try later!');
+                    this.disablePlaceOrder = true;
+                })
+            }
         },
         getImage() {
             console.log('UrlIS',this.image);
@@ -438,6 +570,9 @@
         handleToggleDrawer() {
             this.checkCart();
             console.log('insideToggle',this.$refs.drawer);
+            this.$refs.drawer.toggle();
+        },
+        hideToggle() {
             this.$refs.drawer.toggle();
         },
         handleMaskClick() {
@@ -463,7 +598,8 @@
             })
         },
         navigateToTrack() {
-          this.$router.push('/track');
+            console.log('addID',this.addID);
+          // this.$router.push('/track');
         },
         async fetchRestaurantMealById(resId, mealId) {
                 console.log('bothIDs'+resId+mealId);
