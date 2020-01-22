@@ -8,7 +8,7 @@
                         <p>{{download.appDescription}}</p>
 
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-4 col-sm-8 col-12 mx-auto">
                         <div class="phone-image">
                             <img :src="phoneimg" />
                         </div>
@@ -90,7 +90,7 @@ export default {
 .margin-right-10px{
     margin-right: 10px;
 }
-@media screen and (min-width: 950px){
+@media screen and (min-width: 960px){
     .ar-head-text{
         display: inline;
     }
@@ -100,4 +100,5 @@ export default {
         top:-380px;
     }
 }
+@media screen and (max-width: 576px) {}
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-4 padding-top-botom">
+    <div class="col-md-4 col-sm-6 padding-top-botom">
         <div class="restaurant" >
             <router-link to="/">
                 <div>
@@ -71,5 +71,10 @@
         margin: 0;
         font-family: "Roboto";
         font-size: 9px;
+    }
+    @media screen and (max-width: 960px) {
+        .restaurants-list img{
+            height: 160px;
+        }
     }
 </style>

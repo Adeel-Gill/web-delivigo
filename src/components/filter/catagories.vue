@@ -135,4 +135,5 @@
 .bg-grey .catagory-text {
     color: black;
 }
+
 </style>

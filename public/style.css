@@ -71,7 +71,7 @@ a.nav-link{
 }
 #carousel-2 .carousel-indicators {
     top: 7%;
-    right: 22%;
+    right: 7%;  /*22px*/
     left: auto;
     bottom: auto;
     margin: 0;
@@ -102,6 +102,7 @@ a.nav-link{
 #dropdown {
     border: none;
     margin: 0 !important;
+    width: 100%;
 }
 #dropdown button#dropdown__BV_toggle_ {
     background: #f2f2f2;
@@ -111,7 +112,8 @@ a.nav-link{
     font-family: "Panton";
     font-weight: bold;
     font-size: 21px;
-    width: 320px;
+    width:100%; /*320px;*/
+    text-align: left;
 }
 #dropdown .dropdown-toggle::after{
     vertical-align: 0 !important;
@@ -119,10 +121,14 @@ a.nav-link{
     border-right: 10px solid transparent !important;
     border-left: 10px solid transparent !important;
     color: #1f1f1f;
-    margin-left: 177px !important;
+    /*margin-left: 177px !important;*/
+    float: right;
+    position: relative;
+    top: 11px;
 }
 #dropdown ul.dropdown-menu {
     width: 490px;
+    /*width: 100%;*/
 }
 #food-filter #dropdown ul.dropdown-menu{
     left: -50px !important;
@@ -240,14 +246,10 @@ a.nav-link{
     #carousel-1 .carousel-caption{
         top: 6%;
     }
-    .banner-caption h1{
-        font-size: 22px !important;
+    ol#carousel-1___BV_indicators_{
+        margin-bottom: 0;
     }
-    .banner-caption p{
-        font-size: 16px !important;
-        margin-bottom: 10px !important;
-        line-height: 16px !important;
-    }
+
     .form-control{
         font-size:18px !important;
         width: 100% !important;
@@ -257,19 +259,7 @@ a.nav-link{
     /*    right: 10% !important;*/
     /*    left: 10% !important;*/
     /*}*/
-    .btn-search{
-        font-size: 22px !important;
-        line-height: 25px !important;
-        padding: 0px 21px !important;
-        margin: 10px 0 0 0 !important;
-    }
-    .overlay{
-        margin-left:0px !important;
-    }
-    .btn-overlay{
-        text-align: center !important;
-        padding-left:0px !important;
-    }
+
     .catagory{
         margin: auto !important;
     }
@@ -278,5 +268,11 @@ a.nav-link{
     }
     html {
         overflow-x: hidden;
+    }
+    #food-filter #dropdown ul.dropdown-menu{
+        left: unset !important;
+    }
+    #price-filter ul.dropdown-menu {
+        right: unset;
     }
 }

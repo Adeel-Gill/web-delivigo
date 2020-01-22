@@ -1,16 +1,26 @@
 <template>
     <div class="filter-section">
-        <Sort />
-        <food />
-        <price />
+        <div class="row">
+        <div class="col-12 col-sm-4">
+            <Sort />
+        </div>
+        <div class="col-12 col-sm-4">
+            <food />
+        </div>
+        <div class="col-12 col-sm-4">
+            <price />
+        </div>
+        </div>
     </div>
 </template>
 <script>
 import Sort from './sort';
 import Food from './food';
 import Price from './price';
+import DiamondAward from "../../User/DiamondAward";
 export default {
     components:{
+        DiamondAward,
         Sort,
         Food,
         Price

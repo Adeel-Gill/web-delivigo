@@ -1,6 +1,6 @@
 <template>
-    <div class="col-md-4 padding-top-botom">
-         <div class="restaurant" @click="emitId">
+    <div class="col-md-4 col-sm-6 padding-top-botom">
+    <div class="restaurant" @click="emitId">
              <router-link :to="'/restaurant/'+newRestaurant.Id">
             <img :src="`${getImage(newRestaurant.ImageUrl)}`" @error="`${getImage('')}`" />
             <div class="restaurants-details">
@@ -120,5 +120,10 @@
     i.far.fa-clock {
         font-size: 14px !important;
         color: #8ba939;
+    }
+    @media screen and (max-width: 960px) {
+        .restaurants-list img{
+            height: 160px;
+        }
     }
 </style>

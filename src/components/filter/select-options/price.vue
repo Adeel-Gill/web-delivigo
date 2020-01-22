@@ -44,14 +44,16 @@
 
 .price{
     display: inline-block;
-    max-width: 330px;
-    margin: 0;
-  margin-bottom: 20px;
+    /*max-width: 330px;*/
+  width: 100%;
+  /*margin: 0;*/
+  /*margin-bottom: 20px;*/
 
 }
 
 ul.dropdown-menu {
-    min-width: 488px;
+    /*min-width: 488px;*/
+  width: 100%;
 }
 li.dropdown-menu-items{
     display: inline-block;

@@ -56,7 +56,10 @@
   }
 </script>
 <style scoped>
-
+.filter-caption{
+  width: 100%;
+  /*height: 100%;*/
+}
 .filter-caption h6 {
     font-family: "Roboto";
     font-size: 15px;
@@ -72,6 +75,7 @@
     color: black;
     text-shadow: none;
     margin: 0;
+  word-wrap: break-word;
     line-height: 30px;
 }
 .filter-caption p {

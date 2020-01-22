@@ -137,7 +137,7 @@
 }
 .btn-overlay{
     text-align: left;
-    padding-left: 20px !important;
+    padding-left: 20px;
 }
 .btn-search {
     font-family: "Roboto";
@@ -151,6 +151,107 @@
     background: #df3e03;
     height: 45px;
 }
+@media screen and (max-width: 400px) {
+    .btn-search{
+        font-size: 18px;
+        line-height: 18px;
+        margin: 5px 0 0 0;
+        height: 36px;
+    }
+    .overlay{
+        margin-left:0px;
+    }
+    .btn-overlay{
+        text-align: center;
+        padding: 0;
+    }
+    .banner-caption h1{
+        font-size: 22px;
+    }
+    .banner-caption p{
+        font-size: 16px;
+        margin-bottom: 10px;
+        line-height: 16px;
+    }
+}
+@media screen and (max-width: 576px) and (min-width: 401px) {
+    .btn-search{
+        font-size: 22px;
+        line-height: 25px;
+        padding: 0px 21px;
+        margin: 10px 0 0 0;
+    }
+
+    .overlay{
+        margin-left:0px;
+    }
+    .btn-overlay{
+        text-align: center;
+        padding-left:0px;
+    }
+
+    .banner-caption h1{
+        font-size: 22px;
+    }
+    .banner-caption p{
+        font-size: 16px;
+        margin-bottom: 10px;
+        line-height: 16px;
+    }
+}
+
+@media screen and (max-width: 760px) and (min-width: 576px) {
+    .btn-search{
+        font-size: 22px;
+        line-height: 25px;
+        padding: 0px 21px;
+        margin: 10px 0 0 0;
+    }
+
+    .overlay{
+        margin-left:0px;
+    }
+    .btn-overlay{
+        text-align: center;
+        padding-left:0px;
+    }
+
+    .banner-caption h1{
+        font-size: 42px;
+    }
+    .banner-caption p{
+        font-size: 22px;
+        margin-bottom: 10px;
+        line-height: 22px;
+    }
+}
+
+@media screen and (max-width: 960px) and (min-width: 760px) {
+    .banner-caption h1{
+        font-size: 62px;
+    }
+    .banner-caption p{
+        font-size: 30px;
+        margin-bottom: 20px;
+        line-height: 30px;
+    }
+
+    .btn-search{
+        font-size: 22px;
+        line-height: 25px;
+        padding: 0px 21px;
+        margin: 10px 0 0 0;
+    }
+
+    .overlay{
+        margin-left:0px;
+    }
+    .btn-overlay{
+        text-align: center;
+        padding-left:0px;
+    }
+}
+
 /*.form-control{*/
 /*    line-height: 32px;*/
 /*    font-size: 27px;*/

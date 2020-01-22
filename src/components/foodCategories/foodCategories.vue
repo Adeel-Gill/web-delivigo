@@ -1,5 +1,5 @@
 <template>
-    <div class="catagory col-7 col-sm-3 col-md-2" @click = "emitName()">
+    <div class="catagory col-sm-3 col-md-2" @click = "emitName()">
         <router-link to="/foodFilter" >
             <div  class="card-image">
                 <img :src="`${getImage(foodCategories.ImageUrl)}`" @error="`${getImage('')}`"/>
@@ -103,9 +103,10 @@
         border-radius: 110px 110px 0 0;
     }
     .catagory-text {
-        margin: 0 30px;
+        /*margin: 0 30px;*/
         min-height: 165px;
         color: white;
+        text-align: center;
     }
     .catagory-text h5 {
         font-family: "Panton";
@@ -128,5 +129,40 @@
     }
     .bg-grey .catagory-text {
         color: black;
+    }
+    @media screen and (max-width: 760px) and (min-width: 560px){
+        .catagory-text {
+            /*margin: 0 10px;*/
+            min-height:140px ;
+        }
+        .card-image{
+            height: 190px;
+        }
+    }
+    @media screen and (max-width: 600px) and (min-width: 401px) {
+        .catagory{
+            margin: 0 10%;
+            width: 40%;
+        }
+        .catagory-text {
+            /*margin: 0 10px;*/
+            min-height:140px ;
+        }
+        .card-image{
+            height: 190px;
+        }
+    }
+
+    @media screen and (max-width: 400px){
+        .catagory{
+            width: 50%;
+        }
+        .catagory-text {
+            /*margin: 0 10px;*/
+            min-height:140px ;
+        }
+        .card-image{
+            height: 190px;
+        }
     }
 </style>
