@@ -7,7 +7,7 @@
         </div>
         <div class="clear"></div>
         <div class="row">
-            <app-categories v-for="catagory in foodCategories.slice(0,3)"
+            <app-categories v-for="catagory in foodCategories.slice(0,10)"
                             v-bind:key="catagory.Id"
                             :foodCategories="catagory"></app-categories>
         </div>

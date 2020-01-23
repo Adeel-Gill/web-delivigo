@@ -12,29 +12,52 @@
                 </div>
                 <div class="extra-order">
                     <h6>GLI EXTRA - FACOLTATING</h6>
-                    <div class="extra-checkbox" v-for="customOption in customOptions" v-bind:key="customOption">
-                        <div >
-                            <span class="float-left">{{customOption.Name}}</span>
-                            <span class="float-right"><input type="checkbox" name="extra" :value="customOption.Name" ></span>
+                    <div class="extra-checkbox" v-for="(customOption, customIndex)  in customOptions" v-bind:key="customOption">
+                        <div>
+
+                            <h5 class="float-left">{{customOption.Name}}</h5>
+                            <div style="margin-right: 30px; margin-left: 30px" v-for="(option,index) in customOption.Options" :key="option.Id">
+                                <div class="clear"></div>
+
+                                <span class="float-left">{{option.Name}}</span>
+                                <span class="float-right"><input type="checkbox" @change="setCustomOptions(customIndex,index)" :checked="option.IsSelected"
+                                                                       name="extra" :value="option.Name" ></span>
+                            </div>
                             <div class="clear"></div>
                         </div>
                     </div>
                     <h6>GLI EXTRA - FACOLTATING</h6>
-                    <div class="extra-checkbox" v-for="addon in addOns" v-bind:key="addon">
+                    <div class="extra-checkbox" v-for="(addon, index) in addOns" v-bind:key="addon">
                         <div>
                             <span class="float-left">{{addon.Name}}</span>
-                            <span class="float-right">(+ €{{addon.Price}}.00)</span>
+                            <span class="float-left">&nbsp (+ €{{addon.Price}}.00)</span>
+                            <span class="float-right"><input type="checkbox" @change="setAddOnOption(index,addon.Id,addon.Price)"
+                                                             name="extra" ref="addOn"  ></span>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <h6>GLI EXTRA - Scale</h6>
+                    <div class="extra-checkbox" v-for="(scale, index) in scales" v-bind:key="scale.Id">
+                        <div>
+                            <span class="float-left">{{scale.Name}} </span>
+                            <span class="float-right">€{{scale.UnitPrice}}.00 Per unit</span>
+                            <div style="margin-right: 30px; margin-left: 30px" v-for="(option, index) in scale.Options" :key="option.Id">
+                                <div class="clear"></div>
+                                <span class="float-left">{{option.Name}} - €{{option.Value}}</span>
+                                <span class="float-right"><input type="radio"
+                                                                 name="extra" :value="option.Name" ></span>
+                            </div>
                             <div class="clear"></div>
                         </div>
                     </div>
                 </div>
                 <div class="quantity-toggle">
-                    <button @click="decrement()">&mdash;</button>
+                    <button @click="decrement(dishDetail.Price)">&mdash;</button>
                     <input type="text" :value="quantity" readonly>
-                    <button @click="increment()">&#xff0b;</button>
+                    <button @click="increment(dishDetail.Price)">&#xff0b;</button>
                 </div>
                 <div class="add-item-btn">
-                    <button @click="saveToCart()" >Add item -  € {{dishDetail.Price * quantity}}.00</button>
+                    <button @click="saveToCart()" >Add item -  € {{totalPrice}}.00</button>
                 </div>
             </div>
         </div>
@@ -71,16 +94,20 @@ export default {
             quantity: 1,
             dishDetail: {},
             addOns: [],
+            scales: [],
             customOptions: [],
+            newCustomOptions: [],
+            newAddOnIds: [],
+            newScales: [],
             baseLink: baseAddress,
             dishObj: {},
             image: '',
             baseUrl: '',
             selected: [], // Must be an array reference!
             isCustomMeal: null,
+            totalPrice: 0,
             count: 0,
-            meal: {
-                "Meal":
+            meal: {"Meal":
                     {
                         "MealId": null,
                         "Name": null,
@@ -121,50 +148,101 @@ export default {
                 "IsSelected": true,
                 "Id": null,
                 "Name": null
-            }
+            },
+            checked: true,
+            addOnIds: [],
         }
     },
     methods: {
-        increment () {
-            this.quantity++
+        setAddOnOption(id,addonId,price) {
+          console.log('addOnId',id, this.$refs.addOn.checked,this.newAddOnIds[id].IsSelected);
+          this.newAddOnIds[id].IsSelected = !this.newAddOnIds[id].IsSelected;
+            console.log('addOnId',id, this.$refs.addOn.checked,this.newAddOnIds[id].IsSelected);
+           console.log(this.newAddOnIds[id].IsSelected);
+          if(this.newAddOnIds[id].IsSelected) {
+              this.addOnIds.push(addonId);
+              console.log('afterPush',this.addOnIds);
+              this.totalPrice = this.totalPrice + price;
+          } else {
+              this.addOnIds.splice(this.addOnIds.indexOf(addonId),1);
+              this.totalPrice = this.totalPrice - price;
+              console.log('afterSplice',this.addOnIds);
+          }
         },
-        decrement () {
+        setCustomOptions(pID,cID) {
+          console.log('pID',pID,'cID',cID);
+        },
+        isChecked() {
+          this.checked = !this.checked
+            return this.checked;
+        },
+        increment (price) {
+            this.quantity++;
+            this.totalPrice = price * this.quantity;
+        },
+        decrement (price) {
             if(this.quantity === 1) {
                 alert('Negative quantity not allowed')
             } else {
-                this.quantity--
+                this.quantity--;
+                this.totalPrice = price * this.quantity;
             }
         },
         clearMealObject() {
             console.log('start',this.meal);
-            this.meal.Meal.MealId = null;
-            this.meal.Meal.Name = null;
-            this.meal.Meal.RestroId = null;
-            this.meal.Meal.Price = null;
-            this.meal.Meal.MealCategoryId = null;
-            this.meal.Meal.ImageUrl = null;
-            this.meal.Meal.IsRecommend = true;
-            this.meal.Meal.IsFeatured = true;
-            this.meal.Meal.IsCustomDish = true;
-            this.meal.Meal.IsAvailable = true;
-            this.meal.Meal.Quantity = null;
-            this.meal.Meal.MealMainId = null;
-            this.meal.Meal.Description = null;
-            this.meal.Meal.Discount = null;
-            this.meal.Meal.Rating = null;
-            this.meal.Meal.TimeDuration = 30;
-            this.meal.Meal.Tags = null;
-            console.log('here1');
-            this.meal.AddOnIds = []
-            console.log('here2');
-            this.meal.CustomOptions = [];
-            this.customOptionObject.Id = this.singleOptionObject.Id = null;
-            this.customOptionObject.Name = this.singleOptionObject.Name =null;
+            this.meal = {};
+            this.customOptionObject = {};
+            this.singleOptionObject = {};
             console.log('here3');
         },
-        setMealObject(obj) {
+        resetMealObject() {
+            this.meal = {
+                "Meal":
+                    {
+                        "MealId": null,
+                        "Name": null,
+                        "RestroId": null,
+                        "Price": null,
+                        "MealCategoryId": null,
+                        "IsRecommend": null,
+                        "IsCustomDish": null,
+                        "ImageUrl": null,
+                        "IsFeatured": null,
+                        "IsAvailable": null,
+                        "MealMainId": null,
+                        "Description": null,
+                        "Quantity": null,
+                        "Discount": null,
+                        "Rating": null,
+                        "TimeDuration": null,
+                        "Tags": null
+                    },
+                "AddOnIds":
+                    [
+                        null
+                    ],
+                "CustomOptions":
+                    [
+                        null
+                    ]
+            };
+            this.customOptions = {
+                "Id": null,
+                "Name": null,
+                "Options":
+                    [
+
+                    ]
+            };
+            this.singleOptionObject = {
+                "IsSelected": true,
+                "Id": null,
+                "Name": null
+            };
+            console.log('mealObject',this.meal);
+        },
+         setMealObject(obj) {
             console.log('start',obj);
-            this.clearMealObject();
             this.meal.Meal.MealId = obj.Meal.Id;
             this.meal.Meal.Name = obj.Meal.Name;
             this.meal.Meal.RestroId = obj.Meal.RestroId;
@@ -183,26 +261,32 @@ export default {
             this.meal.Meal.TimeDuration = 30;
             this.meal.Meal.Tags = obj.Meal.Tags;
             console.log('here1');
-            for( let addon of obj.AddOns){
+            for(  let addon of obj.AddOns){
                 this.meal.AddOnIds.push(addon.Id);
             }
             console.log('here2');
             for(let customOption of obj.CustomOptions) {
+                console.log('insideLoop',customOption);
                 this.customOptionObject.Id = this.singleOptionObject.Id = customOption.Id;
                 this.customOptionObject.Name = this.singleOptionObject.Name = customOption.Name;
                 this.customOptionObject.Options.push(this.singleOptionObject);
+                console.log('afterFirstPush',this.customOptionObject.Options);
+
                 this.meal.CustomOptions.push(this.customOptionObject);
+                console.log('afterSecondPush',this.meal.CustomOptions);
             }
-            console.log('here3');
+            console.log('here3Object',this.meal);
         },
         saveToCart() {
             if(this.$store.state.cartData.length <= 0) {
                 console.log('received',);
+                this.resetMealObject();
                 this.setMealObject(this.dishObj);
                 console.log('mealObject',this.meal);
                 this.$store.dispatch('saveInCart',this.meal);
                 document.getElementById("display-dish").style.display = "none";
                 this.showNotification('success','Success','Item added in cart...!');
+                this.resetMealObject();
             }
             else if(this.dishObj.Meal.RestroId === this.$store.state.cartData[0].Meal.RestroId) {
                 console.log('received',);
@@ -211,6 +295,7 @@ export default {
                 this.$store.dispatch('saveInCart',this.meal);
                 document.getElementById("display-dish").style.display = "none";
                 this.showNotification('success','Success','Item added in cart...!');
+                this.resetMealObject();
             } else {
                 this.$dialog.confirm('Items of different restaurants are already in the cart. Clear cart to add new item. Continue?', {
                     loader: true
@@ -218,6 +303,8 @@ export default {
                     dialog.loading(false);
                     this.$store.dispatch('clearCart');
                     console.log('received',);
+                    this.clearMealObject();
+                    this.createMealObject();
                     this.setMealObject(this.dishObj);
                     console.log('mealObject',this.meal);
                     this.$store.dispatch('saveInCart',this.meal);
@@ -251,6 +338,11 @@ export default {
                 if(this.checkObjectResponse(response.Meal,'dish detail')) {
                     this.dishObj = response;
                     this.dishDetail = response.Meal;
+                    this.totalPrice = this.dishDetail.Price;
+                    this.scales = response.Scale;
+                    this.newScales = response.Scale;
+                    this.newAddOnIds = response.AddOns;
+                    this.newCustomOptions = response.CustomOptions;
                 }
                 if(this.checkArrayResponse(response.AddOns,'addons')) {
                     this.addOns = response.AddOns;
@@ -325,6 +417,7 @@ export default {
                     this.count++;
                 }
             }
+            // this.resetMealObject();
         })
         this.$root.$on('isCustomMeal', response => {
             this.isCustomMeal = response;
@@ -334,6 +427,7 @@ export default {
                 this.addDishes();
             }
         })
+        // this.createMealObject();
     },
     updated() {
         this.$root.$on('isCustomMeal', response => {

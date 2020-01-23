@@ -70,6 +70,12 @@ export const UserInfo = new Vuex.Store({
           state.cartData = [];
           localStorage.setItem('cart',null);
         },
+        removeCartItem: (state, payload) => {
+            console.log('beforeDeletionCArt',payload,state.cartData,state.cartData.length);
+          state.cartData.splice(payload, 1);
+            console.log('afterDeletionCart',state.cartData,state.cartData.length);
+          localStorage.setItem('cart', state.cartData);
+        },
         isLogin: state => {
             state.isLogin = true;
             state.isLoggedOut = false;
@@ -112,6 +118,9 @@ export const UserInfo = new Vuex.Store({
         setAddressID: ({commit}, payload) => {
             console.log('idAddress',payload);
             commit('setAddressID',payload);
+        },
+        removeCartItem: ({commit}, payload) => {
+          commit('removeCartItem',payload);
         },
         clearCart: ({commit}) => {
             commit('clearCart');
