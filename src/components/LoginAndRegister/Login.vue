@@ -68,12 +68,12 @@
                             console.log('id',response.Id);
                             localStorage.setItem('userProfile',response.UrlImage);
                             this.$store.dispatch('storeToken',response);
-                            console.log('cart',JSON.parse(JSON.stringify(localStorage.getItem('cart'))));
+                            // console.log('cart',JSON.parse(localStorage.getItem('cart').replace (/(^')|('$)/g, '')));
+                            // console.log('cart',JSON.parse(JSON.stringify(localStorage.getItem('cart'))));
 
                             console.log('cart',JSON.parse(localStorage.getItem('cart')));
                             this.$router.push({path:'/'});
                             this.$router.go();
-
                             // this.storeToken('storeToken',response.AuthToken, response)
 
                         } else {

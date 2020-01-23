@@ -301,6 +301,7 @@
     import {calculateDistance} from "../api/CalculateDistance";
     import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
     import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
+    import {fetchRestaurantById} from "../api/FilterRestaurants";
 
     export default {
     data(){
@@ -409,15 +410,25 @@
             })
         });
         this.$root.$on('restaurant', response => {
-            this.restaurant = response;
+
             console.log('insideCartRestaurant',response.ImageUrl);
-            this.lon1 = this.restaurant.Longitude;
-            this.lat1 = this.restaurant.Latitude;
+            this.resID = this.$store.state.cartData[0].Meals.RestroId
             this.image = baseAddress + response.ImageUrl;
+            this.fetchRestaurant(this.resID);
             console.log('imageHere',this.image);
         })
     },
     methods: {
+        fetchRestaurant(id) {
+         fetchRestaurantById(id).then(response => {
+
+             this.lon1 = response.Restaurant.Longitude;
+             this.lat1 = response.Restaurant.Latitude;
+         },error => {
+             console.log(error);
+             this.showNotification('error','Error','Error occurred please try later!');
+         })
+        },
         showInstruction() {
           this.$bvModal.show('instruction');
           if(this.instruction !== '' || this.instruction != null) {

@@ -54,7 +54,11 @@ export const UserInfo = new Vuex.Store({
             console.log('beforeCart',state.cartData);
             state.cartData.push(payload);
             console.log('afterSaveCart',state.cartData);
-            localStorage.setItem('cart',state.cartData);
+            localStorage.setItem('cart',JSON.stringify(state.cartData));
+        },
+        setCart: (state, payload) => {
+          state.cartData = payload;
+          console.log('cart',state.cartData)
         },
         saveMapData: (state, payload) => {
             state.mapData =  payload;
@@ -98,6 +102,9 @@ export const UserInfo = new Vuex.Store({
         },
         saveInCart: ({commit}, payload) => {
             commit('saveInCart',payload);
+        },
+        setCart: ({commit}, payload) => {
+          commit('setCart', payload);
         },
         saveMapData: ({commit}, payload) => {
             commit('saveMapData', payload);
