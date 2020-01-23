@@ -50,8 +50,8 @@ export default {
 .popular-dishes {
     text-align: left;
     background: #f2f2f2;
-    margin: 50px 15px -20px 0px;
-    padding: 15px 0 15px 35px;
+    /*margin: 50px 15px -20px 0px;*/
+    padding: 15px 0 15px 25px;
 }
 .popular-dishes h5 {
     font-family: "Roboto";
@@ -68,7 +68,7 @@ export default {
     background: black;
     position: absolute;
     bottom: 0;
-    left: -35px;
+    left: -25px;
 }
 .popular-dishes ul {
     padding: 0;

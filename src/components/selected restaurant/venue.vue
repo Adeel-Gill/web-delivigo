@@ -207,4 +207,24 @@ button.link {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
 }
+
+@media screen and (max-width: 1250px) and (min-width: 960px){
+    .open-days{
+        float: none;
+    }
+    .open-time{
+        float: none;
+    }
+}
+@media screen and (max-width: 960px) and (min-width: 768px){
+
+}
+@media screen and (max-width: 767px) and (min-width: 561px){
+
+}
+@media screen and (max-width: 560px) and (min-width: 401px){
+
+}
+@media screen and (max-width: 400px){
+}
 </style>

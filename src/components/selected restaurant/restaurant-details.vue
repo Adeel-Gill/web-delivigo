@@ -12,11 +12,11 @@
                 <div class="clear"></div>
             </div>
             <div class="restaurnt-address">
-                <p><i class="fas fa-map-marker-alt"></i>{{restaurant.FullAddress | truncate}}</p>
+                <p><i class="fas fa-map-marker-alt"></i>{{restaurant.FullAddress | truncate2}}</p>
             </div>
             <div class="rating-times">
                 <div class="row">
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-4 col-md-4">
                         <div class="rating">
                             <p>
                                 <i class="fas fa-star"></i>
@@ -25,7 +25,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-4 col-md-4">
                         <div class="delivery">
                             <p v-if="freeDelivery === true">
                                 <i class="fas fa-euro-sign"></i>
@@ -36,7 +36,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-4 col-md-4">
                         <div class="mints">
                             <p>
                                 <i class="far fa-clock"></i>
@@ -89,6 +89,14 @@ export default {
     },
     filters: {
         truncate(val) {
+            let length = 20;
+            if(val.length <= length) {
+                return val
+            } else {
+                return val.substring(0, length)+ '...';
+            }
+        },
+        truncate2(val) {
             let length = 26;
             if(val.length <= length) {
                 return val
@@ -103,7 +111,8 @@ export default {
 .details-restaurant {
     position: relative;
 }
-.description-about[data-v-6db8e78f] {
+/*[data-v-6db8e78f]*/
+.description-about {
     background: #f2f2f2;
     padding: 30px;
     position: absolute;
@@ -187,16 +196,148 @@ i.far.fa-clock {
     color: #8ba939;
 }
 
-@media screen and (max-width: 960px) and (min-width: 761px){
+@media screen and (max-width: 960px) and (min-width: 768px){
+    .description-about{
+        padding: 20px;
+    }
 
+    .name-desc h4{
+        font-size: 37px;
+    }
+    .name-desc p{
+        font-size: 21px;
+    }
+    .restaurnt-address{
+        margin: 20px 0;
+    }
+    .restaurnt-address p{
+        font-size: 18px;
+        /*margin: 10px 0;*/
+    }
+    .reviews a{
+        font-size: 19px;
+        /*padding: 0;*/
+    }
+    .reviews{
+        padding: 10px 0 0 0;
+    }
+    .mints p{
+        font-size:19px ;
+    }
+    .delivery p{
+        font-size: 19px;
+    }
+    .rating p{
+        font-size: 19px;
+    }
 }
-@media screen and (max-width: 760px) and (min-width: 561px){
-
+@media screen and (max-width: 767px) and (min-width: 561px){
+    .description-about{
+        top: -390px;
+        right: 0px;
+        padding: 20px;
+    }
+    .name-desc h4{
+        font-size: 36px;
+    }
+    .name-desc p{
+        font-size: 21px;
+    }
+    .restaurnt-address{
+        margin: 20px 0;
+    }
+    .restaurnt-address p{
+        font-size: 17px;
+        /*margin: 10px 0;*/
+    }
+    .reviews a{
+        font-size: 19px;
+        /*padding: 0;*/
+    }
+    .reviews{
+        padding: 10px 0 0 0;
+    }
+    .mints p{
+        font-size:19px ;
+    }
+    .delivery p{
+        font-size: 19px;
+    }
+    .rating p{
+        font-size: 19px;
+    }
 }
 @media screen and (max-width: 560px) and (min-width: 401px){
+    .description-about{
+        top: -390px;
+        right: 0px;
+        padding: 20px;
+    }
+    .name-desc h4{
+        font-size: 34px;
+    }
+    .name-desc p{
+        font-size: 20px;
+    }
+    .restaurnt-address{
+        margin: 20px 0;
+    }
+    .restaurnt-address p{
+        font-size: 17px;
+        /*margin: 10px 0;*/
+    }
+    .reviews a{
+        font-size: 18px;
+        padding: 0;
+    }
+    .reviews{
+        padding: 10px 0 0 0;
+    }
+    .mints p{
+        font-size:18px ;
+    }
+    .delivery p{
+        font-size: 18px;
+    }
+    .rating p{
+        font-size: 18px;
+    }
 
 }
 @media screen and (max-width: 400px){
-
+    .description-about{
+        top: -390px;
+        right: 0px;
+        padding: 20px;
+    }
+    .name-desc h4{
+        font-size: 31px;
+    }
+    .name-desc p{
+        font-size: 19px;
+    }
+    .restaurnt-address{
+        margin: 20px 0;
+    }
+    .restaurnt-address p{
+        font-size: 17px;
+        /*margin: 10px 0;*/
+    }
+    .reviews a{
+        font-size: 17px;
+        /*padding: 0;*/
+    }
+    .reviews{
+        padding: 10px 0 0 0;
+    }
+    .mints p{
+        font-size:17px ;
+    }
+    .delivery p{
+        font-size: 17px;
+    }
+    .rating p{
+        font-size: 17px;
+    }
 }
 </style>

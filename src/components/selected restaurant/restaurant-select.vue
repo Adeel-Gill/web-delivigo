@@ -11,7 +11,7 @@
                 </div>
 <!--                <div class="col-lg-3 col-md-3"></div>-->
             </div>
-            <div class="row">
+            <div class="row menu-sec">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <dishes />
@@ -110,12 +110,26 @@ export default {
 }
 </script>
 <style scoped>
-    .popular{
-        display: inline-block;
+    .menu-sec{
+        position: relative;
+        top: -20px;
     }
-@media screen and (max-width: 780px) {
     .popular{
-        display: none;
+        /*display: inline-block;*/
+    }
+@media screen and (max-width: 767px) {
+    .popular{
+        visibility:hidden;
+    }
+    .menu-sec{
+        position: relative;
+        top: -120px;
+    }
+}
+@media screen and (max-width: 560px){
+    .menu-sec{
+        position: relative;
+        top: -100px;
     }
 }
 </style>

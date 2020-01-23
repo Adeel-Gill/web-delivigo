@@ -561,9 +561,19 @@ export default {
 
 }
 @media screen and (max-width: 560px) and (min-width: 401px){
-
+    .dish-image img{
+        height: 120px;
+    }
+    .descp-about{
+        min-height: 137px;
+    }
 }
 @media screen and (max-width: 400px){
-
+    .dish-image img{
+        height: 105px;
+    }
+    .descp-about{
+        min-height: 120px;
+    }
 }
 </style>

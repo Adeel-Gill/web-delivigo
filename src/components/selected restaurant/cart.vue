@@ -1031,6 +1031,9 @@ a.link-color h2{
         height:400px ;
         border-radius: 0px 350px 350px 0;
     }
+    .food-type{
+        left: 26px;
+    }
 }
 @media screen and (max-width: 576px) and (min-width: 400px){
     .slected-bg{
