@@ -84,6 +84,7 @@ export default {
                     this.$root.$emit('restaurant', response.Restaurant);
                     this.$root.$emit('restaurantImages', response.RestaurantImagesURL);
                     this.$root.$emit('isCustomMeal', false);
+                    console.log('restaurant',response.Restaurant);
 
                 }, error => {
                     console.log(error);

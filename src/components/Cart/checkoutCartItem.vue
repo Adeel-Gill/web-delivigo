@@ -7,7 +7,7 @@
                         <img :src="item.ImageUrl">
                     </div>
                     <div class="col-8 py-0 pr-1">
-                        <a src="#" class="float-right"><i class="fas fa-times"></i></a>
+                        <a src="#" @click="removeItem(itemIndex)" class="float-right"><i class="fas fa-times"></i></a>
                         <h4>{{item.Name}}</h4>
                         <p class="text-muted m-0">{{item.Description}}</p>
                         <p class="m-0 d-inline-block price mr-5">{{item.Price}}</p> <span><i class="fas fa-times"></i> {{item.Quantity}}</span>
@@ -21,7 +21,13 @@
 <script>
     export default {
         name: "checkoutCartItem",
-        props: ['item']
+        props: ['itemIndex','item'],
+        methods: {
+            removeItem(i) {
+                console.log('indexSent',i);
+                this.$emit('removeItemInCart',i);
+            }
+        }
     }
 </script>
 

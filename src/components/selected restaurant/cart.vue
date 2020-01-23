@@ -39,7 +39,11 @@
                     <div class="drawer-body px-3">
                         <!-- card start-->
                         <div v-if="notEmpty">
-                            <app-cart-items v-for="item in cartItems" :key="item.Meal" :item="item.Meal"></app-cart-items>
+                            <app-cart-items v-for="(item,index) in cartItems"
+                                            :key="item.Meal"
+                                            :itemIndex="index"
+                                            :item="item.Meal"
+                                @removeInCart="removeItem(index)"></app-cart-items>
                         </div>
                         <div v-else>
                             <h3>Add items in cart first...!</h3>
@@ -97,7 +101,10 @@
                     <a href="#" class="link-color"></a></h2>
                 <p class="text-muted">Desired delivery time + 10 min</p>
                 <div class="row" style="box-sizing: border-box;">
-                    <app-checkout-cart-item v-for="item in cartItems" :key="item.Meal" :item="item.Meal"></app-checkout-cart-item>
+                    <app-checkout-cart-item v-for="(item, index) in cartItems" :key="item.Meal"
+                                            :itemIndex="index"
+                                            @removeItemInCart="itemRemoveInOrder(index)"
+                                            :item="item.Meal"></app-checkout-cart-item>
                 </div>
 
                 <a href="#" class="link-color"><h2><i class="fas fa-plus"></i> Add more items</h2></a>
@@ -340,8 +347,12 @@
                 icon: 'cached'
             }],
             allImages: [],
+            paramID: null,
             cartItems: [],
             userData: {},
+            resData: {},
+            newResData: {},
+            cartData: [],
             restaurantImages: [],
             resID: null,
             mealID: null,
@@ -402,28 +413,89 @@
         this.$root.$on('mealMenu', response => {
             this.foodTypes = response;
         });
+        console.log('inCreated');
         this.$root.$on('restaurantImages', response => {
             this.restaurantImages = response;
+            console.log('hereInImages');
             this.restaurantImages.forEach(image => {
                 this.allImages.push(this.baseUrl+image.ImageUrl);
-                console.log('allImages',this.allImages);
+                // console.log('allImages',this.allImages);
             })
         });
-        this.$root.$on('restaurant', response => {
-
-            console.log('insideCartRestaurant',response.ImageUrl);
-            this.resID = this.$store.state.cartData[0].Meals.RestroId
-            this.image = baseAddress + response.ImageUrl;
-            this.fetchRestaurant(this.resID);
-            console.log('imageHere',this.image);
-        })
+        console.log('redID',this.resID,this.$store.state.cartData);
+        console.log('redID',this.resID == null);
+            console.log('insideTimeOUT',this.$store.state.cartData.length ,this.resID == null);
+            if(this.$store.state.cartData.length > 0) {
+                console.log('hereInCondition')
+                this.resID = this.$store.state.cartData[0].Meal.RestroId;
+                this.fetchRestaurant(this.resID);
+                this.paramID = this.$route.params.id;
+                this.fetchRestaurantByParam(this.paramID);
+                // this.$root.$on('restaurant', response => {
+                //
+                //     console.log('insideCartRestaurant',response.ImageUrl);
+                //     // this.resID = this.$store.state.cartData[0].Meals.RestroId;
+                //     this.resID = response.Id;
+                //     this.resData = response;
+                //     console.log('UrlIs',response);
+                //     // this.fetchRestaurant(this.resID);
+                // })
+            } else {
+                console.log('here inside else');
+                this.paramID = this.$route.params.id;
+                this.fetchRestaurantByParam(this.paramID);
+            }
     },
     methods: {
+        itemRemoveInOrder(i) {
+            this.$dialog.confirm('Item will be removed from order. Continue?', {
+                loader: true
+            }).then(dialog => {
+                dialog.loading(false);
+                this.$store.dispatch('removeCartItem',i);
+                this.checkCartAfterOrderItemDeletion();
+                this.showNotification('success','Success','Item removed.');
+                dialog.close();
+            }).catch(() => {
+                this.showNotification('info','Info','Deletion cancelled');
+            })
+        },
+        removeItem(i) {
+            this.$dialog.confirm('Item will be removed from cart. Continue?', {
+                loader: true
+            }).then(dialog => {
+                dialog.loading(false);
+                this.$store.dispatch('removeCartItem',i);
+                this.checkCartAfterDeletion();
+                this.showNotification('success','Success','Item removed from cart');
+                dialog.close();
+            }).catch(() => {
+                this.showNotification('info','Info','Deletion cancelled');
+            })
+
+          console.log('indexReceived',i);
+        },
+        fetchRestaurantByParam(id) {
+            fetchRestaurantById(id).then(response => {
+                if(this.$store.state.cartData.length > 0) {
+                    this.resData = response.Restaurant;
+                } else {
+                    this.lon1 = response.Restaurant.Longitude;
+                    this.lat1 = response.Restaurant.Latitude;
+                    this.resData = response.Restaurant;
+                }
+                console.log('resData',id,this.resData);
+            },error => {
+                console.log(error);
+                this.showNotification('error','Error','Error occurred please try later!');
+            })
+        },
         fetchRestaurant(id) {
          fetchRestaurantById(id).then(response => {
 
              this.lon1 = response.Restaurant.Longitude;
              this.lat1 = response.Restaurant.Latitude;
+             console.log('resData',id,this.resData);
          },error => {
              console.log(error);
              this.showNotification('error','Error','Error occurred please try later!');
@@ -437,6 +509,35 @@
           } else {
               this.emptyInstruction = true;
           }
+        },
+        checkCartAfterOrderItemDeletion() {
+            if(this.$store.state.cartData.length <= 0) {
+                this.doProceed = true;
+                this.notEmpty = false;
+                this.cartItems =[];
+                this.$bvModal.hide('checkout');
+                this.$store.dispatch('clearCart');
+
+            } else {
+                this.cartItems = this.$store.state.cartData;
+                for(var i=0; i<this.cartItems.length; i++) {
+                    var temp = {};
+                    this.subTotal = 0;
+                    temp = this.cartItems[i].Meal;
+                    this.subTotal += temp.Price;
+                }
+                this.totalPrice = this.subTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
+            }
+        },
+        checkCartAfterDeletion() {
+            if(this.$store.state.cartData.length <= 0) {
+                this.doProceed = true;
+                this.notEmpty = false;
+                this.cartItems =[];
+                this.$store.dispatch('clearCart');
+            } else {
+                this.cartItems = this.$store.state.cartData;
+            }
         },
         checkFormValidity() {
             const valid = this.$refs.form.checkValidity()
@@ -757,7 +858,8 @@
             }
         },
         getImage() {
-            console.log('UrlIS',this.image);
+            this.image =  baseAddress + this.resData.ImageUrl
+            console.log('UrlIS',this.resData,this.image);
             return this.image;
         },
         hideModal() {
