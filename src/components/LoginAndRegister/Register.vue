@@ -15,7 +15,7 @@
                     <label for="number">Mobile Number</label>
                     <input type="text"
                            class="form-control"
-                           v-model="userData.mobileNo"
+                           v-model="userData.mobile"
                            placeholder="e.g 03121234123"
                            id="number" required>
                 </div>
@@ -64,7 +64,7 @@
                     firstName: '',
                     lastName: '',
                     fullName: '',
-                    mobileNo: '',
+                    mobile: '',
                     email: '',
                     password: '',
                     deviceToken: 'web',
@@ -103,7 +103,7 @@
             },
             checkObject() {
                 if( this.userData.fullName != '' &&
-                    this.userData.mobileNo != '' &&
+                    this.userData.mobile != '' &&
                     this.userData.email !='' &&
                     this.userData.password !='' &&
                     this.$refs.termsChecked.checked != false) {

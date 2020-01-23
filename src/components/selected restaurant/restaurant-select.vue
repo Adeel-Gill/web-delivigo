@@ -61,6 +61,11 @@ export default {
         this.resId = this.$route.params.id;
         console.log('queryData'+this.resId);
         this.fetchRestaurantData(this.resId);
+        if(localStorage.getItem('cart') === 'null' || localStorage.getItem('cart') == null) {
+            this.$store.dispatch('clearCart')
+        } else {
+            this.$store.dispatch('setCart', JSON.parse(localStorage.getItem('cart')));
+        }
     },
     destroyed() {
         this.unChangeHeader();
