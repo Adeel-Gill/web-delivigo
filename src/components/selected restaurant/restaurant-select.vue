@@ -3,20 +3,20 @@
         <banner />
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-3">
+                <div class="col-md-3 popular">
                     <popular-foods></popular-foods>
                 </div>
-                <div class="col-lg-6 col-md-6">
+                <div class="col-md-6">
                     <restaurnt-name></restaurnt-name>
                 </div>
-                <div class="col-lg-3 col-md-3"></div>
+<!--                <div class="col-lg-3 col-md-3"></div>-->
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-3"></div>
-                <div class="col-lg-6">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
                     <dishes />
                 </div>
-                <div class="col-lg-3 col-md-3">
+                <div class="col-md-3">
                     <venue />
                 </div>
             </div>
@@ -111,5 +111,12 @@ export default {
 }
 </script>
 <style scoped>
-
+    .popular{
+        display: inline-block;
+    }
+@media screen and (max-width: 780px) {
+    .popular{
+        display: none;
+    }
+}
 </style>

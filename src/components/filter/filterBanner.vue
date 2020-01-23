@@ -56,10 +56,10 @@
   }
 </script>
 <style scoped>
-.filter-caption{
+/*.filter-caption{
   width: 100%;
-  /*height: 100%;*/
-}
+  !*height: 100%;*!
+}*/
 .filter-caption h6 {
     font-family: "Roboto";
     font-size: 15px;

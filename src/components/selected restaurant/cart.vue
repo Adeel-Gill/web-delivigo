@@ -919,8 +919,8 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    height: 667px;
-    border-radius: 0px 500px 500px 0;
+    height: 600px;
+    border-radius: 0px 550px 550px 0;
     box-shadow: 37px 17px 7px 0px rgba(0, 0, 0, 0.05);
     width: 97%;
 }
@@ -954,14 +954,15 @@
 .food-type button {
     text-decoration: none;
     display: inline-block;
-    padding: 10px 20px;
+    padding: 5px 15px;
     background: red;
     margin: 0 20px 0 5px;
     color: white;
-    font-weight: bold;
+    /*font-weight: bold;*/
     font-family: "Roboto";
-    font-size: 20px;
+    font-size: 18px;
     text-transform: uppercase;
+    font-weight: 500;
 }
 .food-type p span {
     display: inline-block;
@@ -1126,6 +1127,41 @@ a.link-color h2{
         text-decoration: none;
         color: #5F7E32;
     }
+
+@media screen and (max-width: 400px){
+    .slected-bg{
+        height:400px ;
+        border-radius: 0px 350px 350px 0;
+    }
+}
+@media screen and (max-width: 576px) and (min-width: 400px){
+    .slected-bg{
+        height:450px ;
+        border-radius: 0px 400px 400px 0;
+    }
+}
+@media screen and (max-width: 760px) and (min-width: 576px){
+    .slected-bg{
+        height:500px ;
+        border-radius: 0px 450px 450px 0;
+    }
+}
+@media screen and (max-width: 960px) and (min-width: 760px){
+    .slected-bg{
+        height:550px ;
+        border-radius: 0px 500px 500px 0;
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
     /*.card-sec{
         display: flex;

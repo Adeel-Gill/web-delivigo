@@ -108,8 +108,8 @@ export default {
     padding: 30px;
     position: absolute;
     width: 100%;
-    top: -40px;
-    right: -60px;
+    top: -132px;
+    right: -80px;
 }
 .name-desc {
     float: left;
@@ -185,5 +185,18 @@ i.fas.fa-euro-sign {
 }
 i.far.fa-clock {
     color: #8ba939;
+}
+
+@media screen and (max-width: 960px) and (min-width: 761px){
+
+}
+@media screen and (max-width: 760px) and (min-width: 561px){
+
+}
+@media screen and (max-width: 560px) and (min-width: 401px){
+
+}
+@media screen and (max-width: 400px){
+
 }
 </style>

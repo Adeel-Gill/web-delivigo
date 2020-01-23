@@ -553,11 +553,12 @@ export default {
     position: relative;
 }
 .dish-image {
-    max-width: 200px;
-    float: left;
-    margin: 8px 0;
-    position: absolute;
-    left: 0;
+    max-width: 35%;
+    /*float: left;*/
+    margin: 8px -20px 8px 0px;
+    /*position: absolute;*/
+    /*left: 0;*/
+    display: inline-block;
 }
 .dish-image img {
     width: 100%;
@@ -565,13 +566,18 @@ export default {
     height: 133px;
 }
 .about-dish {
-    float: right;
+    /*float: right;*/
     z-index: -2;
+    width: 65%;
+    display: inline-block;
+    position: absolute;
 }
 .descp-about{
-    min-width: 380px;
+    min-width: 100%;
     min-height: 149px;
     border-radius: 10px;
+    background-color: antiquewhite;
+    padding-left: 40px;
 }
 .descp-about p {
     color: #787878;
@@ -580,12 +586,12 @@ export default {
     margin: 0 auto;
     line-height: 20px;
     text-align: left;
-    max-width: 250px;
+    /*max-width: 250px;*/
     padding: 30px 0 0 0;
 }
 .price-dish {
     float: left;
-    margin: 0 65px;
+    /*margin: 0 65px;*/
 }
 .price-dish p {
     padding: 20px 0 !important;
@@ -596,7 +602,8 @@ export default {
 .buy-btn {
     float: right;
     padding: 15px 0;
-    margin: 0 47px;
+    /*margin: 0 47px;*/
+    margin-right: 20px;
 }
 .buy-btn a {
     display: inline-block;
@@ -640,4 +647,17 @@ export default {
     transform: rotate(-45deg);
 }
 
+
+@media screen and (max-width: 960px) and (min-width: 761px){
+
+}
+@media screen and (max-width: 760px) and (min-width: 561px){
+
+}
+@media screen and (max-width: 560px) and (min-width: 401px){
+
+}
+@media screen and (max-width: 400px){
+
+}
 </style>
