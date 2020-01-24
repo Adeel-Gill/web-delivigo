@@ -287,7 +287,7 @@ export default {
                 "Name": null
             };
             console.log('mealObject',this.meal);
-            this.quantity = 1;
+
         },
          setMealObject(obj) {
             console.log('start',obj);
@@ -347,6 +347,7 @@ export default {
                 document.getElementById("display-dish").style.display = "none";
                 this.showNotification('success','Success','Item added in cart...!');
                 this.resetMealObject();
+                this.quantity = 1;
             }
             else if(this.dishObj.Meal.RestroId === this.$store.state.cartData[0].Meal.RestroId) {
                 console.log('received',);
@@ -356,6 +357,7 @@ export default {
                 document.getElementById("display-dish").style.display = "none";
                 this.showNotification('success','Success','Item added in cart...!');
                 this.resetMealObject();
+                this.quantity = 1;
             } else {
                 this.$dialog.confirm('Items of different restaurants are already in the cart. Clear cart to add new item. Continue?', {
                     loader: true

@@ -587,7 +587,7 @@
                 "ExtraKMDeliveryFee": this.extraKmDeliveryFee,
                 "TotalPrice": this.totalPrice,
                 "Notes": this.instruction,
-                "Order Items": cartItems,
+                "OrderItems": cartItems,
             }
         },
         setAddressID(obj) {
@@ -674,6 +674,7 @@
               } else {
                   this.$store.dispatch('clearCart');
                   this.showNotification('success','Success','Order is successfully placed! Thankyou!');
+                  console.log('orderObject',this.orderObject);
                   this.$router.push('/orderHistory')
               }
           }, error => {
