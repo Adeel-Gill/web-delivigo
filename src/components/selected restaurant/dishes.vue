@@ -37,14 +37,14 @@
                         </div>
                     </div>
                     <h6>GLI EXTRA - Scale</h6>
-                    <div class="extra-checkbox" v-for="(scale, index) in scales" v-bind:key="scale.Id">
+                    <div class="extra-checkbox" v-for="(scale, scaleIndex) in scales" v-bind:key="scale.Id">
                         <div>
                             <span class="float-left">{{scale.Name}} </span>
                             <span class="float-right">€{{scale.UnitPrice}}.00 Per unit</span>
                             <div style="margin-right: 30px; margin-left: 30px" v-for="(option, index) in scale.Options" :key="option.Id">
                                 <div class="clear"></div>
                                 <span class="float-left">{{option.Name}} - €{{option.Value}}</span>
-                                <span class="float-right"><input type="radio"
+                                <span class="float-right"><input type="radio" @change="setScaleOptions(scaleIndex, index, scale.UnitPrice, option.Value)"
                                                                  name="extra" :value="option.Name" ></span>
                             </div>
                             <div class="clear"></div>
@@ -106,6 +106,7 @@ export default {
             selected: [], // Must be an array reference!
             isCustomMeal: null,
             totalPrice: 0,
+            dishPrice: 0,
             count: 0,
             meal: {"Meal":
                     {
@@ -134,7 +135,10 @@ export default {
                 "CustomOptions":
                     [
                         null
-                    ]
+                    ],
+                "Scale": [
+                    null
+                ]
             },
             customOptionObject: {
                 "Id": null,
@@ -154,7 +158,7 @@ export default {
         }
     },
     methods: {
-        setAddOnOption(id,addonId,price) {
+         setAddOnOption(id,addonId,price) {
           console.log('addOnId',id, this.$refs.addOn.checked,this.newAddOnIds[id].IsSelected);
           this.newAddOnIds[id].IsSelected = !this.newAddOnIds[id].IsSelected;
             console.log('addOnId',id, this.$refs.addOn.checked,this.newAddOnIds[id].IsSelected);
@@ -162,30 +166,78 @@ export default {
           if(this.newAddOnIds[id].IsSelected) {
               this.addOnIds.push(addonId);
               console.log('afterPush',this.addOnIds);
-              this.totalPrice = this.totalPrice + price;
+              this.calculatePrice(this.dishPrice);
+              // this.totalPrice = this.totalPrice + price;
           } else {
               this.addOnIds.splice(this.addOnIds.indexOf(addonId),1);
-              this.totalPrice = this.totalPrice - price;
+              // this.totalPrice = this.totalPrice - price;
+              this.calculatePrice(this.dishPrice);
               console.log('afterSplice',this.addOnIds);
           }
+
         },
         setCustomOptions(pID,cID) {
           console.log('pID',pID,'cID',cID);
+          console.log('before',this.newCustomOptions[pID].Options[cID].IsSelected,this.newCustomOptions[pID].Options);
+          this.newCustomOptions[pID].Options[cID].IsSelected = !this.newCustomOptions[pID].Options[cID].IsSelected;
+          console.log('after',this.newCustomOptions[pID].Options[cID].IsSelected,this.newCustomOptions[pID].Options);
+        },
+        setScaleOptions(pID,cID,unitPrice,value) {
+             console.log('pID',pID,'cID',cID,'unitPrice',unitPrice,'value',value);
+             console.log('before',this.newScales[pID].Options[cID].IsSelected, this.newScales[pID].Options);
+             this.newScales[pID].Options[cID].IsSelected = !this.newScales[pID].Options[cID].IsSelected;
+             console.log('after',this.newScales[pID].Options[cID].IsSelected,this.newScales[pID].Options);
+             for(var i = 0; i< this.newScales.length; i++) {
+                 for(var j=0; j< this.newScales[i].Options.length; j++) {
+                     var obj = this.newScales[i].Options[j];
+                     if(j !== cID) {
+                         if(obj.IsSelected) {
+                             obj.IsSelected = !obj.IsSelected;
+                             // this.totalPrice = (this.totalPrice - (unitPrice * obj.Value));
+                         }
+                     } else {
+                         // this.totalPrice = (this.totalPrice + (unitPrice * value));
+                     }
+                 }
+             }
+            console.log('afterLoop',this.newScales[pID].Options);
+            this.calculatePrice(this.dishPrice);
         },
         isChecked() {
           this.checked = !this.checked
             return this.checked;
         },
+        calculatePrice(price) {
+             var tempPrice = 0;
+             for(var i=0; i<this.newAddOnIds.length; i++) {
+                 for(var j=0; j<this.addOnIds.length;j++) {
+                     if(this.newAddOnIds[i].Id === this.addOnIds[j]) {
+                         console.log('here');
+                         tempPrice = tempPrice + this.newAddOnIds[i].Price;
+                     }
+                 }
+             }
+             for(var k=0; k<this.newScales.length; k++) {
+                 for(var l=0; l<this.newScales[k].Options.length; l++) {
+                     if(this.newScales[k].Options[l].IsSelected) {
+                         tempPrice = tempPrice + (this.newScales[k].UnitPrice * this.newScales[k].Options[l].Value);
+                     }
+                 }
+             }
+             this.totalPrice = (price + tempPrice) * this.quantity;
+        },
         increment (price) {
             this.quantity++;
-            this.totalPrice = price * this.quantity;
+            // this.totalPrice = this.totalPrice * this.quantity;
+            this.calculatePrice(price);
         },
         decrement (price) {
             if(this.quantity === 1) {
                 alert('Negative quantity not allowed')
             } else {
                 this.quantity--;
-                this.totalPrice = price * this.quantity;
+                // this.totalPrice = price * this.quantity;
+                this.calculatePrice(price);
             }
         },
         clearMealObject() {
@@ -217,14 +269,9 @@ export default {
                         "TimeDuration": null,
                         "Tags": null
                     },
-                "AddOnIds":
-                    [
-                        null
-                    ],
-                "CustomOptions":
-                    [
-                        null
-                    ]
+                "AddOnIds": [],
+                "CustomOptions": [],
+                "Scale": []
             };
             this.customOptions = {
                 "Id": null,
@@ -240,13 +287,14 @@ export default {
                 "Name": null
             };
             console.log('mealObject',this.meal);
+            this.quantity = 1;
         },
          setMealObject(obj) {
             console.log('start',obj);
             this.meal.Meal.MealId = obj.Meal.Id;
             this.meal.Meal.Name = obj.Meal.Name;
             this.meal.Meal.RestroId = obj.Meal.RestroId;
-            this.meal.Meal.Price = this.quantity * obj.Meal.Price;
+            this.meal.Meal.Price = this.totalPrice;
             this.meal.Meal.MealCategoryId = obj.Meal.MealCategoryId;
             this.meal.Meal.ImageUrl = baseAddress + obj.Meal.ImageUrl;
             this.meal.Meal.IsRecommend = true;
@@ -260,21 +308,33 @@ export default {
             this.meal.Meal.Rating = obj.Meal.Rating;
             this.meal.Meal.TimeDuration = 30;
             this.meal.Meal.Tags = obj.Meal.Tags;
-            console.log('here1');
-            for(  let addon of obj.AddOns){
-                this.meal.AddOnIds.push(addon.Id);
-            }
+            console.log('here1',this.addOnIds,this.newCustomOptions,this.newScales);
+            this.meal.AddOnIds = (this.addOnIds);
+            this.meal.CustomOptions= (this.newCustomOptions);
+            this.meal.Scale= (this.newScales);
+            // for(var i=0; i<this.addOnIds.length;i++) {
+            //     this.meal.AddOnIds.push(this.addOnIds[i]);
+            // }
+            // for(var j=0; j<this.newCustomOptions.length; j++) {
+            //     this.meal.CustomOptions.push(this.newCustomOptions[j]);
+            // }
+            // for(var k=0; k<this.newScales.length; k++) {
+            //     this.meal
+            // }
+            // for(  let addon of obj.AddOns){
+            //     this.meal.AddOnIds.push(addon.Id);
+            // }
             console.log('here2');
-            for(let customOption of obj.CustomOptions) {
-                console.log('insideLoop',customOption);
-                this.customOptionObject.Id = this.singleOptionObject.Id = customOption.Id;
-                this.customOptionObject.Name = this.singleOptionObject.Name = customOption.Name;
-                this.customOptionObject.Options.push(this.singleOptionObject);
-                console.log('afterFirstPush',this.customOptionObject.Options);
-
-                this.meal.CustomOptions.push(this.customOptionObject);
-                console.log('afterSecondPush',this.meal.CustomOptions);
-            }
+            // for(let customOption of obj.CustomOptions) {
+            //     console.log('insideLoop',customOption);
+            //     this.customOptionObject.Id = this.singleOptionObject.Id = customOption.Id;
+            //     this.customOptionObject.Name = this.singleOptionObject.Name = customOption.Name;
+            //     this.customOptionObject.Options.push(this.singleOptionObject);
+            //     console.log('afterFirstPush',this.customOptionObject.Options);
+            //
+            //     this.meal.CustomOptions.push(this.customOptionObject);
+            //     console.log('afterSecondPush',this.meal.CustomOptions);
+            // }
             console.log('here3Object',this.meal);
         },
         saveToCart() {
@@ -338,7 +398,7 @@ export default {
                 if(this.checkObjectResponse(response.Meal,'dish detail')) {
                     this.dishObj = response;
                     this.dishDetail = response.Meal;
-                    this.totalPrice = this.dishDetail.Price;
+                    this.totalPrice = this.dishPrice = this.dishDetail.Price;
                     this.scales = response.Scale;
                     this.newScales = response.Scale;
                     this.newAddOnIds = response.AddOns;

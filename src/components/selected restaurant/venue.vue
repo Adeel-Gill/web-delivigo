@@ -82,7 +82,7 @@ export default {
         })
         setTimeout(()=> {
             this.changeShowAll();
-        },1000);
+        },2000);
         this.changeShowAll();
     },
     methods: {
