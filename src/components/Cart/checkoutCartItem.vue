@@ -1,5 +1,5 @@
 <template>
-    <div class="col-6" >
+    <div class="col-md-6">
         <div class="card p-0 mb-3" style="width: 100%;">
             <div class="card-body py-0 pl-2">
                 <div class="row">

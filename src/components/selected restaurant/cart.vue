@@ -157,7 +157,8 @@
                     </div>
                     <div class="col-12">
                         <VueSlickCarousel v-bind="settings">
-                            <div v-for="address in allAddresses" :key="address.Id">
+                            <div v-for="address in allAddresses" class="col-12" :key="address.Id">
+                                <div>
                                 <div class="card card-block">
                                     <div class="card-body">
                                         <div v-if="!address.IsDefault">
@@ -169,6 +170,7 @@
                                         <p class="m-0">{{address.Apartment}}</p>
                                         <p class="m-0">{{address.AddressLine | truncate}}</p>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         </VueSlickCarousel>
@@ -182,13 +184,11 @@
                     </div>
 
                     <div class="col-12">
-                        <VueSlickCarousel v-bind="settings">
-                                <div class="card card-block">
-                                    <div class="card-body">
-                                        <p class="m-0">{{userData.FullName}}</p>
-                                    </div>
+                            <div class="card card-block">
+                                <div class="card-body">
+                                    <p class="m-0">{{userData.FullName}}</p>
                                 </div>
-                        </VueSlickCarousel>
+                            </div>
                     </div>
                 </div>
 
@@ -200,7 +200,8 @@
 
                     <div class="col-12">
                         <VueSlickCarousel v-bind="settings">
-                            <div v-for="card in allCards" :key="card.Id">
+                            <div v-for="card in allCards" id="abc" :class="['card-width']" :key="card.Id">
+                                <div id="a123" >
                                 <div class="card card-block">
                                     <div class="card-body">
                                         <div v-if="!card.IsDefault">
@@ -214,6 +215,7 @@
                                         <p class="m-0">Expires in {{card.Month}}/{{card.Year}}</p>
                                     </div>
                                 </div>
+                            </div>
                             </div>
                         </VueSlickCarousel>
                     </div>
@@ -939,6 +941,10 @@
     margin: 0 0;
     text-shadow: 2px 2px 11px #020202;
 }
+/*//class of */
+.card-width{
+    width: 320px !important;
+}
 .food-type a {
     text-decoration: none;
     display: inline-block;
@@ -1126,6 +1132,12 @@ a.link-color h2{
     a.link-color:hover{
         text-decoration: none;
         color: #5F7E32;
+    }
+
+    .active-background{
+        background-color: #6A8623;
+        color: white;
+        font-weight: 400;
     }
 
 @media screen and (max-width: 400px){
