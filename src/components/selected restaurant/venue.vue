@@ -115,19 +115,19 @@ export default {
     },
     filters: {
             truncate(val) {
-                let length = 100;
-                if(val.length <= length) {
+                let total = 100;
+                if(val.length <= total) {
                     return val
                 } else {
-                    return val.substring(0, length)+ '...';
+                    return val.substring(0, total)+ '...';
                 }
             },
             truncateAddress(val) {
-                let length = 20;
-                if(val.length <= length) {
+                let total = 20;
+                if(val.length <= total) {
                     return val
                 } else {
-                    return val.substring(0, length)+ '...';
+                    return val.substring(0, total)+ '...';
                 }
             }
     }
