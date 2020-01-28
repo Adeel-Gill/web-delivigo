@@ -390,11 +390,11 @@
         },
         filters: {
             truncate(val) {
-                let length = 26;
-                if(val.length <= length) {
+                let total = 26;
+                if(val.length <= total) {
                     return val
                 } else {
-                    return val.substring(0, length)+ '...';
+                    return val.substring(0, total)+ '...';
                 }
             }
         },
