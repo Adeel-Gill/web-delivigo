@@ -34,7 +34,7 @@
                                 <i class="fas fa-euro-sign"></i>
                                 No Free Delivery!
                             </p>
-                        </div>y
+                        </div>
 
                     </div>
                     <div class="col-4 col-md-4">

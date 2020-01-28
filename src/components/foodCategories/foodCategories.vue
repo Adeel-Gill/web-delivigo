@@ -26,12 +26,15 @@
         data() {
           return {
               baseUrl: baseAddress,
-              bgClass: 'bg-green',
-              image: ''
+              classNames: ['bg-green','bg-red','bg-blue','bg-grey','bg-brown'],
+              bgClass: '',
+              image: '',
+
           }
         },
         created() {
             console.log('categories',this.foodCategories);
+            this.generateRandom();
         },
         methods: {
             emitName() {
@@ -48,8 +51,12 @@
                     console.log('imageinsideelse',this.image,'param',img);
                     return this.image;
                 }
-            }
-        }
+            },
+            generateRandom() {
+                console.log(Math.floor(Math.random()*(4-0+1)+0));
+              this.bgClass= this.classNames[Math.floor(Math.random()*(4-0+1)+0)];
+            },
+        },
     }
 </script>
 

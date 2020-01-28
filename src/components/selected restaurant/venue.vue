@@ -72,6 +72,7 @@ export default {
                 delivery:'Free delivery',
                 timeing:'35-45 Mins',
             },
+            start: true,
             showAll: false
         }
     },
@@ -79,10 +80,15 @@ export default {
         this.$root.$on('restaurant', response => {
             this.restaurant = response;
             console.log('inVenue',this.restaurant);
+
         })
-        setTimeout(()=> {
-            this.changeShowAll();
-        },2000);
+        // setTimeout(()=> {
+        //     this.changeShowAll();
+        // },500);
+
+
+    },
+    updated() {
         this.changeShowAll();
     },
     methods: {
@@ -90,8 +96,18 @@ export default {
                 this.$router.push({path:'/map/',query:{long:long, lat: lat}});
             },
         changeShowAll() {
+            if(this.start) {
                 console.log('showAll')
                 this.showAll = !this.showAll;
+                this.start = false;
+            }
+
+        },
+        changeShowAllOnTime() {
+                console.log('changingOnTime');
+            setTimeout(()=> {
+                        this.changeShowAll();
+                    },500);
         },
         emitRestaurant() {
                 this.$root.$emit('resDetail',this.restaurant);
