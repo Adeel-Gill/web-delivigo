@@ -88,7 +88,7 @@ export default {
 
 
     },
-    updated() {
+    created() {
         this.changeShowAll();
     },
     methods: {

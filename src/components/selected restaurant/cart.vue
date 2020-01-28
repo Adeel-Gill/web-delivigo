@@ -110,8 +110,8 @@
 
                 <a href="#" class="link-color"><h2><i class="fas fa-plus"></i> Add more items</h2></a>
                 <div v-if="emptyInstruction">
-                    <a @click="showInstruction" class="link-color" >
-                        <h2><i class="fas fa-pepper-hot"></i> Add special cooking Intructions</h2></a>
+                    <h2><p @click="showInstruction" class="link-color" >
+                        <i class="fas fa-pepper-hot"></i> Add special cooking Intructions</p></h2>
                 </div>
                <div v-else>
                    <a @click="showInstruction" class="link-color" >
@@ -158,7 +158,7 @@
                     </div>
                     <div class="col-12">
                         <VueSlickCarousel v-bind="settings">
-                            <div v-for="address in allAddresses" class="col-12" :key="address.Id">
+                            <div v-for="address in allAddresses" :class="['card-width']" :key="address.Id">
                                 <div>
                                 <div class="card card-block">
                                     <div class="card-body">
@@ -1103,6 +1103,14 @@
 }
 a.link-color h2{
     font-size: 26px;
+}
+p.link-color{
+    font-size: 26px;
+    color: #8ba939;
+    cursor: pointer;
+}
+p.link-color:hover{
+    color: #5f7e32;
 }
     a.link-color{
         color: #8ba939;
