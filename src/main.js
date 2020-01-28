@@ -21,7 +21,8 @@ export const baseAddress = 'https://www.foodizza.com/';
 export const defaultUserPic = 'images/userpic.png';
 export const defaultRestaurantPic = 'images/restauranticon.png';
 export const defaultDishPic = 'images/dish.png';
-export const defaultCityPic = 'images/city.png'
+export const defaultCityPic = 'images/city.png';
+localStorage.setItem('all70', false.toString());
 export let map ;
 export const EventBus = new Vue();
 Vue.use(VuejsDialog);

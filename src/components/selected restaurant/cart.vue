@@ -20,6 +20,7 @@
                         ripple-color="dark"
                         bg-color="#8ba939"
                         main-tooltip="Cart"
+                        fixed-tooltip="true"
                         main-icon="shopping_cart"
                         enable-rotation="false"
                 ></fab>
@@ -589,7 +590,7 @@
                 "ExtraKMDeliveryFee": this.extraKmDeliveryFee,
                 "TotalPrice": this.totalPrice,
                 "Notes": this.instruction,
-                "Order Items": cartItems,
+                "OrderItems": cartItems,
             }
         },
         setAddressID(obj) {
@@ -676,7 +677,8 @@
               } else {
                   this.$store.dispatch('clearCart');
                   this.showNotification('success','Success','Order is successfully placed! Thankyou!');
-                  this.$router.push('/orderHistory')
+                  console.log('orderObject',this.orderObject);
+                  this.$router.push('/currentOrder');
               }
           }, error => {
               console.log(error);

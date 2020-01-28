@@ -251,7 +251,7 @@ export default {
             this.meal = {
                 "Meal":
                     {
-                        "MealId": null,
+                        "Id": null,
                         "Name": null,
                         "RestroId": null,
                         "Price": null,
@@ -287,11 +287,11 @@ export default {
                 "Name": null
             };
             console.log('mealObject',this.meal);
-            this.quantity = 1;
+
         },
          setMealObject(obj) {
             console.log('start',obj);
-            this.meal.Meal.MealId = obj.Meal.Id;
+            this.meal.Meal.Id = obj.Meal.Id;
             this.meal.Meal.Name = obj.Meal.Name;
             this.meal.Meal.RestroId = obj.Meal.RestroId;
             this.meal.Meal.Price = this.totalPrice;
@@ -347,6 +347,7 @@ export default {
                 document.getElementById("display-dish").style.display = "none";
                 this.showNotification('success','Success','Item added in cart...!');
                 this.resetMealObject();
+                this.quantity = 1;
             }
             else if(this.dishObj.Meal.RestroId === this.$store.state.cartData[0].Meal.RestroId) {
                 console.log('received',);
@@ -356,6 +357,7 @@ export default {
                 document.getElementById("display-dish").style.display = "none";
                 this.showNotification('success','Success','Item added in cart...!');
                 this.resetMealObject();
+                this.quantity = 1;
             } else {
                 this.$dialog.confirm('Items of different restaurants are already in the cart. Clear cart to add new item. Continue?', {
                     loader: true

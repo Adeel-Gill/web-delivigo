@@ -22,6 +22,10 @@ import Register from "./components/LoginAndRegister/Register";
 import OrderTracking from "./components/Order/OrderTracking";
 import DiamondAward from "./components/User/DiamondAward";
 import AllCities from "./components/All Cities/AllCities";
+// import CurrentOrder from "./components/Order/CurrentOrder";
+// import PreviousOrder from "./components/Order/PreviousOrder";
+import currentOrder from "./components/User/currentOrder";
+import previousOrder from "./components/User/previousOrder";
 export const routes = [
     { path: '/', component: Home },
     { path: '/loginandreg', component: LoginAndRegister, children: [
@@ -68,7 +72,10 @@ export const routes = [
                         next('/');
                     }
                 }},
-            { path: '/orderHistory', component: OrderHistory ,
+            { path: '/orderHistory', component: OrderHistory, children: [
+                    {path : '/currentOrder', component: currentOrder},
+                    {path: '/previousOrder', component: previousOrder}
+                ] ,
                 beforeEnter(to, from, next) {
                     if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
                         next();
@@ -117,7 +124,7 @@ export const routes = [
     {path: '/restaurants', component: allRestaurants},
     {path: '/foodCategories', component: allFoodCategories},
     {path: '/foodFilter', component: SelectedFoodRestaurants},
-    {path: '/checkout', component: checkout}
+    {path: '/orderTracking', component: checkout}
 ]
 function checkLoginRoute() {
     if(localStorage.getItem('token') !== null || localStorage.getItem('token') !== '') {
