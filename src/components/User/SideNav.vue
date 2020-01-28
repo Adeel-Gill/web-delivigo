@@ -27,7 +27,7 @@
                         <a class="nav-link">Billing And Payments</a>
                     </router-link>
                     <router-link class="nav-item"
-                                 to="/orderHistory"
+                                 to="/currentOrder"
                                  tag="li"
                                  active-class="active"
                                  exact>

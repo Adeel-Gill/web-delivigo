@@ -251,7 +251,7 @@ export default {
             this.meal = {
                 "Meal":
                     {
-                        "MealId": null,
+                        "Id": null,
                         "Name": null,
                         "RestroId": null,
                         "Price": null,
@@ -291,7 +291,7 @@ export default {
         },
          setMealObject(obj) {
             console.log('start',obj);
-            this.meal.Meal.MealId = obj.Meal.Id;
+            this.meal.Meal.Id = obj.Meal.Id;
             this.meal.Meal.Name = obj.Meal.Name;
             this.meal.Meal.RestroId = obj.Meal.RestroId;
             this.meal.Meal.Price = this.totalPrice;

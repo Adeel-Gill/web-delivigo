@@ -1,0 +1,328 @@
+<template>
+    <div>
+        <div v-if="(checkAll70)">
+            <div v-if="isEmpty">
+                <div class="card mb-5" v-if="isPreviousOrder">
+                    <div class="card-body">
+                        <div class="row mx-3 mt-3">
+                            <div class="col-md-6">
+                                <!--                    <p style="display:none;">{{decomposeObject(currentOrder)}}</p>-->
+                                <div class="sec1" >
+                                    <h6>{{previousOrderObject.Restaurant.Name}}</h6>
+                                    <p class="text-muted">{{previousOrderObject.Order.OrderPlaceTime}}</p>
+                                </div>
+                                <div class="sec1">
+                                    <p class="mt-4">{{previousOrderObject.Restaurant.FullAddress}}</p>
+                                </div>
+                                <div class="">
+                                    <div class="rating mt-4 mb-3">
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+
+                                        <!--                                    <star-rating :increment="0.5"></star-rating>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea  class="form-control review" placeholder="your review"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            <div>-->
+<!--                                {{showObject(previousOrder)}}-->
+<!--                            </div>-->
+                            <div class="col-md-6">
+                                <div class="collapse-tab" role="tablist">
+                                    <div class="line">
+                                        <div class="px-1 ml-1 collapse-head" role="tab">
+                                            <a v-b-toggle.accordion-1><div class="numberCircle">1</div>{{previousOrderObject.Order.OrderItems[0].Title}}</a>
+                                            <span class="float-right">${{previousOrderObject.Order.OrderItems[0].Price}}</span>
+                                        </div>
+                                        <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+                                            <div class="pl-3 sub-catg pb-3">
+                                                <p class="d-inline-block text-muted">Quantity</p><span class="float-right text-muted">{{previousOrderObject.Order.OrderItems[0].Quantity}}</span>
+                                                <div v-if="isCustomOptions">
+                                                    <div v-for="customOption in customOptions" :key="customOption.Id">
+                                                        <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </b-collapse>
+                                    </div>
+
+                                    <div class="line">
+                                        <div v-if="isAddons" >
+                                            <div class="px-1 ml-1 collapse-head" role="tab">
+                                                <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{addOnTitle}}</a>
+                                                <!--                                                <span class="float-right">$44</span>-->
+                                                <span class="float-right">${{addOnPrice}}</span>
+                                            </div>
+                                            <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
+                                                <div class="pl-3 sub-catg pb-3">
+                                                    <div v-for="addon in addOns" :key="addon.Id">
+                                                        <p class="d-inline-block text-muted">{{addon.Id}}</p><span class="float-right text-muted">${{addon.Price}}</span>
+                                                    </div>
+                                                </div>
+                                            </b-collapse>
+                                        </div>
+<!--                                        <div v-else>-->
+<!--                                            <div class="px-1 ml-1 collapse-head" role="tab">-->
+<!--                                                <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{emptyAddOnTitle}}</a>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                    </div>
+
+                                    <div class="line">
+                                        <div v-if="isScales">
+                                            <div class="px-1 ml-1 collapse-head" role="tab">
+                                                <a v-b-toggle.accordion-3><div class="numberCircle">3</div>{{scalesTitle}}</a>
+                                                <span class="float-right">$33</span>
+                                            </div>
+                                            <b-collapse id="accordion-3" visible accordion="my-accordion" role="tabpanel">
+                                                <div class="pl-3 sub-catg pb-3">
+                                                    <div v-for="scale in scales" :key="scale.Id">
+                                                        <p class="d-inline-block text-muted">{{scale.Name}}</p><span class="float-right text-muted">${{scale.Price}}</span>
+                                                    </div>
+
+                                                </div>
+                                            </b-collapse>
+                                        </div>
+<!--                                        <div v-else>-->
+<!--                                            <div class="px-1 ml-1 collapse-head" role="tab">-->
+<!--                                                <a v-b-toggle.accordion-3><div class="numberCircle">3</div>{{emptyScalesTitle}}</a>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="total">
+                                    <span class="float-right">{{previousOrderObject.Order.TotalPrice}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <router-link to="/orderTracking">
+                            <button class="btn btn-primary float-right"
+                                    :disabled="!(statuses.OrderDelivered === previousOrderObject.Order.OrderStatusId)">
+                                Track Order
+                            </button>
+                        </router-link>
+                    </div>
+                </div>
+            </div>
+            <div v-else>
+                <app-empty-error :custom-message="'No orders are avaialable to show'"></app-empty-error>
+            </div>
+        </div>
+        <div v-else>
+            <app-empty-error :custom-message="'No orders are avaialable to show'"></app-empty-error>
+        </div>
+    </div>
+</template>
+
+<script>
+    import noItemError from "../error/noItemError";
+    import {orderStatus} from "./OrderStatus";
+
+    export default {
+        name: "PreviousOrder",
+        components: {
+            appEmptyError: noItemError
+        },
+        props: ['previousOrder','isEmptyArray','all70'],
+        data() {
+            return {
+                addOnPrice: 0,
+                obj: this.previousOrder,
+                previousOrderObject: {},
+                statuses: orderStatus,
+                addOns: [],
+                customOptions: [],
+                scales: [],
+                isAddons: false,
+                isAll70: this.all70,
+                isCustomOptions: false,
+                checkAll70: this.all70 === 'true',
+                isScales: false,
+                addOnTitle: "AddOns",
+                emptyAddOnTitle: "No AddOns",
+                isEmpty: this.isEmptyArray,
+                emptyCustomOptionTitle: "No Custom Options",
+                scalesTitle: "Scales",
+                emptyScalesTitle: "No Scales",
+                isPreviousOrder: false,
+                mealBasePrice: 0,
+            }
+        },
+        methods: {
+            calculateAddOnsPrice(addons) {
+                for(var i=0; i<addons.length; i++) {
+                    this.addOnPrice += addons[i].Price;
+                }
+                console.log('price',this.addOnPrice);
+                return this.addOnPrice;
+            },
+            // showObject(obj) {
+            //     // console.log('currentOrder',currentOrder)
+            //     console.log('first',obj.Order.OrderItems[0].Title);
+            //     console.log('first',obj.Order.OrderItems[0].Price);
+            //     console.log('first',obj.Order.OrderItems[0].Quantity);
+            //     console.log('first',obj.Order.OrderItems[0].AddOns);
+            //     console.log('first',obj.Order.OrderItems[0].AddOns[0].Id);
+            //     console.log('first',obj.Order.OrderItems[0].AddOns[0].Price);
+            // },
+            decomposeObject() {
+                // this.previousOrderObject = obj;
+                console.log('previousOrderObject', this.previousOrderObject,'obj',this.obj);
+                if(this.obj.Order.OrderStatusId === orderStatus.OrderDelivered) {
+                    this.previousOrderObject = this.obj;
+                    console.log('previousOrderObject', this.previousOrderObject);
+                    this.isPreviousOrder = true;
+                    if(this.previousOrderObject.Order.OrderItems[0].AddOns.length > 0) {
+                        this.isAddons = true;
+                        this.addOns = this.previousOrderObject.Order.OrderItems[0].AddOns;
+                        this.calculateAddOnsPrice(this.addOns);
+                        if(this.previousOrderObject.Order.OrderItems[0].CustomOption.length > 0) {
+                            this.isCustomOptions = true;
+                            this.customOptions = this.previousOrderObject.Order.OrderItems[0].CustomOption;
+                            if(this.previousOrderObject.Order.OrderItems[0].Scales.length > 0) {
+                                this.isScales = true;
+                                this.scales = this.previousOrderObject.Order.OrderItems[0].Scales;
+                            } else {
+                                this.isScales = false;
+                            }
+                        } else {
+                            this.isCustomOptions = false;
+                        }
+                    } else {
+                        this.isAddons = false;
+                    }
+                } else {
+                    this.isPreviousOrder = false;
+                    this.previousOrderObject = {};
+                }
+            },
+            getLocalAll70() {
+                console.log('insidelocal70',localStorage.getItem('all70'));
+                if(localStorage.getItem('all70') === 'true') {
+                    console.log('here');
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        },
+        created() {
+            if(this.isEmpty) {
+                console.log(this.isEmpty,this.obj);
+                if(localStorage.getItem('all70') === 'true') {
+                    this.decomposeObject();
+                }
+            }
+
+        }
+    }
+</script>
+
+<style scoped>
+    .btn-tab{
+        border-bottom: 1px solid #9C9C9C;
+        color: black !important;
+    }
+    .btn-tab a{
+        color: inherit;
+    }
+    .btn-tab:hover{
+        color: #007bff !important;
+        border-bottom: 2px solid #0056b3;
+    }
+    .btn-tab a:hover{
+        text-decoration: none;
+
+    }
+    .active-btn{
+        border-bottom: 2px solid #0056b3;
+        color: #007bff !important;
+    }
+    .sec1{
+        border-bottom: 1px solid #9C9C9C;
+    }
+    .review{
+        height: 70px;
+        background-color: #f2f2f2;
+    }
+    /*rating star*/
+    .rating {
+        unicode-bidi: bidi-override;
+        direction: rtl;
+    }
+    .rating > span {
+        display: inline-block;
+        position: relative;
+        font-size: 1.1em;
+        color: #e6e6e6;
+    }
+    .rating > span:hover:before,
+    .rating > span:hover ~ span:before {
+        color: #fbb03b;
+    }
+    /* end*/
+
+    /*.custom-text {*/
+    /*    font-weight: bold;*/
+    /*    font-size: 1.9em;*/
+    /*    border: 1px solid #cfcfcf;*/
+    /*    padding-left: 10px;*/
+    /*    padding-right: 10px;*/
+    /*    border-radius: 5px;*/
+    /*    color: #999;*/
+    /*    background: #fff;*/
+    /*}*/
+
+    .numberCircle {
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        /*padding-bottom:2px;*/
+        background: #5860ff;
+        padding-top: 1px;
+        /*border: 2px solid #5860ff;*/
+        color: #fff;
+        position: absolute;
+        left: 14px;
+        text-align: center;
+        font-size: 11px;
+        display: inline-block;
+    }
+    .line{
+        border-left: 1px solid #5860ff;
+        margin-left: 10px;
+        padding-left: 10px;
+    }
+    .sub-catg p,.sub-catg span{
+        font-family: pantonl;
+        text-transform: capitalize;
+        margin-bottom: 0;
+        font-size: 16px;
+        /*font-weight: lighter;*/
+    }
+    .collapse-head{
+        font-size: 19px;
+    }
+    .collapse-tab{
+        padding-bottom: 10px;
+        border-bottom: 1px solid #9C9C9C;
+    }
+    .total span{
+        font-size: 19px;
+        padding-top: 15px;
+    }
+    .card{
+        box-shadow: 4px 1px 10px 1px #DEDEDE;
+    }
+
+    @media screen and (max-width: 576px) {
+        .w-75{
+            width: 100% !important;
+        }
+    }
+</style>
