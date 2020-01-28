@@ -90,19 +90,19 @@ export default {
     },
     filters: {
         truncate(val) {
-            let length = 20;
-            if(val.length <= length) {
+            let total = 20;
+            if(val.length <= total) {
                 return val
             } else {
-                return val.substring(0, length)+ '...';
+                return val.substring(0, total)+ '...';
             }
         },
         truncate2(val) {
-            let length = 26;
-            if(val.length <= length) {
+            let total = 26;
+            if(val.length <= total) {
                 return val
             } else {
-                return val.substring(0, length)+ '...';
+                return val.substring(0, total)+ '...';
             }
         }
     }
