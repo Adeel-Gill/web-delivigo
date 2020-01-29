@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="clear"></div>
                                 <div class="about-your-health">
-                                    <p v-if="showAll">{{restaurant.Description}}</p>
+                                    <p v-if="showAll" @="changeShowAllOnTime">{{restaurant.Description}}</p>
                                     <p v-else>{{restaurant.Description | truncate}}</p>
                                 </div>
                                 <div class="contant-num">
@@ -73,23 +73,19 @@ export default {
                 timeing:'35-45 Mins',
             },
             start: true,
-            showAll: false
+            showAll: true
         }
     },
     mounted() {
         this.$root.$on('restaurant', response => {
             this.restaurant = response;
             console.log('inVenue',this.restaurant);
-
         })
         // setTimeout(()=> {
         //     this.changeShowAll();
         // },500);
 
 
-    },
-    created() {
-        this.changeShowAll();
     },
     methods: {
             navigateTo(long, lat) {
@@ -99,15 +95,14 @@ export default {
             if(this.start) {
                 console.log('showAll')
                 this.showAll = !this.showAll;
-                this.start = false;
             }
 
         },
         changeShowAllOnTime() {
-                console.log('changingOnTime');
-            setTimeout(()=> {
-                        this.changeShowAll();
-                    },500);
+            //     console.log('changingOnTime');
+            // setTimeout(()=> {
+            //             this.changeShowAll();
+            //         },500);
         },
         emitRestaurant() {
                 this.$root.$emit('resDetail',this.restaurant);
@@ -115,19 +110,19 @@ export default {
     },
     filters: {
             truncate(val) {
-                let total = 100;
-                if(val.length <= total) {
+                let length = 100;
+                if(val.length <= length) {
                     return val
                 } else {
-                    return val.substring(0, total)+ '...';
+                    return val.substring(0, length)+ '...';
                 }
             },
             truncateAddress(val) {
-                let total = 20;
-                if(val.length <= total) {
+                let length = 20;
+                if(val.length <= length) {
                     return val
                 } else {
-                    return val.substring(0, total)+ '...';
+                    return val.substring(0, length)+ '...';
                 }
             }
     }

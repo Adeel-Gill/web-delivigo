@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div v-if="checkAll70">
             <div v-if="isEmpty">
                 <div class="card mb-5" v-if="isCurrentOrder">
                     <div class="card-body">
@@ -63,8 +62,6 @@
                                                     <div v-for="addon in addOns" :key="addon.Id">
                                                         <p class="d-inline-block text-muted">{{addon.Id}}</p><span class="float-right text-muted">${{addon.Price}}</span>
                                                     </div>
-                                                    <p class="text-muted">thin Crust</p>
-                                                    <p class="text-muted">Spicy</p>
                                                 </div>
                                             </b-collapse>
                                         </div>
@@ -98,10 +95,16 @@
                                     </div>
                                 </div>
                                 <div class="total">
-                                    <span class="float-right">{{currentOrder.Order.TotalPrice}}</span>
+                                    <span class="float-right">{{currentOrderObject.Order.TotalPrice}}</span>
                                 </div>
                             </div>
                         </div>
+                        <router-link :to="{path:'/orderTracking/'+currentOrderObject.Order.OrderId,query:{cusID:currentOrderObject.Customer.CustomerId}}">
+                            <button class="btn btn-primary float-right"
+                                    :disabled="(statuses.OrderDelivered === currentOrderObject.Order.OrderStatusId)">
+                                Track Order
+                            </button>
+                        </router-link>
                     </div>
 
                 </div>
@@ -109,15 +112,13 @@
             <div v-else>
                 <app-empty-error :custom-message="'No orders are avaialable to show'"></app-empty-error>
             </div>
-        </div>
-        <div v-else>
-            <app-empty-error :custom-message="'No orders are avaialable to show'"></app-empty-error>
-        </div>
     </div>
 </template>
 
 <script>
     import noItemError from "../error/noItemError";
+    import {orderStatus} from "./OrderStatus";
+
     export default {
         name: "CurrentOrder",
         components: {
@@ -133,6 +134,7 @@
                 customOptions: [],
                 scales: [],
                 isAddons: false,
+                statuses: orderStatus,
                 isAll70: this.all70,
                 checkAll70: this.all70 === 'false',
                 isCustomOptions: false,
@@ -168,6 +170,7 @@
                 if(this.obj.Order.OrderStatusId !== 70) {
                     this.currentOrderObject = this.obj;
                     this.isCurrentOrder = true;
+                    console.log('currentOrderAssigned',this.currentOrderObject);
                     if(this.currentOrderObject.Order.OrderItems[0].AddOns.length > 0) {
                         this.isAddons = true;
                         this.addOns = this.currentOrderObject.Order.OrderItems[0].AddOns;
@@ -206,7 +209,9 @@
             }
         },
         mounted() {
+            console.log('isEmpty',this.isEmpty);
             if(this.isEmpty) {
+                console.log('object',this.obj);
                 this.decomposeObject();
             }
 

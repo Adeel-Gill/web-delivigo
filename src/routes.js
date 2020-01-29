@@ -124,7 +124,7 @@ export const routes = [
     {path: '/restaurants', component: allRestaurants},
     {path: '/foodCategories', component: allFoodCategories},
     {path: '/foodFilter', component: SelectedFoodRestaurants},
-    {path: '/orderTracking', component: checkout}
+    {path: '/orderTracking/:id', component: checkout}
 ]
 function checkLoginRoute() {
     if(localStorage.getItem('token') !== null || localStorage.getItem('token') !== '') {
