@@ -6,7 +6,7 @@
                 <button
                         v-for="foodType in foodTypes.slice(0,6)"
                         style="margin-top: 5px"
-                        :key="foodType"
+                        :key="foodType.Id"
                         @click="navigateTo(foodType.Id)" >{{foodType.Name}}</button>
             </div>
         </div>

@@ -22,19 +22,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 p-0 dot text-center">
-                        <i class="fas fa-circle"></i>
-                        <i class="fas fa-circle"></i>
-                        <i class="fas fa-circle"></i>
-                        <i class="fas fa-circle"></i>
-                        <i class="fas fa-circle"></i>
-                        <i class="fas fa-circle"></i>
-                        <i class="fas fa-circle"></i>
-                        <i class="fas fa-circle"></i>
-                        <i class="fas fa-circle"></i>
-                        <i class="fas fa-circle"></i>
-                        <i class="fas fa-circle"></i>
-                        <i class="fas fa-circle"></i>
+                    <div class="col-md-6 p-0 text-center">
+                        <div v-for="index in 12" :key="index">
+                            <i class="fas fa-circle" :class="[index%2===0? 'dot': 'greenDot']">{{index}}</i>
+                        </div>
                         <div>
                             <h6>Will be delivered within</h6>
                             <h6 class="text-primary">10-15 min</h6>
@@ -128,7 +119,11 @@
 
 <script>
     export default {
-        name: "OrderTracking"
+        name: "OrderTracking",
+        mounted() {
+            console.log('here');
+            console.log('trackID',this.$route.params.id);
+        }
     }
 </script>
 
@@ -140,6 +135,11 @@
     .dot i{
         font-size: 8px;
         color: #C2C2C3;
+        margin: 0 9px;
+    }
+    .greenDot i{
+        font-size: 8px;
+        color: #39b54a;
         margin: 0 9px;
     }
     .map-marker{

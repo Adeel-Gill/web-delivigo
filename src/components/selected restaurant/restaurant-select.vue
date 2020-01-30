@@ -51,21 +51,25 @@ export default {
 
     },
     created() {
+        // EventBus.$on('StartOverlay', response => {
+        //     this.loader = response;
+        //     console.log('StartOverlay'+this.loader);
+        // })
+    },
+    mounted() {
         EventBus.$on('StartOverlay', response => {
             this.loader = response;
             console.log('StartOverlay'+this.loader);
         })
-    },
-    mounted() {
       this.changeHeader();
         this.resId = this.$route.params.id;
         console.log('queryData'+this.resId);
         this.fetchRestaurantData(this.resId);
-        if(localStorage.getItem('cart') === 'null' || localStorage.getItem('cart') == null) {
-            this.$store.dispatch('clearCart')
-        } else {
-            this.$store.dispatch('setCart', JSON.parse(localStorage.getItem('cart')));
-        }
+        // if(localStorage.getItem('cart') === 'null' || localStorage.getItem('cart') == null) {
+        //     this.$store.dispatch('clearCart')
+        // } else {
+        //     this.$store.dispatch('setCart', JSON.parse(localStorage.getItem('cart')));
+        // }
     },
     destroyed() {
         this.unChangeHeader();
@@ -85,6 +89,11 @@ export default {
                     this.$root.$emit('restaurantImages', response.RestaurantImagesURL);
                     this.$root.$emit('isCustomMeal', false);
                     console.log('restaurant',response.Restaurant);
+                    if(localStorage.getItem('cart') === 'null' || localStorage.getItem('cart') == null) {
+                        this.$store.dispatch('clearCart')
+                    } else {
+                        this.$store.dispatch('setCart', JSON.parse(localStorage.getItem('cart')));
+                    }
 
                 }, error => {
                     console.log(error);

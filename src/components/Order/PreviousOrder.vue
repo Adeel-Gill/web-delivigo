@@ -1,13 +1,12 @@
 <template>
     <div>
-        <div v-if="(checkAll70)">
             <div v-if="isEmpty">
                 <div class="card mb-5" v-if="isPreviousOrder">
                     <div class="card-body">
                         <div class="row mx-3 mt-3">
                             <div class="col-md-6">
                                 <!--                    <p style="display:none;">{{decomposeObject(currentOrder)}}</p>-->
-                                <div class="sec1" >
+                                <div class="sec1">
                                     <h6>{{previousOrderObject.Restaurant.Name}}</h6>
                                     <p class="text-muted">{{previousOrderObject.Order.OrderPlaceTime}}</p>
                                 </div>
@@ -102,7 +101,7 @@
                         </div>
                         <router-link to="/orderTracking">
                             <button class="btn btn-primary float-right"
-                                    :disabled="!(statuses.OrderDelivered === previousOrderObject.Order.OrderStatusId)">
+                                    :disabled="(statuses.OrderDelivered === previousOrderObject.Order.OrderStatusId)">
                                 Track Order
                             </button>
                         </router-link>
@@ -113,10 +112,6 @@
                 <app-empty-error :custom-message="'No orders are avaialable to show'"></app-empty-error>
             </div>
         </div>
-        <div v-else>
-            <app-empty-error :custom-message="'No orders are avaialable to show'"></app-empty-error>
-        </div>
-    </div>
 </template>
 
 <script>
@@ -172,6 +167,7 @@
             // },
             decomposeObject() {
                 // this.previousOrderObject = obj;
+                console.log('here',this.previousOrderObject);
                 console.log('previousOrderObject', this.previousOrderObject,'obj',this.obj);
                 if(this.obj.Order.OrderStatusId === orderStatus.OrderDelivered) {
                     this.previousOrderObject = this.obj;
@@ -212,11 +208,13 @@
             }
         },
         created() {
+            // console.log(this.isEmpty,this.obj);
             if(this.isEmpty) {
                 console.log(this.isEmpty,this.obj);
-                if(localStorage.getItem('all70') === 'true') {
-                    this.decomposeObject();
-                }
+                this.decomposeObject();
+                // if(localStorage.getItem('all70') === 'true') {
+                //     this.decomposeObject();
+                // }
             }
 
         }

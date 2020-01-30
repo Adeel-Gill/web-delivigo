@@ -27,7 +27,7 @@
             }
         },
         methods: {
-            getCurrentOrders() {
+            getPreviousOrders() {
                 getOrderHistory(Number(localStorage.getItem('id'))).then(response => {
                     if(response.HasErrors) {
                         this.isEmpty = true;
@@ -58,6 +58,10 @@
                             this.showNotification('error','Error','No orders are currently placed to show');
                         }
                     }
+                }, error => {
+                    console.log(error);
+                    this.isEmpty = true;
+                    this.showNotification('error','Error','No orders are currently placed to show');
                 })
             },
             getLocalAll70() {
@@ -75,7 +79,7 @@
             }
         },
         mounted() {
-            this.getCurrentOrders();
+            this.getPreviousOrders();
         }
     }
 </script>

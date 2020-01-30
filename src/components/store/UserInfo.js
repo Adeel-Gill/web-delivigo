@@ -13,6 +13,14 @@ export const UserInfo = new Vuex.Store({
         cartData: [],
         mapData: [],
         addressId: null,
+        quantity: 1,
+        totalPrice: 0,
+        tempPrice: 0,
+        newCustomOptions: [],
+        newAddOnIds: [],
+        newScales: [],
+        addOnIds: [],
+        dishPrice: 0,
     },
     getters: {
       getLogin: state => {
@@ -24,6 +32,12 @@ export const UserInfo = new Vuex.Store({
               return state.isLogin;
           }
       },
+        getTotalPrice: state => {
+          return state.totalPrice;
+        },
+        getQuantity: state => {
+          return state.quantity;
+        },
         getCart: state => {
           return state.cartData;
         },
@@ -93,6 +107,91 @@ export const UserInfo = new Vuex.Store({
             localStorage.setItem('isLoggedOut',state.isLoggedOut);
             localStorage.setItem('id', null);
             localStorage.setItem('creationCounter', '0');
+        },
+        setOrderItems: (state, {customOption,addOn,scale,dishPrice}) => {
+            // console.log('receivedMutations',customOption,addOn,scale);
+            state.newCustomOptions = customOption;
+            state.newAddOnIds = addOn;
+            state.newScales = scale;
+            state.dishPrice = state.totalPrice = dishPrice;
+        },
+        clearOrderItems: state => {
+            state.newCustomOptions = [];
+            state.newAddOnIds = [];
+            state.addOnIds = [];
+            state.newScales = [];
+            state.tempPrice = 0;
+            state.quantity = 1;
+            state.totalPrice = 0;
+            state.dishPrice = 0;
+        },
+        setCustomOptions: (state, {pID,cID}) => {
+            state.newCustomOptions[pID].Options[cID].IsSelected = !state.newCustomOptions[pID].Options[cID].IsSelected;
+            // calculatePrice(state, state.dishPrice);
+        },
+        setAddOnOption: (state, {id,addonId}) => {
+            // console.log('addOnIds',id,addonId);
+            state.newAddOnIds[id].IsSelected = !state.newAddOnIds[id].IsSelected;
+            if(state.newAddOnIds[id].IsSelected) {
+                state.addOnIds.push(addonId);
+                // console.log('afterPush',state.addOnIds);
+                // this.totalPrice = this.totalPrice + price;
+            } else {
+                // console.log('splicingID',state.addOnIds.indexOf(addonId));
+                var i =state.addOnIds.indexOf(addonId)
+                state.addOnIds.splice(i,1);
+                // this.totalPrice = this.totalPrice - price;
+                // console.log('afterSplice',state.addOnIds);
+            }
+        },
+        setScaleOptions: (state, {pID, cID}) => {
+            // console.log('pID',pID,'cID',cID,'unitPrice',unitPrice,'value',value);
+            // console.log('before',this.newScales[pID].Options[cID].IsSelected, this.newScales[pID].Options);
+            state.newScales[pID].Options[cID].IsSelected = !state.newScales[pID].Options[cID].IsSelected;
+            // console.log('after',this.newScales[pID].Options[cID].IsSelected,this.newScales[pID].Options);
+            for(var i = 0; i< state.newScales.length; i++) {
+                for(var j=0; j< state.newScales[i].Options.length; j++) {
+                    var obj = state.newScales[i].Options[j];
+                    if(j !== cID) {
+                        if(obj.IsSelected) {
+                            obj.IsSelected = !obj.IsSelected;
+                            // this.totalPrice = (this.totalPrice - (unitPrice * obj.Value));
+                        }
+                    } else {
+                        // this.totalPrice = (this.totalPrice + (unitPrice * value));
+                    }
+                }
+            }
+        },
+        increment: (state) => {
+          state.quantity++;
+        },
+        decrement: (state) => {
+            if(state.quantity > 1) {
+                state.quantity--;
+            }
+        },
+        calculatePrice: (state, {dishPrice}) => {
+            // console.log('Price',dishPrice);
+            var tempPrice = 0;
+            // console.log('addOnIdsArray',state.newAddOnIds,state.addOnIds);
+            for(var i=0; i<state.newAddOnIds.length; i++) {
+                for(var j=0; j<state.addOnIds.length;j++) {
+                    if(state.newAddOnIds[i].Id === state.addOnIds[j]) {
+                        // console.log('here');
+                        tempPrice = tempPrice + state.newAddOnIds[i].Price;
+                    }
+                }
+            }
+            for(var k=0; k<state.newScales.length; k++) {
+                for(var l=0; l<state.newScales[k].Options.length; l++) {
+                    if(state.newScales[k].Options[l].IsSelected) {
+                        tempPrice = tempPrice + (state.newScales[k].UnitPrice * state.newScales[k].Options[l].Value);
+                    }
+                }
+            }
+            state.totalPrice = (state.dishPrice + tempPrice) * state.quantity;
+            // console.log('totalPrice',state.quantity,tempPrice,state.dishPrice,state.totalPrice);
         }
     },
     actions: {
@@ -124,6 +223,41 @@ export const UserInfo = new Vuex.Store({
         },
         clearCart: ({commit}) => {
             commit('clearCart');
+        },
+        setOrderItems: ({commit}, {customOption,addOn,scale,dishPrice})=>{
+            console.log('received',customOption,addOn,scale);
+            commit('setOrderItems',{customOption,addOn,scale,dishPrice});
+            commit('calculatePrice',{dishPrice:1});
+        },
+        clearOrderItems: ({commit}) => {
+            commit('clearOrderItems');
+        },
+        setAddOnOption: ({commit}, {id,addonId})=> {
+            commit('setAddOnOption',{id,addonId});
+            // commit('calculatePrice',{dishPrice});
+        },
+        setCustomOptions: ({commit}, {pID,cID}) => {
+            commit('setCustomOptions', {pID,cID});
+        },
+        setScaleOptions: ({commit}, {pID,cID})=> {
+            commit('setScaleOptions',{pID,cID});
+            // commit('calculatePrice',{dishPrice});
+        },
+        increment: ({commit}) => {
+            commit('increment');
+            // commit('calculatePrice',{dishPrice});
+        },
+        decrement: ({commit}) => {
+            commit('decrement');
+            // commit('calculatePrice',{dishPrice});
+        },
+        calculatePrice: ({commit},{dishPrice}) => {
+            commit('calculatePrice',{dishPrice});
         }
     }
 })
+// function calculatePrice(state,price) {
+//     console.log('price',price);
+//     state.dishPrice = price;
+//     console.log('price',state.dishPrice,price);
+// }

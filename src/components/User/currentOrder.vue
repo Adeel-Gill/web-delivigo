@@ -33,6 +33,7 @@
                         this.showNotification('error', 'Error', 'Error occurred please try later!')
                     } else {
                         if(response.length > 0) {
+                            this.isEmpty = false;
                             for(var i=0; i< response.length; i++) {
                                 this.allOrders = response;
                                 if(response[i].Order.OrderStatusId === orderStatus.OrderDelivered) {
@@ -54,6 +55,11 @@
                             this.showNotification('error','Error','No orders are currently placed to show');
                         }
                     }
+                }, error => {
+                    console.log('error',error);
+                    this.isEmpty = true;
+                    this.allOrders = [];
+                    this.showNotification('error','Error','Error occurred please try later!');
                 })
             },
             getLocalAll70() {
@@ -72,9 +78,11 @@
         },
         mounted() {
             if(localStorage.getItem('all70') === 'false' || this.isEmpty)
+                console.log('empty',this.isEmpty);
             this.getCurrentOrders();
         },
         created() {
+            console.log('empty',this.isEmpty);
             this.getCurrentOrders();
         }
     }
