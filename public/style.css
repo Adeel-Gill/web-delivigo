@@ -208,6 +208,13 @@ a.nav-link{
 .bm-burger-button {
     position: relative !important;
 }
+
+.slick-track{
+    padding-left: 30px !important;
+    width: 970px;
+}
+
+
 @media screen and (min-width: 1200px) and (max-width: 1299px) {
     .container {
         padding-top: 0 !important;
@@ -240,11 +247,22 @@ a.nav-link{
         padding: 0 10px 0 16px;
     }
     }
-    @media screen and (min-width: 1366px) {
-       
-        
-    }
+
 /* change by arslan */
+@media screen and (max-width: 990px) {
+
+    .slick-track{
+        padding-left: 20px !important;
+    }
+}
+@media screen and (max-width: 760px) {
+
+    .slick-track{
+        padding-left: 40px !important;
+    }
+}
+
+
 @media screen and (max-width: 576px) {
     #carousel-1 .carousel-caption{
         top: 6%;
@@ -257,6 +275,10 @@ a.nav-link{
         font-size:18px !important;
         width: 100% !important;
         height: 40px !important;
+    }
+
+    .slick-track{
+        padding-left: 10px !important;
     }
     /*.banner-caption{*/
     /*    right: 10% !important;*/
@@ -274,5 +296,11 @@ a.nav-link{
     }
     #price-filter ul.dropdown-menu {
         right: unset;
+    }
+}
+@media screen and (max-width: 400px) {
+
+    .slick-track{
+        padding-left: 0px !important;
     }
 }

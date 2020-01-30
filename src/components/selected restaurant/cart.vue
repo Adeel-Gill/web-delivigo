@@ -83,7 +83,7 @@
                 </div>
                 <div class="row mx-0 btn-main">
                     <div class="col-6 p-0 btn-group">
-                        <button type="button" class="btn btn-lg" @click="forDelivery" :class="[isDelivery ? 'active' : 'notActive']" ><h3 class="m-0">Delivery</h3><h4 class="m-0"> Around 30 Min</h4><p class="m-0"><small>total distance would be 10km</small></p></button>
+                        <button type="button" class="btn btn-lg" @click="forDelivery" :class="[isDelivery ? 'active' : 'notActive']" ><h3 class="m-0">Delivery</h3><h3 class="m-0"> Around 30 Min</h3><p class="m-0"><small>total distance would be 10km</small></p></button>
                     </div>
                     <div class="col-6 p-0 btn-group">
                         <button type="button" class="btn btn-lg " @click="forPickup" :class="[!isDelivery ? 'active' : 'notActive']"><h3 class="m-0">Pickup</h3><h4 class="m-0"></h4></button>
@@ -92,15 +92,14 @@
 
             </div>
             <div class="container p-4">
-                <h2 class="sec-heading"><i class="far fa-calendar-check"></i> Scheduled order: Today&nbsp<i class="fas fa-plus"></i>
-                    <VueCtkDateTimePicker
-                            v-model="time"
-                            only-time="true"
-                            label="Select time"
-                            output-format="hh:mm:ss"
-                            format="hh:mm a"></VueCtkDateTimePicker>
-                    <a href="#" class="link-color"></a></h2>
-                <p class="text-muted">Desired delivery time + 10 min</p>
+                <h2 class="sec-heading mb-2"><i class="far fa-calendar-check"></i> Scheduled order: Today&nbsp;<i class="fas fa-plus"></i></h2>
+                <VueCtkDateTimePicker
+                        v-model="time"
+                        only-time="true"
+                        label="Select time"
+                        output-format="hh:mm:ss"
+                        format="hh:mm a"></VueCtkDateTimePicker>
+                <p class="text-muted mt-1">Desired delivery time + 10 min</p>
                 <div class="row" style="box-sizing: border-box;">
                     <app-checkout-cart-item v-for="(item, index) in cartItems" :key="item.Meal"
                                             :itemIndex="index"
@@ -152,24 +151,25 @@
                 </div>
                 </div>
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-md-8 col-12">
                 <h2 class="d-inline-block sec-heading">Shipping Address</h2>
                 <p class="float-right mt-2"><a href="#">Add New</a></p>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 p-0">
                         <VueSlickCarousel v-bind="settings">
                             <div v-for="address in allAddresses" :class="['card-width']" :key="address.Id">
                                 <div>
                                 <div class="card card-block">
                                     <div class="card-body">
-                                        <div v-if="!address.IsDefault">
+                                        <p class="m-0 text-truncate">{{address.Apartment}}</p>
+                                        <p class="m-0 text-truncate">{{address.AddressLine}}</p>
+                                        <div v-if="!address.IsDefault" class="default-btn">
                                             <button class="btn btn-primary" @click="newDefaultAddress(address.Id, address.IsDefault)" :checked="address.IsDefault">Set Default</button>
                                         </div>
-                                        <div v-else style="display: none">
+                                        <div v-else class="default-btn">
+                                            <button class="btn btn-dark" disabled>Default</button>
                                             {{setAddressID(address)}}
                                         </div>
-                                        <p class="m-0">{{address.Apartment}}</p>
-                                        <p class="m-0">{{address.AddressLine | truncate}}</p>
                                     </div>
                                 </div>
                                 </div>
@@ -185,7 +185,7 @@
                     </div>
 
                     <div class="col-12">
-                            <div class="card card-block">
+                            <div class="card card-block w-100">
                                 <div class="card-body">
                                     <p class="m-0">{{userData.FullName}}</p>
                                 </div>
@@ -194,26 +194,28 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-md-8 col-12">
                         <h2 class="d-inline-block sec-heading">Payment Method</h2>
                         <p class="float-right mt-2"><a href="#">Add New</a></p>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-12 p-0">
                         <VueSlickCarousel v-bind="settings">
-                            <div v-for="card in allCards" id="abc" :class="['card-width']" :key="card.Id">
+                            <div v-for="card in allCards" :class="['card-width']" :key="card.Id">
                                 <div id="a123" >
                                 <div class="card card-block">
                                     <div class="card-body">
-                                        <div v-if="!card.IsDefault">
-                                            <button class="btn btn-primary"  @click="newDefaultCard(card,card.IsDefault)" :checked="(card.IsDefault)">Set Default</button>
-<!--                                            <label class="d-inline-block">Default</label>-->
-                                        </div>
-                                        <div v-else style="display: none">
-                                            {{setCardID(card.Id)}}
-                                        </div>
                                         <p class="m-0">{{card.Brand}} .... .... {{card.CardNumber}}</p>
                                         <p class="m-0">Expires in {{card.Month}}/{{card.Year}}</p>
+
+                                        <div v-if="!card.IsDefault" class="default-btn">
+                                            <button class="btn btn-primary"  @click="newDefaultCard(card,card.IsDefault)" :checked="(card.IsDefault)">Set Default</button>
+                                            <!--                                            <label class="d-inline-block">Default</label>-->
+                                        </div>
+                                        <div v-else class="default-btn">
+                                            <button class="btn btn-dark" disabled>Default</button>
+                                            {{setCardID(card.Id)}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -366,7 +368,7 @@
                 "arrows":false,
                 "centerPadding": "20px",
                 "focusOnSelect": true,
-                "infinite": true,
+                "infinite": false,
                 "slidesToShow": 2,
                 "speed": 500,
                 "swipeToSlide":true,
@@ -1107,6 +1109,7 @@ a.link-color h2{
 p.link-color{
     font-size: 26px;
     color: #8ba939;
+    font-weight: 500;
     cursor: pointer;
 }
 p.link-color:hover{
@@ -1117,9 +1120,11 @@ p.link-color:hover{
     }
     .card-block{
         box-shadow:0px 0px 7px 1px #E8E8E9;
-        width: 90%;
+        width: 95%;
         border-radius: 15px;
+        /*padding: 0 20px;*/
     }
+
     .card-block p{
         font-size: 18px;
         font-weight: 400;
@@ -1150,7 +1155,43 @@ p.link-color:hover{
         font-weight: 400;
     }
 
-@media screen and (max-width: 400px){
+    .default-btn{
+        display: grid;
+        margin-top: 5px;
+    }
+@media screen and (max-width: 380px) {
+    .card-width{
+        width: 120px !important;
+    }
+    .default-btn .btn{
+        padding: 0 !important;
+    }
+    .btn-main h3{
+        font-size: 19px;
+    }
+    .btn-main p{
+        font-size: 14px;
+    }
+    .btn-continue button{
+        width: 100%;
+        font-size: 22px;
+    }
+
+    .sec-heading{
+        font-size: 22px;
+    }
+    a.link-color h2{
+        font-size: 22px;
+    }
+    p.link-color{
+        font-size: 22px;
+    }
+
+    .invoice p{
+        padding-left: 10px;
+    }
+}
+@media screen and (max-width: 430px) and (min-width: 380px){
     .slected-bg{
         height:400px ;
         border-radius: 0px 350px 350px 0;
@@ -1158,11 +1199,57 @@ p.link-color:hover{
     .food-type{
         left: 26px;
     }
+    .card-width{
+        width: 160px !important;
+    }
+
+    .default-btn .btn{
+        padding: 0 !important;
+    }
+    .btn-main h3{
+        font-size: 20px;
+    }
+
+    .btn-main p{
+        font-size: 15px;
+    }
+    .btn-continue button{
+        width: 100%;
+        font-size: 22px;
+    }
+    .sec-heading{
+        font-size: 22px;
+    }
+    a.link-color h2{
+        font-size: 24px;
+    }
+    p.link-color{
+        font-size: 24px;
+    }
+    .invoice p{
+        padding-left: 15px;
+    }
 }
-@media screen and (max-width: 576px) and (min-width: 400px){
+@media screen and (max-width: 576px) and (min-width: 430px){
     .slected-bg{
         height:450px ;
         border-radius: 0px 400px 400px 0;
+    }
+    .card-width{
+        width: 180px !important;
+    }
+    .btn-main h3{
+        font-size: 22px;
+    }
+    .btn-continue button{
+        width: 80%;
+        font-size: 24px;
+    }
+    .sec-heading{
+        font-size: 24px;
+    }
+    .invoice p{
+        padding-left: 20px;
     }
 }
 @media screen and (max-width: 760px) and (min-width: 576px){
@@ -1170,15 +1257,31 @@ p.link-color:hover{
         height:500px ;
         border-radius: 0px 450px 450px 0;
     }
+    .card-width{
+        width: 180px !important;
+    }
+    .btn-main h3{
+        font-size: 24px;
+    }
+    .invoice p{
+        padding-left: 30px;
+    }
 }
 @media screen and (max-width: 960px) and (min-width: 760px){
     .slected-bg{
         height:550px ;
         border-radius: 0px 500px 500px 0;
     }
+    .card-width{
+        width: 200px !important;
+    }
 }
 
-
+@media screen and (max-width: 989px) and (min-width: 960px) {
+    .card-width{
+        width: 200px !important;
+    }
+}
 
 
 
@@ -1210,6 +1313,6 @@ p.link-color:hover{
 .demo{
     /*width: 100px;*/
     /*height: 100px;*/
-    background-color: #8f8f90;
+    /*background-color: #8f8f90;*/
 }
 </style>
