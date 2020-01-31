@@ -11,7 +11,7 @@
                                     <p class="text-muted">{{currentOrderObject.Order.OrderPlaceTime}}</p>
                                 </div>
                                 <div class="sec1">
-                                    <p class="mt-4">{{currentOrderObject.Restaurant.FullAddress}}</p>
+                                    <p class="mt-4">{{currentOrderObject.Order.AddressLine}}</p>
                                 </div>
                                 <div class="">
                                     <div class="rating mt-4 mb-3">
@@ -32,16 +32,16 @@
 <!--                                {{showObject(currentOrderObject)}}-->
 <!--                            </div>-->
                             <div class="col-md-6">
-                                <div class="collapse-tab" role="tablist">
+                                <div class="collapse-tab" role="tablist"  v-for="(orderItem, itemIndex) in currentOrderObject.Order.OrderItems" :key="orderItem.MealId">
                                     <div class="line">
                                         <div class="px-1 ml-1 collapse-head" role="tab">
-                                            <a v-b-toggle.accordion-1><div class="numberCircle">1</div>{{currentOrderObject.Order.OrderItems[0].Title}}</a>
-                                            <span class="float-right">${{currentOrderObject.Order.OrderItems[0].Price}}</span>
+                                            <a v-b-toggle.accordion-1><div class="numberCircle">1</div>{{orderItem.Title}}</a>
+                                            <span class="float-right">${{orderItem.Price }}</span>
                                         </div>
                                         <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
                                             <div class="pl-3 sub-catg pb-3">
-                                                <p class="d-inline-block text-muted">Quantity</p><span class="float-right text-muted">{{currentOrderObject.Order.OrderItems[0].Quantity}}</span>
-                                                <div v-if="isCustomOptions">
+                                                <p class="d-inline-block text-muted">Quantity</p><span class="float-right text-muted">{{orderItem.Quantity}}</span>
+                                                <div v-if="orderItem.CustomOption.length > 0">
                                                     <div v-for="customOption in customOptions" :key="customOption.Id">
                                                         <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
                                                     </div>
@@ -55,12 +55,12 @@
                                             <div class="px-1 ml-1 collapse-head" role="tab">
                                                 <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{addOnTitle}}</a>
 <!--                                                <span class="float-right">$44</span>-->
-                                                <span class="float-right">${{this.addOnPrice}}</span>
+                                                <span class="float-right">${{addOnsPrices[itemIndex]}}</span>
                                             </div>
                                             <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
                                                 <div class="pl-3 sub-catg pb-3">
-                                                    <div v-for="addon in addOns" :key="addon.Id">
-                                                        <p class="d-inline-block text-muted">{{addon.Id}}</p><span class="float-right text-muted">${{addon.Price}}</span>
+                                                    <div v-for="addon in orderItem.AddOns" :key="addon.Id">
+                                                        <p class="d-inline-block text-muted">{{addon.Title}}</p><span class="float-right text-muted">${{addon.Price}}</span>
                                                     </div>
                                                 </div>
                                             </b-collapse>
@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
                                 <div class="total">
-                                    <span class="float-right">{{currentOrderObject.Order.TotalPrice}}</span>
+                                    <span class="float-right">{{currentOrderObject.Order.TotalPrice.toFixed(2)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -131,6 +131,7 @@
                 obj: this.currentOrder,
                 currentOrderObject: {},
                 addOns: [],
+                addOnsPrices: [],
                 customOptions: [],
                 scales: [],
                 isAddons: false,
@@ -150,10 +151,14 @@
         },
         methods: {
             calculateAddOnsPrice(addons) {
+                console.log('here',addons);
                 for(var i=0; i<addons.length; i++) {
-                    this.addOnPrice += addons[i].Price;
+                    for(var j=0; j<addons.AddOns.length; j++) {
+                        this.addOnPrice += addons[i].AddOns[j].Price;
+                    }
+                    this.addOnsPrices.push(this.addOnPrice);
+                    this.addOnPrice = 0;
                 }
-                return this.addOnPrice;
             },
             showObject(obj) {
                 // console.log('currentOrder',currentOrder)
@@ -174,7 +179,8 @@
                     if(this.currentOrderObject.Order.OrderItems[0].AddOns.length > 0) {
                         this.isAddons = true;
                         this.addOns = this.currentOrderObject.Order.OrderItems[0].AddOns;
-                        this.calculateAddOnsPrice(this.addOns);
+                        this.calculateAddOnsPrice(this.currentOrderObject.Order.OrderItems);
+                        console.log('here after method',this.currentOrderObject.Order.OrderItems)
                         if(this.currentOrderObject.Order.OrderItems[0].CustomOption.length > 0) {
                             this.isCustomOptions = true;
                             this.customOptions = this.currentOrderObject.Order.OrderItems[0].CustomOption;

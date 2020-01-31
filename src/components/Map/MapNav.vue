@@ -1,8 +1,8 @@
 <template>
-   <div>
-       <div id="map" style="display: none;"></div>
-       <div id="geocoder" class="geocoder" placeholder="Address" @select="showValues" ></div>
-   </div>
+    <div>
+        <div id="map"></div>
+        <div id="geocoder" class="geocoder" placeholder="Address" @select="showValues"></div>
+    </div>
 </template>
 
 <script>
@@ -10,11 +10,13 @@
     import 'mapbox-gl/dist/mapbox-gl.css'
     import '@mapbox/mapbox-gl-geocoder/dist/new.css'
     export default {
-        name: "MapNavigation",
+        name: "MapNav",
+        props: ['mapData'],
         data() {
             return {
                 map: null,
                 geocoder: null,
+                mapDetail: this.mapData
             }
         },
         methods: {
@@ -47,10 +49,26 @@
 </script>
 
 <style scoped>
-    .mapboxgl-ctrl-geocoder {
-        width: 100% !important;
-        font-size: 15px;
-        line-height: 20px;
-        max-width: 100% !important;
+    .marker {
+        background-image: url('../../../public/images/mapbox-icon.png');
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+    .mapboxgl-popup {
+        max-width: 200px;
+    }
+    .mapboxgl-marker {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        border:1px solid gray;
+        background-color:lightblue;
+    }
+    .mapboxgl-popup-content {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
     }
 </style>

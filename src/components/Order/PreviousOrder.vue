@@ -11,7 +11,7 @@
                                     <p class="text-muted">{{previousOrderObject.Order.OrderPlaceTime}}</p>
                                 </div>
                                 <div class="sec1">
-                                    <p class="mt-4">{{previousOrderObject.Restaurant.FullAddress}}</p>
+                                    <p class="mt-4">{{previousOrderObject.Order.AddressLine}}</p>
                                 </div>
                                 <div class="">
                                     <div class="rating mt-4 mb-3">

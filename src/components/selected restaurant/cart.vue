@@ -270,7 +270,7 @@
                     </div>
                     <div class="col-4 price">
 
-                        <p>{{extraKmDeliveryFee}}</p>
+                        <p>{{extraKmDeliveryFee.toFixed(2)}}</p>
                     </div>
                 </div>
                 <div class="row invoice">
@@ -278,7 +278,7 @@
                         <p>Total</p>
                     </div>
                     <div class="col-4 price">
-                        <p>{{totalPrice}}</p>
+                        <p>{{totalPrice.toFixed(2)}}</p>
                     </div>
                 </div>
 

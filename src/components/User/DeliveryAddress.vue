@@ -27,44 +27,44 @@
     </div>
         <b-modal size="lg" hide-footer class="my-modal" id="modal-1" title="Add new Address">
             <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Address</label>
-                        <app-map-nav @mapObj = "setMapData"></app-map-nav>
-<!--                        <div id="map" style="display: none;"></div>-->
-<!--                        <div id="geocoder" class="geocoder col-md-12" @select="showValues"></div>-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Address</label>
+                            <app-map-nav @mapObj = "setMapData"></app-map-nav>
+    <!--                        <div id="map" style="display: none;"></div>-->
+    <!--                        <div id="geocoder" class="geocoder col-md-12" @select="showValues"></div>-->
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="zipCode">City</label>
-                        <input type="text"  disabled class="form-control" :value="city" id="zipCode">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="zipCode">City</label>
+                            <input type="text"  disabled class="form-control" :value="city" id="zipCode">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="city">State</label>
+                            <input type="text" disabled class="form-control" :value="state" id="city">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="state">Country</label>
+                            <input type="text" disabled class="form-control" :value="country" id="state">
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="city">State</label>
-                        <input type="text" disabled class="form-control" :value="state" id="city">
-                    </div>
+                <div class="btn-modal">
+                    <buttonSpinner
+                            :loading="isLoading"
+                            :disabled="isLoading"
+                            :styled="true"
+                            @click.native="saveAddress">Save
+                    </buttonSpinner>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="state">Country</label>
-                        <input type="text" disabled class="form-control" :value="country" id="state">
-                    </div>
-                </div>
-            </div>
-            <div class="btn-modal">
-                <buttonSpinner
-                        :loading="isLoading"
-                        :disabled="isLoading"
-                        :styled="true"
-                        @click.native="saveAddress">Save
-                </buttonSpinner>
-            </div>
             </div>
         </b-modal>
     </div>
@@ -113,9 +113,9 @@
             setMapData(obj) {
                 this.mapData = JSON.parse(obj);
                 if(this.mapData.place_type[0] === "poi") {
-                    this.city = this.mapData.id;
-                    this.state = this.mapData.text;
-                    this.country = this.mapData.place_name;
+                    this.city = this.mapData.context[1].text;
+                    this.state = this.mapData.context[2].text;
+                    this.country = this.mapData.context[3].text;
                     console.log(this.mapData,this.city,this.state,this.country);
                 } else {
                     this.showNotification('error','Error','Please enter nearby address!');
@@ -250,10 +250,12 @@
             },
             showModal() {
                 this.$bvModal.show('modal-1');
+                this.state = this.city = this.country = '';
 
             },
             hideModal() {
                 this.$bvModal.hide('modal-1');
+                this.state = this.city = this.country = '';
             },
             showNotification(type, title, message) {
                 console.log('after Fail',message);

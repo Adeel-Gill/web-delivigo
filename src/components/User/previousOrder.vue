@@ -1,11 +1,16 @@
 <template>
     <div>
-        <app-previous-order v-for="orders in allOrders"
-                            :key="orders.Order.OrderId"
-                            :previousOrder="orders"
-                            :all70="getLocalAll70()"
-                            :is-empty-array="allOrders.length>0"
-        ></app-previous-order>
+        <div v-if="!noPreviousORders">
+            <app-previous-order v-for="orders in allOrders"
+                                :key="orders.Order.OrderId"
+                                :previousOrder="orders"
+                                :all70="getLocalAll70()"
+                                :is-empty-array="allOrders.length>0"
+            ></app-previous-order>
+        </div>
+        <div v-else>
+            <app-empty-error :custom-message="'No orders available to show'"></app-empty-error>
+        </div>
     </div>
 </template>
 
@@ -13,17 +18,20 @@
     import PreviousOrder from "../Order/PreviousOrder";
     import {getOrderHistory} from "../api/OrderHistory";
     import {orderStatus} from "../Order/OrderStatus";
+    import noItemError from "../error/noItemError";
 
     export default {
         name: "previousOrder",
         components: {
-            appPreviousOrder: PreviousOrder
+            appPreviousOrder: PreviousOrder,
+            appEmptyError: noItemError
         },
         data() {
             return {
                 isEmpty: true,
                 allOrders: [],
                 isAll70: false,
+                noPreviousORders: true,
             }
         },
         methods: {
@@ -38,19 +46,19 @@
                                 this.allOrders = response;
                                 if(response[i].Order.OrderStatusId === orderStatus.OrderDelivered) {
                                     this.isAll70 = true;
+                                    this.noPreviousORders = false;
                                 } else {
                                     this.isAll70 = false;
                                 }
                             }
-                            if(this.isAll70) {
+                            if(!this.noPreviousORders) {
                                 localStorage.setItem('all70',true.toString());
                                 this.allOrders = response;
                                 console.log('hereResponse',this.allOrders);
                                 this.showNotification('success','Success','Current orders shown successfully!');
 
                             } else {
-                                this.allOrders = response;
-                                this.showNotification('success','Success','Current orders shown successfully!');
+                                this.allOrders = [];
                                 localStorage.setItem('all70',false.toString());
                             }
                         } else {

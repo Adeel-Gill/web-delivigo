@@ -7,7 +7,8 @@
                     <p class="text-muted">Showing location</p>
                 </div>
                 <div class="w-100">
-                    <img src="../../../public/images/map.png" class="img-fluid" alt="map image">
+                    <app-custom-map :cus="cusData" :res="resData" :driver="driverData"></app-custom-map>
+<!--                    <img src="../../../public/images/map.png" class="img-fluid" alt="map image">-->
                 </div>
                 <div class="row mx-auto map-add mt-4">
                     <div class="col-md-3 p-0">
@@ -108,21 +109,43 @@
 <script>
     import {getOrderTracking} from "../api/OrderTracking";
     import {orderStatus} from "../Order/OrderStatus";
+    import CustomMap from "../Map/CustomMap";
 
     export default {
         name: "checkout",
+        components: {
+          appCustomMap: CustomMap
+        },
         data() {
           return {
               orderObject: {},
               statuses: orderStatus,
               progress: 0,
               statusText: '',
+              cusData: {
+                  "longitude": 0,
+                  "latitude": 0,
+              },
+              resData: {
+                  "longitude": 0,
+                  "latitude": 0,
+              },
+              driverData: {
+                  "longitude": 0,
+                  "latitude": 0,
+              },
           }
         },
         methods: {
             getOrderTrackingDetail(cusID, orderID) {
                 getOrderTracking(cusID,orderID).then(response => {
                     this.orderObject = response;
+                    this.cusData.longitude = this.orderObject.Order.Longitude;
+                    this.cusData.latitude = this.orderObject.Order.Latitude;
+                    this.resData.longitude = this.orderObject.Restaurant.Longitude;
+                    this.resData.latitude = this.orderObject.Restaurant.Latitude;
+                    this.driverData.longitude = this.orderObject.Restaurant.Longitude;
+                    this.driverData.latitude = this.orderObject.Restaurant.Latitude;
                     switch (this.orderObject.Order.OrderStatusId) {
                         case this.statuses.OrderReceived: {
                             this.progress = 12;

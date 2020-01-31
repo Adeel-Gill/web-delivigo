@@ -52,6 +52,7 @@
                             }
                         } else {
                             this.isEmpty = true;
+                            this.allOrders = [];
                             this.showNotification('error','Error','No orders are currently placed to show');
                         }
                     }
