@@ -32,17 +32,17 @@
 <!--                                {{showObject(previousOrder)}}-->
 <!--                            </div>-->
                             <div class="col-md-6">
-                                <div class="collapse-tab" role="tablist">
+                                <div class="collapse-tab" role="tablist" v-for="(orderItem, itemIndex) in previousOrderObject.Order.OrderItems" :key="orderItem.MealId">
                                     <div class="line">
                                         <div class="px-1 ml-1 collapse-head" role="tab">
-                                            <a v-b-toggle.accordion-1><div class="numberCircle">1</div>{{previousOrderObject.Order.OrderItems[0].Title}}</a>
-                                            <span class="float-right">${{previousOrderObject.Order.OrderItems[0].Price}}</span>
+                                            <a v-b-toggle.accordion-1><div class="numberCircle">1</div>{{orderItem.Title}}</a>
+                                            <span class="float-right">${{orderItem.Price}}</span>
                                         </div>
                                         <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
                                             <div class="pl-3 sub-catg pb-3">
-                                                <p class="d-inline-block text-muted">Quantity</p><span class="float-right text-muted">{{previousOrderObject.Order.OrderItems[0].Quantity}}</span>
-                                                <div v-if="isCustomOptions">
-                                                    <div v-for="customOption in customOptions" :key="customOption.Id">
+                                                <p class="d-inline-block text-muted">Quantity</p><span class="float-right text-muted">{{orderItem.Quantity}}</span>
+                                                <div v-if="orderItem.CustomOption.length > 0">
+                                                    <div v-for="customOption in orderItem.CustomOption" :key="customOption.Id">
                                                         <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
                                                     </div>
                                                 </div>
@@ -51,15 +51,15 @@
                                     </div>
 
                                     <div class="line">
-                                        <div v-if="isAddons" >
+                                        <div v-if="orderItem.AddOns.length > 0" >
                                             <div class="px-1 ml-1 collapse-head" role="tab">
                                                 <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{addOnTitle}}</a>
                                                 <!--                                                <span class="float-right">$44</span>-->
-                                                <span class="float-right">${{addOnPrice}}</span>
+                                                <span class="float-right">${{addOnsPrices[itemIndex]}}</span>
                                             </div>
                                             <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
                                                 <div class="pl-3 sub-catg pb-3">
-                                                    <div v-for="addon in addOns" :key="addon.Id">
+                                                    <div v-for="addon in orderItem.AddOns" :key="addon.Id">
                                                         <p class="d-inline-block text-muted">{{addon.Id}}</p><span class="float-right text-muted">${{addon.Price}}</span>
                                                     </div>
                                                 </div>
@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
                                 <div class="total">
-                                    <span class="float-right">{{previousOrderObject.Order.TotalPrice}}</span>
+                                    <span class="float-right">{{previousOrderObject.Order.TotalPrice.toFixed(2)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -133,6 +133,9 @@
                 addOns: [],
                 customOptions: [],
                 scales: [],
+                orderItems: [],
+                newAddons: [],
+                addOnsPrices: [],
                 isAddons: false,
                 isAll70: this.all70,
                 isCustomOptions: false,
@@ -150,11 +153,23 @@
         },
         methods: {
             calculateAddOnsPrice(addons) {
-                for(var i=0; i<addons.length; i++) {
-                    this.addOnPrice += addons[i].Price;
+                this.orderItems = addons;
+
+                for(var i=0; i<this.orderItems.length; i++) {
+                    this.newAddons = this.orderItems[i].AddOns;
+                    console.log('orderItems,addons',this.orderItems[i],this.newAddons);
+                    for(var j=0; j<this.newAddons.length; j++) {
+                        console.log('addons',this.newAddons);
+                        this.addOnPrice += this.newAddons[j].Price;
+                    }
+                    this.addOnsPrices.push(this.addOnPrice);
+                    this.addOnPrice = 0;
                 }
-                console.log('price',this.addOnPrice);
-                return this.addOnPrice;
+                // for(var i=0; i<addons.length; i++) {
+                //     this.addOnPrice += addons[i].Price;
+                // }
+                // console.log('price',this.addOnPrice);
+                // return this.addOnPrice;
             },
             // showObject(obj) {
             //     // console.log('currentOrder',currentOrder)
@@ -176,7 +191,7 @@
                     if(this.previousOrderObject.Order.OrderItems[0].AddOns.length > 0) {
                         this.isAddons = true;
                         this.addOns = this.previousOrderObject.Order.OrderItems[0].AddOns;
-                        this.calculateAddOnsPrice(this.addOns);
+                        this.calculateAddOnsPrice(this.previousOrderObject.Order.OrderItems);
                         if(this.previousOrderObject.Order.OrderItems[0].CustomOption.length > 0) {
                             this.isCustomOptions = true;
                             this.customOptions = this.previousOrderObject.Order.OrderItems[0].CustomOption;

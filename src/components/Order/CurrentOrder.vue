@@ -133,7 +133,9 @@
                 addOns: [],
                 addOnsPrices: [],
                 customOptions: [],
+                newAddons: [],
                 scales: [],
+                orderItems: [],
                 isAddons: false,
                 statuses: orderStatus,
                 isAll70: this.all70,
@@ -151,10 +153,15 @@
         },
         methods: {
             calculateAddOnsPrice(addons) {
-                console.log('here',addons);
-                for(var i=0; i<addons.length; i++) {
-                    for(var j=0; j<addons.AddOns.length; j++) {
-                        this.addOnPrice += addons[i].AddOns[j].Price;
+                console.log('hereInFunction',addons);
+                this.orderItems = addons;
+
+                for(var i=0; i<this.orderItems.length; i++) {
+                    this.newAddons = this.orderItems[i].AddOns;
+                    console.log('orderItems,addons',this.orderItems[i],this.newAddons);
+                    for(var j=0; j<this.newAddons.length; j++) {
+                        console.log('addons',this.newAddons);
+                        this.addOnPrice += this.newAddons[j].Price;
                     }
                     this.addOnsPrices.push(this.addOnPrice);
                     this.addOnPrice = 0;

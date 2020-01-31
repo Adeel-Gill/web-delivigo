@@ -83,8 +83,8 @@
             this.getCurrentOrders();
         },
         created() {
-            console.log('empty',this.isEmpty);
-            this.getCurrentOrders();
+            // console.log('empty',this.isEmpty);
+            // this.getCurrentOrders();
         }
     }
 </script>
