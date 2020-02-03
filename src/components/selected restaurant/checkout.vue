@@ -157,38 +157,43 @@
                             this.statusText = "Order is open!";
                             break;
                         }
-                        case this.statuses.AssignedToRestaurant: {
+                        case this.statuses.RestaurantAccept: {
                             this.progress = 2;
+                            this.statusText = "Order is open!";
+                            break;
+                        }
+                        case this.statuses.AssignedToRestaurant: {
+                            this.progress = 3;
                             this.statusText = "Order is assigned to restaurant!";
                             break;
                         }
                         case this.statuses.Cooking: {
-                            this.progress = 3;
+                            this.progress = 4;
                             this.statusText = "Restaurant start cooking your order!";
                             break;
                         }
                         case this.statuses.FoodReady: {
-                            this.progress = 4;
+                            this.progress = 5;
                             this.statusText = "Order is cooked and ready for pickup/delivery!"
                             break;
                         }
                         case this.statuses.DriverAccept: {
-                            this.progress = 5;
+                            this.progress = 6;
                             this.statusText = "Driver accept your order request";
                             break;
                         }
                         case this.statuses.GoingPickup: {
-                            this.progress = 6;
+                            this.progress = 7;
                             this.statusText = "Driver is on its way to pickup your order"
                             break;
                         }
                         case this.statuses.DriverPickup: {
-                            this.progress = 7;
+                            this.progress = 8;
                             this.statusText = "Order is picked up by driver"
                             break;
                         }
                         case this.statuses.GoingDelivered: {
-                            this.progress = 8;
+                            this.progress = 9;
                             this.statusText = "Driver is on its way to deliver order"
                             break;
                         }

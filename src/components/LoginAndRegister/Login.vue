@@ -8,14 +8,14 @@
                            class="form-control"
                            v-model="userData.email"
                            placeholder="abc@mail.com"
-                           id="email">
+                           id="email" required>
                 </div>
                 <div class="form-group">
                     <label for="npwd">PASSWORD</label>
                     <input type="password"
                            class="form-control"
                            placeholder="Password Here...!"
-                           v-model="userData.password" id="npwd">
+                           v-model="userData.password" id="npwd" required>
                 </div>
                 <div class="button">
                     <button type="submit" @click="checkCredentials" class="btn btn-submit">SIGN IN</button>

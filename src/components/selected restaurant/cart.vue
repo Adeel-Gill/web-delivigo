@@ -118,42 +118,33 @@
                </div>
                 <h2>People Also Added</h2>
                 <div class="row">
-
                     <div class="col-12">
-                    <VueSlickCarousel v-bind="settings">
-                        <div>
-                        <div class="card card-block">
-                            <div class="card-body">
-                                <p class="m-0">Murphy</p>
-                                <p class="m-0">$ 33</p>
-                            </div>
-                        </div>
-                        </div>
-
-                        <div>
-                        <div class="card card-block">
-                            <div class="card-body">
-                                <p class="m-0">Murphy</p>
-                                <p class="m-0">$ 33</p>
-                            </div>
-                        </div>
-                        </div>
-
-                        <div>
-                        <div class="card card-block">
-                            <div class="card-body">
-                                <p class="m-0">Murphy</p>
-                                <p class="m-0">$ 33</p>
-                            </div>
-                        </div>
-                        </div>
-                    </VueSlickCarousel>
-                </div>
+                        <VueSlickCarousel v-bind="settings">
+<!--                            <div class="card card-block">-->
+<!--                                <div class="card-body">-->
+<!--                                    <p class="m-0">Murphy</p>-->
+<!--                                    <p class="m-0">$ 33</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--&lt;!&ndash;                            <div class="card card-block">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <p class="m-0">Murphy</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <p class="m-0">$ 33</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--                            <div class="card card-block">-->
+<!--                                <div class="card-body">-->
+<!--                                    <p class="m-0">Murphy</p>-->
+<!--                                    <p class="m-0">$ 33</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </VueSlickCarousel>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-8 col-12">
                 <h2 class="d-inline-block sec-heading">Shipping Address</h2>
-                <p class="float-right mt-2"><a href="#">Add New</a></p>
+                <p class="float-right mt-2"><router-link to="/delivery">Add New</router-link></p>
                     </div>
                     <div class="col-12 p-0">
                         <VueSlickCarousel v-bind="settings">
@@ -196,7 +187,7 @@
                 <div class="row">
                     <div class="col-md-8 col-12">
                         <h2 class="d-inline-block sec-heading">Payment Method</h2>
-                        <p class="float-right mt-2"><a href="#">Add New</a></p>
+                        <p class="float-right mt-2"><router-link to="/billing">Add New</router-link></p>
                     </div>
 
                     <div class="col-12 p-0">

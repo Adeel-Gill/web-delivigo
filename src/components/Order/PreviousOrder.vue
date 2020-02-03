@@ -40,7 +40,8 @@
                                         </div>
                                         <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
                                             <div class="pl-3 sub-catg pb-3">
-                                                <p class="d-inline-block text-muted">Quantity</p><span class="float-right text-muted">{{orderItem.Quantity}}</span>
+                                                <p class="d-inline-block text-muted">Quantity</p><span class="float-right text-muted">{{orderItem.Quantity}}</span><br>
+                                                <p class="d-inline-block text-muted">Other Charges</p><span class="float-right text-muted">{{(previousOrderObject.Order.TotalPrice.toFixed(2)-(orderItem.Price + addOnTotal))}}</span>
                                                 <div v-if="orderItem.CustomOption.length > 0">
                                                     <div v-for="customOption in orderItem.CustomOption" :key="customOption.Id">
                                                         <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
@@ -55,7 +56,7 @@
                                             <div class="px-1 ml-1 collapse-head" role="tab">
                                                 <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{addOnTitle}}</a>
                                                 <!--                                                <span class="float-right">$44</span>-->
-                                                <span class="float-right">${{addOnsPrices[itemIndex]}}</span>
+                                                <span class="float-right">${{addOnsPrices.length == 1? addOnsPrices[0] : addOnsPrices[itemIndex]}}</span>
                                             </div>
                                             <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
                                                 <div class="pl-3 sub-catg pb-3">
@@ -142,6 +143,7 @@
                 checkAll70: this.all70 === 'true',
                 isScales: false,
                 addOnTitle: "AddOns",
+                addOnTotal: 0,
                 emptyAddOnTitle: "No AddOns",
                 isEmpty: this.isEmptyArray,
                 emptyCustomOptionTitle: "No Custom Options",
@@ -163,6 +165,7 @@
                         this.addOnPrice += this.newAddons[j].Price;
                     }
                     this.addOnsPrices.push(this.addOnPrice);
+                    this.addOnTotal += this.addOnPrice;
                     this.addOnPrice = 0;
                 }
                 // for(var i=0; i<addons.length; i++) {

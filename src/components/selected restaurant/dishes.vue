@@ -11,7 +11,7 @@
                     <p>{{dishDetail.Description}}</p>
                 </div>
                 <div class="extra-order">
-                    <h6>GLI EXTRA - FACOLTATING</h6>
+                    <h6>GLI EXTRA - Custom Options</h6>
                     <div class="extra-checkbox" v-for="(customOption, customIndex)  in customOptions" v-bind:key="customOption">
                         <div>
 
@@ -26,7 +26,7 @@
                             <div class="clear"></div>
                         </div>
                     </div>
-                    <h6>GLI EXTRA - FACOLTATING</h6>
+                    <h6>GLI EXTRA - AddOns</h6>
                     <div class="extra-checkbox" v-for="(addon, index) in addOns" v-bind:key="addon">
                         <div>
                             <span class="float-left">{{addon.Name}}</span>

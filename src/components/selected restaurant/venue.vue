@@ -81,9 +81,9 @@ export default {
             this.restaurant = response;
             console.log('inVenue',this.restaurant);
         })
-        // setTimeout(()=> {
-        //     this.changeShowAll();
-        // },500);
+        setTimeout(()=> {
+            this.changeShowAll();
+        },2000);
 
 
     },
