@@ -111,14 +111,14 @@ export default {
     padding: 50px 0;
 }
 .app-download h3 {
-    font-family: "Roboto";
+    font-family: "PantonSemi";
     font-weight: 500;
     font-size: 46px;
     color: white;
     margin: 0;
 }
 .app-download p {
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     color: white;
     font-size: 18px;
     max-width: 327px;

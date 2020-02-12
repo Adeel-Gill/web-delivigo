@@ -60,8 +60,8 @@
         /*height: 90px;*/
     }
     .restaurants-details h6{
-        font-family: "Roboto";
-        font-size: 22px;
+        /*font-family: "Roboto";*/
+        font-size: 20px;
         font-weight: 500;
         margin: 0;
         display: inline-block;
@@ -69,7 +69,7 @@
     }
     .restaurants-details p{
         margin: 0;
-        font-family: "Roboto";
+        /*font-family: "Roboto";*/
         font-size: 9px;
     }
     @media screen and (max-width: 960px) {

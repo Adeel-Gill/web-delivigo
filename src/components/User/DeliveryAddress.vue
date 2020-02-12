@@ -19,7 +19,7 @@
                     <button @click="deleteAddress(address.Id)" :disabled="address.IsDefault"><i class="fas fa-times-circle cancel"></i></button>
                     <div class="radio">
                         <input type="radio" id="rad" :checked="address.IsDefault" @click="setDefaultAddress(address.Id)">
-                        <label class="d-inline-block">Default</label>
+                        <label>Default</label>
                     </div>
                 </div>
             </div>
@@ -284,13 +284,13 @@
 </script>
 
 <style scoped>
-    @font-face {
+   /* @font-face {
         font-family: pantonb;
         src:url("../../assets/fonts/Panton-Bold.ttf");
     }
     .row{
         font-family:pantonb ;
-    }
+    }*/
     .m-top{
         margin-top: 30px;
     }
@@ -362,7 +362,7 @@
         position: absolute;
         right: 0;
         text-align: right;
-        padding-right: 0;
+        /*padding-right: 0;*/
         /*margin-top: 20px;*/
     }
     .icon i{

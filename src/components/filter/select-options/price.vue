@@ -60,7 +60,7 @@ li.dropdown-menu-items{
 }
 .dropdown-menu-items p{
     margin: 0;
-    font-family: "Panton";
+    /*font-family: "Panton";*/
     font-size: 11px;
     font-weight: 600;
     text-align: center;

@@ -69,13 +69,16 @@
         color: #0030b4;
         display: inline-block;
         margin: 10px 0 20px;
-        font-family: "Panton";
+        /*font-family: "Panton";*/
         font-weight: bold;
         font-size: 17px;
     }
 .catagories{
     margin-bottom: 50px;
 }
+    .catagories h2{
+        font-weight: bold;
+    }
 .catagory a {
     text-decoration: none;
     display: inline-block;
@@ -115,20 +118,20 @@
     color: white;
 }
 .catagory-text h5 {
-    font-family: "Panton";
-    font-weight: bold;
+    font-family: "pantonSemi";
+    /*font-weight: bold;*/
     font-size: 22px;
     padding-top: 15px;
     margin: 0;
 }
 .catagory-text h6 {
-    font-family: "Panton";
+    /*font-family: "Panton";*/
     font-weight: normal;
     font-size: 13px;
     margin-bottom: 25px;
 }
 .catagory-text p {
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-size: 17px;
     font-weight: normal;
 }

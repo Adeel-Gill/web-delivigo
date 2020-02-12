@@ -28,10 +28,10 @@
 </script>
 
 <style scoped>
-    @font-face {
+   /* @font-face {
         font-family: pantonb;
         src:url("../../assets/fonts/Panton-Bold.ttf");
-    }
+    }*/
     a.nav-link{
         font-family: pantonb;
         color: #b3b3b3 !important;

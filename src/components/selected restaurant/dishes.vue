@@ -52,12 +52,12 @@
                     </div>
                 </div>
                 <div class="quantity-toggle">
-                    <button @click="decrement(dishDetail.Price)">&mdash;</button>
+                    <button class="btn" @click="decrement(dishDetail.Price)">&mdash;</button>
                     <input type="text" :value="getQuantity" readonly>
-                    <button @click="increment(dishDetail.Price)">&#xff0b;</button>
+                    <button class="btn" @click="increment(dishDetail.Price)">&#xff0b;</button>
                 </div>
                 <div class="add-item-btn">
-                    <button @click="saveToCart()" >Add item -  € {{getTotalPrice}}.00</button>
+                    <button class="btn" @click="saveToCart()" >Add item -  € {{getTotalPrice}}.00</button>
                 </div>
             </div>
         </div>
@@ -555,7 +555,7 @@ export default {
     margin: 35px 0;
 }
 .extra-order h6 {
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-size: 22px;
     font-weight: normal;
     position: relative;
@@ -564,28 +564,28 @@ export default {
 }
 .extra-order h6::after {
     content: '';
-    width: 532px;
+    width: 100%;
     height: 2px;
     background: #e3e3e3;
     position: absolute;
-    left: -20px;
+    /*left: -20px;*/
     bottom: 0;
     right: 0;
 }
 .extra-checkbox span {
     margin: 10px 0 0px 0;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-size: 20px;
 }
 .dish-name-descp h4 {
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-weight: normal;
     font-size: 30px;
 }
 
 .dish-name-descp p {
     color: #787878;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-weight: normal;
     font-size: 15px;
     margin-bottom: 22px;
@@ -605,12 +605,19 @@ export default {
     font-weight: 900;
     color: #8ba939;
     font-size: 19px;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
+    cursor: pointer;
 }
+.quantity-toggle button:hover{
+    color: white;
+    background-color:#8ba939 ;
+    border: 4px solid #76963C;
+}
+
 .quantity-toggle input {
     width: 95px;
     text-align: center;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-weight: 600;
     font-size: 23px;
 }
@@ -620,13 +627,22 @@ export default {
 .add-item-btn button {
     background: #8ba939;
     display: inline-block;
-    padding: 20px 68px;
+    padding: 20px 55px;
     border-radius: 60px;
     color: white;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-weight: bold;
     font-size: 22px;
     text-decoration: none;
+}
+
+.extra-checkbox input[type="checkbox"]{
+    height: 15px;
+    width: 16px;
+}
+.extra-checkbox input[type="radio"]{
+    height: 18px;
+    width: 18px;
 }
 .bg-gray{
     background: #d6d6d6;
@@ -675,7 +691,7 @@ export default {
 }
 .descp-about p {
     color: #787878;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-size: 19px;
     margin: 0 auto;
     line-height: 20px;
@@ -703,7 +719,7 @@ export default {
     display: inline-block;
     border: 2px solid #4c37eb;
     color: #4c37eb;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-weight: 600;
     font-size: 17px;
     padding: 0px 20px;
@@ -743,7 +759,10 @@ export default {
 
 
 @media screen and (max-width: 960px) and (min-width: 761px){
-
+    .add-item-btn button {
+        padding: 15px 40px;
+        font-size: 20px;
+    }
 }
 @media screen and (max-width: 760px) and (min-width: 561px){
 
@@ -755,6 +774,11 @@ export default {
     .descp-about{
         min-height: 137px;
     }
+
+    .add-item-btn button {
+        padding: 15px 20px;
+        font-size: 20px;
+    }
 }
 @media screen and (max-width: 400px){
     .dish-image img{
@@ -762,6 +786,11 @@ export default {
     }
     .descp-about{
         min-height: 120px;
+    }
+
+    .add-item-btn button {
+        padding: 10px 15px;
+        font-size: 20px;
     }
 }
 </style>

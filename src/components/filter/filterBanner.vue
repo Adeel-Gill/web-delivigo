@@ -61,16 +61,16 @@
   !*height: 100%;*!
 }*/
 .filter-caption h6 {
-    font-family: "Roboto";
+    /*font-family: "pantonSemi";*/
     font-size: 15px;
-    font-weight: 500;
+    /*font-weight: 500;*/
     color: black;
     text-shadow: none;
     margin: 0;
 }
 .filter-caption h3 {
-    font-family: "Roboto";
-    font-weight: bold;
+    font-family: "pantonSemi";
+    /*font-weight: bold;*/
     font-size: 25px;
     color: black;
     text-shadow: none;
@@ -79,7 +79,7 @@
     line-height: 30px;
 }
 .filter-caption p {
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-size: 25px;
     font-weight: 300;
     text-shadow: none;

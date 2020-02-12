@@ -106,13 +106,13 @@
 </script>
 
 <style scoped>
-    @font-face {
+    /*@font-face {
         font-family: pantonb;
-        src:url("../../assets/fonts/Panton-Bold.ttf");
+        src:url("../../assets/fonts/Panton-Light.otf");
     }
     .row{
         font-family:pantonb ;
-    }
+    }*/
     .m-top{
         margin-top: 20px;
     }

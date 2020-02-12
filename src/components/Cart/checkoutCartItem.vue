@@ -65,7 +65,7 @@
         margin: 0 20px 0 5px;
         color: white;
         font-weight: bold;
-        font-family: "Roboto";
+        /*font-family: "Roboto";*/
         font-size: 20px;
         text-transform: uppercase;
     }
@@ -77,7 +77,7 @@
         margin: 0 20px 0 5px;
         color: white;
         font-weight: bold;
-        font-family: "Roboto";
+        /*font-family: "Roboto";*/
         font-size: 20px;
         text-transform: uppercase;
     }

@@ -109,11 +109,12 @@
 .banner-caption h1 {
     font-size: 85px;
     letter-spacing: 1px;
-    font-family: "H.H. Samuel";
+    /*font-family: "H.H. Samuel";*/
+    font-family: "pantonSemi";
     display: inline-block;
 }
 .banner-caption p {
-    font-family: "Roboto";
+    font-family: "pantonSemi";
     font-size: 30px;
     line-height: 32px;
     font-weight: normal;
@@ -140,7 +141,7 @@
     padding-left: 20px;
 }
 .btn-search {
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-weight: normal;
     font-size: 22px;
     line-height: 32px;

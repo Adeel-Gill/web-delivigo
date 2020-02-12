@@ -54,7 +54,7 @@ export default {
     padding: 15px 0 15px 25px;
 }
 .popular-dishes h5 {
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-size: 30px;
     font-weight: 500;
     color: black;
@@ -76,7 +76,7 @@ export default {
 .popular-dishes ul li {
     list-style: none;
     padding: 7px 0px;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-size: 27px;
     font-weight: 500;
     color: black;

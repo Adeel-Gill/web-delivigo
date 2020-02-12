@@ -75,11 +75,12 @@
     }
     .title{
         text-align: center;
-        font-family: "Roboto";
+        /*font-family: "Roboto";*/
         color: #080808;
     }
     .title h2{
         font-size: 35px;
+        font-weight: bold;
         text-transform: uppercase;
     }
     .title p{

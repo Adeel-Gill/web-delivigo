@@ -177,7 +177,7 @@
         padding-left: 10px;
     }
     .sub-catg p,.sub-catg span{
-        font-family: pantonl;
+        /*font-family: pantonl;*/
         text-transform: capitalize;
         margin-bottom: 0;
         font-size: 16px;

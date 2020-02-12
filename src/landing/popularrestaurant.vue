@@ -80,17 +80,18 @@ export default {
     color: #0030b4;
     display: inline-block;
     margin: 10px 0 20px;
-    font-family: "Panton";
+    /*font-family: "Panton";*/
     font-weight: bold;
     font-size: 17px;
 }
 .title{
   text-align: center;
-  font-family: "Roboto";
+  /*font-family: "Roboto";*/
   color: #080808;
 }
 .title h2{
   font-size: 35px;
+  font-weight: bold;
   text-transform: uppercase;
 }
 .title p{

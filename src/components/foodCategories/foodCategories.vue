@@ -116,21 +116,21 @@
         text-align: center;
     }
     .catagory-text h5 {
-        font-family: "Panton";
-        font-weight: bold;
+        font-family: "pantonSemi";
+        /*font-weight: bold;*/
         font-size: 22px;
         padding-top: 15px;
         margin: 0;
         word-break: break-all;
     }
     .catagory-text h6 {
-        font-family: "Panton";
+        /*font-family: "Panton";*/
         font-weight: normal;
         font-size: 13px;
         margin-bottom: 25px;
     }
     .catagory-text p {
-        font-family: "Roboto";
+        /*font-family: "Roboto";*/
         font-size: 17px;
         font-weight: normal;
     }

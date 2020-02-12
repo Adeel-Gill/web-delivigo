@@ -373,13 +373,13 @@
 </script>
 
 <style scoped>
-    @font-face {
+   /* @font-face {
         font-family: pantonb;
         src:url("../../assets/fonts/Panton-Bold.ttf");
     }
     .row{
         font-family:pantonb ;
-    }
+    }*/
     .m-top{
         margin-top: 30px;
     }

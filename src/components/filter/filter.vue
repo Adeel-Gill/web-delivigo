@@ -165,6 +165,7 @@ export default {
 }
 .restaurants-list h2 {
     margin-bottom: 40px;
+    font-weight: bold;
 }
 .title h2 {
     text-align: left !important;

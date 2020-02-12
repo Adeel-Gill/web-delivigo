@@ -96,17 +96,17 @@ export default {
     /*height: 90px;*/
 }
 .restaurants-details h6{
-    font-family: "Roboto";
-    font-size: 17px;
-    font-weight: bold;
+    font-family: "pantonSemi";
+    font-size: 18px;
+    /*font-weight: bold;*/
     margin: 0;
     display: inline-block;
     padding: 0 10px;
 }
 .restaurants-details p{
     margin: 0;
-    font-family: "Roboto";
-    font-size: 9px;
+    /*font-family: "Roboto";*/
+    font-size: 10px;
 }
 .font-light{
     font-weight: 300;

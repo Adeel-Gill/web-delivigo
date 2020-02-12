@@ -126,25 +126,25 @@ export default {
 }
 .name-desc h4 {
     color: #8ba939;
-    font-family: "Roboto";
+    font-family: "pantonBold";
     font-size: 40px;
-    font-weight: 600;
+    /*font-weight: 600;*/
     margin: 0;
 }
 .name-desc p {
     color: #8f8f90;
     font-size: 23px;
-    font-family: "Roboto";
-    font-weight: 600;
+    font-family: "pantonSemi";
+    /*font-weight: 600;*/
     text-align: left;
     margin: 0;
 }
 .restaurnt-address p {
     text-align: left;
     margin: 0;
-    font-family: "Roboto";
+    font-family: "pantonSemi";
     font-size: 18px;
-    font-weight: 600;
+    /*font-weight: 600;*/
 }
 .reviews {
     float: right;
@@ -152,8 +152,8 @@ export default {
 }
 .reviews a {
     color: #2125c3;
-    font-family: "Roboto";
-    font-weight: 600;
+    font-family: "pantonSemi";
+    /*font-weight: 600;*/
     font-size: 20px;
 }
 .restaurnt-address{
@@ -165,9 +165,9 @@ i.fas.fa-map-marker-alt {
 .rating p {
     margin: 0;
     text-align: left;
-    font-family: "Roboto";
+    font-family: "pantonSemi";
     font-size: 22px;
-    font-weight: 600;
+    /*font-weight: 600;*/
 }
 i.fas.fa-star {
     color: #8ba939;
@@ -179,7 +179,7 @@ i.fas.fa-star {
 .delivery p {
     margin: 0;
     text-align: left;
-    font-family: "Roboto";
+    font-family: "pantonSemi";
     font-size: 20px;
     font-weight: 600;
 }
@@ -189,9 +189,9 @@ i.fas.fa-euro-sign {
 .mints p {
     margin: 0;
     text-align: right;
-    font-family: "Roboto";
+    font-family: "pantonSemi";
     font-size: 20px;
-    font-weight: 600;
+    /*font-weight: 600;*/
 }
 i.far.fa-clock {
     color: #8ba939;

@@ -136,7 +136,7 @@ export default {
     text-align: left;
 }
 .venue-info h3 {
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-weight: bold;
     font-size: 30px;
     margin-bottom: 50px;
@@ -148,7 +148,7 @@ export default {
 .address-info p[data-v-0e54dd28] {
     max-width: 145px;
     margin: 0;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-weight: normal;
     font-size: 20px;
     line-height: 26px;
@@ -167,13 +167,13 @@ export default {
 }
 .open-days h6 {
     margin: 0;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-weight: normal;
     font-size: 18px;
     color: #040404;
 }
 .open-time p {
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-weight: 100;
     font-size: 18px;
     color: #040404;
@@ -186,19 +186,19 @@ export default {
 }
 .about-your-health p {
     color: #040404;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     font-size: 15px;
 }
 .contant-num p {
     font-size: 18px;
     color: #1c0095;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     margin: 5px 0 30px 0;
 }
 .contant-num a {
     font-size: 18px;
     color: #1c0095;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     margin: 5px 0 30px 0;
 }
 .delivery-time span {
@@ -210,7 +210,7 @@ button.link {
     border:none;
     font-size: 18px;
     color: #1c0095;
-    font-family: "Roboto";
+    /*font-family: "Roboto";*/
     margin: 5px 0 30px 0;}
 .fade-enter-active, .fade-leave-active {
     transition: opacity 2.5s ease-out;
