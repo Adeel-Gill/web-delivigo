@@ -5,5 +5,6 @@ export function fetchResturantsData() {
     return service({
         url: 'Landing',
         method: 'get',
+
     })
 }

@@ -1,3 +1,22 @@
+
+@font-face {
+       font-family: pantonSemi;
+       src:url("fonts/Panton-SemiBold.otf");
+   }
+
+@font-face {
+    font-family: panton;
+    src:url("fonts/Panton-Regular.otf");
+}
+
+@font-face {
+    font-family: pantonBold;
+    src:url("fonts/Panton-Bold.otf");
+}
+   *{
+       font-family:panton;
+   }
+
 .clear{
     clear: both;
 }
@@ -13,7 +32,7 @@
     padding: 23px 0 !important;
 }
 .nav-link.dropdown-toggle{
-    font-family: Panton-Bold;
+    font-family: pantonBold;
     font-size: 15px;
     color: #b3b3b3 !important;
 }
@@ -22,7 +41,7 @@
     padding: 0px 0px;
 }
 a.nav-link{
-    font-family: Panton-Bold;
+    font-family: pantonBold;
     font-size: 14px;
     /*color: #ffffff !important;*/
 }
@@ -151,13 +170,16 @@ a.nav-link{
     right: -100px;
 }
 #tabes-venue .nav-tabs .nav-link {
-    font-family: "Roboto";
+    font-family: "panton";
     font-size: 18px;
     font-weight: normal;
     color: #040404 !important;
     border: transparent;
     padding: 0 !important;
     /*margin: 0 45px 0 0;*/
+}
+#tabes-venue .nav-tabs .nav-item:first-child{
+    margin-right: 10px;
 }
     a#__BVID__119___BV_tab_button__{
         margin: 0 20px 20px 0;

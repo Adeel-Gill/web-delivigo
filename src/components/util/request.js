@@ -31,6 +31,14 @@ service.interceptors.request.use(config => {
 // request interceptor
 service.interceptors.request.use(
   config => {
+      // config.headers['']
+      // config.headers['Access-Control-Allow-Methods'] = 'GET, POST';
+      // config.headers['Access-Control-Allow-Origin'] =  'localhost:8080';
+      // config.headers['crossDomain']
+      // config.headers['Access-Control-Allow-Origin'] = '*';
+      // console.log('request',service.interceptors.request.method);
+      // config.headers['sec-fetch-mode'] =  'cors';
+      // config.headers['sec-fetch-site'] =  'cross-site';
     // do something before request is sent
     //
     // if (store.getters.token) {
