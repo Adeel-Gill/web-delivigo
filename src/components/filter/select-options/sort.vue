@@ -1,7 +1,7 @@
 <template>
     <div class="sort">
         <b-dropdown size="sm" :text="text" class="m-2" id="dropdown">
-            <b-dropdown-item href="#" class="dropdown-menu-items" v-for="filter in filters" :filter="filters" :key="filter.id" >
+            <b-dropdown-item href="#" class="dropdown-menu-items" v-for="(filter,index) in filters" @click="callAPI(index+1)" :filter="filters" :key="filter.id" >
                 <div class="dropdown-menu-item">
                     <div class="sort">
                         <img :src="filter.imagePath">
@@ -46,6 +46,11 @@ export default {
                     filterWith:'Delivery Time'
                 }
             ]
+        }
+    },
+    methods: {
+        callAPI(sort) {
+            this.$emit('callAPI',sort);
         }
     }
 }

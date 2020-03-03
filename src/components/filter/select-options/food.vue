@@ -1,7 +1,7 @@
 <template>
     <div class="food" id="food-filter">
         <b-dropdown size="lg" :text="text" class="m-2" id="dropdown">
-            <b-dropdown-item href="#" class="dropdown-menu-items" v-for="filter in filters" :filter="filters" :key="filter.id" >
+            <b-dropdown-item href="#" class="dropdown-menu-items" v-for="filter in filters" @click="callAPI(filter.filterWith)" :filter="filters" :key="filter.id" >
                 <div class="dropdown-menu-item">
                     <div class="sort">
                         <img :src="filter.imagePath">
@@ -31,13 +31,13 @@ export default {
                     id:2,
                     imagePath:'./images/gluten.png',
                     imageHover:'./images/gluten-hover.png',
-                    filterWith:'Gluten-Free'
+                    filterWith:'Gluten Free'
                 },
                 {
                     id:3,
                     imagePath:'./images/vegan.png',
                     imageHover:'./images/vegan-hover.png',
-                    filterWith:'vegan'
+                    filterWith:'Vegan'
                 },
                 {
                     id:4,
@@ -46,6 +46,11 @@ export default {
                     filterWith:'Halal'
                 }
             ]
+        }
+    },
+    methods: {
+        callAPI(food) {
+            this.$emit('callAPI', food);
         }
     }
 }

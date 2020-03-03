@@ -8,15 +8,35 @@
                 <v-card-text>
                   <v-row>
                     <v-col class="px-4">
-                      <v-range-slider
-                        v-model="range"
-                        :max="max"
-                        :min="min"
-                        hide-details
-                        class="align-center"
-                        thumb-label="always"
+                      <vue-slider
+                      v-model="value"
+                      :enable-cross = "false"
+                      :min="min"
+                      :max="max"
+                      :tooltip="'always'"
+                      :tooltip-formatter="formatTooltip"
+                      @change="callAPI(value)"
                       >
-                      </v-range-slider>
+
+                      </vue-slider>
+<!--                      <vue-range-slider-->
+<!--                        v-model="value"-->
+<!--                        :min="40"-->
+<!--                        :max="max"-->
+<!--                        :formatter="formatter"-->
+<!--                        :tooltip-merge="tooltipMerge"-->
+<!--                        :enable-cross="enableCross">-->
+<!--                      </vue-range-slider>-->
+<!--                      <v-range-slider-->
+<!--                        :max="max"-->
+<!--                        :min="min"-->
+<!--                        :step="1"-->
+<!--                        v-model="range"-->
+<!--                        hide-details-->
+<!--                        thumb-label="always"-->
+<!--                        class="align-center"-->
+<!--                      >-->
+<!--                      </v-range-slider>-->
                     </v-col>
                   </v-row>
                 </v-card-text>
@@ -28,15 +48,36 @@
       </div>
 </template>
 <script>
+
+  import VueSlider from 'vue-slider-component'
+  import 'vue-slider-component/theme/default.css'
   export default {
     data () {
       return {
         text:'Price',
         min: 0,
         max: 250,
-        range: [123, 223],
+        value: [100, 170],
+        enableCross: false,
+        tooltipMerge: false,
+        formatter: '',
+        formatTooltip: '${value}'
       }
     },
+  methods: {
+      callAPI(value) {
+        console.log('methodCalled',value);
+        this.$emit('callAPI', value);
+        this.$root.$emit('price',value);
+      }
+  },
+    components: {
+      VueSlider
+    },
+    created() {
+
+      this.formatter = value => `$${value}`
+    }
   }
 </script>
 <style scoped>

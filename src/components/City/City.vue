@@ -1,7 +1,7 @@
 <template>
     <div class="col-md-4 col-sm-6 padding-top-botom">
-        <div class="restaurant" >
-            <router-link to="/">
+        <div class="restaurant">
+            <router-link :to="{path: '/filter',query: {city: city.Name}}">
                 <div>
 <!--                    <img :src="`${getImage('')}`" @error="`${getImage('')}`" />-->
                     <img :src="`${getImage(city.ImageUrl)}`" @error="getImage('')">
@@ -35,6 +35,9 @@
                     // console.log('imageinsideelse',this.image,'param',img);
                     return this.image;
                 }
+            },
+            navigateTo(name) {
+                this.$router.push({path: '/filter',query: {city: name}});
             }
         }
     }

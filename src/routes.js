@@ -54,6 +54,8 @@ export const routes = [
             }
         }},
     { path: '/filter', component: Filter },
+    {path : '/filter/{id}', component: Filter},
+
     { path: '/user', component: User, children: [
             { path: '/profile', component: Profile,
                 beforeEnter(to, from, next) {

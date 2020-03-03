@@ -46,6 +46,9 @@
         sliding: null,
           map: null,
           geocoder: null,
+          data: {},
+          longitude: 0,
+          latitiude: 0,
         slides:[
             {
                 // heading:'ORDER DELIVERY & TAKE OUT',
@@ -69,12 +72,35 @@
       },
         showValues() {
             console.log('query',this.geocoder.inputString,'lastSelected',this.geocoder.lastSelected);
+            console.log('obj',JSON.parse(this.geocoder.lastSelected));
         },
         navigateTo() {
-          this.$router.push('filter');
-            this.$root.$on('popularData', popularRestaurants => {
-                console.log('inLandingBannerOn'+popularRestaurants);
-                EventBus.$emit('popularData',popularRestaurants);
+          this.data = JSON.parse(this.geocoder.lastSelected);
+          if(this.data != null) {
+              this.longitude = this.data.geometry.coordinates[0];
+              this.latitude = this.data.geometry.coordinates[1];
+              if((this.longitude != null && this.latitude != null)) {
+                  this.$router.push({path: '/filter',query: {longitude: this.longitude, latitude: this.latitude}});
+                  this.$root.$on('popularData', popularRestaurants => {
+                      console.log('inLandingBannerOn'+popularRestaurants);
+                      EventBus.$emit('popularData',popularRestaurants);
+                  })
+              } else {
+                  this.showNotification('error','Error','Please select nearby location...!');
+              }
+          } else {
+              this.showNotification('error','Error','Please select nearby location...!');
+          }
+
+
+        },
+        showNotification(type, title, message) {
+            this.$notify({
+                group: 'foo',
+                type: type,
+                title: title,
+                text: message,
+                duration: 2000
             })
         }
     },
