@@ -7,7 +7,7 @@
                     <p>{{restaurant.FullAddress | truncate}}</p>
                 </div>
                 <div class="reviews">
-                    <a href="#">All Reviews</a>
+                    <a v-b-modal.reviewModal class="links">All Reviews</a>
                 </div>
                 <div class="clear"></div>
             </div>
@@ -48,6 +48,100 @@
                 </div>
             </div>
         </div>
+        <b-modal id="reviewModal" title="All Review" size="lg" hide-footer>
+            <div class="card mb-2">
+                <div class="card-body py-0">
+                <div class="row">
+                    <div class="col-md-2 px-1">
+                        <div class="text-center">
+                        <img src="../../../public/images/user-pic.png" class="img image-size card-img rounded-circle img-fluid"/>
+                            <p class="text-secondary ">15 Minutes Ago</p>
+                        </div>
+                    </div>
+                    <div class="col-md-10 px-1 text-justify">
+                        <p class="stars">
+                            <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Maniruzzaman Akash</strong></a>
+                            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+
+                        </p>
+                        <div class="clearfix"></div>
+                        <p class="card-text">Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release. It was popularised in the 1960s with the release.</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="card mb-2">
+                <div class="card-body py-0">
+                    <div class="row">
+                        <div class="col-md-2 px-1">
+                            <div class="text-center">
+                                <img src="../../../public/images/user-pic.png" class="img image-size card-img rounded-circle img-fluid"/>
+                                <p class="text-secondary ">15 Minutes Ago</p>
+                            </div>
+                        </div>
+                        <div class="col-md-10 px-1 text-justify">
+                            <p class="stars">
+                                <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Maniruzzaman Akash</strong></a>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+
+                            </p>
+                            <div class="clearfix"></div>
+                            <p class="card-text">Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release. It was popularised in the 1960s with the release.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-2">
+                <div class="card-body py-0">
+                    <div class="row">
+                        <div class="col-md-2 px-1">
+                            <div class="text-center">
+                                <img src="../../../public/images/user-pic.png" class="img image-size card-img rounded-circle img-fluid"/>
+                                <p class="text-secondary ">15 Minutes Ago</p>
+                            </div>
+                        </div>
+                        <div class="col-md-10 px-1 text-justify">
+                            <p class="stars">
+                                <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Maniruzzaman Akash</strong></a>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+
+                            </p>
+                            <div class="clearfix"></div>
+                            <p class="card-text">Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release. It was popularised in the 1960s with the release.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!--<div class="card mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="../../../public/images/user-pic.png" class="card-img rounded-circle" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+        </b-modal>
     </div>
 </template>
 <script>
@@ -151,10 +245,15 @@ export default {
     padding: 25px 0;
 }
 .reviews a {
-    color: #2125c3;
+    color: #8ba939 !important;
     font-family: "pantonSemi";
     /*font-weight: 600;*/
     font-size: 20px;
+    cursor: pointer;
+}
+.reviews a:hover{
+    text-decoration: underline !important;
+    color: #6A8623 !important;
 }
 .restaurnt-address{
     margin: 30px 0;
@@ -196,7 +295,20 @@ i.fas.fa-euro-sign {
 i.far.fa-clock {
     color: #8ba939;
 }
-
+.stars i{
+    font-size: 22px;
+    padding-left: 5px;
+}
+.image-size{
+    width: 70%;
+    height: 70%;
+}
+.card-text{
+    font-size: 15px;
+}
+.card{
+    box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.4);
+}
 @media screen and (max-width: 960px) and (min-width: 768px){
     .description-about{
         padding: 20px;
@@ -340,5 +452,7 @@ i.far.fa-clock {
     .rating p{
         font-size: 17px;
     }
+
+
 }
 </style>
