@@ -49,79 +49,17 @@
             </div>
         </div>
         <b-modal id="reviewModal" title="All Review" size="lg" hide-footer>
-            <div class="card mb-2">
-                <div class="card-body py-0">
-                <div class="row">
-                    <div class="col-md-2 px-1">
-                        <div class="text-center">
-                        <img src="../../../public/images/user-pic.png" class="img image-size card-img rounded-circle img-fluid"/>
-                            <p class="text-secondary ">15 Minutes Ago</p>
-                        </div>
-                    </div>
-                    <div class="col-md-10 px-1 text-justify">
-                        <p class="stars">
-                            <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Maniruzzaman Akash</strong></a>
-                            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-
-                        </p>
-                        <div class="clearfix"></div>
-                        <p class="card-text">Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release. It was popularised in the 1960s with the release.</p>
-                    </div>
-                </div>
-                </div>
+            <div v-if="allReviews.length>0">
+                <review v-for="(review,index) in allReviews" :key="index" :review="review"  ></review>
             </div>
-
-            <div class="card mb-2">
+            <div class="card mb-2" v-else>
                 <div class="card-body py-0">
                     <div class="row">
-                        <div class="col-md-2 px-1">
-                            <div class="text-center">
-                                <img src="../../../public/images/user-pic.png" class="img image-size card-img rounded-circle img-fluid"/>
-                                <p class="text-secondary ">15 Minutes Ago</p>
-                            </div>
-                        </div>
                         <div class="col-md-10 px-1 text-justify">
-                            <p class="stars">
-                                <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Maniruzzaman Akash</strong></a>
-                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-
-                            </p>
                             <div class="clearfix"></div>
-                            <p class="card-text">Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release. It was popularised in the 1960s with the release.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mb-2">
-                <div class="card-body py-0">
-                    <div class="row">
-                        <div class="col-md-2 px-1">
-                            <div class="text-center">
-                                <img src="../../../public/images/user-pic.png" class="img image-size card-img rounded-circle img-fluid"/>
-                                <p class="text-secondary ">15 Minutes Ago</p>
-                            </div>
-                        </div>
-                        <div class="col-md-10 px-1 text-justify">
-                            <p class="stars">
-                                <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Maniruzzaman Akash</strong></a>
-                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-
+                            <p class="card-text">
+                                No reviews available to show!
                             </p>
-                            <div class="clearfix"></div>
-                            <p class="card-text">Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release. It was popularised in the 1960s with the release.</p>
                         </div>
                     </div>
                 </div>
@@ -145,6 +83,7 @@
     </div>
 </template>
 <script>
+    import review from "../Reviews/review";
 export default {
     data(){
         return{
@@ -157,8 +96,13 @@ export default {
             ratingLight:'(127)',
             delivery:'Free delivery',
             timeing:'35-45 Mins',
-            freeDelivery: false
+            freeDelivery: false,
+            allReviews: [],
+
         }
+    },
+    components: {
+        review
     },
     mounted() {
         this.$root.$on('restaurant', response => {
@@ -169,6 +113,9 @@ export default {
                 this.freeDelivery = this.restaurant.IsDeliveryFree;
             }
 
+        });
+        this.$root.$on('reviews', response => {
+            this.allReviews = response;
         })
     },
     methods: {

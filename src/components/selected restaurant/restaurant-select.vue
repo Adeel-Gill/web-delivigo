@@ -32,6 +32,7 @@ import Venue from "./venue.vue";
 import {EventBus} from "../../main";
 import {fetchRestaurantById} from "../api/FilterRestaurants";
 import {fetchRestaurantMealsById} from "../api/CustomMeal";
+import {fetchRestaurantReviews} from "../api/Reviews";
 
 export default {
     data() {
@@ -83,17 +84,22 @@ export default {
         },
         async fetchRestaurantData(id) {
                 fetchRestaurantById(id).then(response => {
+                    fetchRestaurantReviews(1).then(response => {
+                        this.$root.$emit('reviews',response);
+                    })
                     this.$root.$emit('mealMenu', response.MealMenu);
                     this.$root.$emit('popularFood', response.Popular);
                     this.$root.$emit('restaurant', response.Restaurant);
                     this.$root.$emit('restaurantImages', response.RestaurantImagesURL);
                     this.$root.$emit('isCustomMeal', false);
+
                     console.log('restaurant',response.Restaurant);
                     if(localStorage.getItem('cart') === 'null' || localStorage.getItem('cart') == null) {
                         this.$store.dispatch('clearCart')
                     } else {
                         this.$store.dispatch('setCart', JSON.parse(localStorage.getItem('cart')));
                     }
+
 
                 }, error => {
                     console.log(error);
