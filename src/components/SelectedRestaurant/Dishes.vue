@@ -417,19 +417,19 @@
                 this.baseUrl = baseAddress;
                 console.log('dishes',this.selected);
                 // await this.checkFoodResponse(response);
-                // if(response.length>0) {
-                //     this.selected = response;
-                //     this.baseUrl = baseAddress;
-                //     console.log('dishes',this.selected);
-                // } else {
-                //     if(this.count === 0) {
-                //         console.log('dishesNotification');
-                //         this.showNotification('error','Error','No dishes are available to show!');
-                //         this.count++;
-                //     } else {
-                //         this.count++;
-                //     }
-                // }
+                if(response.length>0) {
+                    this.selected = response;
+                    this.baseUrl = baseAddress;
+                    console.log('dishes',this.selected);
+                } else {
+                    if(this.count === 0) {
+                        console.log('dishesNotification');
+                        this.showNotification('error','Error','No dishes are available to show!');
+                        this.count++;
+                    } else {
+                        this.count++;
+                    }
+                }
                 // this.resetMealObject();
             })
             // this.$root.$on('isCustomMeal', response => {

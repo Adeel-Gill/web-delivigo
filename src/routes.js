@@ -22,10 +22,15 @@ import Register from "./components/LoginAndRegister/Register";
 import OrderTracking from "./components/Order/OrderTracking";
 import DiamondAward from "./components/User/DiamondAward";
 import AllCities from "./components/All Cities/AllCities";
+import Discount from "./components/User/Discount";
 // import CurrentOrder from "./components/Order/CurrentOrder";
 // import PreviousOrder from "./components/Order/PreviousOrder";
 import currentOrder from "./components/User/currentOrder";
 import previousOrder from "./components/User/previousOrder";
+import Policy from "./components/Documents/Policy";
+import TermsAndConditions from "./components/Documents/TermsAndConditions";
+import Cookies from "./components/Documents/Cookies";
+import Legal from "./components/User/Legal";
 export const routes = [
     { path: '/', component: Home },
     { path: '/loginandreg', component: LoginAndRegister, children: [
@@ -85,6 +90,14 @@ export const routes = [
                         next('/');
                     }
                 }},
+            { path: '/discount', component: Discount ,
+                beforeEnter(to, from, next) {
+                    if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
+                        next();
+                    } else {
+                        next('/');
+                    }
+                }},
             { path: '/diamond', component: DiamondAward ,
                 beforeEnter(to, from, next) {
                     if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
@@ -109,14 +122,28 @@ export const routes = [
                         next('/');
                     }
                 }},
-        ], beforeEnter(to, from, next) {
+            { path: '/legal', component: Legal, children: [
+                    {path: '/', component: Policy, query: {docType: 'p'}},
+                    {path: '/', component: TermsAndConditions, query: {docType: 't'}},
+                    {path: '/', component: Cookies, query: {docType: 'c'}},
+
+                ] ,
+                beforeEnter(to, from, next) {
+                    if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
+                        next();
+                    } else {
+                        next('/');
+                    }
+                }},
+        ]},
+    { path : '/track', component: OrderTracking,
+        beforeEnter(to, from, next) {
             if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
                 next();
             } else {
                 next('/');
             }
         }},
-    { path : '/track', component: OrderTracking},
     { path: '/map/', component: Map},
     { path: '/restaurant/:id', component: Selected },
     {path: '/populars', component: allPopularRestaurants},
@@ -126,7 +153,8 @@ export const routes = [
     {path: '/restaurants', component: allRestaurants},
     {path: '/foodCategories', component: allFoodCategories},
     {path: '/foodFilter', component: SelectedFoodRestaurants},
-    {path: '/orderTracking/:id', component: checkout}
+    {path: '/orderTracking/:id', component: checkout},
+
 ]
 function checkLoginRoute() {
     if(localStorage.getItem('token') !== null || localStorage.getItem('token') !== '') {

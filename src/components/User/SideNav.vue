@@ -34,6 +34,13 @@
                         <a class="nav-link">Order History</a>
                     </router-link>
                     <router-link class="nav-item"
+                                 to="/discount"
+                                 tag="li"
+                                 active-class="active"
+                                 exact>
+                        <a class="nav-link">Discount</a>
+                    </router-link>
+                    <router-link class="nav-item"
                                  to="/diamond"
                                  tag="li"
                                  active-class="active"
@@ -46,6 +53,13 @@
                                  active-class="active"
                                  exact>
                         <a class="nav-link">Support</a>
+                    </router-link>
+                    <router-link class="nav-item"
+                                 to="/legal"
+                                 tag="li"
+                                 active-class="active"
+                                 exact>
+                        <a class="nav-link">Legal</a>
                     </router-link>
                 </ul>
             </nav>

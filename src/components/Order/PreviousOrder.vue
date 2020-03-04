@@ -106,6 +106,10 @@
                                 Track Order
                             </button>
                         </router-link>
+                        <button class="btn btn-primary float-left"
+                                :disabled="(statuses.OrderDelivered !== previousOrderObject.Order.OrderStatusId)">
+                            Reorder
+                        </button>
                     </div>
                 </div>
             </div>
