@@ -1,6 +1,6 @@
 import Home from './landing/index.vue';
 import Filter from './components/filter/filter.vue';
-import Selected from './components/selected restaurant/restaurant-select.vue'
+import Selected from './components/SelectedRestaurant/RestaurantSelect'
 import allRestaurants from "./components/All Restaurants/Restaurants";
 import allPopularRestaurants from "./components/All Restaurants/PopularRestaurants";
 import allFeaturedRestaurants from "./components/All Restaurants/FeaturedRestaurants";
@@ -14,7 +14,7 @@ import OrderHistory from "./components/User/Order History";
 import Support from "./components/User/Support";
 import Profile from "./components/User/Profile";
 import Map from "./components/Map/Map";
-import checkout from "./components/selected restaurant/checkout";
+import checkout from "./components/SelectedRestaurant/Checkout";
 import BillingAndPayments from "./components/User/BillingAndPayments";
 import LoginAndRegister from "./components/LoginAndRegister/LoginAndRegister";
 import Login from "./components/LoginAndRegister/Login";

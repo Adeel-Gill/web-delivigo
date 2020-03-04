@@ -26,8 +26,8 @@
                 <!--                    <img src="//placehold.it/50" />-->
                   </div>
             </b-nav-item>
-            <b-nav-item to="/signin" activClass="active" v-if="isLoggedOut === 'true'? true: false" class="singin mt-2">Sign In</b-nav-item>
-            <b-nav-item to="/signup" activClass="active" v-if="isLoggedOut === 'true'? true: false" class="register mt-2">Register</b-nav-item>
+            <b-nav-item to="/signin" activClass="active" v-if="isLoggedOut === 'true' || isLoggedOut == undefined? true: false" class="singin mt-2">Sign In</b-nav-item>
+            <b-nav-item to="/signup" activClass="active" v-if="isLoggedOut === 'true' || isLoggedOut == undefined? true: false" class="register mt-2">Register</b-nav-item>
             <b-nav-item  activClass="active" v-if="isLogin === 'true'? true: false" class="register mt-2" @click="signOut">Sign Out</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
@@ -111,12 +111,6 @@
           duration: 2000,
 
         })
-      }
-    },
-    beforeCreate() {
-      if((this.isLogin == null || this.isLoggedOut == null)) {
-        this.$store.dispatch('cleanToken');
-        this.$router.go();
       }
     },
   mounted() {
