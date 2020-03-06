@@ -41,7 +41,7 @@
                                         <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
                                             <div class="pl-3 sub-catg pb-3">
                                                 <p class="d-inline-block text-muted">Quantity</p><span class="float-right text-muted">{{orderItem.Quantity}}</span><br>
-                                                <p class="d-inline-block text-muted">Other Charges</p><span class="float-right text-muted">{{(previousOrderObject.Order.TotalPrice.toFixed(2)-(orderItem.Price + addOnTotal))}}</span>
+                                                <p class="d-inline-block text-muted">Other Charges</p><span class="float-right text-muted">{{otherCharges}}</span>
                                                 <div v-if="orderItem.CustomOption.length > 0">
                                                     <div v-for="customOption in orderItem.CustomOption" :key="customOption.Id">
                                                         <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
@@ -106,7 +106,7 @@
                                 Track Order
                             </button>
                         </router-link>
-                        <button class="btn btn-primary float-left"
+                        <button class="btn btn-primary float-left" @click="reorder(previousOrderObject.Order.OrderId)"
                                 :disabled="(statuses.OrderDelivered !== previousOrderObject.Order.OrderStatusId)">
                             Reorder
                         </button>
@@ -122,6 +122,7 @@
 <script>
     import noItemError from "../error/noItemError";
     import {orderStatus} from "./OrderStatus";
+    import {reOrder} from "../api/PlaceOrder";
 
     export default {
         name: "PreviousOrder",
@@ -155,22 +156,27 @@
                 emptyScalesTitle: "No Scales",
                 isPreviousOrder: false,
                 mealBasePrice: 0,
+                otherCharges: 0,
+                orderTotalPrice: 0,
             }
         },
         methods: {
             calculateAddOnsPrice(addons) {
                 this.orderItems = addons;
-
+                this.addOnTotal = 0;
                 for(var i=0; i<this.orderItems.length; i++) {
                     this.newAddons = this.orderItems[i].AddOns;
                     console.log('orderItems,addons',this.orderItems[i],this.newAddons);
                     for(var j=0; j<this.newAddons.length; j++) {
-                        console.log('addons',this.newAddons);
-                        this.addOnPrice += this.newAddons[j].Price;
+                        console.log('addons',this.newAddons, this.newAddons[j].Price);
+                        this.otherCharges = this.addOnPrice += this.newAddons[j].Price;
                     }
                     this.addOnsPrices.push(this.addOnPrice);
                     this.addOnTotal += this.addOnPrice;
+                    this.otherCharges = this.orderTotalPrice - this.otherCharges
                     this.addOnPrice = 0;
+
+
                 }
                 // for(var i=0; i<addons.length; i++) {
                 //     this.addOnPrice += addons[i].Price;
@@ -187,6 +193,15 @@
             //     console.log('first',obj.Order.OrderItems[0].AddOns[0].Id);
             //     console.log('first',obj.Order.OrderItems[0].AddOns[0].Price);
             // },
+            showNotification(type, title, message) {
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
+                })
+            },
             decomposeObject() {
                 // this.previousOrderObject = obj;
                 console.log('here',this.previousOrderObject);
@@ -195,6 +210,7 @@
                     this.previousOrderObject = this.obj;
                     console.log('previousOrderObject', this.previousOrderObject);
                     this.isPreviousOrder = true;
+                    this.orderTotalPrice = this.previousOrderObject.Order.TotalPrice;
                     if(this.previousOrderObject.Order.OrderItems[0].AddOns.length > 0) {
                         this.isAddons = true;
                         this.addOns = this.previousOrderObject.Order.OrderItems[0].AddOns;
@@ -227,6 +243,31 @@
                 } else {
                     return false;
                 }
+            },
+            reorder(id) {
+                this.$dialog.confirm('Reorder this. Continue?', {
+                    loader: true
+                }).then(dialog => {
+                    dialog.loading(true);
+                    reOrder(id).then(response => {
+                        if(response) {
+                            this.showNotification('success','Success','Successfully reordered!');
+                            this.$router.push('/currentOrder');
+                        } else {
+                            this.showNotification('error','Error','Reordering failed!');
+                        }
+                        dialog.loading(false);
+                        dialog.close();
+                    }, error => {
+                        this.showNotification('error','Error','Reordering failed!');
+                        dialog.loading(false);
+                        dialog.close();
+                    })
+                }).catch(() => {
+                    this.showNotification('info','Info','Reordering cancelled!');
+                    // dialog.close();
+                })
+
             }
         },
         created() {

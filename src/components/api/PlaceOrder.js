@@ -7,3 +7,9 @@ export function placeOrder(data) {
         data
     })
 }
+export function reOrder(id) {
+    return service({
+        url: `ReOrder?orderId=${id}`,
+        method: 'get'
+    })
+}
