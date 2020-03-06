@@ -55,7 +55,7 @@
                         <a class="nav-link">Support</a>
                     </router-link>
                     <router-link class="nav-item"
-                                 to="/legal"
+                                 to="/privacy?docType=p"
                                  tag="li"
                                  active-class="active"
                                  exact>
