@@ -107,7 +107,8 @@
                             </button>
                         </router-link>
                         <button class="btn btn-primary float-left"
-                                :disabled="(statuses.OrderDelivered !== previousOrderObject.Order.OrderStatusId)">
+                                :disabled="(statuses.OrderDelivered !== previousOrderObject.Order.OrderStatusId)"
+                                @click="reorder(previousOrderObject.Order.OrderId)">
                             Reorder
                         </button>
                     </div>
