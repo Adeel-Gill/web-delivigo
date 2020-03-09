@@ -123,9 +123,9 @@ export const routes = [
                     }
                 }},
             { path: '/legal', component: Legal, children: [
-                    {path: '/', component: Policy, query: {docType: 'p'}},
-                    {path: '/', component: TermsAndConditions, query: {docType: 't'}},
-                    {path: '/', component: Cookies, query: {docType: 'c'}},
+                    {path: '/privacy', component: Policy, query: {docType: 'p'}},
+                    {path: '/terms', component: TermsAndConditions, query: {docType: 't'}},
+                    {path: '/cookies', component: Cookies, query: {docType: 'c'}},
 
                 ] ,
                 beforeEnter(to, from, next) {
