@@ -6,6 +6,7 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import vuetify from '@/plugins/vuetify' // path to vuetify export
+import * as gMap from 'vue2-google-maps'
 import VShowSlide from 'v-show-slide'
 import {UserInfo} from "./components/store/UserInfo";
 import Notification from 'vue-notification';
@@ -14,6 +15,7 @@ import {DrawerLayout} from 'vue-drawer-layout';
 import Paginate from 'vuejs-paginate';
 import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js';
 import 'vuejs-dialog/dist/vuejs-dialog.min.css';
+import StarRating from 'vue-star-rating';
 
 new Vue({
   vuetify,
@@ -32,9 +34,17 @@ Vue.use(BootstrapVue);
 Vue.use(Notification);
 Vue.component(DrawerLayout.name, DrawerLayout);
 Vue.component('paginate', Paginate);
+Vue.component('star-rating',StarRating);
 Vue.prototype.$eventBus = new Vue(); // add this line of code
 Vue.prototype.$store = UserInfo;
 Vue.use(VueRouter);
+Vue.use(gMap,{
+  load: {
+    key: 'AIzaSyD558YhipGyRlJimQwE4wB-oKI6AsaShfM',
+    libraries: 'places'
+  },
+  installComponents: true
+})
 // Vue.forceUpdate();
 const router = new VueRouter({
   mode: 'history',

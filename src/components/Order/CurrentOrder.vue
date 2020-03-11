@@ -15,16 +15,13 @@
                                 </div>
                                 <div class="">
                                     <div class="rating mt-4 mb-3">
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-
+                                        <div class="rating mt-4 mb-3">
+                                            <star-rating :rating="0" :read-only="true" :star-size="35" :rtl="true"></star-rating>
+                                        </div>
                                         <!--                                    <star-rating :increment="0.5"></star-rating>-->
                                     </div>
                                     <div class="form-group">
-                                        <textarea  class="form-control review" placeholder="your review"></textarea>
+                                        <textarea  class="form-control review" disabled placeholder="your review"></textarea>
                                     </div>
                                 </div>
                             </div>

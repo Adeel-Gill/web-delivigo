@@ -72,6 +72,8 @@
       },
         showValues() {
             console.log('query',this.geocoder.inputString,'lastSelected',this.geocoder.lastSelected);
+            this.map.locate();
+
             console.log('obj',JSON.parse(this.geocoder.lastSelected));
         },
         navigateTo() {
@@ -91,8 +93,11 @@
           } else {
               this.showNotification('error','Error','Please select nearby location...!');
           }
-
-
+        },
+        getUserLocation() {
+          navigator.geolocation.getCurrentPosition(position => {
+              console.log('position',position);
+          })
         },
         showNotification(type, title, message) {
             this.$notify({
@@ -105,6 +110,7 @@
         }
     },
       mounted() {
+        this.getUserLocation();
           mapboxgl.accessToken = 'pk.eyJ1IjoiYXFpYmphdmVkMSIsImEiOiJjazRtZ3Z5YXUwNG9vM21wNTRoODFicnZtIn0.UjSkEQkYpVOmS0QUYpXoHg';
          this.map =  new mapboxgl.Map({
               container: 'map',
@@ -118,8 +124,15 @@
               accessToken: mapboxgl.accessToken,
               mapboxgl: mapboxgl
           });
+          this.map.addControl(new mapboxgl.GeolocateControl({
+              positionOptions: {
+                  enableHighAccuracy: true
+              },
+              trackUserLocation: true
+          }));
           document.getElementById("geocoder").appendChild(this.geocoder.onAdd(this.map));
           console.log('map',this.map,'geo',this.geocoder,'Map',MapboxGeocoder);
+
       },
       updated() {
         console.log('query',this.geocoder.inputString,'lastSelected',this.geocoder.lastSelected);

@@ -61,10 +61,10 @@
                 </div>
             </div>
         </div>
-        <div class="dishes"  v-for="select in selected" :select="select" :key="select.Id" @click="displayDish(select.Id)">
+        <div class="dishes"  v-for="select in selected" :key="select.Id" @click="displayDish(select.Id)">
             <div class="dish-selection" >
                 <div class="dish-image">
-                    <img :src="getImage(select.ImageUrl)" @error="getImage('')">
+                    <img :src="`https://www.foodizza.com/` + select.ImageUrl">
                 </div>
                 <div class="about-dish">
                     <div class="descp-about" >
@@ -417,6 +417,10 @@
                 this.baseUrl = baseAddress;
                 console.log('dishes',this.selected);
                 // await this.checkFoodResponse(response);
+                // setTimeout(()=> {
+                //     this.selected = response;
+                //     console.log('dishes',this.selected);
+                // },2000);
                 if(response.length>0) {
                     this.selected = response;
                     this.baseUrl = baseAddress;

@@ -15,17 +15,14 @@
                                 </div>
                                 <div class="">
                                     <div class="rating mt-4 mb-3">
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-
-                                        <!--                                    <star-rating :increment="0.5"></star-rating>-->
+                                        <star-rating :rating="rating" v-model="rating"  :star-size="35" :rtl="true"></star-rating>
                                     </div>
                                     <div class="form-group">
-                                        <textarea  class="form-control review" placeholder="your review"></textarea>
+                                        <textarea  class="form-control review" v-model="review" id="review" :disabled="isLoading" placeholder="your review"></textarea>
+
                                     </div>
+                                    <button class="btn btn-primary float-right" @click="submitReview(previousOrderObject.Order.RestaurantId, previousOrderObject.Order.OrderId)" :disabled="isLoading">Review</button>
+<!--                                    <button class="btn btn-primary">Review</button>-->
                                 </div>
                             </div>
 <!--                            <div>-->
@@ -123,6 +120,7 @@
     import noItemError from "../error/noItemError";
     import {orderStatus} from "./OrderStatus";
     import {reOrder} from "../api/PlaceOrder";
+    import {submitReview} from "../api/Reviews";
 
     export default {
         name: "PreviousOrder",
@@ -133,6 +131,8 @@
         data() {
             return {
                 addOnPrice: 0,
+                rating: 0,
+                review: '',
                 obj: this.previousOrder,
                 previousOrderObject: {},
                 statuses: orderStatus,
@@ -147,6 +147,7 @@
                 isCustomOptions: false,
                 checkAll70: this.all70 === 'true',
                 isScales: false,
+                isLoading: false,
                 addOnTitle: "AddOns",
                 addOnTotal: 0,
                 emptyAddOnTitle: "No AddOns",
@@ -158,6 +159,13 @@
                 mealBasePrice: 0,
                 otherCharges: 0,
                 orderTotalPrice: 0,
+                reviewObj: {
+                    Comments: "string",
+                    Rates: 0,
+                    CustomerId: 0,
+                    RestaurantId: 0,
+                    OrderID: 0,
+                }
             }
         },
         methods: {
@@ -244,6 +252,9 @@
                     return false;
                 }
             },
+            setRating(rating) {
+              this.rating = rating;
+            },
             reorder(id) {
                 this.$dialog.confirm('Reorder this. Continue?', {
                     loader: true
@@ -268,6 +279,32 @@
                     // dialog.close();
                 })
 
+            },
+            submitReview(resId,orderId) {
+                if(this.rating === 0) {
+                    this.showNotification('info','Field Missing','Please select stars to rate')
+                } else {
+                    if(this.review.length < 5 && this.review.length>0) {
+                        this.showNotification('Info', 'Info','Review length too short')
+                    } else if (this.review.length> 100) {
+                        this.showNotification('Info', 'Info','Review length too long')
+                    } else {
+                        this.reviewObj.Comments = this.review;
+                        this.reviewObj.Rates = this.rating;
+                        this.reviewObj.CustomerId = localStorage.getItem('id');
+                        this.reviewObj.RestaurantId = resId;
+                        this.reviewObj.OrderID = orderId;
+                        submitReview(this.reviewObj).then(response => {
+                            if(response.hasErrors) {
+                                this.showNotification('error','Error','Review failed to submit!');
+                            } else {
+                                this.showNotification('success','Success','Review submitted successfully');
+                            }
+                        }, error => {
+                            this.showNotification('error','Error','Review failed to submit!');
+                        })
+                    }
+                }
             }
         },
         created() {
@@ -280,6 +317,9 @@
                 // }
             }
 
+        },
+        updated() {
+            console.log('rating',this.rating)
         }
     }
 </script>
@@ -385,5 +425,8 @@
         .w-75{
             width: 100% !important;
         }
+    }
+    .vue-star-rating-rating-text[data-v-34cbeed1] {
+        display: none;
     }
 </style>

@@ -4,7 +4,7 @@
       toggleable="lg"
       type="dark"
       variant="info"
-      v-bind:class="[isFilter? 'filter-header': 'bg-info']"
+      class="bg-info"
     >
       <div class="container">
         <b-navbar-brand to="/">
@@ -158,12 +158,7 @@
     background-color: black !important;
   }
   .filter-header {
-    background-image: url(/images/topbar-bg.png);
-    border: none;
-    width: 100%;
-    height: 65px;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: black !important;
   }
   .filter-header div#nav-collapse li.nav-item.singin a.nav-link {
     border: 2px solid transparent;

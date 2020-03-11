@@ -4,13 +4,13 @@
             <div class="row">
                 <div class="col-md-2 px-1">
                     <div class="text-center">
-                        <img src="../../../public/images/user-pic.png" class="img image-size card-img rounded-circle img-fluid"/>
+                        <img :src="baseURL + review.UrlImage" class="img image-size card-img rounded-circle img-fluid"/>
                         <p class="text-secondary ">15 Minutes Ago</p>
                     </div>
                 </div>
                 <div class="col-md-10 px-1 text-justify">
                     <p class="stars">
-                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Maniruzzaman Akash</strong></a>
+                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>{{review.FullName}}</strong></a>
                         <span v-for="index in review.Rates" :key="index" class="float-right"><i class="text-warning fa fa-star"></i></span>
                     </p>
                     <div class="clearfix"></div>
@@ -22,9 +22,16 @@
 </template>
 
 <script>
+    import {baseAddress} from "../../main";
+
     export default {
         name: "review",
-        props: ['review']
+        props: ['review'],
+        data() {
+            return {
+                baseURL: baseAddress
+            }
+        }
     }
 </script>
 

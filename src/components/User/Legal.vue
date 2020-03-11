@@ -41,10 +41,12 @@
                 switch(type) {
                     case 'p': {
                         this.isPolicy = true;
+                        console.log('here');
                         this.isTerms = this.isCookies = false;
                         break;
                     } case 't': {
                         this.isTerms = true;
+                        console.log('here');
                         this.isPolicy = this.isCookies = false;
                         break;
                     } case 'c': {

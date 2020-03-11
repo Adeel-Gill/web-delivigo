@@ -6,3 +6,10 @@ export function fetchRestaurantReviews(id) {
         method: 'get'
     })
 }
+export function submitReview(data) {
+    return service({
+        url: 'RestaurantReviews',
+        method: 'post',
+        data
+    })
+}

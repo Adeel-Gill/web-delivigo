@@ -13,11 +13,11 @@
           @sliding-end="onSlideEnd"
         >
           <!-- Text slides with image -->
-          <b-carousel-slide v-for="slide in mockData" :key="slide" :img-src= "slide.imageURL" >
+          <b-carousel-slide v-for="slide in restaurants" :key="slide" :img-src= "baseUrl + slide.ImageUrl" >
             <div class="filter-caption w-100 float-right" style="right: 0;">
-              <h6>slide.name</h6>
-              <h3>slide.description </h3>
-              <p>slide.rating</p>
+              <h6>{{slide.Name}}</h6>
+              <h3>{{slide.FullAddress}} </h3>
+              <p>{{slide.Tags}}</p>
             </div>
           </b-carousel-slide>
         </b-carousel>
@@ -48,7 +48,7 @@
     },
     mounted() {
       this.$root.$on('popularData', popularRestaurants => {
-        console.log('inFilterBannerOn'+popularRestaurants);
+        console.log('inFilterBannerOn',popularRestaurants);
         this.restaurants = popularRestaurants;
         console.log('mockData'+this.mockData);
       })
