@@ -19,9 +19,25 @@
             <p>Find restaurants, specials, and coupons for free</p>
             <div class="row overlay">
             <div id="map" style="display: none;"></div>
-            <div id="geocoder" class="geocoder col-md-8 col-12 p-0" @select="showValues"></div>
+                <div class="col-md-8 col-12 p-0">
+                    <div class="row">
+                        <div class="col-11 p-0">
+                    <div id="geocoder" class="geocoder d-inline-block" style="width: 100%;" @select="showValues"></div></div>
+                        <div class="col-1 p-0">
+                    <button class="btn-location" @click="getAddress">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 25 25" id="ic-locate-round">
+                            <g fill="none" fill-rule="evenodd">
+                                <path stroke-width="2" stroke="#fff" d="M11.5 22.5v-2.986l.471-.028a8.001 8.001 0 0 0 7.515-7.515l.028-.471H22.5h-2.986l-.028-.471a8.001 8.001 0 0 0-7.515-7.515l-.471-.028V.5v2.986l-.471.028a8.001 8.001 0 0 0-7.515 7.515l-.028.471H.5h2.986l.028.471a8.001 8.001 0 0 0 7.515 7.515l.471.028V22.5z"></path>
+                                <circle cx="11.5" cy="11.5" r="4" stroke-width="2" stroke="#fff"></circle>
+                                <circle cx="11.5" cy="11.5" r="1" stroke-width="2" fill="#fff"></circle> //#999898
+                            </g>
+                        </svg>
+                    </button></div>
+                    </div>
+                </div>
 <!--            <b-form-input v-model="text" placeholder="I Would like to eat...."></b-form-input>-->
             <div class="col-md-4 col-12 p-0 btn-overlay">
+
             <b-button class="btn-search" @click="navigateTo">Search Food</b-button>
             </div>
             </div>
@@ -38,6 +54,7 @@
   import {map} from "../main";
   import 'mapbox-gl/dist/mapbox-gl.css'
   import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
+  import axios from 'axios'
   export default {
     data() {
       return {
@@ -49,6 +66,8 @@
           data: {},
           longitude: 0,
           latitiude: 0,
+          position: {},
+          userAddress: '',
         slides:[
             {
                 // heading:'ORDER DELIVERY & TAKE OUT',
@@ -78,6 +97,7 @@
         },
         navigateTo() {
           this.data = JSON.parse(this.geocoder.lastSelected);
+          console.log('data',this.data);
           if(this.data != null) {
               this.longitude = this.data.geometry.coordinates[0];
               this.latitude = this.data.geometry.coordinates[1];
@@ -91,13 +111,44 @@
                   this.showNotification('error','Error','Please select nearby location...!');
               }
           } else {
-              this.showNotification('error','Error','Please select nearby location...!');
+              if((this.position.coords.longitude != null && this.position.coords.latitude != null)) {
+                  this.$router.push({path: '/filter',query: {longitude: this.position.coords.longitude, latitude: this.position.coords.latitude}});
+                  this.$root.$on('popularData', popularRestaurants => {
+                      console.log('inLandingBannerOn'+popularRestaurants);
+                      EventBus.$emit('popularData',popularRestaurants);
+                  })
+              } else {
+                  this.showNotification('error','Error','Please select nearby location...!');
+              }
           }
         },
-        getUserLocation() {
-          navigator.geolocation.getCurrentPosition(position => {
-              console.log('position',position);
+         getUserLocation() {
+          navigator.geolocation.getCurrentPosition((position) => {
+              this.position = position;
+              console.log('position', this.position.coords.longitude,this.position.coords.latitude);
+              axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${this.position.coords.longitude}%2C${this.position.coords.latitude}.json?access_token=pk.eyJ1IjoiYXFpYmphdmVkMSIsImEiOiJjazRtZ3Z5YXUwNG9vM21wNTRoODFicnZtIn0.UjSkEQkYpVOmS0QUYpXoHg`)
+                  .then(response => {
+                      console.log('Address :: ',response);
+                      if(response.data.features.length > 0) {
+                          this.userAddress = response.data.features[0].place_name;
+                          this.geocoder.inputString = this.userAddress;
+                          document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].value = this.userAddress;
+                          console.log('Address of User',this.userAddress,this.geocoder.inputString,document.getElementsByClassName("mapboxgl-ctrl-geocoder--input"));
+                      } else {
+                          this.showNotification('error','Error','Location not found');
+                          EventBus.$emit('StartOverlay', false);
+                      }
+                  },error => {
+                      this.showNotification('error','Error','Location not found');
+                      EventBus.$emit('StartOverlay', false);
+                  })
+              EventBus.$emit('StartOverlay', false);
           })
+        },
+        async getAddress() {
+            EventBus.$emit('StartOverlay', true);
+        this.getUserLocation();
+
         },
         showNotification(type, title, message) {
             this.$notify({
@@ -110,7 +161,7 @@
         }
     },
       mounted() {
-        this.getUserLocation();
+
           mapboxgl.accessToken = 'pk.eyJ1IjoiYXFpYmphdmVkMSIsImEiOiJjazRtZ3Z5YXUwNG9vM21wNTRoODFicnZtIn0.UjSkEQkYpVOmS0QUYpXoHg';
          this.map =  new mapboxgl.Map({
               container: 'map',
@@ -190,6 +241,16 @@
     color: #ffffff;
     background: #df3e03;
     height: 45px;
+    margin-left: 4px;
+}
+.btn-location{
+    background-color: #df3e03;
+    height: 45px;
+    width: 40px;
+    padding-top: 4px;
+    border-radius:4px;
+    margin-left: 4px;
+
 }
 @media screen and (max-width: 400px) {
     .btn-search{
