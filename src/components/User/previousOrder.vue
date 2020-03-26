@@ -6,6 +6,7 @@
                                 :previousOrder="orders"
                                 :all70="getLocalAll70()"
                                 :is-empty-array="allOrders.length>0"
+                                @recallOrders = "getPreviousOrders"
             ></app-previous-order>
         </div>
         <div v-else>

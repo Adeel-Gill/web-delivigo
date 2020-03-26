@@ -121,6 +121,7 @@
     import {orderStatus} from "./OrderStatus";
     import {reOrder} from "../api/PlaceOrder";
     import {submitReview} from "../api/Reviews";
+    import {updateReview} from "../api/Reviews";
 
     export default {
         name: "PreviousOrder",
@@ -165,6 +166,10 @@
                     CustomerId: 0,
                     RestaurantId: 0,
                     OrderID: 0,
+                },
+                updateReview: {
+                    OrderNumber: 0,
+                    IsReviewed: true
                 }
             }
         },
@@ -289,20 +294,42 @@
                     } else if (this.review.length> 100) {
                         this.showNotification('Info', 'Info','Review length too long')
                     } else {
-                        this.reviewObj.Comments = this.review;
-                        this.reviewObj.Rates = this.rating;
-                        this.reviewObj.CustomerId = localStorage.getItem('id');
-                        this.reviewObj.RestaurantId = resId;
-                        this.reviewObj.OrderID = orderId;
-                        submitReview(this.reviewObj).then(response => {
-                            if(response.hasErrors) {
+                        this.$dialog.confirm('Submit review. Continue?', {
+                            loader: true
+                        }).then(dialog => {
+                            dialog.loading(true);
+                            this.reviewObj.Comments = this.review;
+                            this.reviewObj.Rates = this.rating;
+                            this.reviewObj.CustomerId = localStorage.getItem('id');
+                            this.reviewObj.RestaurantId = resId;
+                            this.reviewObj.OrderID = orderId;
+                            submitReview(this.reviewObj).then(response => {
+                                if(response.hasErrors) {
+                                    this.showNotification('error','Error','Review failed to submit!');
+                                    dialog.loading(false);
+                                } else {
+                                    this.updateReview.OrderNumber = orderId;
+                                    updateReview(this.updateReview).then(response => {
+                                        if(response.hasErrors) {
+                                            this.showNotification('error','Error','Review failed to submit!');
+                                            dialog.loading(false);
+                                        } else {
+
+                                        }
+                                    }, error => {
+                                        this.showNotification('error','Error','Review failed to submit!');
+                                        dialog.loading(false);
+                                    })
+                                }
+                            }, error => {
                                 this.showNotification('error','Error','Review failed to submit!');
-                            } else {
-                                this.showNotification('success','Success','Review submitted successfully');
-                            }
-                        }, error => {
-                            this.showNotification('error','Error','Review failed to submit!');
+                                dialog.loading(false);
+                            })
+                        }).catch(() => {
+                            this.showNotification('info','Info','Review submit cancelled');
+                            dialog.loading(false);
                         })
+
                     }
                 }
             }

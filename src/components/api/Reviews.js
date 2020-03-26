@@ -13,3 +13,10 @@ export function submitReview(data) {
         data
     })
 }
+export function updateReview(data) {
+    return service({
+        url: 'UpdateReview',
+        method: 'post',
+        data
+    })
+}
