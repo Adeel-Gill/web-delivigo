@@ -19,7 +19,7 @@
             <p>Find restaurants, specials, and coupons for free</p>
             <div class="row overlay">
             <div id="map" style="display: none;"></div>
-                <div class="col-md-8 col-12 p-0">
+                <div class="col-md-9 col-12 py-0">
                     <div class="row">
                         <div class="col-11 p-0">
                     <div id="geocoder" class="geocoder d-inline-block" style="width: 100%;" @select="showValues"></div></div>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
 <!--            <b-form-input v-model="text" placeholder="I Would like to eat...."></b-form-input>-->
-            <div class="col-md-4 col-12 p-0 btn-overlay">
+            <div class="col-md-3 col-12 p-0 btn-overlay">
 
             <b-button class="btn-search" @click="navigateTo">Search Food</b-button>
             </div>
@@ -224,7 +224,7 @@
     top: 10%;
 }
 .overlay{
-    margin-left: 50px;
+    /*margin-left: 50px;*/
 }
 .btn-overlay{
     text-align: left;
@@ -240,17 +240,30 @@
     vertical-align: unset;
     color: #ffffff;
     background: #df3e03;
-    height: 45px;
+    height: 44px;
     margin-left: 4px;
 }
+.btn-search:hover{
+    color: white;
+    background: #AE3F03;
+}
+.btn-search:active{
+    color: white !important;
+    background-color: #AE3F03 !important;
+}
+
 .btn-location{
     background-color: #df3e03;
-    height: 45px;
+    height: 44px;
     width: 40px;
     padding-top: 4px;
     border-radius:4px;
     margin-left: 4px;
 
+}
+.btn-location:hover{
+    color: white;
+    background: #AE3F03;
 }
 @media screen and (max-width: 400px) {
     .btn-search{

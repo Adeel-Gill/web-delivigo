@@ -29,7 +29,7 @@
     background-color: transparent;
 }
 .navbar-brand{
-    padding: 23px 0 !important;
+    /*padding: 23px 0 !important;*/
 }
 .nav-link.dropdown-toggle{
     font-family: pantonBold;
@@ -77,6 +77,7 @@ a.nav-link{
 }
 #carousel-2 .carousel-item img {
     width: 71% !important;
+    height: 500px !important;
 }
 #carousel-2 .carousel-caption {
     text-align: left;
@@ -227,6 +228,9 @@ a.nav-link{
     background-color: #f2f2f2 !important;
 
 }
+.mapboxgl-ctrl-geocoder--input{
+    height: 44px !important;
+}
 .bm-burger-button {
     position: relative !important;
 }
@@ -268,13 +272,27 @@ a.nav-link{
     .singin {
         padding: 0 10px 0 16px;
     }
-    }
+}
 
 /* change by arslan */
 @media screen and (max-width: 990px) {
 
     .slick-track{
         padding-left: 20px !important;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    .mapboxgl-ctrl-geocoder{
+        max-width: unset !important;
+    }
+    .mapboxgl-ctrl-geocoder--icon {
+        top: 11px !important;
+    }
+    .mapboxgl-ctrl-geocoder--icon-search{
+        left: 6px !important;
+        height: 23px !important;
+        width: 23px !important;
     }
 }
 @media screen and (max-width: 760px) {
