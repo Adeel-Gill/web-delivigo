@@ -97,12 +97,15 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="float-right">
+                        <button class="btn btn-primary mr-2"><i class="fas fa-download"></i> &nbsp;Receipt</button>
                         <router-link :to="{path:'/orderTracking/'+currentOrderObject.Order.OrderId,query:{cusID:currentOrderObject.Customer.CustomerId}}">
-                            <button class="btn btn-primary float-right"
+                            <button class="btn btn-primary"
                                     :disabled="(statuses.OrderDelivered === currentOrderObject.Order.OrderStatusId)">
                                 Track Order
                             </button>
                         </router-link>
+                        </div>
                     </div>
 
                 </div>
@@ -313,7 +316,7 @@
         padding-left: 10px;
     }
     .sub-catg p,.sub-catg span{
-        font-family: pantonl;
+        font-family: panton;
         text-transform: capitalize;
         margin-bottom: 0;
         font-size: 16px;
