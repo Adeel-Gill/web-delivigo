@@ -2,7 +2,7 @@
     <div class="downloads">
         <div class="container">
             <div class="app-download mx-auto">
-                <div class="row mt-5">
+                <div class="row">
                     <div class="col-md-8 col-12 ar-head-text">
                         <h3>{{download.appHeading}}</h3>
                         <p>{{download.appDescription}}</p>
@@ -70,14 +70,14 @@ export default {
     position: relative;
 }
 .app-download h3 {
-    font-family: "PantonSemi";
+    /*font-family: "PantonSemi";*/
     font-weight: 500;
     font-size: 46px;
     color: white;
     margin: 0;
 }
 .app-download p {
-    font-family: "PantonSemi";
+    /*font-family: "HH-Samuel",sans-serif;*/
     color: white;
     font-size: 18px;
     max-width: 327px;
@@ -90,14 +90,18 @@ export default {
 .margin-right-10px{
     margin-right: 10px;
 }
+.ar-head-text{
+    margin-top: 30px;
+}
 @media screen and (min-width: 960px){
     .ar-head-text{
         display: inline;
+        margin-top: 80px;
     }
     .store-image{
         display: inline;
         position: relative;
-        top:-380px;
+        top:-315px;
     }
 }
 @media screen and (max-width: 576px) {}

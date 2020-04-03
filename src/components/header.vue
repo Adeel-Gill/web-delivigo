@@ -4,9 +4,9 @@
       toggleable="lg"
       type="dark"
       variant="info"
-      class="filter-header"
+      class="filter-header p-0"
     >
-      <div class="container">
+      <div class="container p-0">
         <b-navbar-brand to="/">
           <img class="img-width" src="/images/logo.png" />
         </b-navbar-brand>
@@ -14,7 +14,7 @@
         <b-collapse id="nav-collapse" is-nav>
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto" id="navbar-dropdown">
-            <b-nav-item-dropdown text="ENG" right class="mt-2">
+            <b-nav-item-dropdown text="ENG" right class="">
               <b-dropdown-item href="#">EN</b-dropdown-item>
               <b-dropdown-item href="#">ES</b-dropdown-item>
               <b-dropdown-item href="#">RU</b-dropdown-item>
@@ -26,9 +26,9 @@
                 <!--                    <img src="//placehold.it/50" />-->
                   </div>
             </b-nav-item>
-            <b-nav-item to="/signin" activClass="active" v-if="isLoggedOut === 'true' || isLoggedOut == undefined? true: false" class="singin mt-2">Sign In</b-nav-item>
-            <b-nav-item to="/signup" activClass="active" v-if="isLoggedOut === 'true' || isLoggedOut == undefined? true: false" class="register mt-2">Register</b-nav-item>
-            <b-nav-item  activClass="active" v-if="isLogin === 'true'? true: false" class="register mt-2" @click="signOut">Sign Out</b-nav-item>
+            <b-nav-item to="/signin" activClass="active" v-if="isLoggedOut === 'true' || isLoggedOut == undefined? true: false" class="singin ">Sign In</b-nav-item>
+            <b-nav-item to="/signup" activClass="active" v-if="isLoggedOut === 'true' || isLoggedOut == undefined? true: false" class="register">Register</b-nav-item>
+            <b-nav-item  activClass="active" v-if="isLogin === 'true'? true: false" class="register" @click="signOut">Sign Out</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </div>
@@ -161,7 +161,7 @@
     background-image: url(/images/topbar-bg.png);
     border: none;
     width: 100%;
-    height: 65px;
+    /*height: 65px;*/
     background-repeat: no-repeat;
     background-size: cover;
   }
@@ -174,5 +174,10 @@
   }
   a.nav-link{
     color: #ffffff !important;
+  }
+  .img-width{
+    width: 135px;
+    padding-top: 6px;
+    padding-bottom:6px;
   }
 </style>

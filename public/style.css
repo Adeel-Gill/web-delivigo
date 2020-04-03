@@ -16,7 +16,10 @@
 
 @font-face {
     font-family: HH-Samuel;
-    src:url("fonts/hh-Samuel-font.ttf");
+    src:url("fonts/hh-Samuel-font.ttf")
+    format("truetype");
+    font-weight:normal;
+    font-style:normal
 }
    *{
        font-family:'Roboto', sans-serif;
@@ -245,7 +248,9 @@ a.nav-link{
     width: 970px;
 }
 
-
+.mapboxgl-ctrl-geocoder{
+    min-width: 190px !important;
+}
 @media screen and (min-width: 1200px) and (max-width: 1299px) {
     .container {
         padding-top: 0 !important;
@@ -344,9 +349,11 @@ a.nav-link{
     }
 }
 @media screen and (max-width: 400px) {
-
     .slick-track{
         padding-left: 0px !important;
+    }
+    .mapboxgl-ctrl-geocoder--input{
+        height: 35px !important;
     }
 }
 

@@ -2,9 +2,9 @@
     <div v-if="">
         <landing-banner></landing-banner>
         <app-available-cities></app-available-cities>
-        <popular-Restaurant  ></popular-Restaurant>
+        <!--<popular-Restaurant  ></popular-Restaurant>-->
         <delivery-process></delivery-process>
-        <featured-restaurants></featured-restaurants>
+        <!--<featured-restaurants></featured-restaurants>-->
         <app-download></app-download>
     </div>
 </template>
