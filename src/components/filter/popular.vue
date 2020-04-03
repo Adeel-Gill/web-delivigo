@@ -8,9 +8,13 @@
       </div>
       <div class="clear"></div>
       <div class="restaurants-list" v-if="popularNotEmpty">
-        <div class="row">
-          <restaurantsData v-for= "restaurant in restaurants.slice(0,3)" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
-        </div>
+<!--        <div class="row">-->
+<!--        <carousel :autoplay="true" :nav="false" :responsive="{0:{items:1,nav:false},600:{items:2,nav:true},1000:{items:3,nav:false}}">-->
+          <div class="owl-carousel owl-theme">
+            <restaurantsData v-for= "restaurant in restaurants.slice(0,3)" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
+          </div>
+<!--        </carousel>-->
+<!--        </div>-->
       </div>
       <div class="row" v-else>
         <app-empty-error></app-empty-error>
@@ -19,11 +23,16 @@
 </template>
 <script>
 import restaurant from '../restaurant/restaurant';
+import carousel from 'vue-owl-carousel2';
 import emptyError from "../error/emptyError";
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel';
+import 'jquery';
 export default {
     components: {
         restaurantsData: restaurant,
-      appEmptyError: emptyError
+      appEmptyError: emptyError,
+      carousel
     },
     data(){
         return{
@@ -51,6 +60,33 @@ export default {
         this.restaurants = popularRestaurants;
         if(popularRestaurants.length > 3) {
           this.popularMore = true;
+          $(document).ready(function(){
+              $('.owl-carousel').owlCarousel({
+                  loop:true,
+                  dots: false,
+                  autoplay:true,
+                  autoplayTimeout:2000,
+                  autoplayHoverPause:true,
+                  responsiveClass:false,
+                  margin:10,
+                  lazyLoad:true,
+                  responsive:{
+                      0:{
+                          items:1,
+                          nav:true
+                      },
+                      600:{
+                          items:2,
+                          nav:true
+                      },
+                      1000:{
+                          items:3,
+                          nav:true,
+                          loop:false
+                      }
+                  }
+              });
+          });
         }
       } else {
         this.popularNotEmpty = false;
