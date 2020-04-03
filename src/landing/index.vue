@@ -2,30 +2,33 @@
     <div v-if="">
         <landing-banner></landing-banner>
         <app-available-cities></app-available-cities>
-        <popular-Restaurant  ></popular-Restaurant>
+<!--        <popular-Restaurant  ></popular-Restaurant>-->
         <delivery-process></delivery-process>
-        <featured-restaurants></featured-restaurants>
+<!--        <featured-restaurants></featured-restaurants>-->
+        <app-what-is-delivigo></app-what-is-delivigo>
         <app-download></app-download>
     </div>
 </template>
 <script>
 
 import Banner from './landingBanner.vue';
-import Popular from './popularrestaurant.vue';
+// import Popular from './popularrestaurant.vue';
 import Process from './delivery.vue';
-import Featured from './featuredRestaurants.vue';
+// import Featured from './featuredRestaurants.vue';
 import Download from './appdownload.vue';
 import {fetchResturantsData} from "../components/api/Landing";
 import availableCities from "./availableCities";
+import whatIsDelivigo from "./whatIsDelivigo";
 
 
 export default {
     components:{
     landingBanner: Banner,
-    popularRestaurant: Popular,
+    // popularRestaurant: Popular,
     deliveryProcess: Process,
-    featuredRestaurants: Featured,
+    // featuredRestaurants: Featured,
     appAvailableCities: availableCities,
+    appWhatIsDelivigo: whatIsDelivigo,
     appDownload: Download,
     },
     data(){
