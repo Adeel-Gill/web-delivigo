@@ -200,11 +200,11 @@
     font-size: 85px;
     letter-spacing: 1px;
     /*font-family: "H.H. Samuel";*/
-    font-family: "pantonSemi";
+    font-family: "HH-Samuel" !important;
     display: inline-block;
 }
 .banner-caption p {
-    font-family: "pantonSemi";
+    font-family: "HH-Samuel";
     font-size: 30px;
     line-height: 32px;
     font-weight: normal;
