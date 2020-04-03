@@ -19,8 +19,11 @@
                 </div>
                 <div class="button">
                     <button type="submit" @click="checkCredentials" class="btn btn-submit">SIGN IN</button>
+
                 </div>
+                <v-facebook-login app-id="649127768995419" @login="fbLogin"></v-facebook-login>
             </form>
+
         </div>
     </div>
 </template>
@@ -29,9 +32,13 @@
     import {checkCredentials} from "../api/Profile";
     import {mapActions} from "vuex";
     import {EventBus} from "../../main";
+    import VFacebookLogin from "vue-facebook-login-component";
 
     export default {
         name: "Login",
+        components: {
+          VFacebookLogin
+        },
         data() {
             return {
                 userData: {
@@ -39,7 +46,9 @@
                     email: '',
                     DeviceUniqueCode: "web",
                     DeviceToken: "web",
-                }
+                },
+                scope: null,
+                FB: null,
             }
         },
         mounted() {
@@ -94,6 +103,12 @@
                 } else {
                     return false;
                 }
+            },
+            fbLogin({FB, scope}) {
+                this.FB = FB;
+                this.scope = scope;
+                console.log("FB",this.FB);
+                console.log("scope",this.scope);
             }
         }
 
@@ -136,7 +151,7 @@
     }
     .button{
         margin-top: 50px;
-        margin-bottom: 100px;
+        margin-bottom: 10px;
     }
     .button button{
         border-radius: 30px;

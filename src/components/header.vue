@@ -4,7 +4,7 @@
       toggleable="lg"
       type="dark"
       variant="info"
-      class="bg-info"
+      class="filter-header"
     >
       <div class="container">
         <b-navbar-brand to="/">
@@ -158,7 +158,12 @@
     background-color: black !important;
   }
   .filter-header {
-    background-color: black !important;
+    background-image: url(/images/topbar-bg.png);
+    border: none;
+    width: 100%;
+    height: 65px;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .filter-header div#nav-collapse li.nav-item.singin a.nav-link {
     border: 2px solid transparent;

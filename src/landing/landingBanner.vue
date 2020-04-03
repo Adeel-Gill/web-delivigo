@@ -66,7 +66,7 @@
           data: {},
           longitude: 0,
           latitiude: 0,
-          position: {},
+          position: null,
           userAddress: '',
         slides:[
             {
@@ -111,17 +111,39 @@
                   this.showNotification('error','Error','Please select nearby location...!');
               }
           } else {
-              if((this.position.coords.longitude != null && this.position.coords.latitude != null)) {
-                  this.$router.push({path: '/filter',query: {longitude: this.position.coords.longitude, latitude: this.position.coords.latitude}});
-                  this.$root.$on('popularData', popularRestaurants => {
-                      console.log('inLandingBannerOn'+popularRestaurants);
-                      EventBus.$emit('popularData',popularRestaurants);
-                  })
+              console.log("here",this.position);
+              if(this.position != null) {
+                  console.log("inside condition");
+                  if((this.position.coords.longitude != null && this.position.coords.latitude != null)) {
+                      this.$router.push({path: '/filter',query: {longitude: this.position.coords.longitude, latitude: this.position.coords.latitude}});
+                      this.$root.$on('popularData', popularRestaurants => {
+                          console.log('inLandingBannerOn'+popularRestaurants);
+                          EventBus.$emit('popularData',popularRestaurants);
+                      })
+                  } else {
+                      console.log("hereree");
+                      this.showNotification('error','Error','Please select nearby location...!');
+                  }
               } else {
                   this.showNotification('error','Error','Please select nearby location...!');
               }
+
           }
         },
+        isEmpty(obj) {
+          console.log("object",obj)
+          console.log(Object.getOwnPropertyNames(obj));
+          return Object.keys(obj).length ===0;
+              // for(var key in obj) {
+              //     console.log("key",key);
+              //     console.log("obj",obj.hasOwnProperty(key));
+              //     if(obj.hasOwnProperty(key)) {
+              //         console.log("hereee");
+              //         return false;
+              //     }
+              // }
+              // return true;
+          },
          getUserLocation() {
           navigator.geolocation.getCurrentPosition((position) => {
               this.position = position;
