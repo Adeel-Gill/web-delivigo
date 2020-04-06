@@ -143,7 +143,7 @@
         font-family:pantonb ;
     }*/
     a.nav-link{
-        font-family: PantonSemi;
+        /*font-family: PantonSemi;*/
         color: #000000;
     }
     .m-top{

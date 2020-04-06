@@ -13,7 +13,7 @@
                             <img :src="phoneimg" />
                         </div>
                     </div>
-                    <div class="col-12 col-md-4 store-image">
+                    <div class="store-image">
                         <a href="#" class="margin-right-10px"><img :src="download.iphone" /></a>
                         <a href="#"><img :src="download.android" /></a>
                     </div>
@@ -65,7 +65,9 @@ export default {
 }
 .store-image{
     text-align: center;
+    margin: auto;
 }
+
 .app-download{
     position: relative;
 }
@@ -100,8 +102,9 @@ export default {
     }
     .store-image{
         display: inline;
-        position: relative;
-        top:-315px;
+        position: absolute;
+        top:240px;
+        margin: auto;
     }
 }
 @media screen and (max-width: 576px) {}

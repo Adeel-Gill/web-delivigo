@@ -116,7 +116,8 @@
         text-align: center;
     }
     .catagory-text h5 {
-        font-family: "pantonSemi";
+        /*font-family: "pantonSemi";*/
+        font-weight: 400;
         /*font-weight: bold;*/
         font-size: 22px;
         padding-top: 15px;

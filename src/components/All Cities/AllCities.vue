@@ -84,7 +84,7 @@
         color: #0030b4;
         display: inline-block;
         margin: 10px 0 20px;
-        font-family: "Panton";
+        /*font-family: "Panton";*/
         font-weight: bold;
         font-size: 17px;
     }

@@ -67,6 +67,7 @@
         font-size: 20px;
         font-weight: 500;
         margin: 0;
+        text-transform: capitalize;
         display: inline-block;
         padding: 0 10px;
     }

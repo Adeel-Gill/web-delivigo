@@ -77,7 +77,7 @@ export default {
     margin-bottom: 28px;
 }
 .copyright p{
-    font-family: Panton;
+    /*font-family: Panton;*/
     font-weight: normal;
     font-size: 18px;
     color: #cccccc;
@@ -98,7 +98,7 @@ export default {
     padding: 0 25px 0 0;
 }
 .quickLinks a{
-    font-family: Panton;
+    /*font-family: Panton;*/
     font-weight: normal;
     font-size: 18px;
     color: #cccccc;
@@ -111,7 +111,7 @@ export default {
     padding: 50px 0;
 }
 .app-download h3 {
-    font-family: "PantonSemi";
+    /*font-family: "PantonSemi";*/
     font-weight: 500;
     font-size: 46px;
     color: white;

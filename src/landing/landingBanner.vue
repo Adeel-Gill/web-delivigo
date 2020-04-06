@@ -19,7 +19,9 @@
             <p>Find restaurants, specials, and coupons for free</p>
             <div class="row overlay">
             <div id="map" style="display: none;"></div>
-                <div class="col-md-9 col-12 py-0">
+                <div class="container">
+                    <div class="row">
+                <div class="col-md-10 col-12 py-0">
                     <div class="row">
                         <div class="col-11 p-0">
                     <div id="geocoder" class="geocoder d-inline-block" style="width: 100%;" @select="showValues"></div></div>
@@ -35,11 +37,14 @@
                     </button></div>
                     </div>
                 </div>
+
 <!--            <b-form-input v-model="text" placeholder="I Would like to eat...."></b-form-input>-->
-            <div class="col-md-3 col-12 p-0 btn-overlay">
+            <div class="col-md-2 col-12 p-0 btn-overlay">
 
             <b-button class="btn-search" @click="navigateTo">Search</b-button>
             </div>
+                </div>
+                </div>
             </div>
         </div>
     </b-carousel>

@@ -391,7 +391,8 @@
     /*}*/
     .profile-heading{
         color: #5860ff;
-        font-size: 38px;
+        font-size: 34px;
+        font-weight: 500;
         margin-bottom: 50px;
     }
     .address-block{
@@ -399,7 +400,7 @@
         /*margin-bottom: 30px;*/
     }
     .address-block p{
-        font-size: 18px;
+        font-size: 16px;
         padding-left: 5px;
         display: inline-block;
     }

@@ -125,18 +125,19 @@
     }
     .profile-heading{
         color: #5860ff;
-        font-size: 38px;
+        font-size: 34px;
+        font-weight: 500;
         margin-bottom: 50px;
     }
     .form-group label{
-        font-size: 21px;
+        font-size: 19px;
         margin-top: 20px;
     }
     .myProfile input{
         border: 0;
         border-bottom: 1px solid #e6e6e6;
         border-radius: 0;
-        font-size: 18px;
+        font-size: 16px;
         background:none;
     }
     .myProfile input:focus{
