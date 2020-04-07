@@ -6,3 +6,10 @@ export function checkIfStripeExist(id) {
         method: 'get',
     })
 }
+
+export function verifyStripe(id) {
+    return service({
+        url: `StripeAccount/${id}`,
+        method: 'get',
+    })
+}
