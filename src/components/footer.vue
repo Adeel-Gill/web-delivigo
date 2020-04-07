@@ -175,7 +175,7 @@ export default {
     /*font-family: "PantonSemi";*/
     font-weight: 500;
     font-size: 30px;
-    color: #cccccc;
+    color: rgb(235 155 70);
     margin: 0;
 }
 .app-download p {
