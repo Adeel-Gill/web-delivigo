@@ -172,7 +172,6 @@
                     userInformation => {
                     console.log("userInfo",userInformation);
                         this.personalID = userInformation.id;
-                        debugger;
                         if(this.personalID != '' || this.personalID != null) {
                             this.fbUserData.FirstName = userInformation.first_name;
                             this.fbUserData.LastName = userInformation.last_name;

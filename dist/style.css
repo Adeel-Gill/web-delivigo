@@ -16,7 +16,10 @@
 
 @font-face {
     font-family: HH-Samuel;
-    src:url("fonts/hh-Samuel-font.ttf");
+    src:url("fonts/hh-Samuel-font.ttf")
+    format("truetype");
+    font-weight:normal;
+    font-style:normal
 }
    *{
        font-family:'Roboto', sans-serif;
@@ -37,7 +40,7 @@
     /*padding: 23px 0 !important;*/
 }
 .nav-link.dropdown-toggle{
-    font-family: pantonBold;
+    /*font-family: pantonBold;*/
     font-size: 15px;
     color: #b3b3b3 !important;
 }
@@ -46,7 +49,7 @@
     padding: 0px 0px;
 }
 a.nav-link{
-    font-family: pantonBold;
+    /*font-family: pantonBold;*/
     font-size: 14px;
     /*color: #ffffff !important;*/
 }
@@ -55,8 +58,11 @@ a.nav-link{
 }
 .singin a{
     padding: 8px 31px !important;
-    border: 2px solid #df3e03;
+    border: 2px solid #df3e03 !important;
     border-radius: 5px;
+}
+.singin a:hover{
+    background-color: #df3e03;
 }
 .register a{
     padding: 9px 27px !important;
@@ -120,9 +126,9 @@ a.nav-link{
 .dropdown-toggle::after {
     margin-left: 13px !important;
     vertical-align: 0 !important;
-    border-top: 10px solid !important;
-    border-right: 7px solid transparent !important;
-    border-left: 7px solid transparent !important;
+    border-top: 9px solid !important;
+    border-right: 6px solid transparent !important;
+    border-left: 6px solid transparent !important;
 }
 #dropdown {
     border: none;
@@ -133,18 +139,19 @@ a.nav-link{
     background: #f2f2f2;
     color: #999999;
     border: none;
-    padding: 20px 25px;
-    font-family: "Panton";
-    font-weight: bold;
-    font-size: 21px;
+    padding: 12px 25px;
+    /*font-family: "Panton";*/
+    font-weight: 500;
+    font-size: 20px;
     width:100%; /*320px;*/
     text-align: left;
+    border-radius: 5px;
 }
 #dropdown .dropdown-toggle::after{
     vertical-align: 0 !important;
-    border-top: 13px solid !important;
-    border-right: 10px solid transparent !important;
-    border-left: 10px solid transparent !important;
+    /*border-top: 13px solid !important;*/
+    /*border-right: 10px solid transparent !important;*/
+    /*border-left: 10px solid transparent !important;*/
     color: #1f1f1f;
     /*margin-left: 177px !important;*/
     float: right;
@@ -176,7 +183,7 @@ a.nav-link{
     right: -100px;
 }
 #tabes-venue .nav-tabs .nav-link {
-    font-family: "panton";
+    /*font-family: "panton";*/
     font-size: 18px;
     font-weight: normal;
     color: #040404 !important;
@@ -245,7 +252,9 @@ a.nav-link{
     width: 970px;
 }
 
-
+.mapboxgl-ctrl-geocoder{
+    min-width: 190px !important;
+}
 @media screen and (min-width: 1200px) and (max-width: 1299px) {
     .container {
         padding-top: 0 !important;
@@ -344,9 +353,11 @@ a.nav-link{
     }
 }
 @media screen and (max-width: 400px) {
-
     .slick-track{
         padding-left: 0px !important;
+    }
+    .mapboxgl-ctrl-geocoder--input{
+        height: 35px !important;
     }
 }
 
@@ -399,4 +410,9 @@ a.nav-link{
 .vue-star-rating[data-v-34cbeed1] {
     display: unset !important;
     align-items: center;
+}
+.errorMessage{
+  color: red;
+  font-size: smaller;
+  margin-left: 10px !important;
 }
