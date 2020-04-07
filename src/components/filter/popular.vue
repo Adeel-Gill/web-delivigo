@@ -11,7 +11,7 @@
 <!--        <div class="row">-->
 <!--        <carousel :autoplay="true" :nav="false" :responsive="{0:{items:1,nav:false},600:{items:2,nav:true},1000:{items:3,nav:false}}">-->
           <div class="owl-carousel owl-theme">
-            <restaurantsData v-for= "restaurant in restaurants.slice(0,3)" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
+            <restaurantsData v-for= "restaurant in restaurants" :key="restaurant.Id" :restaurant='restaurant'></restaurantsData>
           </div>
 <!--        </carousel>-->
 <!--        </div>-->
@@ -22,9 +22,8 @@
     </div>
 </template>
 <script>
-import restaurant from '../restaurant/restaurant';
-import carousel from 'vue-owl-carousel2';
-import emptyError from "../error/emptyError";
+import restaurant from '../restaurant/resturant-slider';
+import carousel from 'vue-owl-carousel2';import emptyError from "../error/emptyError";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel';
 import 'jquery';
@@ -69,20 +68,17 @@ export default {
                   autoplayHoverPause:true,
                   responsiveClass:false,
                   margin:10,
+                  nav:false,
                   lazyLoad:true,
                   responsive:{
                       0:{
-                          items:1,
-                          nav:true
+                          items:1
                       },
                       600:{
-                          items:2,
-                          nav:true
+                          items:2
                       },
                       1000:{
-                          items:3,
-                          nav:true,
-                          loop:false
+                          items:3
                       }
                   }
               });
@@ -107,7 +103,7 @@ export default {
     color: #0030b4;
     display: inline-block;
     margin: 10px 0 20px;
-    font-family: "Panton";
+    /*font-family: "Panton";*/
     font-weight: bold;
     font-size: 17px;
 }
@@ -121,3 +117,4 @@ export default {
   text-transform: uppercase;
 }
 </style>
+

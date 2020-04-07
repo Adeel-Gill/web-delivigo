@@ -69,8 +69,8 @@
     margin: 0;
 }
 .filter-caption h3 {
-    font-family: "pantonSemi";
-    /*font-weight: bold;*/
+    /*font-family: "pantonSemi";*/
+    font-weight: bold;
     font-size: 25px;
     color: black;
     text-shadow: none;

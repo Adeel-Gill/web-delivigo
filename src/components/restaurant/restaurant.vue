@@ -96,9 +96,9 @@ export default {
     /*height: 90px;*/
 }
 .restaurants-details h6{
-    font-family: "pantonSemi";
+    /*font-family: "pantonSemi";*/
     font-size: 18px;
-    /*font-weight: bold;*/
+    font-weight: 500;
     margin: 0;
     display: inline-block;
     padding: 0 10px;

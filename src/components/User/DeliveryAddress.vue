@@ -306,7 +306,8 @@
     /*}*/
     .profile-heading{
         color: #5860ff;
-        font-size: 38px;
+        font-size: 34px;
+        font-weight: 500;
         margin-bottom: 50px;
     }
     .address-block{
@@ -314,11 +315,11 @@
         margin-bottom: 10px;
     }
     .address-block h6{
-        font-size: 21px;
+        font-size: 19px;
         /*margin-top: 20px;*/
     }
     .address-block p{
-        font-size: 18px;
+        font-size: 16px;
         padding-left: 5px;
         display: inline-block;
         margin-bottom: 0;

@@ -19,13 +19,15 @@
             <p>Find restaurants, specials, and coupons for free</p>
             <div class="row overlay">
             <div id="map" style="display: none;"></div>
-                <div class="col-md-9 col-12 py-0">
+                <div class="container">
+                    <div class="row">
+                <div class="col-md-10 col-12 py-0">
                     <div class="row">
                         <div class="col-11 p-0">
                     <div id="geocoder" class="geocoder d-inline-block" style="width: 100%;" @select="showValues"></div></div>
                         <div class="col-1 p-0">
                     <button class="btn-location" @click="getAddress">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 25 25" id="ic-locate-round">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" id="ic-locate-round">
                             <g fill="none" fill-rule="evenodd">
                                 <path stroke-width="2" stroke="#fff" d="M11.5 22.5v-2.986l.471-.028a8.001 8.001 0 0 0 7.515-7.515l.028-.471H22.5h-2.986l-.028-.471a8.001 8.001 0 0 0-7.515-7.515l-.471-.028V.5v2.986l-.471.028a8.001 8.001 0 0 0-7.515 7.515l-.028.471H.5h2.986l.028.471a8.001 8.001 0 0 0 7.515 7.515l.471.028V22.5z"></path>
                                 <circle cx="11.5" cy="11.5" r="4" stroke-width="2" stroke="#fff"></circle>
@@ -35,11 +37,14 @@
                     </button></div>
                     </div>
                 </div>
-<!--            <b-form-input v-model="text" placeholder="I Would like to eat...."></b-form-input>-->
-            <div class="col-md-3 col-12 p-0 btn-overlay">
 
-            <b-button class="btn-search" @click="navigateTo">Search Food</b-button>
+<!--            <b-form-input v-model="text" placeholder="I Would like to eat...."></b-form-input>-->
+            <div class="col-md-2 col-12 p-0 btn-overlay">
+
+            <b-button class="btn-search" @click="navigateTo">Search</b-button>
             </div>
+                </div>
+                </div>
             </div>
         </div>
     </b-carousel>
@@ -222,14 +227,14 @@
     font-size: 85px;
     letter-spacing: 1px;
     /*font-family: "H.H. Samuel";*/
-    font-family: "HH-Samuel" !important;
+    font-family: "HH-Samuel",sans-serif !important;
     display: inline-block;
 }
 .banner-caption p {
-    font-family: "HH-Samuel";
+    font-family: "HH-Samuel",sans-serif;
     font-size: 30px;
     line-height: 32px;
-    font-weight: normal;
+    font-weight:lighter;
     display: inline-block;
     margin-bottom: 28px;
 }
@@ -243,7 +248,7 @@
     left: 15%;
     right: 15%;
     /*margin-left: -25%;*/
-    top: 10%;
+    top: 35%;
 }
 .overlay{
     /*margin-left: 50px;*/
@@ -281,18 +286,28 @@
     padding-top: 4px;
     border-radius:4px;
     margin-left: 4px;
-
 }
 .btn-location:hover{
     color: white;
     background: #AE3F03;
+}
+.btn-location svg{
+    height: 36px;
+    width: 36px;
 }
 @media screen and (max-width: 400px) {
     .btn-search{
         font-size: 18px;
         line-height: 18px;
         margin: 5px 0 0 0;
-        height: 36px;
+        height: 35px;
+    }
+    .btn-location{
+        height: 35px;
+    }
+    .btn-location svg{
+        height: 28px;
+        width: 28px;
     }
     .overlay{
         margin-left:0px;
@@ -308,6 +323,9 @@
         font-size: 16px;
         margin-bottom: 10px;
         line-height: 16px;
+    }
+    .banner-caption{
+        top: 10%;
     }
 }
 @media screen and (max-width: 576px) and (min-width: 401px) {
@@ -333,6 +351,9 @@
         font-size: 16px;
         margin-bottom: 10px;
         line-height: 16px;
+    }
+    .banner-caption{
+        top: 20%;
     }
 }
 
@@ -360,6 +381,9 @@
         margin-bottom: 10px;
         line-height: 22px;
     }
+    .banner-caption{
+        top: 25%;
+    }
 }
 
 @media screen and (max-width: 960px) and (min-width: 760px) {
@@ -385,6 +409,9 @@
     .btn-overlay{
         text-align: center;
         padding-left:0px;
+    }
+    .banner-caption{
+        top: 30%;
     }
 }
 

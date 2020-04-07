@@ -53,25 +53,25 @@
     }
     .name-desc h4 {
         color: #8ba939;
-        font-family: "pantonBold";
+        /*font-family: "pantonBold";*/
         font-size: 40px;
-        /*font-weight: 600;*/
+        font-weight: 600;
         margin: 0;
     }
     .name-desc p {
         color: #8f8f90;
         font-size: 23px;
-        font-family: "pantonSemi";
-        /*font-weight: 600;*/
+        /*font-family: "pantonSemi";*/
+        font-weight: 500;
         text-align: left;
         margin: 0;
     }
     .restaurnt-address p {
         text-align: left;
         margin: 0;
-        font-family: "pantonSemi";
+        /*font-family: "pantonSemi";*/
         font-size: 18px;
-        /*font-weight: 600;*/
+        font-weight: 500;
     }
     .reviews {
         float: right;

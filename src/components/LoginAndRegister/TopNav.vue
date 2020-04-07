@@ -33,12 +33,14 @@
         src:url("../../assets/fonts/Panton-Bold.ttf");
     }*/
     a.nav-link{
-        font-family: pantonb;
+        /*font-family: pantonb;*/
+        font-weight: bold;
         color: #b3b3b3 !important;
     }
     .nav-link{
-        font-family: Panton-Bold;
+        /*font-family: Panton-Bold;*/
         font-size: 15px;
+        font-weight: bold;
         color: #5860ff !important;
     }
     .nav-item a{

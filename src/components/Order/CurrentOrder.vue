@@ -16,7 +16,7 @@
                                 <div class="">
                                     <div class="rating mt-4 mb-3">
                                         <div class="rating mt-4 mb-3">
-                                            <star-rating :rating="0" :read-only="true" :star-size="35" :rtl="true"></star-rating>
+                                            <star-rating :rating="0" :read-only="true" :star-size="30" :rtl="true"></star-rating>
                                         </div>
                                         <!--                                    <star-rating :increment="0.5"></star-rating>-->
                                     </div>
@@ -316,11 +316,11 @@
         padding-left: 10px;
     }
     .sub-catg p,.sub-catg span{
-        font-family: panton;
+        /*font-family: panton;*/
         text-transform: capitalize;
         margin-bottom: 0;
         font-size: 16px;
-        /*font-weight: lighter;*/
+        font-weight: lighter;
     }
     .collapse-head{
         font-size: 19px;
