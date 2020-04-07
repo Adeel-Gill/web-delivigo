@@ -4,21 +4,25 @@
             <form action="" v-on:submit.prevent class="myProfile">
                 <div class="form-group">
                     <label for="email">EMAIL ADDRESS</label>
+                    <label class="errorMessage" id="emailError"></label>
                     <input type="email"
                            class="form-control"
                            v-model="userData.email"
                            placeholder="abc@mail.com"
+                            v-on:input="checkEmail()"
                            id="email" required>
                 </div>
                 <div class="form-group">
                     <label for="npwd">PASSWORD</label>
+                    <label class="errorMessage" id="passwordError"></label>
                     <input type="password"
                            class="form-control"
                            placeholder="Password Here...!"
+                            v-on:input="checkPassword()"
                            v-model="userData.password" id="npwd" required>
                 </div>
                 <div class="button">
-                    <button type="submit" @click="checkCredentials" class="btn btn-submit">SIGN IN</button>
+                    <button type="submit" @click="checkCredentials" :disabled="disableSubmit" class="btn btn-submit">SIGN IN</button>
 
                 </div>
 <!--                <v-facebook-login app-id="649127768995419" @login="fbLogin"></v-facebook-login>-->
@@ -48,6 +52,7 @@
     // import VFacebookLogin from "vue-facebook-login-component";
     // import { VFBLoginScope as VFacebookLoginScope } from 'vue-facebook-login-component'
     import facebookLogin from 'facebook-login-vuejs';
+     import {validEmail} from "../util/validate";
     export default {
         name: "Login",
         components: {
@@ -64,13 +69,12 @@
                     DeviceToken: "web",
                 },
                 fbUserData: {
-
+                    FirstName: "",
+                    LastName: "",
                     FacebookUId: "",
                     ImageUrl: "",
                     Password: "",
                     Email: "",
-
-
                     DeviceUniqueCode: "web",
                     DeviceToken: "web",
                 },
@@ -84,6 +88,9 @@
                 email: '',
                 personalID: '',
                 FB: undefined,
+                emailCheck: false,
+                passwordCheck: false,
+                disableSubmit: true,
                 url: ''
             }
         },
@@ -122,7 +129,7 @@
                             // this.storeToken('storeToken',response.AuthToken, response)
 
                         } else {
-                            console.log('Error: '+ response.ResultMessages[0].Message);
+                            
                             this.showNotification('error', 'Error', 'Sign in failed');
                         }
                     }, error => {
@@ -165,7 +172,10 @@
                     userInformation => {
                     console.log("userInfo",userInformation);
                         this.personalID = userInformation.id;
+                        debugger;
                         if(this.personalID != '' || this.personalID != null) {
+                            this.fbUserData.FirstName = userInformation.first_name;
+                            this.fbUserData.LastName = userInformation.last_name;
                             this.fbUserData.FacebookUId = this.fbUserData.Password = userInformation.id;
                             this.fbUserData.Email = userInformation.email;
                             this.fbUserData.ImageUrl = userInformation.picture.data.url;
@@ -202,6 +212,57 @@
             },
             onLogout() {
                 this.isConnected = false;
+            },
+            checkEmail() {
+                if(validEmail(this.userData.email)) {
+                   document.getElementById('emailError').style.visibility = "hidden";
+                   document.getElementById('emailError').innerHTML = "";
+                   document.getElementById('email').style.borderColor = "grey";
+                //    this.disableButton = false;
+                this.emailCheck = true;
+                   return true;
+                } else {
+                   document.getElementById('emailError').style.visibility = "visible";
+                   document.getElementById('emailError').innerHTML = "Email invalid...!";
+                   document.getElementById('email').style.borderColor = "red";
+                //    this.disableButton = true;
+                this.emailCheck = false;
+                   return false;
+                }
+            },
+            checkPassword() {
+                var res = false;
+                if(this.userData.password === "") {
+                    document.getElementById('passwordError').style.visibility = "visible";
+                    document.getElementById('passwordError').innerHTML = "Password Cannot Be Empty...!";
+                    document.getElementById('npwd').style.borderColor = "red";
+                    this.passwordCheck = false;
+                } else if(!this.userData.password.match(/^[a-zA-Z0-9\s#]+$/)) {
+                    document.getElementById('passwordError').style.visibility = "visible";
+                    document.getElementById('passwordError').innerHTML = "Wrong Input alphabets only...!";
+                    document.getElementById('npwd').style.borderColor = "red";
+                    this.passwordCheck = false;
+                } else if(this.userData.password.length < 6) {
+                    document.getElementById('passwordError').style.visibility = "visible";
+                    document.getElementById('passwordError').innerHTML = "Password must be upto 6 ..!";
+                    document.getElementById('npwd').style.borderColor = "red";
+                    this.passwordCheck = false;
+                } else {
+                    document.getElementById('passwordError').style.visibility = "hidden";
+                    document.getElementById('passwordError').innerHTML = "";
+                    document.getElementById('npwd').style.borderColor = "grey";
+                    this.passwordCheck = true;
+                    res = true;
+                }
+                this.checkAll();
+                return res;
+            },
+            checkAll() {
+                if(this.emailCheck && this.passwordCheck) {
+                    this.disableSubmit = false;
+                } else {
+                    this.disableSubmit = true;
+                }
             }
         }
 
