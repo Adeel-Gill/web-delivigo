@@ -83,7 +83,7 @@
     import {EventBus} from "../../main";
     import {deleteCustomerCard} from "../api/CardAndPayments";
     import VueLoadingButton from 'vue-loading-button';
-    import {checkIfStripeExist} from "../api/CheckStripe"
+    import {checkIfStripeExist, verifyStripe} from "../api/CheckStripe"
     import {validEmail} from "../util/validate"
     import {updateEmail} from "../api/UpdateEmail"
     let stripe = Stripe(`pk_test_TYPazNES7wQJ4WyN83oLTlEa`),
@@ -304,8 +304,33 @@
                 })
             },
             saveEmail() {
+                this.isLoading = true;
                 updateEmail(localStorage.getItem('id'),this.Email).then(response => {
                     
+                    if(response.HasErrors == true) {
+                        this.isLoading = false;
+                        this.showNotification("error","Error","Error occurred please try later!");
+                    } else {
+                        // this.isLoading = false;
+                        verifyStripe(localStorage.getItem('id')).then(response => {
+                            console.log("hereInVerify");
+                            if(response.HasErrors == true) {
+                                this.isLoading = false;
+                                this.showNotification("error","Error","Error occurred please try later!");
+                            } else {
+                                this.isLoading = false;
+                                this.showNotification("success","Success","Email updated successfully!");
+                                this.$bvModal.hide("modal-2");
+                                this.createCard();
+                            }
+                        }, error => {
+                            this.isLoading = false;
+                            this.showNotification("error","Error","Error occurred please try later!");
+                        })
+                    }
+                }, error => {
+                    this.isLoading = false;
+                    this.showNotification("error","Error","Error occurred please try later!");
                 })
             },
             validateEmail() {
@@ -333,6 +358,7 @@
                     if(!res) {
                         this.$bvModal.show('modal-2');
                     } else {
+                        this.$bvModal.show('modal-1');
                         setTimeout(()=> {
                             if(this.setOnce) {
                                 card.mount(this.$refs.card);
