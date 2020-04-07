@@ -37,7 +37,7 @@
                 <div class="form-check">
                     <span class="form-check-label"
                            for="materialUnchecked">
-                        I agree all the terms of services
+                        I agree to the <a href="#" @click="loadTermsModal">terms of services</a> and <a href="#" @click="loadPolicyModal">privacy policy.</a>
                         <input type="checkbox"
                                class="form-check-input"
                                ref="termsChecked"
