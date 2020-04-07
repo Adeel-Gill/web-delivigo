@@ -8,7 +8,7 @@
                         <p>{{download.appDescription}}</p>
 
                     </div>
-                    <div class="col-md-4 col-sm-8 col-12 mx-auto">
+                    <div class="col-md-4 col-sm-8 col-12 mx-auto py-0">
                         <div class="phone-image">
                             <img :src="phoneimg" />
                         </div>
@@ -105,6 +105,7 @@ export default {
         position: absolute;
         top:240px;
         margin: auto;
+        left: 16%;
     }
 }
 @media screen and (max-width: 576px) {}

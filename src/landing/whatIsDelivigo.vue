@@ -7,7 +7,7 @@
                 <h1>What is&nbsp;DeliviGo?</h1> <br>
                 <p>DeliviGo is a fresh option in food delivery business. We are local company, our roots are deep in the soil of Turku. Delivigo doesn’t deliver just food. Delivigo represents quality time with family and friends, calm everyday life and happy partytime.</p>
             </div>
-            <div class="col-md-8 col-12 py-5 pr-5 pl-0">
+            <div class="col-md-8 col-12 py-5 pr-md-5 pl-md-0">
                 <video src="/images/delivigo_promotional_video_lr.mp4" poster="/images/video-poster.png" controls muted></video>
             </div>
         </div>
