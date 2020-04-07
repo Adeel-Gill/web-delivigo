@@ -411,3 +411,8 @@ a.nav-link{
     display: unset !important;
     align-items: center;
 }
+.errorMessage{
+  color: red;
+  font-size: smaller;
+  margin-left: 10px !important;
+}

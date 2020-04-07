@@ -161,7 +161,7 @@
             },
             getUserData() {
                 EventBus.$emit('StartOverlay', true);
-                this.FB.api('/me', 'GET', { fields: 'id,name,email,picture.type(large)' },
+                this.FB.api('/me', 'GET', { fields: 'id,name,first_name,last_name,email,picture.type(large)' },
                     userInformation => {
                     console.log("userInfo",userInformation);
                         this.personalID = userInformation.id;

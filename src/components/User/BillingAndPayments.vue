@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-10">
                     <h1 class="profile-heading d-inline-block">Billing and Payments</h1>
-                    <b-button class="btn btn-submit float-right" @click="createCard" v-b-modal.modal-1><i class="fas fa-plus mr-3"></i>Add Card</b-button>
+                    <b-button class="btn btn-submit float-right" @click="createCard" ><i class="fas fa-plus mr-3"></i>Add Card</b-button>
                     <!--                <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Card</button>-->
                 </div>
             </div>
@@ -49,53 +49,28 @@
                         :styled="true"
                         @click.native="showToken">Save Card
                 </buttonSpinner>
-<!--                <button class="btn btn-submit" > Save-->
-<!--                </button>-->
-<!--                <div class="row">-->
-<!--                    <div class="col-md-12">-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="cNumber">Card Number</label>-->
-<!--                            <input type="text" v-model="cardData.cardNumber" class="form-control" id="cNumber">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                    <div class="col-md-6">-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="fName">First Name</label>-->
-<!--                            <input type="text" v-model="firstName" class="form-control" id="fName">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-6">-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="lName">Last Name</label>-->
-<!--                            <input type="text" v-model="lastName" class="form-control" id="lName">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                    <div class="col-md-3">-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="expDate">Expires On</label>-->
-<!--                            <input type="text" class="form-control" v-model="cardData.expMonth" placeholder="MM" id="expDate">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-3">-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="year">&nbsp;</label>-->
-<!--                            <input type="text" class="form-control" v-model="cardData.expYear" placeholder="YY" id="year">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-6">-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="security">CVC</label>-->
-<!--                            <input type="text" class="form-control" v-model="cardData.cvc" id="security">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="btn-modal">-->
-<!--                    <button @click="createCard" class="btn btn-submit">Continue</button>-->
-<!--                </div>-->
+            </b-modal>
+            <b-modal hide-footer refs="modal" class="my-modal"  @exit="close" id="modal-2" title="Update Email">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <label class="errorMessage" id="emailError"></label>
+                                <input type="text" required class="form-control" v-model="Email" v-on:input="validateEmail()" id="email">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-modal">
+                    <hr>
+                    <buttonSpinner
+                            :loading="isLoading"
+                            :disabled="disableButton"
+                            :styled="true"
+                            @click.native="saveEmail">Save Email
+                    </buttonSpinner>
+                </div>
             </b-modal>
         </div>
 </div>
@@ -108,6 +83,9 @@
     import {EventBus} from "../../main";
     import {deleteCustomerCard} from "../api/CardAndPayments";
     import VueLoadingButton from 'vue-loading-button';
+    import {checkIfStripeExist} from "../api/CheckStripe"
+    import {validEmail} from "../util/validate"
+    import {updateEmail} from "../api/UpdateEmail"
     let stripe = Stripe(`pk_test_TYPazNES7wQJ4WyN83oLTlEa`),
         elements = stripe.elements(),
         card = undefined;
@@ -126,10 +104,12 @@
                 status: '',
                 image: '',
                 close: false,
+                Email: '',
                 setOnce: false,
                 disableCard: true,
                 checked: false,
                 isAvailable: false,
+                disableButton: true,
                 cardData: {
                     CardNumber: '',
                     Brand: '',
@@ -316,26 +296,65 @@
                     //     this.$bvModal.hide('modal-1');
                     // });
             },
+            checkStripe() {
+                checkIfStripeExist(localStorage.getItem('id')).then(response => {
+                    return response.IsSripeId
+                }, error => {
+                    return 2;
+                })
+            },
+            saveEmail() {
+                updateEmail(localStorage.getItem('id'),this.Email).then(response => {
+                    
+                })
+            },
+            validateEmail() {
+                console.log(this.Email);
+                console.log('::',this.disableButton);
+                if(validEmail(this.Email)) {
+                    document.getElementById('emailError').style.visibility = "hidden";
+                   document.getElementById('emailError').innerHTML = "";
+                   document.getElementById('email').style.borderColor = "white";
+                   this.disableButton = false;
+                   return true;
+                } else {
+                   document.getElementById('emailError').style.visibility = "visible";
+                   document.getElementById('emailError').innerHTML = "Email invalid...!";
+                   document.getElementById('email').style.borderColor = "red";
+                   this.disableButton = true;
+                   return false;
+                }
+            },
             createCard() {
-                setTimeout(()=> {
-                    if(this.setOnce) {
-                        card.mount(this.$refs.card);
-                        this.showNotification('info','Info','Card is setted as once');
+                var res = this.checkStripe();
+                if(res == 2) {
+                    this.showNotification('error','Error','Error occurred please try later');
+                } else {
+                    if(!res) {
+                        this.$bvModal.show('modal-2');
                     } else {
-                        if(localStorage.getItem('creationCounter') === '0') {
-                            this.showNotification('info','Info','Card is not created firstly');
-                            card = elements.create('card');
-                            card.mount(this.$refs.card);
-                            localStorage.setItem('creationCounter', '1');
-                        } else {
-                            this.showNotification('info','Info','Card is not creation counter already started');
-                            card = elements.create('card');
-                            card.mount(this.$refs.card);
-                        }
-                        localStorage.setItem('setOnce', true);
+                        setTimeout(()=> {
+                            if(this.setOnce) {
+                                card.mount(this.$refs.card);
+                                this.showNotification('info','Info','Card is setted as once');
+                            } else {
+                                if(localStorage.getItem('creationCounter') === '0') {
+                                    this.showNotification('info','Info','Card is not created firstly');
+                                    card = elements.create('card');
+                                    card.mount(this.$refs.card);
+                                    localStorage.setItem('creationCounter', '1');
+                                } else {
+                                    this.showNotification('info','Info','Card is not creation counter already started');
+                                    card = elements.create('card');
+                                    card.mount(this.$refs.card);
+                                }
+                                localStorage.setItem('setOnce', true);
+                            }
+                            this.setOnce = true;
+                        },200)
                     }
-                    this.setOnce = true;
-                },200)
+                }
+                
             },
             destroyCard() {
                 // console.log('method Called');
