@@ -22,13 +22,13 @@
 
 <script>
     import SideNav from "./SideNav";
-    import Profile from "./Profile";
+    import profile2 from "./profile2";
     import DeliveryAddress from "./DeliveryAddress";
     export default {
         name: "Profile",
         components: {
             appSideNav: SideNav,
-            appProfile: Profile,
+            appProfile: profile2,
             appDeliveryAddress: DeliveryAddress
         }
     }
