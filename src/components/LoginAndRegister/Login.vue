@@ -21,9 +21,21 @@
                     <button type="submit" @click="checkCredentials" class="btn btn-submit">SIGN IN</button>
 
                 </div>
-                <v-facebook-login app-id="649127768995419" @login="fbLogin"></v-facebook-login>
-            </form>
+<!--                <v-facebook-login app-id="649127768995419" @login="fbLogin"></v-facebook-login>-->
+<!--                <v-facebook-login-scope app-id="649127768995419" v-model="model" @sdk-init="handleSdkInit">-->
+<!--                    &lt;!&ndash; Compose HTML/CSS here, otherwise nothing will be rendered &ndash;&gt;-->
+<!--                    <button  @click="doLogin">-->
+<!--                        &lt;!&ndash; Compose with `scope` here &ndash;&gt; Login-->
+<!--                    </button>-->
+<!--                </v-facebook-login-scope>-->
 
+            </form>
+            <facebook-login class="button"
+                            appId="649127768995419"
+                            @login="onLogin"
+                            @logout="onLogout"
+                            @sdk-loaded="sdkLoaded">
+            </facebook-login>
         </div>
     </div>
 </template>
@@ -31,13 +43,17 @@
 <script>
     import {checkCredentials} from "../api/Profile";
     import {mapActions} from "vuex";
+    import {facebookAPILogin} from "../api/FacebookLogin";
     import {EventBus} from "../../main";
-    import VFacebookLogin from "vue-facebook-login-component";
-
+    // import VFacebookLogin from "vue-facebook-login-component";
+    // import { VFBLoginScope as VFacebookLoginScope } from 'vue-facebook-login-component'
+    import facebookLogin from 'facebook-login-vuejs';
     export default {
         name: "Login",
         components: {
-          VFacebookLogin
+          // VFacebookLogin
+          //   VFacebookLoginScope
+            facebookLogin
         },
         data() {
             return {
@@ -47,8 +63,28 @@
                     DeviceUniqueCode: "web",
                     DeviceToken: "web",
                 },
-                scope: null,
-                FB: null,
+                fbUserData: {
+
+                    FacebookUId: "",
+                    ImageUrl: "",
+                    Password: "",
+                    Email: "",
+
+
+                    DeviceUniqueCode: "web",
+                    DeviceToken: "web",
+                },
+
+                // FB: {},
+                model: {},
+                scope: {},
+                //data
+                isConnected: false,
+                name: '',
+                email: '',
+                personalID: '',
+                FB: undefined,
+                url: ''
             }
         },
         mounted() {
@@ -104,11 +140,68 @@
                     return false;
                 }
             },
-            fbLogin({FB, scope}) {
-                this.FB = FB;
-                this.scope = scope;
-                console.log("FB",this.FB);
-                console.log("scope",this.scope);
+            fbLogin(response) {
+                console.log("response",response)
+                // this.FB = FB;
+                // this.scope = scope;
+                // console.log("FB",this.FB);
+                // console.log("scope",this.scope);
+                // this.scope.login(response => {
+                //     console.log("loginStatus", response);
+                // });
+            },
+            handleSdkInit({ FB, scope }) {
+                this.FB = FB
+                this.scope = scope
+            },
+            doLogin() {
+                this.scope.login(response => {
+                   console.log("loginResponse", response);
+                });
+            },
+            getUserData() {
+                EventBus.$emit('StartOverlay', true);
+                this.FB.api('/me', 'GET', { fields: 'id,name,email,picture.type(large)' },
+                    userInformation => {
+                    console.log("userInfo",userInformation);
+                        this.personalID = userInformation.id;
+                        if(this.personalID != '' || this.personalID != null) {
+                            this.fbUserData.FacebookUId = this.fbUserData.Password = userInformation.id;
+                            this.fbUserData.Email = userInformation.email;
+                            this.fbUserData.ImageUrl = userInformation.picture.data.url;
+                            facebookAPILogin(this.fbUserData).then(response => {
+                                if(response.HasErrors === false) {
+                                    this.showNotification('success', 'Success', 'Sign in successfully');
+                                    console.log('id',response.Id);
+                                    localStorage.setItem('userProfile',response.UrlImage);
+                                    this.$store.dispatch('storeToken',response);
+                                    this.$router.push({path:'/'});
+                                    localStorage.setItem("fbLogin", true);
+                                    this.$router.go();
+                                } else {
+                                    this.showNotification('error', 'Error', 'Sign in failed');
+                                }
+                            }, error => {
+                                console.log('error',error);
+                                this.showNotification('error', 'Error', 'Sign in failed');
+                            })
+                        }
+                        console.log('url',this.url);
+                    }
+                )
+                EventBus.$emit('StartOverlay', false);
+            },
+            sdkLoaded(payload) {
+                this.isConnected = payload.isConnected
+                this.FB = payload.FB
+                if (this.isConnected) this.getUserData()
+            },
+            onLogin() {
+                this.isConnected = true
+                this.getUserData()
+            },
+            onLogout() {
+                this.isConnected = false;
             }
         }
 

@@ -76,7 +76,11 @@
         if(img === '' || img === 'null') {
           return this.image = defaultUserPic;
         } else {
-          return this.image =  baseAddress + img;
+          if(localStorage.getItem("fbLogin") === "true") {
+            return img;
+          } else {
+            return this.image =  baseAddress + img;
+          }
         }
       },
       signOut() {

@@ -1,5 +1,5 @@
 
-@font-face {
+/*@font-face {
        font-family: pantonSemi;
        src:url("fonts/Panton-SemiBold.otf");
    }
@@ -12,9 +12,14 @@
 @font-face {
     font-family: pantonBold;
     src:url("fonts/Panton-Bold.otf");
+}*/
+
+@font-face {
+    font-family: HH-Samuel;
+    src:url("fonts/hh-Samuel-font.ttf");
 }
    *{
-       font-family:panton;
+       font-family:'Roboto', sans-serif;
    }
 
 .clear{
