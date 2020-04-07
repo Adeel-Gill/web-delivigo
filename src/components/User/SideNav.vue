@@ -159,6 +159,7 @@
         color: #000000;
         font-size: 20px;
         text-align: left;
+        font-weight: 500;
         /*margin-left: 60px;*/
     }
     .col-md-4{
