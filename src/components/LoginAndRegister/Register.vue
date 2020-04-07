@@ -47,6 +47,12 @@
                     <button type="submit" @click="registerUser" class="btn btn-submit">SIGN UP</button>
                 </div>
             </form>
+            <facebook-login class="button"
+                            appId="649127768995419"
+                            @login="onLogin"
+                            @logout="onLogout"
+                            @sdk-loaded="sdkLoaded">
+            </facebook-login>
         </div>
     </div>
 </template>
@@ -55,9 +61,14 @@
     import {registerUser} from "../api/Profile";
     import {baseAddress} from "../../main";
     import {EventBus} from "../../main";
-
+import facebookLogin from 'facebook-login-vuejs';
     export default {
         name: "Register",
+         components: {
+          // VFacebookLogin
+          //   VFacebookLoginScope
+            facebookLogin
+        },
         data() {
             return {
                 userData: {
@@ -71,6 +82,27 @@
                     deviceType: 'web',
                     deviceUniqueCode: 'web',
                 },
+                fbUserData: {
+
+                    FacebookUId: "",
+                    ImageUrl: "",
+                    Password: "",
+                    Email: "",
+
+
+                    DeviceUniqueCode: "web",
+                    DeviceToken: "web",
+                },
+                // FB: {},
+                model: {},
+                scope: {},
+                //data
+                isConnected: false,
+                name: '',
+                email: '',
+                personalID: '',
+                FB: undefined,
+                url: '',
                 result: true,
                 message: '',
                 objStatus: false
@@ -122,6 +154,50 @@
                     text: message,
                     duration: 2000
                 })
+            },
+            getUserData() {
+                EventBus.$emit('StartOverlay', true);
+                this.FB.api('/me', 'GET', { fields: 'id,name,first_name,last_name,email,picture.type(large)' },
+                    userInformation => {
+                    console.log("userInfo",userInformation);
+                        this.personalID = userInformation.id;
+                        if(this.personalID != '' || this.personalID != null) {
+                            this.fbUserData.FacebookUId = this.fbUserData.Password = userInformation.id;
+                            this.fbUserData.Email = userInformation.email;
+                            this.fbUserData.ImageUrl = userInformation.picture.data.url;
+                            facebookAPILogin(this.fbUserData).then(response => {
+                                if(response.HasErrors === false) {
+                                    this.showNotification('success', 'Success', 'Sign in successfully');
+                                    console.log('id',response.Id);
+                                    localStorage.setItem('userProfile',response.UrlImage);
+                                    this.$store.dispatch('storeToken',response);
+                                    this.$router.push({path:'/'});
+                                    localStorage.setItem("fbLogin", true);
+                                    this.$router.go();
+                                } else {
+                                    this.showNotification('error', 'Error', 'Sign in failed');
+                                }
+                            }, error => {
+                                console.log('error',error);
+                                this.showNotification('error', 'Error', 'Sign in failed');
+                            })
+                        }
+                        console.log('url',this.url);
+                    }
+                )
+                EventBus.$emit('StartOverlay', false);
+            },
+            sdkLoaded(payload) {
+                this.isConnected = payload.isConnected
+                this.FB = payload.FB
+                if (this.isConnected) this.getUserData()
+            },
+            onLogin() {
+                this.isConnected = true
+                this.getUserData()
+            },
+            onLogout() {
+                this.isConnected = false;
             }
         }
     }
