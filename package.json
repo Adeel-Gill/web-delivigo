@@ -13,6 +13,7 @@
     "bootstrap-vue": "^2.0.4",
     "core-js": "^2.6.5",
     "eslint-plugin-vue": "^5.2.3",
+    "facebook-login-vuejs": "^2.1.3",
     "mapbox-gl": "^1.6.1",
     "owl.carousel": "^2.3.4",
     "stripe": "^7.15.0",
