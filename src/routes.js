@@ -12,7 +12,8 @@ import {UserInfo} from "./components/store/UserInfo";
 import DeliveryAddress from "./components/User/DeliveryAddress";
 import OrderHistory from "./components/User/Order History";
 import Support from "./components/User/Support";
-import Profile from "./components/User/Profile";
+// import Profile from "./components/User/Profile";
+import profile2 from "./components/User/profile2";
 import Map from "./components/Map/Map";
 import checkout from "./components/SelectedRestaurant/Checkout";
 import BillingAndPayments from "./components/User/BillingAndPayments";
@@ -63,7 +64,7 @@ export const routes = [
     {path : '/filter/{id}', component: Filter},
 
     { path: '/user', component: User, children: [
-            { path: '/profile', component: Profile,
+            { path: '/profile', component: profile2,
                 beforeEnter(to, from, next) {
                 console.log('routeResult', localStorage.getItem('token'));
                     if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
