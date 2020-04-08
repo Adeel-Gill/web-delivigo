@@ -182,6 +182,7 @@
                                 if(response.HasErrors === false) {
                                     this.showNotification('success', 'Success', 'Sign in successfully');
                                     console.log('id',response.Id);
+                                    debugger;
                                     localStorage.setItem('userProfile',response.UrlImage);
                                     this.$store.dispatch('storeToken',response);
                                     this.$router.push({path:'/'});

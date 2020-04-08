@@ -25,7 +25,9 @@
                     </div>
                     <div class="clear"></div>
                     <div class="row">
-                        <new-delivigo v-for= "newRestaurant in newRestaurants.slice(0,3)" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
+                        <div class="owl-carousel owl-theme">
+                            <new-delivigo v-for= "newRestaurant in newRestaurants" :key="newRestaurant.Id" :restaurant='newRestaurant'></new-delivigo>
+                        </div>
                     </div>
                 </div>
                 <div class="row" v-else>
@@ -38,7 +40,9 @@
                     </div>
                     <div class="clear"></div>
                     <div class="row">
-                        <new-delivigo v-for= "newRestaurant in allRestaurants.slice(0,3)" :key="newRestaurant.Id" :newRestaurant='newRestaurant'></new-delivigo>
+                         <div class="owl-carousel owl-theme">
+                            <new-delivigo v-for= "newRestaurant in allRestaurants" :key="newRestaurant.Id" :restaurant='newRestaurant'></new-delivigo>
+                        </div>
                     </div>
                 </div>
                 <div class="row" v-else>
@@ -54,7 +58,11 @@
 <script>
 import Banner from './filterBanner.vue';
 import Catagories from './catagories.vue';
-import newDelivigo from './new/newdelivigo.vue';
+// import newDelivigo from './new/newdelivigo.vue';
+import restaurant from '../restaurant/resturant-slider';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel';
+import 'jquery';
 import popular from './popular';
 import sort from "./select-options/sort";
 import food from "./select-options/food";
@@ -66,7 +74,7 @@ export default {
     components:{
         Banner,
         Catagories,
-        newDelivigo,
+        newDelivigo : restaurant,
         popular,
         sort,
         food,
@@ -96,6 +104,7 @@ export default {
     mounted() {
       this.changeHeader();
       this.changeFooter();
+      
     },
     destroyed() {
         this.unChangeHeader();
@@ -152,6 +161,30 @@ export default {
                             this.allRestaurants = this.fetchedData.Restaurants;
                             if(this.allRestaurants.length > 3) {
                                 this.allRestaurantsMore = true;
+                                $(document).ready(function(){
+                                    $('.owl-carousel').owlCarousel({
+                                        loop:true,
+                                        dots: false,
+                                        autoplay:true,
+                                        autoplayTimeout:2000,
+                                        autoplayHoverPause:true,
+                                        responsiveClass:false,
+                                        margin:10,
+                                        nav:false,
+                                        lazyLoad:true,
+                                        responsive:{
+                                            0:{
+                                                items:1
+                                            },
+                                            600:{
+                                                items:2
+                                            },
+                                            1000:{
+                                                items:3
+                                            }
+                                        }
+                                    });
+                                });
                             }
                         } else {
                             this.allNotEmoty = false;

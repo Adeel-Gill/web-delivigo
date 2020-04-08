@@ -23,7 +23,8 @@
 </template>
 <script>
 import restaurant from '../restaurant/resturant-slider';
-import carousel from 'vue-owl-carousel2';import emptyError from "../error/emptyError";
+import carousel from 'vue-owl-carousel2';
+import emptyError from "../error/emptyError";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel';
 import 'jquery';
