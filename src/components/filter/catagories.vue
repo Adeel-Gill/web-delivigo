@@ -21,7 +21,7 @@
 </template>
 <script>
 
-    import foodCategories from "../foodCategories/foodCategories";
+    import foodCategories from "../foodCategories/foodCategories-slider";
     import emptyError from "../error/emptyError";
     import 'owl.carousel/dist/assets/owl.carousel.css';
     import 'owl.carousel';
@@ -55,7 +55,7 @@
         this.$root.$on('foodCategoriesData', foodCategoriesData => {
             if(foodCategoriesData.length>0) {
                 this.foodCategories = foodCategoriesData;
-                if(foodCategoriesData.length > 3) {
+                if(foodCategoriesData.length > 5) {
                     this.categoriesMore = true;
                     $(document).ready(function(){
                         $('.owl-carousel').owlCarousel({
@@ -68,15 +68,16 @@
                             margin:10,
                             nav:false,
                             lazyLoad:true,
+                            items:5,
                             responsive:{
                                 0:{
-                                    items:1
-                                },
-                                600:{
                                     items:2
                                 },
-                                1000:{
+                                600:{
                                     items:3
+                                },
+                                1000:{
+                                    items:5
                                 }
                             }
                         });
