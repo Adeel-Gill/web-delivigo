@@ -355,7 +355,7 @@
                 if(res == 2) {
                     this.showNotification('error','Error','Error occurred please try later');
                 } else {
-                    if(!res) {
+                    if(res == false) {
                         this.$bvModal.show('modal-2');
                     } else {
                         this.$bvModal.show('modal-1');

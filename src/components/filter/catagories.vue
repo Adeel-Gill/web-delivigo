@@ -7,9 +7,11 @@
         </div>
         <div class="clear"></div>
         <div class="row">
-            <app-categories v-for="catagory in foodCategories.slice(0,5)"
+            <div class="owl-carousel owl-theme">
+                <app-categories v-for="catagory in foodCategories.slice(0,5)"
                             v-bind:key="catagory.Id"
                             :foodCategories="catagory"></app-categories>
+            </div>
         </div>
     </div>
     <div class="row" v-else>
@@ -21,6 +23,9 @@
 
     import foodCategories from "../foodCategories/foodCategories";
     import emptyError from "../error/emptyError";
+    import 'owl.carousel/dist/assets/owl.carousel.css';
+    import 'owl.carousel';
+    import 'jquery';
     export default {
     data(){
         return{
@@ -52,6 +57,30 @@
                 this.foodCategories = foodCategoriesData;
                 if(foodCategoriesData.length > 3) {
                     this.categoriesMore = true;
+                    $(document).ready(function(){
+                        $('.owl-carousel').owlCarousel({
+                            loop:true,
+                            dots: false,
+                            autoplay:true,
+                            autoplayTimeout:2000,
+                            autoplayHoverPause:true,
+                            responsiveClass:false,
+                            margin:10,
+                            nav:false,
+                            lazyLoad:true,
+                            responsive:{
+                                0:{
+                                    items:1
+                                },
+                                600:{
+                                    items:2
+                                },
+                                1000:{
+                                    items:3
+                                }
+                            }
+                        });
+                    });
                 }
             } else {
                 this.categoriesNotEmpty = false;
