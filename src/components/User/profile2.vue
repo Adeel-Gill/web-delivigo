@@ -11,7 +11,7 @@
                         <button class="btn" @click="imageUpload()"><i class="fas fa-camera"></i>&nbsp;Upload picture</button>
                     </div>
                 </div>
-                <button v-b-modal.change-password class="btn password-btn">Change Password</button>
+                <button v-b-modal.change-password :disabled="isFbUser" class="btn password-btn">Change Password</button>
             </div>
             <div class="col-md-9 col-sm-12 col-12">
                 <div class="heading line">
@@ -52,22 +52,45 @@
         <b-modal id="change-password" size="300px" centered title="Change Password">
             <div class="form-field">
                 <form>
+                     <div class="form-group row">
+                        <label for="oldPassword" class="col-sm-4 col-form-label">Old Password</label>
+                        
+                        <div class="col-sm-8">
+                            <input type="password" 
+                            class="form-control" 
+                            v-model="changePasswordObj.OldPassword"
+                             v-on:input="checkOldPassword()"
+                            id="oldPassword" placeholder="Old password...!">
+                            <label class="errorMessage" id="oldPasswordError"></label>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label for="newPassword" class="col-sm-4 col-form-label">New Password</label>
+                        
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" id="newPassword" value="12333">
+                            <input type="password" 
+                            class="form-control" 
+                            v-model="changePasswordObj.NewPassword"
+                             v-on:input="checkNewPassword()"
+                            id="newPassword" placeholder="New password...!">
+                            <label class="errorMessage" id="newPasswordError"></label>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="confirmPassword" class="col-sm-4 col-form-label">Confirm Password</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" id="confirmPassword" value="12333">
+                            <input type="password" 
+                            class="form-control"  
+                            v-model="changePasswordObj.ConfirmPassword" 
+                             v-on:input="checkConfirmPassword()"
+                            id="confirmPassword" placeholder="Repeat password...!">
+                            <label class="errorMessage" id="confirmPasswordError"></label>
                         </div>
                     </div>
                 </form>
             </div>
             <template v-slot:modal-footer="{ ok}">
-                <b-button size="sm" variant="primary" @click="ok()">
+                <b-button size="sm" variant="primary" @click="updatePassword()" :disabled="disableButton">
                     Change Password
                 </b-button>
             </template>
@@ -79,6 +102,8 @@
 <script>
     import {fetchUserProfile} from "../api/Profile";
     import {baseAddress, defaultUserPic} from "../../main";
+    import {changePassword} from "../api/ChangePassword";
+    import {mapActions} from "vuex";
     export default {
         name: "profile2",
         data() {
@@ -86,10 +111,24 @@
                 validated: true,
                 baseUrl: baseAddress,
                 userData: {},
-                image: ''
+                image: '',
+                isFbUser: false,
+                disableButton: true,
+                OldPasswordCheck: false,
+                newPasswordCheck: false,
+                confirmPasswordCheck: false,
+                changePasswordObj: {
+                    OldPassword: "",
+                    NewPassword: "",
+                    ConfirmPassword: "",
+                    Id: 0
+                }
             }
         },
         methods:{
+            ...mapActions([
+                'cleanToken'
+            ]),
              changeValidated() {
                 this.validated = !this.validated
                 if(!this.validated) {
@@ -101,6 +140,11 @@
                 }
             },
             async fetchUserProfile() {
+                if(localStorage.getItem('fbLogin') == "false" || localStorage.getItem('fbLogin') == null) {
+                    this.isFbUser = false;
+                } else {
+                    this.isFbUser = true;
+                }
                 fetchUserProfile(localStorage.getItem('id')).then(response => {
                     console.log('profile',response);
                     this.userData = response;
@@ -133,7 +177,161 @@
             },
             imageUpload() {
                 document.getElementById('image-upload').click();
-            }/*,
+            },
+            checkOldPassword() {
+                 var res = false;
+                if(this.changePasswordObj.OldPassword === "") {
+                    document.getElementById('oldPasswordError').style.visibility = "visible";
+                    document.getElementById('oldPasswordError').innerHTML = "Password Cannot Be Empty...!";
+                    document.getElementById('oldPassword').style.borderColor = "red";
+                    this.oldPasswordCheck = false;
+                } else if(!this.changePasswordObj.OldPassword.match(/^[a-zA-Z0-9\s#]+$/)) {
+                    document.getElementById('oldPasswordError').style.visibility = "visible";
+                    document.getElementById('oldPasswordError').innerHTML = "Wrong Input alphabets only...!";
+                    document.getElementById('oldPassword').style.borderColor = "red";
+                    this.oldPasswordCheck = false;
+                } else if(this.changePasswordObj.OldPassword.length < 6) {
+                    document.getElementById('oldPasswordError').style.visibility = "visible";
+                    document.getElementById('oldPasswordError').innerHTML = "Password must be upto 6 ..!";
+                    document.getElementById('oldPassword').style.borderColor = "red";
+                    this.oldPasswordCheck = false;
+                }  else {
+                    document.getElementById('oldPasswordError').style.visibility = "hidden";
+                    document.getElementById('oldPasswordError').innerHTML = "";
+                    document.getElementById('oldPassword').style.borderColor = "grey";
+                    this.oldPasswordCheck = true;
+                    res = true;
+                }
+                this.checkAll();
+                return res;
+            },
+            checkNewPassword() {
+                 var res = false;
+                if(this.changePasswordObj.NewPassword === "") {
+                    document.getElementById('newPasswordError').style.visibility = "visible";
+                    document.getElementById('newPasswordError').innerHTML = "Password Cannot Be Empty...!";
+                    document.getElementById('newPassword').style.borderColor = "red";
+                    this.newPasswordCheck = false;
+                } else if(!this.changePasswordObj.NewPassword.match(/^[a-zA-Z0-9\s#]+$/)) {
+                    document.getElementById('newPasswordError').style.visibility = "visible";
+                    document.getElementById('newPasswordError').innerHTML = "Wrong Input alphabets only...!";
+                    document.getElementById('newPassword').style.borderColor = "red";
+                    this.newPasswordCheck = false;
+                } else if(this.changePasswordObj.NewPassword.length < 6) {
+                    document.getElementById('newPasswordError').style.visibility = "visible";
+                    document.getElementById('newPasswordError').innerHTML = "Password must be upto 6 ..!";
+                    document.getElementById('newPassword').style.borderColor = "red";
+                    this.newPasswordCheck = false;
+                } else if(this.changePasswordObj.NewPassword !== this.changePasswordObj.ConfirmPassword) {
+                    document.getElementById('newPasswordError').style.visibility = "visible";
+                    document.getElementById('newPasswordError').innerHTML = "Password must be equal ..!";
+                    document.getElementById('newPassword').style.borderColor = "red";
+                    this.newPasswordCheck = false;
+                } else {
+                    document.getElementById('newPasswordError').style.visibility = "hidden";
+                    document.getElementById('newPasswordError').innerHTML = "";
+                    document.getElementById('newPassword').style.borderColor = "grey";
+                    this.newPasswordCheck = true;
+                    document.getElementById('confirmPasswordError').style.visibility = "hidden";
+                    document.getElementById('confirmPasswordError').innerHTML = "";
+                    document.getElementById('confirmPassword').style.borderColor = "grey";
+                    this.confirmPasswordCheck = true;
+                    res = true;
+                }
+                this.checkAll();
+                return res;
+            },
+            checkConfirmPassword() {
+                 var res = false;
+                if(this.changePasswordObj.ConfirmPassword === "") {
+                    document.getElementById('confirmPasswordError').style.visibility = "visible";
+                    document.getElementById('confirmPasswordError').innerHTML = "Password Cannot Be Empty...!";
+                    document.getElementById('confirmPassword').style.borderColor = "red";
+                    this.confirmPasswordCheck = false;
+                } else if(!this.changePasswordObj.ConfirmPassword.match(/^[a-zA-Z0-9\s#]+$/)) {
+                    document.getElementById('confirmPasswordError').style.visibility = "visible";
+                    document.getElementById('confirmPasswordError').innerHTML = "Wrong Input alphabets only...!";
+                    document.getElementById('confirmPassword').style.borderColor = "red";
+                    this.confirmPasswordCheck = false;
+                } else if(this.changePasswordObj.ConfirmPassword.length < 6) {
+                    document.getElementById('confirmPasswordError').style.visibility = "visible";
+                    document.getElementById('confirmPasswordError').innerHTML = "Password must be upto 6 ..!";
+                    document.getElementById('confirmPassword').style.borderColor = "red";
+                    this.confirmPasswordCheck = false;
+                } else if(this.changePasswordObj.NewPassword !== this.changePasswordObj.ConfirmPassword) {
+                    document.getElementById('confirmPasswordError').style.visibility = "visible";
+                    document.getElementById('confirmPasswordError').innerHTML = "Password must be equal ..!";
+                    document.getElementById('confirmPassword').style.borderColor = "red";
+                    this.confirmPasswordCheck = false;
+                }  else {
+                    document.getElementById('newPasswordError').style.visibility = "hidden";
+                    document.getElementById('newPasswordError').innerHTML = "";
+                    document.getElementById('newPassword').style.borderColor = "grey";
+                    this.newPasswordCheck = true;
+                    document.getElementById('confirmPasswordError').style.visibility = "hidden";
+                    document.getElementById('confirmPasswordError').innerHTML = "";
+                    document.getElementById('confirmPassword').style.borderColor = "grey";
+                    this.confirmPasswordCheck = true;
+                    res = true;
+                }
+                this.checkAll();
+                return res;
+            },
+            checkAll() {
+               if(this.newPasswordCheck && this.confirmPasswordCheck && this.oldPasswordCheck) {
+                   this.disableButton = false;
+               } else {
+                   this.disableButton = true;
+               }
+            },
+            updatePassword() {
+                this.disableButton = true;
+                this.changePasswordObj.Id = localStorage.getItem("id");
+                changePassword(this.changePasswordObj).then(response => {
+                    if(response.HasErrors === true) {
+                        this.showNotification("info","Error","Error occurred please try later!");
+                    } else {
+                        this.openDialog();
+                    }
+                }, error => {
+                    console.log(error);
+                    this.disableButton = false;
+                    this.showNotification("info","Error","Error occurred please try later!");
+                })
+            },
+            openDialog() {
+                    this.$dialog.alert("Password reset successfully. Please login again with new password.", {
+                        loader: true
+                    })
+                    .then(dialog => {
+                        dialog.loading = false;
+                        this.signOut();
+                    })
+            },
+            signOut() {
+                if(localStorage.getItem('cart') === 'null' || localStorage.getItem('cart') == null) {
+                this.$store.dispatch('cleanToken');
+                this.$store.dispatch('clearCart');
+                this.showNotification('success','Success','Sign out successfully');
+                this.$router.go();
+                } else {
+                this.$dialog.confirm('There are items in cart if you proceed the cart will be clear. Continue?', {
+                    loader: true
+                }).then(dialog => {
+                    dialog.loading(true);
+                    this.$store.dispatch('cleanToken');
+                    this.$store.dispatch('clearCart');
+                    this.showNotification('success','Success','Sign out successfully');
+                    dialog.loading(false);
+                    dialog.close();
+                    this.$router.go();
+                }).catch(() => {
+                    this.openDialog();
+                })
+                }
+
+            },
+            /*,
              showImage(event) {
                 alert(event);
                 var image = document.getElementById('showImage');
@@ -141,7 +339,8 @@
             }*/
         },
         mounted() {
-            this.fetchUserProfile()
+            this.fetchUserProfile();
+            
         }
     }
 </script>

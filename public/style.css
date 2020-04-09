@@ -414,7 +414,7 @@ a.nav-link{
     align-items: center;
 }
 .errorMessage{
-  color: red;
-  font-size: smaller;
+  color: red !important;
+  font-size: smaller !important;
   margin-left: 10px !important;
 }
