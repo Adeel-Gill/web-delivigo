@@ -21,9 +21,15 @@
                             v-on:input="checkPassword()"
                            v-model="userData.password" id="npwd" required>
                 </div>
-                <div class="button">
+                <div class="button text-center">
                     <button type="submit" @click="checkCredentials" :disabled="disableSubmit" class="btn btn-submit">SIGN IN</button>
-
+                    <span class="or">OR</span>
+                    <facebook-login class="fb"
+                                    appId="649127768995419"
+                                    @login="onLogin"
+                                    @logout="onLogout"
+                                    @sdk-loaded="sdkLoaded">
+                    </facebook-login>
                 </div>
 <!--                <v-facebook-login app-id="649127768995419" @login="fbLogin"></v-facebook-login>-->
 <!--                <v-facebook-login-scope app-id="649127768995419" v-model="model" @sdk-init="handleSdkInit">-->
@@ -34,12 +40,7 @@
 <!--                </v-facebook-login-scope>-->
 
             </form>
-            <facebook-login class="button"
-                            appId="649127768995419"
-                            @login="onLogin"
-                            @logout="onLogout"
-                            @sdk-loaded="sdkLoaded">
-            </facebook-login>
+
         </div>
     </div>
 </template>
@@ -294,7 +295,6 @@
         border-bottom: 1px solid #5860ff;
     }
     .button .btn-submit{
-        margin-right: 50px;
         background-color: #5860ff;
         color: white;
 
@@ -323,4 +323,10 @@
     .edit-btn i:hover{
         color: #5860ff;
     }
+   .or{
+       font-size: 20px;
+       font-weight: 500;
+       display: block;
+       padding-top: 12px;
+   }
 </style>

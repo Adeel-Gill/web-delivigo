@@ -36,7 +36,7 @@ export default {
     },
     data(){
         return{
-            popularHeading:'POPULAR RESTAURANT',
+            popularHeading:'Popular Restaurants',
             restaurants: [],
             popularMore: false,
             popularNotEmpty: true,
@@ -68,7 +68,7 @@ export default {
                   autoplayTimeout:2000,
                   autoplayHoverPause:true,
                   responsiveClass:false,
-                  margin:10,
+                  margin:20,
                   nav:false,
                   lazyLoad:true,
                   responsive:{
@@ -95,7 +95,7 @@ export default {
 </script>
 <style scoped>
 .popular {
-    margin: 50px 0;
+    margin: 43px 0;
 }
 .show-more{
   float: right;
@@ -103,7 +103,7 @@ export default {
 .show-more a {
     color: #0030b4;
     display: inline-block;
-    margin: 10px 0 20px;
+    margin: 0 0 20px;
     /*font-family: "Panton";*/
     font-weight: bold;
     font-size: 17px;
@@ -113,9 +113,9 @@ export default {
   color: #080808;
 }
 .title h2{
-  font-size: 35px;
-  font-weight: bold;
-  text-transform: uppercase;
+  font-size: 32px;
+  font-weight: 500;
+   text-transform: capitalize;
 }
 </style>
 

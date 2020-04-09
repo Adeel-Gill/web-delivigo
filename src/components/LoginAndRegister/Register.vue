@@ -51,10 +51,10 @@
                                id="materialUnchecked" required>I agree to the <a href="#" @click="loadTermsModal">terms of services</a> and <a href="#" @click="loadPolicyModal">privacy policy.</a>
                     </span>
                 </div>
-                <div class="button">
+                <div class="button text-center">
                     <button type="submit" :disabled="disableSubmit" @click="registerUser" class="btn btn-submit">SIGN UP</button>
-                        <p>- - - - - - - - - - - - - - OR - - - - - - - - - - - - - -</p>
-                    <facebook-login class="mx-0 px-0"
+                        <span class="or">OR</span>
+                    <facebook-login class="fb"
                                     appId="649127768995419"
                                     @login="onLogin"
                                     @logout="onLogout"
@@ -64,30 +64,21 @@
 
             </form>
         </div>
-        <b-modal hide-footer refs="modal" size="lg" scrollable class="my-modal"   id="modal-1" title="Terms and Conditions">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
+        <b-modal hide-footer refs="modal" size="xl" scrollable class="my-modal"   id="modal-1" title="Terms and Conditions">
+                <div class="container-fluid px-0">
                             <terms-and-conditions></terms-and-conditions>
-                        </div>
-                    </div>
                 </div>
                 <div class="btn-modal">
                     <hr>
                     
                 </div>
             </b-modal>
-            <b-modal hide-footer refs="modal" size="lg" scrollable class="my-modal"   id="modal-2" title="Terms and Conditions">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
+            <b-modal hide-footer refs="modal" size="xl" scrollable class="my-modal"   id="modal-2" title="Terms and Conditions">
+                <div class="container-fluid px-0">
                             <policy></policy>
-                        </div>
-                    </div>
                 </div>
                 <div class="btn-modal">
                     <hr>
-                    
                 </div>
             </b-modal>
     </div>
@@ -403,7 +394,7 @@ import facebookLogin from 'facebook-login-vuejs';
     }
 
     .button .btn-submit{
-        margin-right: 50px;
+        /*margin-right: 50px;*/
         background-color: #5860ff;
         color: white;
 
@@ -509,6 +500,12 @@ import facebookLogin from 'facebook-login-vuejs';
         display: flex;
         justify-content: flex-end;
         margin: 10px 0 20px 0;
+    }
+    .or{
+        font-size: 20px;
+        font-weight: 500;
+        display: block;
+        padding-top: 12px;
     }
     @media screen and (max-width: 576px) {
         .m-top{

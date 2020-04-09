@@ -85,7 +85,7 @@ export default {
         return{
             newRestaurants : [],
             fetchedData: {},
-            titleHeading:'NEW ON DELIVIGO',
+            titleHeading:'New On Delivigo',
             allRestaurants: [],
             newRestaurantsMore: false,
             allRestaurantsMore: false,
@@ -225,7 +225,7 @@ export default {
     .show-more a {
         color: #0030b4;
         display: inline-block;
-        margin: 10px 0 20px;
+        margin: 0 0 20px;
         /*font-family: "Panton";*/
         font-weight: bold;
         font-size: 17px;
@@ -238,7 +238,7 @@ export default {
     margin: 50px 0;
 }
     .filter-section {
-        padding: 20px 0 60px 0;
+        padding: 20px 0 20px 0;
         width: 90%;
         margin: auto;
     }
@@ -246,8 +246,9 @@ export default {
     margin-bottom: 40px;
 }
 .restaurants-list h2 {
-    margin-bottom: 40px;
-    font-weight: bold;
+    font-size: 32px;
+    font-weight: 500;
+    text-transform: capitalize;
 }
 .title h2 {
     text-align: left !important;

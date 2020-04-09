@@ -432,10 +432,10 @@
 }
     .password-btn{
         position: absolute;
-        bottom: 80px;
+        bottom: 40px;
         background-color:#5860ff;
         color: #fff;
-        margin: 0 10px;
+        margin: 0 20px;
     }
     .password-btn:hover{
         background-color: #494FC9;

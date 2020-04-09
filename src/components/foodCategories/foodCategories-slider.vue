@@ -1,5 +1,5 @@
 <template>
-    <div class="catagory" @click = "emitName()">
+    <div class="catagory w-100" @click = "emitName()">
         <router-link to="/foodFilter" >
             <div  class="card-image">
                 <img :src="`${getImage(foodCategories.ImageUrl)}`" @error="`${getImage('')}`"/>
@@ -66,7 +66,7 @@
     }
     .catagory{
         display: inline-block;
-        margin: 25px 18px;
+        margin-bottom:25px;
     }
     .catagory a {
         text-decoration: none;
