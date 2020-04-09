@@ -257,6 +257,24 @@ a.nav-link{
 .mapboxgl-ctrl-geocoder{
     min-width: 190px !important;
 }
+.fb button{
+    font-family:'Roboto', sans-serif;
+    padding: 5px 0 5px 33px !important;
+    border-radius: 30px;
+    font-weight: 500;
+    line-height: 28px !important;
+    min-width: 208px !important;
+}
+.fb img{
+    top: 7px !important;
+    width: 25px !important;
+}
+.fb .spinner{
+    width: 25px !important;
+    height: 65% !important;
+    top:7px;
+    left: 10px !important;
+}
 @media screen and (min-width: 1200px) and (max-width: 1299px) {
     .container {
         padding-top: 0 !important;

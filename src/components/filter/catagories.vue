@@ -6,7 +6,7 @@
             <router-link to="/foodCategories">Show More</router-link>
         </div>
         <div class="clear"></div>
-        <div class="row">
+        <div class="row mx-2">
             <div class="owl-carousel2 owl-theme">
                 <app-categories v-for="catagory in foodCategories"
                             v-bind:key="catagory.Id"
@@ -71,10 +71,16 @@
                             items:6,
                             responsive:{
                                 0:{
-                                    items:2
+                                    items:2,
+                                },
+                                400:{
+                                    items:3
                                 },
                                 600:{
-                                    items:3
+                                    items:4
+                                },
+                                800:{
+                                    items:5
                                 },
                                 1000:{
                                     items:6
@@ -98,7 +104,7 @@
     .show-more a {
         color: #0030b4;
         display: inline-block;
-        margin: 10px 0 20px;
+        margin: 0 0 20px;
         /*font-family: "Panton";*/
         font-weight: bold;
         font-size: 17px;
@@ -107,7 +113,9 @@
     margin-bottom: 50px;
 }
     .catagories h2{
-        font-weight: bold;
+        font-size: 32px;
+        font-weight: 500;
+        text-transform: capitalize;
     }
 .catagory a {
     text-decoration: none;
