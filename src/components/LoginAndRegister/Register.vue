@@ -45,24 +45,26 @@
                 <div class="form-check">
                     <span class="form-check-label"
                            for="materialUnchecked">
-                        I agree to the <a href="#" @click="loadTermsModal">terms of services</a> and <a href="#" @click="loadPolicyModal">privacy policy.</a>
                         <input type="checkbox"
                                class="form-check-input"
                                ref="termsChecked"
-                               id="materialUnchecked" required></span>
+                               id="materialUnchecked" required>I agree to the <a href="#" @click="loadTermsModal">terms of services</a> and <a href="#" @click="loadPolicyModal">privacy policy.</a>
+                    </span>
                 </div>
                 <div class="button">
                     <button type="submit" :disabled="disableSubmit" @click="registerUser" class="btn btn-submit">SIGN UP</button>
+                        <p>- - - - - - - - - - - - - - OR - - - - - - - - - - - - - -</p>
+                    <facebook-login class="mx-0 px-0"
+                                    appId="649127768995419"
+                                    @login="onLogin"
+                                    @logout="onLogout"
+                                    @sdk-loaded="sdkLoaded">
+                    </facebook-login>
                 </div>
+
             </form>
-            <facebook-login class="button"
-                            appId="649127768995419"
-                            @login="onLogin"
-                            @logout="onLogout"
-                            @sdk-loaded="sdkLoaded">
-            </facebook-login>
         </div>
-        <b-modal hide-footer refs="modal" class="my-modal"   id="modal-1" title="Terms and Conditions">
+        <b-modal hide-footer refs="modal" size="lg" scrollable class="my-modal"   id="modal-1" title="Terms and Conditions">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -75,7 +77,7 @@
                     
                 </div>
             </b-modal>
-            <b-modal hide-footer refs="modal" class="my-modal"   id="modal-2" title="Terms and Conditions">
+            <b-modal hide-footer refs="modal" size="lg" scrollable class="my-modal"   id="modal-2" title="Terms and Conditions">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -390,7 +392,7 @@ import facebookLogin from 'facebook-login-vuejs';
         border-bottom: 1px solid #e6e6e6;
         padding-left: 0;
         width: 20px !important;
-        margin-left: -240px;
+        /*margin-left: -240px;*/
         border-radius: 0;
         color: #999999;
         font-size: 16px;

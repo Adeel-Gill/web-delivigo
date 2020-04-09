@@ -22,13 +22,13 @@
 
 <script>
     import SideNav from "./SideNav";
-    import profile2 from "./profile2";
+    import Profile from "./Profile";
     import DeliveryAddress from "./DeliveryAddress";
     export default {
         name: "Profile",
         components: {
             appSideNav: SideNav,
-            appProfile: profile2,
+            appProfile: Profile,
             appDeliveryAddress: DeliveryAddress
         }
     }
@@ -49,5 +49,8 @@
     }*/
     .nav-color{
         background-color: #f2f2f2;
+    }
+    @media  {
+
     }
 </style>

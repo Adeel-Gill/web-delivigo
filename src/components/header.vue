@@ -14,7 +14,7 @@
         <b-collapse id="nav-collapse" is-nav>
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto" id="navbar-dropdown">
-            <b-nav-item-dropdown text="ENG" right class="">
+            <b-nav-item-dropdown text="ENG" right class="pt-1">
               <b-dropdown-item href="#">EN</b-dropdown-item>
               <b-dropdown-item href="#">ES</b-dropdown-item>
               <b-dropdown-item href="#">RU</b-dropdown-item>
@@ -28,7 +28,7 @@
             </b-nav-item>
             <b-nav-item to="/signin" activClass="active" v-if="isLoggedOut === 'true' || isLoggedOut == undefined? true: false" class="singin ">Sign In</b-nav-item>
             <b-nav-item to="/signup" activClass="active" v-if="isLoggedOut === 'true' || isLoggedOut == undefined? true: false" class="register">Register</b-nav-item>
-            <b-nav-item  activClass="active" v-if="isLogin === 'true'? true: false" class="register" @click="signOut">Sign Out</b-nav-item>
+            <b-nav-item  activClass="active" v-if="isLogin === 'true'? true: false" class="register pl-2 pt-1" @click="signOut">Sign Out</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </div>
