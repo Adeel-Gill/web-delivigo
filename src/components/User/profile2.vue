@@ -5,7 +5,7 @@
             <div class="row py-2">
             <div class="col-md-3 col-sm-12 col-12 profile-pic">
                 <div class="pic-container">
-                    <img src="/images/user-pic.png" id="showImage" class="img-fluid" alt="user">
+                    <img :src="getImage(userData.UrlImage)" @error="getImage('')" id="showImage" class="img-fluid" >
                     <div class="overlay"><!--@change="showImage(e)"-->
                         <input type="file"  id="image-upload" hidden>
                         <button class="btn" @click="imageUpload()"><i class="fas fa-camera"></i>&nbsp;Upload picture</button>
@@ -23,27 +23,27 @@
                         <div class="form-group row">
                             <label for="name" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="name" value="Tatian Shah">
+                                <input type="text" class="form-control" id="name" :value="userData.FullName" :disabled = "validated">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="email" class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" id="email" value="tatian@gmail.com">
+                                <input type="email" class="form-control" id="email" :value="userData.Email" :disabled = "validated">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="phone" class="col-sm-2 col-form-label">Phone No</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="phone" value="0343843343">
+                                <input type="text" class="form-control" id="phone" :value="userData.Mobile" :disabled = "validated">
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <label for="address" class="col-sm-2 col-form-label">Address</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="address" value="River Lake street no 67">
                             </div>
-                        </div>
+                        </div> -->
                     </form>
                 </div>
             </div>
@@ -77,9 +77,60 @@
 </template>
 
 <script>
+    import {fetchUserProfile} from "../api/Profile";
+    import {baseAddress, defaultUserPic} from "../../main";
     export default {
         name: "profile2",
+        data() {
+            return {
+                validated: true,
+                baseUrl: baseAddress,
+                userData: {},
+                image: ''
+            }
+        },
         methods:{
+             changeValidated() {
+                this.validated = !this.validated
+                if(!this.validated) {
+                    alert('fields are editable');
+                    this.$refs.fn.$el.focus();
+                }
+                else{
+                    alert('fields are not editable');
+                }
+            },
+            async fetchUserProfile() {
+                fetchUserProfile(localStorage.getItem('id')).then(response => {
+                    console.log('profile',response);
+                    this.userData = response;
+                }, error => {
+                    console.log(error);
+                    this.showNotification('error','Error','Error occurred please try later!');
+                })
+            },
+            showNotification(type, title, message) {
+                console.log('after Fail',message);
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
+                })
+            },
+            getImage(img) {
+                // console.log('paramImage',img);
+                if(img === '' || img === 'null' || img == null) {
+                    return this.image = defaultUserPic;
+                } else {
+                    if(localStorage.getItem("fbLogin") === "true") {
+                        return img;
+                    } else {
+                        return this.image =  baseAddress + img;
+                    }
+                }
+            },
             imageUpload() {
                 document.getElementById('image-upload').click();
             }/*,
@@ -88,6 +139,9 @@
                 var image = document.getElementById('showImage');
                 image.src = URL.createObjectURL(event.target.files[0]);
             }*/
+        },
+        mounted() {
+            this.fetchUserProfile()
         }
     }
 </script>

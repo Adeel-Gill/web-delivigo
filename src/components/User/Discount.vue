@@ -65,7 +65,7 @@
                   if(response.Restaurants.length > 0) {
                       this.notEmpty = true;
                       this.discounted = response.Restaurants;
-                      this.total = this.getPageRange(response.Pagination.TotalRecords);
+                      this.total = parseInt(this.getPageRange(response.Pagination.TotalRecords));
                       this.showNotification('success','Success','Restaurants with deals are available');
                   } else {
                       this.notEmpty = false;

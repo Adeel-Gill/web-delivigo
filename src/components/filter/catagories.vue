@@ -7,8 +7,8 @@
         </div>
         <div class="clear"></div>
         <div class="row">
-            <div class="owl-carousel owl-theme">
-                <app-categories v-for="catagory in foodCategories.slice(0,5)"
+            <div class="owl-carousel2 owl-theme">
+                <app-categories v-for="catagory in foodCategories"
                             v-bind:key="catagory.Id"
                             :foodCategories="catagory"></app-categories>
             </div>
@@ -23,7 +23,7 @@
 
     import foodCategories from "../foodCategories/foodCategories-slider";
     import emptyError from "../error/emptyError";
-    import 'owl.carousel/dist/assets/owl.carousel.css';
+    import 'owl.carousel/dist/assets/owl.carousel2.css';
     import 'owl.carousel';
     import 'jquery';
     export default {
@@ -58,7 +58,7 @@
                 if(foodCategoriesData.length > 5) {
                     this.categoriesMore = true;
                     $(document).ready(function(){
-                        $('.owl-carousel').owlCarousel({
+                        $('.owl-carousel2').owlCarousel({
                             loop:true,
                             dots: false,
                             autoplay:true,
@@ -68,7 +68,7 @@
                             margin:10,
                             nav:false,
                             lazyLoad:true,
-                            items:5,
+                            items:6,
                             responsive:{
                                 0:{
                                     items:2
@@ -77,7 +77,7 @@
                                     items:3
                                 },
                                 1000:{
-                                    items:5
+                                    items:6
                                 }
                             }
                         });
