@@ -3,7 +3,7 @@
         <div class="row">
             <form action="" v-on:submit.prevent class="myProfile">
                 <div class="form-group">
-                    <label for="email">EMAIL ADDRESS</label>
+                    <label for="email">Email Address</label>
                     <label class="errorMessage" id="emailError"></label>
                     <input type="email"
                            class="form-control"
@@ -13,7 +13,7 @@
                            id="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="npwd">PASSWORD</label>
+                    <label for="npwd">Password</label>
                     <label class="errorMessage" id="passwordError"></label>
                     <input type="password"
                            class="form-control"
@@ -92,7 +92,13 @@
                 emailCheck: false,
                 passwordCheck: false,
                 disableSubmit: true,
-                url: ''
+                url: '',
+                payload: {
+                    isConnected: false,
+                    FB: {
+                        api: null
+                    }
+                }
             }
         },
         mounted() {
@@ -158,6 +164,13 @@
                 //     console.log("loginStatus", response);
                 // });
             },
+            loadSDK() {
+                // this.payload = JSON.parse(localStorage.getItem("payload"));
+                // if()
+                console.log("hereAt");
+                [localStorage.getItem("isFB") === "true"? this.sdkLoaded(JSON.parse(localStorage.getItem("payload"))): ""];
+                // [localStorage.getItem("isFB") === "true"? this.sdkLoaded(JSON.parse(localStorage.getItem("payload"))): ""];
+            },
             handleSdkInit({ FB, scope }) {
                 this.FB = FB
                 this.scope = scope
@@ -183,7 +196,6 @@
                                 if(response.HasErrors === false) {
                                     this.showNotification('success', 'Success', 'Sign in successfully');
                                     console.log('id',response.Id);
-                                    debugger;
                                     localStorage.setItem('userProfile',response.UrlImage);
                                     this.$store.dispatch('storeToken',response);
                                     this.$router.push({path:'/'});
@@ -203,8 +215,12 @@
                 EventBus.$emit('StartOverlay', false);
             },
             sdkLoaded(payload) {
-                this.isConnected = payload.isConnected
-                this.FB = payload.FB
+                this.isConnected = payload.isConnected;
+                this.FB = payload.FB;
+                this.payload.isConnected = payload.isConnected;
+                this.payload.FB.api = payload.FB.api;
+                localStorage.setItem("isFB", true);
+                localStorage.setItem("payload",JSON.stringify(this.payload));
                 if (this.isConnected) this.getUserData()
             },
             onLogin() {
@@ -265,6 +281,9 @@
                     this.disableSubmit = true;
                 }
             }
+        },
+        mounted() {
+            this.loadSDK();
         }
 
     }

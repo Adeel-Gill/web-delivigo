@@ -18,7 +18,7 @@
     font-family: HH-Samuel;
     src:url("fonts/hh-Samuel-font.ttf")
     format("truetype");
-    font-weight:normal;
+    font-weight:400;
     font-style:normal
 }
    *{
@@ -41,7 +41,7 @@
 }
 .nav-link.dropdown-toggle{
     /*font-family: pantonBold;*/
-    font-size: 15px;
+    font-size: 18px;
     color: #b3b3b3 !important;
 }
 .dropup, .dropright, .dropdown, .dropleft{
@@ -57,17 +57,19 @@ a.nav-link{
     padding: 0 15px 0 23px;
 }
 .singin a{
-    padding: 8px 31px !important;
+    padding: 6px 25px !important;
     border: 2px solid #df3e03 !important;
     border-radius: 5px;
+    font-size: 16px;
 }
 .singin a:hover{
     background-color: #df3e03;
 }
 .register a{
-    padding: 9px 27px !important;
+    padding: 8px 23px !important;
     background: #df3e03;
     border-radius: 5px;
+    font-size: 16px;
 }
 #carousel-1 .carousel-caption {
     top: 35%;
@@ -255,6 +257,24 @@ a.nav-link{
 .mapboxgl-ctrl-geocoder{
     min-width: 190px !important;
 }
+.fb button{
+    font-family:'Roboto', sans-serif;
+    padding: 5px 0 5px 33px !important;
+    border-radius: 30px;
+    font-weight: 500;
+    line-height: 28px !important;
+    min-width: 208px !important;
+}
+.fb img{
+    top: 7px !important;
+    width: 25px !important;
+}
+.fb .spinner{
+    width: 25px !important;
+    height: 65% !important;
+    top:7px;
+    left: 10px !important;
+}
 @media screen and (min-width: 1200px) and (max-width: 1299px) {
     .container {
         padding-top: 0 !important;
@@ -412,7 +432,7 @@ a.nav-link{
     align-items: center;
 }
 .errorMessage{
-  color: red;
-  font-size: smaller;
+  color: red !important;
+  font-size: smaller !important;
   margin-left: 10px !important;
 }

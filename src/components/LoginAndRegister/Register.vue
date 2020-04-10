@@ -24,7 +24,7 @@
                            id="number" required>
                 </div>
                 <div class="form-group">
-                    <label for="email">EMAIL ADDRESS</label>
+                    <label for="email">Email Address</label>
                     <label class="errorMessage" id="emailError"></label>
                     <input type="email"
                            class="form-control"
@@ -34,7 +34,7 @@
                            id="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="npwd">PASSWORD</label>
+                    <label for="npwd">Password</label>
                     <label class="errorMessage" id="passwordError"></label>
                     <input type="password" class="form-control"
                            placeholder="Password Here...!"
@@ -73,7 +73,7 @@
                     
                 </div>
             </b-modal>
-            <b-modal hide-footer refs="modal" size="xl" scrollable class="my-modal"   id="modal-2" title="Terms and Conditions">
+            <b-modal hide-footer refs="modal" size="xl" scrollable class="my-modal"   id="modal-2" title="Privacy Policy">
                 <div class="container-fluid px-0">
                             <policy></policy>
                 </div>
@@ -147,6 +147,7 @@ import facebookLogin from 'facebook-login-vuejs';
                 numberCheck: false,
                 emailCheck: false,
                 passwordCheck: false,
+                payload: null,
             }
         },
         methods: {
@@ -197,6 +198,8 @@ import facebookLogin from 'facebook-login-vuejs';
                 })
             },
             getUserData() {
+                console.log("FBObject",this.FB);
+                console.log("Payload",this.payload);
                 EventBus.$emit('StartOverlay', true);
                 this.FB.api('/me', 'GET', { fields: 'id,name,first_name,last_name,email,picture.type(large)' },
                     userInformation => {
@@ -230,9 +233,18 @@ import facebookLogin from 'facebook-login-vuejs';
                 )
                 EventBus.$emit('StartOverlay', false);
             },
+            loadSDK() {
+                this.payload = JSON.parse(localStorage.getItem("payload"));
+                [localStorage.getItem("isFB") === "true"? this.sdkLoaded(this.payload): ""];
+            },
             sdkLoaded(payload) {
-                this.isConnected = payload.isConnected
-                this.FB = payload.FB
+                console.log('payload',payload);
+                
+                this.payload = payload;
+                this.FB = payload.FB;
+                localStorage.setItem("isFB", true);
+                localStorage.setItem("payload",JSON.stringify(payload));
+                this.isConnected = payload.isConnected;
                 if (this.isConnected) this.getUserData()
             },
             onLogin() {
@@ -353,6 +365,9 @@ import facebookLogin from 'facebook-login-vuejs';
                 }
             }
 
+        },
+        mounted() {
+            this.loadSDK();
         }
     }
 </script>

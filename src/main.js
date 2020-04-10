@@ -26,6 +26,7 @@ export const defaultRestaurantPic = 'images/restauranticon.png';
 export const defaultDishPic = 'images/dish.png';
 export const defaultCityPic = 'images/city.png';
 localStorage.setItem('all70', false.toString());
+localStorage.setItem("isFB", false);
 export let map ;
 export const EventBus = new Vue();
 Vue.use(VuejsDialog);

@@ -7,8 +7,8 @@
                 <div class="pic-container">
                     <img :src="getImage(userData.UrlImage)" @error="getImage('')" id="showImage" class="img-fluid" >
                     <div class="overlay"><!--@change="showImage(e)"-->
-                        <input type="file"  id="image-upload" hidden>
-                        <button class="btn" @click="imageUpload()"><i class="fas fa-camera"></i>&nbsp;Upload picture</button>
+                        <input type="file"  id="image-upload" accept="image/*" @change="onFileChange" hidden>
+                        <button class="btn" :disabled="!isEditable" @click="imageUpload()"><i class="fas fa-camera"></i>&nbsp;Upload picture</button>
                     </div>
                 </div>
                 <button v-b-modal.change-password :disabled="isFbUser" class="btn password-btn">Change Password</button>
@@ -16,26 +16,52 @@
             <div class="col-md-9 col-sm-12 col-12">
                 <div class="heading line">
                     <h1 class="profile-heading d-inline">My Profile</h1>
-                    <button  class="btn edit-btn" @click="changeValidated">Edit</button>
+                    <button  class="btn edit-btn" @click="enableEditable" :style="{display: [!isEditable? 'block': 'none']}">Edit</button>
+                    <button  class="btn edit-btn" @click="changeValidated" :disabled="disableSave" :style="{display: [isEditable? 'block': 'none']}">Save</button>
+                    <button  class="btn edit-btn" @click="disableEditable" :style="{display: [isEditable? 'block': 'none']}">Cancel</button>
                 </div>
                 <div class="form-field mt-5 pr-3">
                     <form>
                         <div class="form-group row">
                             <label for="name" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="name" :value="userData.FullName" :disabled = "validated">
+                                <input type="text" class="form-control" 
+                                id="fullName" 
+                                 v-if="!isEditable" 
+                                :value="userData.FullName" 
+                                :disabled = "validated">
+                                 <input type="text" class="form-control" 
+                                id="name"
+                                 v-else  
+                                v-model="user.fullName"
+                                v-on:input="checkName()"
+                                >
+                                 <label class="errorMessage" id="nameError"></label>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="email" class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" id="email" :value="userData.Email" :disabled = "validated">
+                                <input type="email" class="form-control" id="email" :value="userData.Email" disabled >
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="phone" class="col-sm-2 col-form-label">Phone No</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="phone" :value="userData.Mobile" :disabled = "validated">
+                                <input type="text" 
+                                class="form-control" 
+                                id="phoneNumber" 
+                                v-if="!isEditable"
+                                :value="userData.Mobile" 
+                                :disabled = "validated">
+                                <input type="text" 
+                                class="form-control" 
+                                id="number" 
+                                v-else
+                                v-on:input="checkMobileNumber()"
+                                v-model="user.mobile"  
+                                >
+                                <label class="errorMessage" id="numberError"></label>
                             </div>
                         </div>
                         <!-- <div class="form-group row">
@@ -114,6 +140,8 @@
                 image: '',
                 isFbUser: false,
                 disableButton: true,
+                nameCheck: false,
+                numberCheck: false,
                 OldPasswordCheck: false,
                 newPasswordCheck: false,
                 confirmPasswordCheck: false,
@@ -122,22 +150,41 @@
                     NewPassword: "",
                     ConfirmPassword: "",
                     Id: 0
-                }
+                },
+                isEditable: false,
+                disableSave: true,
+                user: {
+                    firstName: '',
+                    lastName: '',
+                    fullName: '',
+                    mobile: '',
+                    deviceToken: 'web',
+                    deviceType: 'web',
+                    deviceUniqueCode: 'web',
+                },
+            imageFile: null,
             }
         },
         methods:{
+            onFileChange(e) {
+                this.imageFile = e.target.files[0];
+                this.userData.UrlImage = URL.createObjectURL(this.imageFile); 
+            },
+            enableEditable() {
+                this.changeValidated();
+                this.isEditable = !this.isEditable;
+            },
+            disableEditable() {
+                this.changeValidated();
+                this.hideErrors();
+                this.isEditable = !this.isEditable;
+            },
             ...mapActions([
                 'cleanToken'
             ]),
              changeValidated() {
                 this.validated = !this.validated
-                if(!this.validated) {
-                    alert('fields are editable');
-                    this.$refs.fn.$el.focus();
-                }
-                else{
-                    alert('fields are not editable');
-                }
+                
             },
             async fetchUserProfile() {
                 if(localStorage.getItem('fbLogin') == "false" || localStorage.getItem('fbLogin') == null) {
@@ -277,12 +324,86 @@
                 this.checkAll();
                 return res;
             },
+            checkName() {
+                var res = false;
+                if(this.user.fullName === "") {
+                    document.getElementById('nameError').style.visibility = "visible";
+                    document.getElementById('nameError').innerHTML = "Name Field Cannot Be Empty...!";
+                    document.getElementById('name').style.borderColor = "red";
+                    this.nameCheck = false;
+                } else if(!this.user.fullName.match(/^[a-zA-Z\s]+$/)) {
+                    document.getElementById('nameError').style.visibility = "visible";
+                    document.getElementById('nameError').innerHTML = "Wrong Input Enter Alphabets Only...!";
+                    document.getElementById('name').style.borderColor = "red";
+                    this.nameCheck = false;
+                } else if(this.user.fullName.length < 3) {
+                    document.getElementById('nameError').style.visibility = "visible";
+                    document.getElementById('nameError').innerHTML = "Wrong Input Enter minimum 3 Alphabets ..!";
+                    document.getElementById('name').style.borderColor = "red";
+                    this.nameCheck = false;
+                } else {
+                    document.getElementById('nameError').style.visibility = "hidden";
+                    document.getElementById('nameError').innerHTML = "";
+                    document.getElementById('name').style.borderColor = "grey";
+                    res = true;
+                    this.nameCheck = true;
+                }
+                this.checkForm();
+                return res;
+            },
+            checkMobileNumber() {
+                var res = false;
+                if(this.user.mobile === "") {
+                    document.getElementById('numberError').style.visibility = "visible";
+                    document.getElementById('numberError').innerHTML = "Number Field Cannot Be Empty...!";
+                    document.getElementById('number').style.borderColor = "red";
+                    this.numberCheck = false;
+                }else if(!this.user.mobile.match(/^[0-9]+$/)) {
+                    document.getElementById('numberError').style.visibility = "visible";
+                    document.getElementById('numberError').innerHTML = "Wrong Input Enter Numbers Only...!";
+                    document.getElementById('number').style.borderColor = "red";
+                    this.numberCheck = false;
+                } else if(this.user.mobile.length < 11) {
+                    document.getElementById('numberError').style.visibility = "visible";
+                    document.getElementById('numberError').innerHTML = "Wrong Input Enter minimum 11 Numbers ..!";
+                    document.getElementById('number').style.borderColor = "red";
+                    this.numberCheck = false;
+                } else {
+                    document.getElementById('numberError').style.visibility = "hidden";
+                    document.getElementById('numberError').innerHTML = "";
+                    document.getElementById('number').style.borderColor = "grey";
+                    this.numberCheck = true;
+                    res = true;
+                }
+                this.checkForm();
+                return res;
+            },
+            hideErrors() {
+                document.getElementById('numberError').style.visibility = "hidden";
+                document.getElementById('numberError').innerHTML = "";
+                document.getElementById('number').style.borderColor = "grey";
+                document.getElementById('number').value = "";
+                document.getElementById('nameError').style.visibility = "hidden";
+                document.getElementById('nameError').innerHTML = "";
+                document.getElementById('name').style.borderColor = "grey";
+                document.getElementById('name').value = "";
+                this.user.fullName = this.user.mobile = "";
+                this.disableSave = true;
+                
+            },
             checkAll() {
                if(this.newPasswordCheck && this.confirmPasswordCheck && this.oldPasswordCheck) {
                    this.disableButton = false;
                } else {
                    this.disableButton = true;
                }
+            },
+            checkForm() {
+                if(this.numberCheck || this.nameCheck) {
+                    this.disableSave = false;
+                } else {
+                    this.disableSave = true;
+                }
             },
             updatePassword() {
                 this.disableButton = true;
