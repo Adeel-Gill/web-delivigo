@@ -7,8 +7,8 @@
                 <div class="pic-container">
                     <img :src="getImage(userData.UrlImage)" @error="getImage('')" id="showImage" class="img-fluid" >
                     <div class="overlay"><!--@change="showImage(e)"-->
-                        <input type="file"  id="image-upload" accept="image/*" @change="onFileChange" hidden>
-                        <button class="btn" :disabled="!isEditable" @click="imageUpload()"><i class="fas fa-camera"></i>&nbsp;Upload picture</button>
+                        <input type="file"  id="image-upload" ref="file" accept="image/*" @change="onFileChange" hidden>
+                        <button class="btn"  @click="imageUpload()"><i class="fas fa-camera"></i>&nbsp;Upload picture</button>
                     </div>
                 </div>
                 <button v-b-modal.change-password :disabled="isFbUser" class="btn password-btn">Change Password</button>
@@ -17,7 +17,7 @@
                 <div class="heading line">
                     <h1 class="profile-heading d-inline">My Profile</h1>
                     <button  class="btn edit-btn" @click="enableEditable" :style="{display: [!isEditable? 'block': 'none']}">Edit</button>
-                    <button  class="btn edit-btn" @click="changeValidated" :disabled="disableSave" :style="{display: [isEditable? 'block': 'none']}">Save</button>
+                    <button  class="btn edit-btn" @click="updateUser" :disabled="disableSave" :style="{display: [isEditable? 'block': 'none']}">Save</button>
                     <button  class="btn edit-btn" @click="disableEditable" :style="{display: [isEditable? 'block': 'none']}">Cancel</button>
                 </div>
                 <div class="form-field mt-5 pr-3">
@@ -126,10 +126,11 @@
 </template>
 
 <script>
-    import {fetchUserProfile} from "../api/Profile";
+    import {fetchUserProfile, updateProfileImage, updateProfile} from "../api/Profile";
     import {baseAddress, defaultUserPic} from "../../main";
     import {changePassword} from "../api/ChangePassword";
     import {mapActions} from "vuex";
+    import {EventBus} from "../../main";
     export default {
         name: "profile2",
         data() {
@@ -163,15 +164,95 @@
                     deviceUniqueCode: 'web',
                 },
             imageFile: null,
+            imageFile2: null,
+            isImageFile: true,
+            imageCheck: false,
+            updateUserData: {
+                Mobile: "",
+                FullName: "",
+                UrlImage: "",
+                Id: ""
+                }
             }
         },
         methods:{
+            updateUser() {
+                if(this.nameCheck || this.numberCheck) {
+                    this.updateUserData.Mobile = this.user.mobile;
+                    this.updateUserData.FullName = this.user.fullName;
+                    this.updateUserData.UrlImage = localStorage.getItem("userProfile");
+                    this.updateUserData.Id = localStorage.getItem("id");
+                    this.updateProfile();
+                }
+            },
+            emitEvent() {
+                var num =Number(localStorage.getItem("changeCount"));
+                        console.log("num",num);
+                        num += 1;
+                        // localStorage.setItem("changeCount", num);
+                        setTimeout(() => {
+                            localStorage.setItem('userProfile', this.userData.UrlImage);
+                            this.$emit("changeTheCounter",num);
+                        }, 1000);
+            },
+            updateImage() {
+                if(this.imageCheck) {
+                    localStorage.setItem("userChanged", true);
+                    let formData = new FormData();
+                    formData.append('file',this.imageFile);
+                    formData.append('Id', localStorage.getItem("id"));
+                    updateProfileImage(formData).then(response => {
+                        if(response.HasErrors === true) {
+                            this.showNotification("info","Error","Error occurred try again");
+                        } else {
+                            console.log(response);
+                            this.fetchUserProfile();
+                            this.emitEvent();
+                            this.showNotification("success","Success","Image updated successfully...!");
+                        }
+                        
+                        // this.$Event.$emit('changeCounter',0);
+                        // this.$router.go();
+                    }, error => {
+                        this.showNotification("info","Error","Error occurred try again")
+                        localStorage.setItem("userChanged", false);
+                    })
+                }
+            },
+            updateProfile() {
+                updateProfile(this.updateUserData).then(response => {
+                    console.log(response);
+                    if(response.HasErrors === true) {
+                        this.showNotification("info","Error","Error occurred try again");
+                    } else {
+                        this.showNotification("success","Success","Profile updated successfully...!");
+                        this.disableEditable();
+                        this.fetchUserProfile();
+                    }
+                }, error => {
+                    this.showNotification("info","Error","Error occurred try again");
+                })
+            },
             onFileChange(e) {
                 this.imageFile = e.target.files[0];
-                this.userData.UrlImage = URL.createObjectURL(this.imageFile); 
+                this.imageFile2 = this.$refs.file.files[0];
+                console.log(this.imageFile2);
+                // this.userData.UrlImage = URL.createObjectURL(this.imageFile);
+                if(this.imageFile!= null) {
+                    this.isImageFile = true;
+                    this.imageCheck = true;
+                    console.log(this.imageFile);
+                    this.updateImage();
+                    // this.fetchUserProfile();
+                } else {
+                    this.imageCheck = false;
+                } 
+                this.checkForm();
             },
             enableEditable() {
                 this.changeValidated();
+                this.user.fullName = this.userData.FullName;
+                this.user.mobile = this.userData.Mobile;
                 this.isEditable = !this.isEditable;
             },
             disableEditable() {
@@ -186,7 +267,7 @@
                 this.validated = !this.validated
                 
             },
-            async fetchUserProfile() {
+            fetchUserProfile() {
                 if(localStorage.getItem('fbLogin') == "false" || localStorage.getItem('fbLogin') == null) {
                     this.isFbUser = false;
                 } else {
@@ -195,6 +276,8 @@
                 fetchUserProfile(localStorage.getItem('id')).then(response => {
                     console.log('profile',response);
                     this.userData = response;
+                    localStorage.setItem('userProfile', this.userData.UrlImage);
+                     
                 }, error => {
                     console.log(error);
                     this.showNotification('error','Error','Error occurred please try later!');
@@ -216,7 +299,11 @@
                     return this.image = defaultUserPic;
                 } else {
                     if(localStorage.getItem("fbLogin") === "true") {
-                        return img;
+                        if(localStorage.getItem("userChanged") === "true") {
+                            return this.image = baseAddress + img;
+                        } else {
+                            return img;
+                        }
                     } else {
                         return this.image =  baseAddress + img;
                     }
@@ -399,7 +486,7 @@
                }
             },
             checkForm() {
-                if(this.numberCheck || this.nameCheck) {
+                if(this.numberCheck || this.nameCheck || this.imageCheck) {
                     this.disableSave = false;
                 } else {
                     this.disableSave = true;

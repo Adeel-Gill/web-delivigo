@@ -20,15 +20,15 @@
               <b-dropdown-item href="#">RU</b-dropdown-item>
               <b-dropdown-item href="#">FA</b-dropdown-item>
             </b-nav-item-dropdown>
-            <b-nav-item to="/profile" v-if="isLogin === 'true'? true: false" class="profile-link">
+            <b-nav-item to="/profile" v-if="isLogin === true? true: false" class="profile-link">
               <div>
                 <img :src="getImage()" @error="getImage('noImage')" class="rounded-circle" height="50" width="50"/>
                 <!--                    <img src="//placehold.it/50" />-->
                   </div>
             </b-nav-item>
-            <b-nav-item to="/signin" activClass="active" v-if="isLoggedOut === 'true' || isLoggedOut == undefined? true: false" class="singin ">Sign In</b-nav-item>
-            <b-nav-item to="/signup" activClass="active" v-if="isLoggedOut === 'true' || isLoggedOut == undefined? true: false" class="register">Register</b-nav-item>
-            <b-nav-item  activClass="active" v-if="isLogin === 'true'? true: false" class="register pl-2 pt-1" @click="signOut">Sign Out</b-nav-item>
+            <b-nav-item to="/signin" activClass="active" v-if="isLoggedOut === true || isLoggedOut == undefined? true: false" class="singin ">Sign In</b-nav-item>
+            <b-nav-item to="/signup" activClass="active" v-if="isLoggedOut === true || isLoggedOut == undefined? true: false" class="register">Register</b-nav-item>
+            <b-nav-item  activClass="active" v-if="isLogin === true? true: false" class="register pl-2 pt-1" @click="signOut">Sign Out</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </div>
@@ -47,8 +47,8 @@
     data() {
       return {
         isFilter: false,
-        isLogin: this.$store.getters.getLogin,
-        isLoggedOut: this.$store.getters.getLoggedOut,
+        isLogin: this.$store.state.isLogin,
+        isLoggedOut: this.$store.state.isLoggedOut,
         user: {},
         image: ''
       }
@@ -58,6 +58,7 @@
         'cleanToken'
       ]),
       checkIsLogin() {
+        
         if (this.$store.state.isLogin !== '' || (localStorage.getItem('isLogin') !== false)) {
           console.log('state', this.$store.state.isLogin);
           this.isLogin = this.$store.state.isLogin;
@@ -71,15 +72,33 @@
           }
         })
       },
+      getStates() {
+        console.log("ghere",this.$store.state.isLogin,this.$store.state.isLoggedOut);
+        if(localStorage.getItem('isLogin') === 'true') {
+          this.isLogin = true;
+          this.isLoggedOut = false;
+        } else {
+          this.isLogin = false;
+          this.isLoggedOut = true;
+        }
+        // this.isLogin = [localStorage.getItem(isLogin) === tr]this.$store.state.isLogin;
+        // this.isLoggedOut = this.$store.state.isLoggedOut;
+        console.log(this.isLogin,this.isLoggedOut);
+      },
       getImage(img) {
-        img = localStorage.getItem('userProfile')
+        img = localStorage.getItem('userProfile');
+        console.log("hereInImage",img);
         if(img === '' || img === 'null') {
           return this.image = defaultUserPic;
         } else {
           if(localStorage.getItem("fbLogin") === "true") {
-            return img;
+            if(localStorage.getItem("userChanged") === "true") {
+                return this.image = baseAddress + img;
+            } else {
+                return this.image = img;
+            }
           } else {
-            return this.image =  baseAddress + img;
+              return this.image =  baseAddress + img;
           }
         }
       },
@@ -88,7 +107,22 @@
           this.$store.dispatch('cleanToken');
           this.$store.dispatch('clearCart');
           this.showNotification('success','Success','Sign out successfully');
-          this.$router.go();
+          var num =Number(localStorage.getItem("changeCount"));
+          console.log("num",num);
+          num += 1;
+          console.log(num);
+          this.isLogin = false;
+          this.isLoggedOut = true;
+          console.log('check',this.isLogin,this.isLoggedOut);
+          localStorage.setItem("changeCount", num);
+          EventBus.$emit('changeCounter', '');
+          this.$router.push('/');
+          // this.isLogin = false;
+          // this.isLoggedOut = true;
+          console.log('check',this.isLogin,this.isLoggedOut);
+          this.getStates();
+          // this.$forceUpdate();
+          // this.$router.go();
         } else {
           this.$dialog.confirm('There are items in cart if you proceed the cart will be clear. Continue?', {
             loader: true
@@ -118,9 +152,11 @@
       }
     },
   mounted() {
-      console.log('m',this.isLogin === 'true'? true: false,this.isLoggedOut === 'true'? true: false);
+    this.getStates();
+    this.getImage(',');
+      console.log('m',this.isLogin === true? true: false,this.isLoggedOut === true? true: false);
       if((this.isLogin == null || this.isLoggedOut == null)) {
-        this.$store.dispatch('cleanToken');
+        // this.$store.dispatch('cleanToken');
         // this.$router.go();
       }
 
@@ -129,6 +165,7 @@
   updated() {
     console.log('u',localStorage.getItem('isLogin'),localStorage.getItem('token'));
     console.log(localStorage.getItem('isLogin'));
+    
   },
     computed: {
       ...mapGetters([
@@ -141,7 +178,7 @@
       console.log('c',this.isLogin,this.isLoggedOut);
       console.log(localStorage.getItem('isLogin'));
       if((this.isLogin == null || this.isLoggedOut == null)) {
-        this.$store.dispatch('cleanToken');
+        // this.$store.dispatch('cleanToken');
       }
       // this.isLogin=localStorage.getItem('isLogin');
         this.$eventBus.$on('checkComponent', (data) => {
