@@ -106,7 +106,7 @@
         display: inline-block;
         margin: 0 0 20px;
         /*font-family: "Panton";*/
-        font-weight: bold;
+        font-weight: 500;
         font-size: 17px;
     }
 .catagories{
@@ -116,6 +116,7 @@
         font-size: 32px;
         font-weight: 500;
         text-transform: capitalize;
+        color: black;
     }
 .catagory a {
     text-decoration: none;

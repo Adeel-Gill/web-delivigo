@@ -5,7 +5,7 @@
             <div class="row py-2">
             <div class="col-md-3 col-sm-12 col-12 profile-pic">
                 <div class="pic-container">
-                    <img :src="getImage(userData.UrlImage)" @error="getImage('')" id="showImage" class="img-fluid" >
+                    <img :src="getImage(userData.UrlImage)" @error="getImage('')" id="showImage" class="w-100 h-100">
                     <div class="overlay"><!--@change="showImage(e)"-->
                         <input type="file"  id="image-upload" accept="image/*" @change="onFileChange" hidden>
                         <button class="btn" :disabled="!isEditable" @click="imageUpload()"><i class="fas fa-camera"></i>&nbsp;Upload picture</button>

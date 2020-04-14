@@ -42,6 +42,7 @@
         border: none;
         /*padding: 30px 30px;*/
         border-radius: 5px;
+        color: #080808;
     }
     .card h1{
         font-size: 36px;

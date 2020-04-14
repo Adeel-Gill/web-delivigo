@@ -46,7 +46,9 @@
     }
 </script>
 <style scoped>
-
+    .clear{
+        clear: both;
+    }
     .popular-dishes {
         text-align: left;
         background: #f2f2f2;
@@ -54,8 +56,8 @@
         padding: 15px 0 15px 25px;
     }
     .popular-dishes h5 {
-        /*font-family: "Roboto";*/
-        font-size: 30px;
+        font-family: "Roboto",sans-serif;
+        font-size: 26px;
         font-weight: 500;
         color: black;
         position: relative;
@@ -77,7 +79,7 @@
         list-style: none;
         padding: 7px 0px;
         /*font-family: "Roboto";*/
-        font-size: 27px;
+        font-size: 21px;
         font-weight: 500;
         color: black;
     }

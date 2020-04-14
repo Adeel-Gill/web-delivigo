@@ -5,7 +5,7 @@
             <div class="address-info">
                 <h3>{{venue.addressHeading}}</h3>
                 <p>{{restaurant.FullAddress}}
-                    <span >
+                    <span class="map">
 <!--                        <app-map to="/map"></app-map>-->
                         <router-link :to="{path: '/map',
                         query: {long: restaurant.Longitude,
@@ -135,22 +135,24 @@
     .venue-info {
         text-align: left;
     }
-    .venue-info h3 {
+    .venue-info >h3:first-child {
         /*font-family: "Roboto";*/
         font-weight: bold;
-        font-size: 30px;
+        font-size: 27px;
         margin-bottom: 50px;
         color: #040404;
     }
     .address-info h3 {
-        margin-bottom: 0 !important;
+        margin-bottom: 20px !important;
+        font-weight: 500;
+        font-size: 24px;
+        color: #040404;
     }
-    .address-info p[data-v-0e54dd28] {
-        max-width: 145px;
-        margin: 0;
-        /*font-family: "Roboto";*/
+    .address-info p {
+        /*max-width: 145px;*/
+        font-family: "Roboto",sans-serif;
         font-weight: normal;
-        font-size: 20px;
+        font-size: 18px;
         line-height: 26px;
         color: #040404;
     }
@@ -158,8 +160,15 @@
         padding: 24px 0;
         display: block;
     }
+    .map a{
+        color: #000;
+        font-family: "Roboto",sans-serif;
+        font-size: 18px;
+    }
     .opening-info h3 {
         margin-bottom: 25px !important;
+        font-size: 24px;
+        font-weight: 500;
     }
     .open-days {
         float: left;
@@ -205,6 +214,7 @@
         display: block;
         margin-top: 15px;
     }
+
     button.link {
         background:none;
         border:none;
