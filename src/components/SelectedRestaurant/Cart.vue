@@ -76,7 +76,7 @@
                 </b-form-group>
             </form>
         </b-modal>
-        <b-modal size="lg" hide-footer class="my-modal" body-class="p-0" id="checkout" title="Checkout">
+        <b-modal size="lg" scrollable hide-footer class="my-modal" body-class="p-0" id="checkout" title="Checkout">
             <div class="container--fluid">
                 <div class="map-place">
                     <img src="../../../public/images/map.png">
@@ -924,7 +924,6 @@
 
     .food-type {
         position: absolute;
-        bottom: 0;
         left: 100px;
         bottom: 100px;
     }
@@ -1150,36 +1149,55 @@
         display: grid;
         margin-top: 5px;
     }
-    @media screen and (max-width: 380px) {
+    @media screen and (max-width: 989px) and (min-width: 960px) {
         .card-width{
-            width: 120px !important;
+            width: 200px !important;
         }
-        .default-btn .btn{
-            padding: 0 !important;
+    }
+    @media screen and (max-width: 960px) and (min-width: 760px){
+        .slected-bg{
+            height:550px ;
+            border-radius: 0px 500px 500px 0;
+        }
+        .card-width{
+            width: 200px !important;
+        }
+    }
+    @media screen and (max-width: 760px) and (min-width: 576px){
+        .slected-bg{
+            height:500px ;
+            border-radius: 0px 450px 450px 0;
+        }
+        .card-width{
+            width: 180px !important;
         }
         .btn-main h3{
-            font-size: 19px;
+            font-size: 24px;
         }
-        .btn-main p{
-            font-size: 14px;
+        .invoice p{
+            padding-left: 30px;
+        }
+    }
+    @media screen and (max-width: 576px) and (min-width: 430px){
+        .slected-bg{
+            height:450px ;
+            border-radius: 0px 400px 400px 0;
+        }
+        .card-width{
+            width: 180px !important;
+        }
+        .btn-main h3{
+            font-size: 22px;
         }
         .btn-continue button{
-            width: 100%;
-            font-size: 22px;
+            width: 80%;
+            font-size: 24px;
         }
-
         .sec-heading{
-            font-size: 22px;
+            font-size: 24px;
         }
-        a.link-color h2{
-            font-size: 22px;
-        }
-        p.link-color{
-            font-size: 22px;
-        }
-
         .invoice p{
-            padding-left: 10px;
+            padding-left: 20px;
         }
     }
     @media screen and (max-width: 430px) and (min-width: 380px){
@@ -1193,7 +1211,6 @@
         .card-width{
             width: 160px !important;
         }
-
         .default-btn .btn{
             padding: 0 !important;
         }
@@ -1221,58 +1238,41 @@
             padding-left: 15px;
         }
     }
-    @media screen and (max-width: 576px) and (min-width: 430px){
-        .slected-bg{
-            height:450px ;
-            border-radius: 0px 400px 400px 0;
-        }
+    @media screen and (max-width: 380px) {
         .card-width{
-            width: 180px !important;
+            width: 120px !important;
+        }
+        .default-btn .btn{
+            padding: 0 !important;
+        }
+        .food-type{
+            left: 20px;
         }
         .btn-main h3{
-            font-size: 22px;
+            font-size: 19px;
+        }
+        .btn-main p{
+            font-size: 14px;
         }
         .btn-continue button{
-            width: 80%;
-            font-size: 24px;
+            width: 100%;
+            font-size: 22px;
         }
         .sec-heading{
-            font-size: 24px;
+            font-size: 22px;
         }
+        a.link-color h2{
+            font-size: 22px;
+        }
+        p.link-color{
+            font-size: 22px;
+        }
+
         .invoice p{
-            padding-left: 20px;
-        }
-    }
-    @media screen and (max-width: 760px) and (min-width: 576px){
-        .slected-bg{
-            height:500px ;
-            border-radius: 0px 450px 450px 0;
-        }
-        .card-width{
-            width: 180px !important;
-        }
-        .btn-main h3{
-            font-size: 24px;
-        }
-        .invoice p{
-            padding-left: 30px;
-        }
-    }
-    @media screen and (max-width: 960px) and (min-width: 760px){
-        .slected-bg{
-            height:550px ;
-            border-radius: 0px 500px 500px 0;
-        }
-        .card-width{
-            width: 200px !important;
+            padding-left: 10px;
         }
     }
 
-    @media screen and (max-width: 989px) and (min-width: 960px) {
-        .card-width{
-            width: 200px !important;
-        }
-    }
 
 
 

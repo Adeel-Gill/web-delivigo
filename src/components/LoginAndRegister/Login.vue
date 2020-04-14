@@ -120,7 +120,6 @@
                 })
             },
             async checkCredentials() {
-                localStorage.setItem("changeCount", 0)
                 if(this.checkObject()) {
                      checkCredentials(this.userData).then(response => {
                         if(response.HasErrors === false) {
@@ -132,13 +131,8 @@
                             // console.log('cart',JSON.parse(JSON.stringify(localStorage.getItem('cart'))));
 
                             console.log('cart',JSON.parse(localStorage.getItem('cart')));
-                            // localStorage.setItem("changeCount", Number(localStorage.getItem("changeCount"))++);
                             this.$router.push({path:'/'});
-                             var num =Number(localStorage.getItem("changeCount"));
-                             num += 1;
-                            localStorage.setItem("changeCount", num);
-                             this.$emit('changeCounter', '');
-                            // this.$router.go();
+                            this.$router.go();
                             // this.storeToken('storeToken',response.AuthToken, response)
 
                         } else {
