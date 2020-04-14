@@ -459,9 +459,6 @@
     }
 </script>
 <style scoped>
-    .clear{
-        clear: both;
-    }
     #display-dish{
         display: none;
     }
@@ -604,7 +601,7 @@
     .about-dish {
         /*float: right;*/
         z-index: -2;
-        width: 68%;
+        width: 65%;
         display: inline-block;
         position: absolute;
     }
@@ -686,7 +683,7 @@
 
     @media screen and (max-width: 960px) and (min-width: 761px){
         .add-item-btn button {
-            padding: 15px 36px;
+            padding: 15px 40px;
             font-size: 20px;
         }
     }

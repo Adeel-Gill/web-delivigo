@@ -227,7 +227,7 @@ export default {
         display: inline-block;
         margin: 0 0 20px;
         /*font-family: "Panton";*/
-        font-weight: 500;
+        font-weight: bold;
         font-size: 17px;
     }
 /*.container{*/
@@ -249,7 +249,6 @@ export default {
     font-size: 32px;
     font-weight: 500;
     text-transform: capitalize;
-    color: black;
 }
 .title h2 {
     text-align: left !important;

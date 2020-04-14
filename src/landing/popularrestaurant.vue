@@ -81,7 +81,7 @@ export default {
     display: inline-block;
     margin: 10px 0 20px;
     /*font-family: "Panton";*/
-    font-weight: 500;
+    font-weight: bold;
     font-size: 17px;
 }
 .title{

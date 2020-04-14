@@ -6,7 +6,7 @@
                     <h4>{{restaurant.Name}}</h4>
                     <p>{{restaurant.FullAddress | truncate}}</p>
                 </div>
-                <div class="reviews text-right">
+                <div class="reviews">
                     <a v-b-modal.reviewModal class="links">All Reviews</a>
                 </div>
                 <div class="clear"></div>
@@ -16,16 +16,16 @@
             </div>
             <div class="rating-times">
                 <div class="row">
-                    <div class="col-3 col-md-3">
+                    <div class="col-4 col-md-4">
                         <div class="rating">
                             <p>
                                 <i class="fas fa-star"></i>
-                                <span class="pl-1">{{restaurant.Rating}} </span>
-                                <span class="light">({{restaurant.ReviewCount}})</span>
+                                <span>{{restaurant.Rating}} </span>
+                                <span class="light">{{restaurant.ReviewCount}}</span>
                             </p>
                         </div>
                     </div>
-                    <div class="col-5 col-md-5">
+                    <div class="col-4 col-md-4">
                         <div class="delivery">
                             <p v-if="freeDelivery === true">
                                 <i class="fas fa-euro-sign"></i>
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <b-modal id="reviewModal" scrollable title="All Review" refs="modal" size="lg" hide-footer>
+        <b-modal id="reviewModal" title="All Review" size="lg" hide-footer>
             <div v-if="allReviews.length>0">
                 <review v-for="(review,index) in allReviews" :key="index" :review="review"  ></review>
             </div>
@@ -155,51 +155,48 @@
     }
     /*[data-v-6db8e78f]*/
     .description-about {
-        font-family:'Roboto', sans-serif;
         background: #f2f2f2;
         padding: 30px;
         position: absolute;
         width: 100%;
         top: -132px;
-        right: 0;
-        border-radius: 7px;
+        right: -80px;
     }
     .name-desc {
-        font-family:'Roboto', sans-serif;
         float: left;
     }
     .name-desc h4 {
-        font-family:'Roboto', sans-serif;
         color: #8ba939;
+        /*font-family: "pantonBold";*/
         font-size: 40px;
         font-weight: 500;
         margin: 0;
     }
     .name-desc p {
         color: #8f8f90;
-        font-size: 21px;
-        font-family:'Roboto', sans-serif;
-        font-weight: 500;
+        font-size: 23px;
+        /*font-family: "pantonSemi";*/
+        font-weight: 400;
         text-align: left;
         margin: 0;
     }
     .restaurnt-address p {
         text-align: left;
         margin: 0;
-        font-family:'Roboto', sans-serif;
+        /*font-family: "pantonSemi";*/
         font-size: 18px;
-        font-weight: 500;
+        font-weight: 400;
     }
     .reviews {
         float: right;
         padding: 25px 0;
     }
     .reviews a {
-        color: #2125c3 !important;
-        font-weight: 500;
+        color: #8ba939 !important;
+        /*font-family: "pantonSemi";*/
+        font-weight: 400;
         font-size: 20px;
         cursor: pointer;
-        font-family:'Roboto', sans-serif;
     }
     .reviews a:hover{
         text-decoration: underline !important;
@@ -214,8 +211,9 @@
     .rating p {
         margin: 0;
         text-align: left;
-        font-size: 20px;
-        font-weight: 500;
+        font-family: "pantonSemi";
+        font-size: 22px;
+        /*font-weight: 600;*/
     }
     i.fas.fa-star {
         color: #8ba939;
@@ -227,8 +225,9 @@
     .delivery p {
         margin: 0;
         text-align: left;
+        /*font-family: "pantonSemi";*/
         font-size: 20px;
-        font-weight: 500;
+        font-weight: 600;
     }
     i.fas.fa-euro-sign {
         color: #8ba939;
@@ -236,8 +235,9 @@
     .mints p {
         margin: 0;
         text-align: right;
+        /*font-family: "pantonSemi";*/
         font-size: 20px;
-        font-weight: 500;
+        font-weight: 400;
     }
     i.far.fa-clock {
         color: #8ba939;
@@ -256,10 +256,6 @@
     .card{
         box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.4);
     }
-    .clear
-    {
-        clear: both;
-    }
     @media screen and (max-width: 960px) and (min-width: 768px){
         .description-about{
             padding: 20px;
@@ -274,7 +270,7 @@
         .restaurnt-address{
             margin: 20px 0;
         }
-        .restaurnt-address p {
+        .restaurnt-address p{
             font-size: 18px;
             /*margin: 10px 0;*/
         }
@@ -297,8 +293,8 @@
     }
     @media screen and (max-width: 767px) and (min-width: 561px){
         .description-about{
-            top: -330px;
-            right: 0;
+            top: -390px;
+            right: 0px;
             padding: 20px;
         }
         .name-desc h4{
@@ -333,8 +329,8 @@
     }
     @media screen and (max-width: 560px) and (min-width: 401px){
         .description-about{
-            top: -320px;
-            right: 0;
+            top: -390px;
+            right: 0px;
             padding: 20px;
         }
         .name-desc h4{
@@ -370,8 +366,8 @@
     }
     @media screen and (max-width: 400px){
         .description-about{
-            top: -320px;
-            right: 0;
+            top: -390px;
+            right: 0px;
             padding: 20px;
         }
         .name-desc h4{
@@ -405,6 +401,5 @@
         }
 
 
-}
-
+    }
 </style>

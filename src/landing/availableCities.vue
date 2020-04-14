@@ -80,21 +80,20 @@
         display: inline-block;
         margin: 10px 0 20px;
         /*font-family: "Panton";*/
-        font-weight: 500;
+        font-weight: bold;
         font-size: 17px;
     }
     .title{
         text-align: center;
         /*font-family: "Roboto";*/
+        color: #080808;
     }
     .title h2{
         font-size: 35px;
         font-weight: bold;
         text-transform: uppercase;
-        color: #080808;
     }
     .title p{
         font-size: 23px;
-        color: #080808;
     }
 </style>
