@@ -7,7 +7,7 @@
         <div class="col-md-5">
             <app-top-nav></app-top-nav>
             <div>
-                <router-view></router-view>
+                <router-view @updateTheCounter="emitCounter"></router-view>
             </div>
         </div>
     </div>
@@ -19,6 +19,11 @@
         name: "Index",
         components: {
             appTopNav: TopNav
+        },
+        methods: {
+            emitCounter() {
+                this.$emit("changeCounter",0);
+            }
         }
     }
 </script>

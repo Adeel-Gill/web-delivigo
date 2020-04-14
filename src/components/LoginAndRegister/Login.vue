@@ -134,10 +134,10 @@
                             console.log('cart',JSON.parse(localStorage.getItem('cart')));
                             // localStorage.setItem("changeCount", Number(localStorage.getItem("changeCount"))++);
                             this.$router.push({path:'/'});
-                             var num =Number(localStorage.getItem("changeCount"));
-                             num += 1;
-                            localStorage.setItem("changeCount", num);
-                             this.$emit('changeCounter', '');
+                            //  var num =Number(localStorage.getItem("changeCount"));
+                            //  num += 1;
+                            // localStorage.setItem("changeCount", num);
+                             this.$emit('updateTheCounter', '');
                             // this.$router.go();
                             // this.storeToken('storeToken',response.AuthToken, response)
 
