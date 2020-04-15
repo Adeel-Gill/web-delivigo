@@ -5,7 +5,7 @@
                 <div class="col-4 p-0 card-img">
                     <img :src="item.ImageUrl">
                 </div>
-                <div class="col-8 py-0 pr-1">
+                <div class="col-8 py-2 pr-1 cart-text">
                     <a src="#" @click="removeItem(index)" class="float-right"><i class="fas fa-times"></i></a>
                     <h4>{{item.Name}}</h4>
                     <p class="text-muted m-0">{{item.Description}}</p>
@@ -37,6 +37,31 @@
 </script>
 
 <style scoped>
+    .card-img img{
+        height: 100%;
+        width: 100%;
+    }
+    .price{
+        font-weight: 500;
+    }
+    .cart-text h4{
+        color: black;
+        font-size: 20px;
+        font-weight: 400;
+    }
+    .cart-text p{
+        color: black;
+        font-size: 15px;
+        font-weight: 400;
+    }
+    .cart-text span{
+        color: black;
+        font-size: 15px;
+        font-weight: 400;
+    }
+    .cart-text span i{
+        color: black;
+    }
     .slected-bg {
         position: relative;
         background-repeat: no-repeat;
@@ -148,13 +173,7 @@
     .drawer-body{
         padding: 10px;
     }
-    .card-img img{
-        height: 100%;
-        width: 100%;
-    }
-    .price{
-        font-weight: bold;
-    }
+
     /*.multiple i{*/
     /*    font-weight: 100;*/
     /*}*/
@@ -266,9 +285,9 @@
 .card-sec::-webkit-scrollbar {
         display: none;
     }*/
-    .demo{
-        /*width: 100px;*/
-        /*height: 100px;*/
+    /*.demo{
+        !*width: 100px;*!
+        !*height: 100px;*!
         background-color: #8f8f90;
-    }
+    }*/
 </style>

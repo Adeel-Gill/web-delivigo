@@ -34,7 +34,7 @@ export default {
                 iphone:'./images/iphoneApp.png',
                 android: './images/mobileApp.png'
             },
-            phoneimg:'./images/phone.png'
+            phoneimg:'./images/download-app.jpg'
         }
     }
 }

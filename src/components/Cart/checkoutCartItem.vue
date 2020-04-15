@@ -3,13 +3,13 @@
         <div class="card p-0 mb-3" style="width: 100%;">
             <div class="card-body py-0 pl-2">
                 <div class="row">
-                    <div class="col-4 p-0 card-img">
+                    <div class="col-5 p-0 card-img">
                         <img :src="item.ImageUrl">
                     </div>
-                    <div class="col-8 py-0 pr-1">
+                    <div class="col-7 py-2 pr-1 cart-text">
                         <a src="#" @click="removeItem(itemIndex)" class="float-right"><i class="fas fa-times"></i></a>
                         <h4>{{item.Name}}</h4>
-                        <p class="text-muted m-0">{{item.Description}}</p>
+                        <p class="text-muted mb-1">{{item.Description}}</p>
                         <p class="m-0 d-inline-block price mr-5">{{item.Price}}</p> <span><i class="fas fa-times"></i> {{item.Quantity}}</span>
                     </div>
                 </div>
@@ -32,6 +32,32 @@
 </script>
 
 <style scoped>
+    .card-img img{
+        height: 100%;
+        width: 100%;
+    }
+    .price{
+        font-weight: 500;
+    }
+    .cart-text h4{
+        color: black;
+        font-size: 20px;
+        font-weight: 400;
+    }
+    .cart-text p{
+        color: black;
+        font-size: 15px;
+        font-weight: 400;
+    }
+    .cart-text span{
+        color: black;
+        font-size: 15px;
+        font-weight: 400;
+    }
+    .cart-text span i{
+        color: black;
+    }
+
     .slected-bg {
         position: relative;
         background-repeat: no-repeat;
@@ -143,16 +169,10 @@
     .drawer-body{
         padding: 10px;
     }
-    .card-img img{
-        height: 100%;
-        width: 100%;
-    }
-    .price{
-        font-weight: bold;
-    }
-    /*.multiple i{*/
-    /*    font-weight: 100;*/
-    /*}*/
+
+    /*!*.multiple i{*!
+    !*    font-weight: 100;*!
+    !*}*!
     .map-place{
         width: 100%;
         height:300px;
@@ -170,12 +190,12 @@
         background-color: #8ba939 !important;
     }
     .invoice{
-        /*margin: 10px 40px;*/
+        !*margin: 10px 40px;*!
     }
     .invoice p{
         font-size: 20px;
         font-weight: 600;
-        /*display: inline-block;*/
+        !*display: inline-block;*!
         padding-left:40px;
         margin: 0;
         padding-bottom: 0;
@@ -197,12 +217,12 @@
         font-size:12px;
         margin-top: -5px;
     }
-    /*.invoice span{
+    !*.invoice span{
         float: right;
         font-size: 18px;
         font-weight: 600;
         padding: 0 20px;
-    }*/
+    }*!
     .sec-heading{
         color: #8ba939;
         font-size: 26px;
@@ -240,7 +260,7 @@
     a.link-color:hover{
         text-decoration: none;
         color: #5F7E32;
-    }
+    }*/
 
     /*.card-sec{
         display: flex;
@@ -261,9 +281,9 @@
 .card-sec::-webkit-scrollbar {
         display: none;
     }*/
-    .demo{
-        /*width: 100px;*/
-        /*height: 100px;*/
+    /*.demo{
+        !*width: 100px;*!
+        !*height: 100px;*!
         background-color: #8f8f90;
-    }
+    }*/
 </style>

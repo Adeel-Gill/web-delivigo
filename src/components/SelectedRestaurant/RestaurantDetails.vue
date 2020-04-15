@@ -297,7 +297,7 @@
     }
     @media screen and (max-width: 767px) and (min-width: 561px){
         .description-about{
-            top: -330px;
+            top: -142px;
             right: 0;
             padding: 20px;
         }
@@ -333,7 +333,7 @@
     }
     @media screen and (max-width: 560px) and (min-width: 401px){
         .description-about{
-            top: -320px;
+            top: -145px;
             right: 0;
             padding: 20px;
         }
@@ -370,7 +370,7 @@
     }
     @media screen and (max-width: 400px){
         .description-about{
-            top: -320px;
+            top: -165px;
             right: 0;
             padding: 20px;
         }

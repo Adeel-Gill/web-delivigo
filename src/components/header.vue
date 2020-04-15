@@ -12,6 +12,9 @@
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
+          <div class="mx-auto address-line">
+            <p class="text-center">Deliver to:&nbsp;<span>Faisal town Lahore Pakistan</span></p>
+          </div>
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto" id="navbar-dropdown">
             <b-nav-item-dropdown text="ENG" right class="pt-1">
@@ -183,5 +186,13 @@
     width: 135px;
     padding-top: 6px;
     padding-bottom:6px;
+  }
+  .address-line p{
+    color: white;
+    font-size: 18px;
+    margin-top: 20px;
+    padding-left: 100px;
+  }
+  .address-line p span{
   }
 </style>

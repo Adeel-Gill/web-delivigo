@@ -4,6 +4,9 @@
             <div v-if="notEmpty">
                 <banner />
                 <div class="filter-section">
+                    <div class="text-right clear-all">
+                        <a href="#">Clear all</a>
+                    </div>
                     <div class="row">
                         <div class="col-12 col-sm-4">
                             <sort @callAPI = "callSortAPI" />
@@ -226,6 +229,14 @@ export default {
         color: #0030b4;
         display: inline-block;
         margin: 0 0 20px;
+        /*font-family: "Panton";*/
+        font-weight: 500;
+        font-size: 17px;
+    }
+    .clear-all a {
+        color: #0030b4;
+        display: inline-block;
+        margin: 0 0 6px 0;
         /*font-family: "Panton";*/
         font-weight: 500;
         font-size: 17px;

@@ -145,7 +145,7 @@
                 <div class="row">
                     <div class="col-md-12 col-12">
                         <h2 class="d-inline-block sec-heading">Shipping Address</h2>
-                        <p class="float-right mt-2"><router-link to="/delivery">Add New</router-link></p>
+                        <p class="float-right mt-2 d-inline"><router-link to="/delivery">Add New</router-link></p>
                     </div>
                     <div class="col-12 p-0">
                         <VueSlickCarousel v-bind="settings">
@@ -173,10 +173,10 @@
 
                 <div class="row">
                     <div class="col-8">
-                        <h2 class="d-inline-block sec-heading">Contact Info</h2>
+                        <h2 class="d-inline-block sec-heading mb-3">Contact Info</h2>
                     </div>
 
-                    <div class="col-12 py-0">
+                    <div class="col-12 py-0 px-4">
                         <div class="card card-block w-100">
                             <div class="card-body">
                                 <p class="m-0">{{userData.FullName}}</p>
@@ -218,7 +218,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="sec-heading">Prices in EUR, Incl. taxes</h2>
+                        <h2 class="sec-heading mb-3">Prices in EUR, Incl. taxes</h2>
                     </div>
                 </div>
                 <div class="row invoice">
@@ -959,11 +959,10 @@
         background: red;
         margin: 0 20px 0 5px;
         color: white;
-        /*font-weight: bold;*/
-        /*font-family: "Roboto";*/
         font-size: 18px;
         text-transform: uppercase;
         font-weight: 500;
+        border-radius: 5px;
     }
     .food-type p span {
         display: inline-block;
@@ -1062,10 +1061,10 @@
     .invoice p{
         font-size: 18px;
         font-weight: 500;
-        /*display: inline-block;*/
-        padding-left:40px;
+        padding-left:33px;
         margin: 0;
         padding-bottom: 0;
+        color: black;
     }
     .invoice .price p{
         text-align: right;
@@ -1139,7 +1138,10 @@
         text-decoration: none;
         color: #5F7E32;
     }
-
+    .btn-main h3{
+        font-weight: 500;
+        font-size: 24px;
+    }
     .active-background{
         background-color: #6A8623;
         color: white;
