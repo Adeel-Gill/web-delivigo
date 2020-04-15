@@ -33,6 +33,9 @@ import Policy from "./components/Documents/Policy";
 import TermsAndConditions from "./components/Documents/TermsAndConditions";
 import Cookies from "./components/Documents/Cookies";
 import Legal from "./components/User/Legal";
+import newPolicy from "./components/Documents/newDocuments/Policy";
+import newTermsAndConditions from "./components/Documents/newDocuments/TermsAndConditions";
+import newCookies from "./components/Documents/newDocuments/Cookies";
 export const routes = [
     { path: '/', component: Home },
     { path: '/loginandreg', component: LoginAndRegister, children: [
@@ -161,7 +164,10 @@ export const routes = [
             {path: '/termsAndConditions', component: TermsAndConditions, query: {docType: 't'}},
             {path: '/cookiesDoc', component: Cookies, query: {docType: 'c'}},
 
-        ]}
+        ]},
+        {path: '/newPolicy', component: newPolicy, query: {docType: 'p'}},
+        {path: '/newTerms', component: newTermsAndConditions, query: {docType: 't'}},
+        {path: '/newCookies', component: newCookies, query: {docType: 'c'}}
 
 ]
 function checkLoginRoute() {

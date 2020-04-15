@@ -2,7 +2,7 @@
     <div class="col-12 p-0" style="min-height: 409px;">
         <app-side-nav></app-side-nav>
         <main id="page-wrap">
-        <router-view></router-view>
+        <router-view @changeTheCounter = "checking"></router-view>
         </main>
     </div>
 </template>
@@ -24,12 +24,24 @@
     import SideNav from "./SideNav";
     import Profile from "./Profile";
     import DeliveryAddress from "./DeliveryAddress";
+import { EventBus } from '../../main';
     export default {
         name: "Profile",
         components: {
             appSideNav: SideNav,
             appProfile: Profile,
             appDeliveryAddress: DeliveryAddress
+        },
+        methods: {
+            checking(n) {
+                console.log("here it is",n);
+                this.$emit("changeCounter", n);
+            }
+        },
+        updated() {
+            this.$on("changeTheCounter", response => {
+                console.log("hereUSer",repsonse);
+            })
         }
     }
 </script>
