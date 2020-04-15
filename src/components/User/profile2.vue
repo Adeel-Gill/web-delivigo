@@ -242,7 +242,7 @@
                     document.getElementById('oldPasswordError').innerHTML = "Password must be upto 6 ..!";
                     document.getElementById('oldPassword').style.borderColor = "red";
                     this.oldPasswordCheck = false;
-                }  else {
+                } else {
                     document.getElementById('oldPasswordError').style.visibility = "hidden";
                     document.getElementById('oldPasswordError').innerHTML = "";
                     document.getElementById('oldPassword').style.borderColor = "grey";
@@ -511,7 +511,7 @@
         width: 100%;
     }
 
-.profile-heading{
+.profile-heading {
     color: #0b0d0f;
     font-size: 32px;
     font-weight: 500;
