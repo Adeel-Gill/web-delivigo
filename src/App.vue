@@ -3,12 +3,12 @@
     <notifications group="foo" position="bottom right"></notifications>
     <app-loader></app-loader>
     <div class="headerSection">
-      <app-header></app-header>
+      <app-header :key='changeCount' ></app-header>
       <div class="clear"></div>
     </div>
     <div class="content">
       <div class="contentSection">
-        <router-view></router-view>
+        <router-view @changeCounter="updateCount"></router-view>
       </div>
     </div>
 
@@ -30,7 +30,19 @@ export default {
       loader: false,
       settings: {
         maxScrollbarLength: 60
-      }
+      },
+      changeCount: 0,
+    }
+  },
+  methods: {
+    updateCount(n) {
+      console.log("inParent");
+      var num =Number(localStorage.getItem("changeCount"));
+          console.log("numP",num);
+          num += 1;
+          console.log(num);
+          this.changeCount = num;
+          localStorage.setItem("changeCount", num);
     }
   },
      components:{
@@ -40,6 +52,14 @@ export default {
         vueScrollBar: vueCustomScrollBar
       },
   updated() {
+    // this.$on("changeCounter", response => {
+    //   console.log("eventEmitted:: ", resposne);
+    // })
+    // this.changeCount = Number(localStorage.getItem("changeCount"))
+    // EventBus.$on("changeTheCounter", response => {
+    //   console.log("eventEmitted",response);
+    //   this.updateCount(response);
+    // })
        EventBus.$on('StartOverlay', response => {
          this.loader = response;
        })

@@ -39,6 +39,7 @@ Vue.component('star-rating',StarRating);
 Vue.prototype.$eventBus = new Vue(); // add this line of code
 Vue.prototype.$store = UserInfo;
 Vue.use(VueRouter);
+Vue.forceUpdate;
 Vue.use(gMap,{
   load: {
     key: 'AIzaSyD558YhipGyRlJimQwE4wB-oKI6AsaShfM',
@@ -47,6 +48,9 @@ Vue.use(gMap,{
   installComponents: true
 })
 // Vue.forceUpdate();
+if(localStorage.getItem("changeCount") == null) {
+  localStorage.setItem("changeCount", 0);
+}
 const router = new VueRouter({
   mode: 'history',
   // base: process.env.BASE_URL,

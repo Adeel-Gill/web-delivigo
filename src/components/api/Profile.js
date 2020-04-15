@@ -21,3 +21,19 @@ export function registerUser(data) {
         data
     })
 }
+export function updateProfileImage(data) {
+    console.log(data);
+    return service({
+        url: 'CustomerImage/MediaUpload',
+        method: 'post',
+        data
+    })
+}
+export function updateProfile(data) {
+    console.log(data);
+    return service({
+        url: 'UpdateCustomer',
+        method: 'post',
+        data
+    })
+}
