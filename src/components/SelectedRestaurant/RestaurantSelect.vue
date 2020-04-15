@@ -1,22 +1,21 @@
 <template>
     <div class="restaurnt-selected" >
         <banner />
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 popular">
+        <div class="container-fluid">
+            <div class="row pb-3">
+                <div class="col-md-3 pr-3 popular">
                     <popular-foods></popular-foods>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 pl-3">
                     <restaurnt-name></restaurnt-name>
                 </div>
                 <!--                <div class="col-lg-3 col-md-3"></div>-->
             </div>
-            <div class="row menu-sec">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
+            <div class="row menu-sec justify-content-end">
+                <div class="col-md-6 float-right">
                     <dishes />
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 float-right">
                     <venue />
                 </div>
             </div>
@@ -121,6 +120,12 @@
     }
 </script>
 <style scoped>
+    *{
+        font-family:'Roboto', sans-serif;
+    }
+    .clear{
+        clear: both;
+    }
     .menu-sec{
         position: relative;
         top: -20px;
@@ -128,7 +133,11 @@
     .popular{
         /*display: inline-block;*/
     }
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 1160px)and (min-width: 960px) {
+
+    }
+
+        @media screen and (max-width: 767px) {
         .popular{
             visibility:hidden;
         }
@@ -137,10 +146,16 @@
             top: -120px;
         }
     }
+    .container-fluid{
+        padding:0 60px;
+    }
     @media screen and (max-width: 560px){
         .menu-sec{
             position: relative;
-            top: -100px;
+            top: -45px;
+        }
+        .container-fluid{
+            padding:0 20px;
         }
     }
 </style>

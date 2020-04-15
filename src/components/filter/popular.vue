@@ -105,17 +105,17 @@ export default {
     display: inline-block;
     margin: 0 0 20px;
     /*font-family: "Panton";*/
-    font-weight: bold;
+    font-weight: 500;
     font-size: 17px;
 }
 .title{
   /*font-family: "Roboto";*/
-  color: #080808;
 }
 .title h2{
   font-size: 32px;
   font-weight: 500;
    text-transform: capitalize;
+    color: #000000;
 }
 </style>
 

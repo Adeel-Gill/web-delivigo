@@ -66,7 +66,7 @@
     }
     .catagory{
         display: inline-block;
-        margin-bottom:25px;
+        /*margin-bottom:25px;*/
     }
     .catagory a {
         text-decoration: none;
@@ -97,7 +97,7 @@
         background-color: #a07f4c;
     }
     .card-image{
-        height: 242px;
+        height: 280px;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;

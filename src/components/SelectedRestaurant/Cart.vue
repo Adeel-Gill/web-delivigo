@@ -76,7 +76,7 @@
                 </b-form-group>
             </form>
         </b-modal>
-        <b-modal size="lg" hide-footer class="my-modal" body-class="p-0" id="checkout" title="Checkout">
+        <b-modal size="lg" scrollable hide-footer class="my-modal" body-class="p-0" id="checkout" title="Checkout">
             <div class="container--fluid">
                 <div class="map-place">
                     <img src="../../../public/images/map.png">
@@ -106,7 +106,7 @@
                                             @removeItemInCart="itemRemoveInOrder(index)"
                                             :item="item.Meal"></app-checkout-cart-item>
                 </div>
-
+                <div class="pl-4">
                 <a href="#" class="link-color"><h2><i class="fas fa-plus"></i> Add more items</h2></a>
                 <div v-if="emptyInstruction">
                     <h2><p @click="showInstruction" class="link-color" >
@@ -116,7 +116,8 @@
                     <a @click="showInstruction" class="link-color" >
                         <h2><i class="fas fa-pepper-hot"></i>{{this.instruction | truncate}}</h2></a>
                 </div>
-                <h2>People Also Added</h2>
+                </div>
+                <h2 class="sec-heading">People Also Added</h2>
                 <div class="row">
                     <div class="col-12">
                         <VueSlickCarousel v-bind="settings">
@@ -142,7 +143,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-8 col-12">
+                    <div class="col-md-12 col-12">
                         <h2 class="d-inline-block sec-heading">Shipping Address</h2>
                         <p class="float-right mt-2"><router-link to="/delivery">Add New</router-link></p>
                     </div>
@@ -175,7 +176,7 @@
                         <h2 class="d-inline-block sec-heading">Contact Info</h2>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-12 py-0">
                         <div class="card card-block w-100">
                             <div class="card-body">
                                 <p class="m-0">{{userData.FullName}}</p>
@@ -185,7 +186,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-8 col-12">
+                    <div class="col-md-12 col-12">
                         <h2 class="d-inline-block sec-heading">Payment Method</h2>
                         <p class="float-right mt-2"><router-link to="/billing">Add New</router-link></p>
                     </div>
@@ -924,7 +925,6 @@
 
     .food-type {
         position: absolute;
-        bottom: 0;
         left: 100px;
         bottom: 100px;
     }
@@ -1032,7 +1032,7 @@
         width: 100%;
     }
     .price{
-        font-weight: bold;
+        font-weight: 500;
     }
     /*.multiple i{*/
     /*    font-weight: 100;*/
@@ -1060,8 +1060,8 @@
         /*margin: 10px 40px;*/
     }
     .invoice p{
-        font-size: 20px;
-        font-weight: 600;
+        font-size: 18px;
+        font-weight: 500;
         /*display: inline-block;*/
         padding-left:40px;
         margin: 0;
@@ -1070,7 +1070,7 @@
     .invoice .price p{
         text-align: right;
         font-size: 18px;
-        font-weight: 600;
+        font-weight: 500;
         padding-right:20px;
         padding-bottom: 0;
     }
@@ -1092,13 +1092,13 @@
     }*/
     .sec-heading{
         color: #8ba939;
-        font-size: 26px;
+        font-size: 24px;
     }
     a.link-color h2{
-        font-size: 26px;
+        font-size: 21px;
     }
     p.link-color{
-        font-size: 26px;
+        font-size: 21px;
         color: #8ba939;
         font-weight: 500;
         cursor: pointer;
@@ -1150,36 +1150,55 @@
         display: grid;
         margin-top: 5px;
     }
-    @media screen and (max-width: 380px) {
+    @media screen and (max-width: 989px) and (min-width: 960px) {
         .card-width{
-            width: 120px !important;
+            width: 200px !important;
         }
-        .default-btn .btn{
-            padding: 0 !important;
+    }
+    @media screen and (max-width: 960px) and (min-width: 760px){
+        .slected-bg{
+            height:550px ;
+            border-radius: 0px 500px 500px 0;
+        }
+        .card-width{
+            width: 200px !important;
+        }
+    }
+    @media screen and (max-width: 760px) and (min-width: 576px){
+        .slected-bg{
+            height:500px ;
+            border-radius: 0px 450px 450px 0;
+        }
+        .card-width{
+            width: 180px !important;
         }
         .btn-main h3{
-            font-size: 19px;
+            font-size: 24px;
         }
-        .btn-main p{
-            font-size: 14px;
+        .invoice p{
+            padding-left: 30px;
+        }
+    }
+    @media screen and (max-width: 576px) and (min-width: 430px){
+        .slected-bg{
+            height:450px ;
+            border-radius: 0px 400px 400px 0;
+        }
+        .card-width{
+            width: 180px !important;
+        }
+        .btn-main h3{
+            font-size: 22px;
         }
         .btn-continue button{
-            width: 100%;
-            font-size: 22px;
+            width: 80%;
+            font-size: 23px;
         }
-
         .sec-heading{
-            font-size: 22px;
+            font-size: 23px;
         }
-        a.link-color h2{
-            font-size: 22px;
-        }
-        p.link-color{
-            font-size: 22px;
-        }
-
         .invoice p{
-            padding-left: 10px;
+            padding-left: 20px;
         }
     }
     @media screen and (max-width: 430px) and (min-width: 380px){
@@ -1193,7 +1212,6 @@
         .card-width{
             width: 160px !important;
         }
-
         .default-btn .btn{
             padding: 0 !important;
         }
@@ -1212,67 +1230,50 @@
             font-size: 22px;
         }
         a.link-color h2{
-            font-size: 24px;
+            font-size: 20px;
         }
         p.link-color{
-            font-size: 24px;
+            font-size: 20px;
         }
         .invoice p{
             padding-left: 15px;
         }
     }
-    @media screen and (max-width: 576px) and (min-width: 430px){
-        .slected-bg{
-            height:450px ;
-            border-radius: 0px 400px 400px 0;
-        }
+    @media screen and (max-width: 380px) {
         .card-width{
-            width: 180px !important;
+            width: 120px !important;
+        }
+        .default-btn .btn{
+            padding: 0 !important;
+        }
+        .food-type{
+            left: 20px;
         }
         .btn-main h3{
-            font-size: 22px;
+            font-size: 19px;
+        }
+        .btn-main p{
+            font-size: 14px;
         }
         .btn-continue button{
-            width: 80%;
-            font-size: 24px;
+            width: 100%;
+            font-size: 22px;
         }
         .sec-heading{
-            font-size: 24px;
+            font-size: 21px;
         }
+        a.link-color h2{
+            font-size: 19px;
+        }
+        p.link-color{
+            font-size: 19px;
+        }
+
         .invoice p{
-            padding-left: 20px;
-        }
-    }
-    @media screen and (max-width: 760px) and (min-width: 576px){
-        .slected-bg{
-            height:500px ;
-            border-radius: 0px 450px 450px 0;
-        }
-        .card-width{
-            width: 180px !important;
-        }
-        .btn-main h3{
-            font-size: 24px;
-        }
-        .invoice p{
-            padding-left: 30px;
-        }
-    }
-    @media screen and (max-width: 960px) and (min-width: 760px){
-        .slected-bg{
-            height:550px ;
-            border-radius: 0px 500px 500px 0;
-        }
-        .card-width{
-            width: 200px !important;
+            padding-left: 10px;
         }
     }
 
-    @media screen and (max-width: 989px) and (min-width: 960px) {
-        .card-width{
-            width: 200px !important;
-        }
-    }
 
 
 
