@@ -46,7 +46,7 @@ export const routes = [
                     } else {
                         next()
                     }
-                } },
+                } }     ,
             { path: '/signup', component: Register, beforeEnter(to, from, next) {
                     console.log('signup',localStorage.getItem('token'));
                     if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
