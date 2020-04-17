@@ -15,7 +15,7 @@ import Banner from './landingBanner.vue';
 // import Popular from './popularrestaurant.vue';
 import Process from './delivery.vue';
 // import Featured from './featuredRestaurants.vue';
-import Download from './appdownload.vue';
+import Download from './appStore.vue';
 import {fetchResturantsData} from "../components/api/Landing";
 import availableCities from "./availableCities";
 import whatIsDelivigo from "./whatIsDelivigo";
