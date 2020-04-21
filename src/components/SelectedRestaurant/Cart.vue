@@ -117,35 +117,18 @@
                         <h2><i class="fas fa-pepper-hot"></i>{{this.instruction | truncate}}</h2></a>
                 </div>
                 </div>
+                <div class="row mt-4">
                 <h2 class="sec-heading">People Also Added</h2>
-                <div class="row">
                     <div class="col-12">
                         <VueSlickCarousel v-bind="settings">
-                            <!--                            <div class="card card-block">-->
-                            <!--                                <div class="card-body">-->
-                            <!--                                    <p class="m-0">Murphy</p>-->
-                            <!--                                    <p class="m-0">$ 33</p>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <!--&lt;!&ndash;                            <div class="card card-block">&ndash;&gt;-->
-                            <!--&lt;!&ndash;                                <div class="card-body">&ndash;&gt;-->
-                            <!--&lt;!&ndash;                                    <p class="m-0">Murphy</p>&ndash;&gt;-->
-                            <!--&lt;!&ndash;                                    <p class="m-0">$ 33</p>&ndash;&gt;-->
-                            <!--&lt;!&ndash;                                </div>&ndash;&gt;-->
-                            <!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-                            <!--                            <div class="card card-block">-->
-                            <!--                                <div class="card-body">-->
-                            <!--                                    <p class="m-0">Murphy</p>-->
-                            <!--                                    <p class="m-0">$ 33</p>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
+
                         </VueSlickCarousel>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 col-12">
+                <div class="row mt-4">
+                    <div class="col-md-12 col-12 pb-2">
                         <h2 class="d-inline-block sec-heading">Shipping Address</h2>
-                        <p class="float-right mt-2 d-inline"><router-link to="/delivery">Add New</router-link></p>
+                        <p class="float-right d-inline p-0"><router-link to="/delivery">Add New</router-link></p>
                     </div>
                     <div class="col-12 p-0">
                         <VueSlickCarousel v-bind="settings">
@@ -171,9 +154,9 @@
                 </div>
 
 
-                <div class="row">
-                    <div class="col-8">
-                        <h2 class="d-inline-block sec-heading mb-3">Contact Info</h2>
+                <div class="row mt-4">
+                    <div class="col-8 pb-2">
+                        <h2 class="d-inline-block sec-heading">Contact Info</h2>
                     </div>
 
                     <div class="col-12 py-0 px-4">
@@ -185,10 +168,10 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12 col-12">
+                <div class="row mt-4">
+                    <div class="col-md-12 col-12 pb-2">
                         <h2 class="d-inline-block sec-heading">Payment Method</h2>
-                        <p class="float-right mt-2"><router-link to="/billing">Add New</router-link></p>
+                        <p class="float-right p-0"><router-link to="/billing">Add New</router-link></p>
                     </div>
 
                     <div class="col-12 p-0">
@@ -216,9 +199,9 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="sec-heading mb-3">Prices in EUR, Incl. taxes</h2>
+                <div class="row mt-4">
+                    <div class="col-12 pb-2">
+                        <h2 class="sec-heading">Prices in EUR, Incl. taxes</h2>
                     </div>
                 </div>
                 <div class="row invoice">
@@ -1062,7 +1045,7 @@
         font-size: 18px;
         font-weight: 500;
         padding-left:33px;
-        margin: 0;
+        margin-bottom: 5px;
         padding-bottom: 0;
         color: black;
     }

@@ -1,46 +1,58 @@
 <template>
-    <div class="pl-5 m-top">
+    <div class="m-top">
         <div class="row">
+            <div class="col-12 px-5">
             <form action="" v-on:submit.prevent class="myProfile">
-                <div class="form-group">
-                    <label for="fullname">Full Name</label>
-                    <label class="errorMessage" id="nameError"></label>
+                <div class="form-group row">
+                    <label for="fullname" class="col-sm-2 col-form-label">Full Name</label>
+                    <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
                            v-model="userData.fullName"
                            placeholder="Name Here...!"
                            id="fullname"
                            v-on:input="checkName()"
-                            required>
+                           required>
+                    <label class="errorMessage" id="nameError"></label>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="number">Mobile Number</label>
-                    <label class="errorMessage" id="numberError"></label>
-                    <input type="text"
-                           class="form-control"
-                           v-model="userData.mobile"
-                           placeholder="e.g 03121234123"
-                            v-on:input="checkMobileNumber()"
-                           id="number" required>
+
+                <div class="form-group row">
+                    <label for="number" class="col-sm-2 col-form-label">Mobile Number</label>
+                    <div class="col-sm-10">
+                        <input type="text"
+                               class="form-control"
+                               v-model="userData.mobile"
+                               placeholder="e.g 03121234123"
+                               v-on:input="checkMobileNumber()"
+                               id="number" required>
+                        <label class="errorMessage" id="numberError"></label>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <label class="errorMessage" id="emailError"></label>
-                    <input type="email"
-                           class="form-control"
-                           placeholder="abc@mail.com"
-                            v-on:input="checkEmail()"
-                           v-model="userData.email"
-                           id="email" required>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">Email Address</label>
+                    <div class="col-sm-10">
+                        <input type="email"
+                               class="form-control"
+                               placeholder="abc@mail.com"
+                               v-on:input="checkEmail()"
+                               v-model="userData.email"
+                               id="email" required>
+                        <label class="errorMessage" id="emailError"></label>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="npwd">Password</label>
-                    <label class="errorMessage" id="passwordError"></label>
-                    <input type="password" class="form-control"
-                           placeholder="Password Here...!"
-                            v-on:input="checkPassword()"
-                           v-model="userData.password" id="npwd" required>
+
+                <div class="form-group row">
+                    <label for="npwd" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control"
+                               placeholder="Password Here...!"
+                               v-on:input="checkPassword()"
+                               v-model="userData.password" id="npwd" required>
+                        <label class="errorMessage" id="passwordError"></label>
+                    </div>
                 </div>
+
                 <!-- Material unchecked -->
                 <div class="form-check">
                     <span class="form-check-label"
@@ -54,7 +66,7 @@
                 <div class="button text-center">
                     <button type="submit" :disabled="disableSubmit" @click="registerUser" class="btn btn-submit">SIGN UP</button>
                         <span class="or">OR</span>
-                    <facebook-login class="fb"
+                    <facebook-login class="fb p-0 mt-3"
                                     appId="649127768995419"
                                     @login="onLogin"
                                     @logout="onLogout"
@@ -63,6 +75,7 @@
                 </div>
 
             </form>
+            </div>
         </div>
         <b-modal hide-footer refs="modal" size="xl" scrollable class="my-modal"   id="modal-1" title="Terms and Conditions">
                 <div class="container-fluid px-0">
@@ -383,7 +396,27 @@ import facebookLogin from 'facebook-login-vuejs';
     .m-top{
         margin-top: 30px;
     }
-    .myProfile input{
+   .form-group label{
+       align-self: center;
+       color: black;
+       font-weight: 500;
+       font-size: 17px;
+   }
+   .form-group input{
+       border: 0;
+       border-bottom: 1px solid #BCBDBF;
+       border-radius: 0;
+       font-size: 16px;
+       background:none;
+   }
+   .form-group input:focus{
+       border-bottom: 1px solid #5860ff;
+   }
+   .form-control:focus{
+       box-shadow: none;
+       -webkit-box-shadow: none;
+   }
+    /*.myProfile input{
         border: 0;
         border-bottom: 1px solid #e6e6e6;
         padding-left: 0;
@@ -392,7 +425,7 @@ import facebookLogin from 'facebook-login-vuejs';
         color: #999999;
         font-size: 16px;
         background:none;
-    }
+    }*/
     .form-check input{
         border: 0;
         border-bottom: 1px solid #e6e6e6;
@@ -404,9 +437,9 @@ import facebookLogin from 'facebook-login-vuejs';
         font-size: 16px;
         background:none;
     }
-    .myProfile input:focus{
+   /* .myProfile input:focus{
         border-bottom: 1px solid #5860ff;
-    }
+    }*/
 
     .button .btn-submit{
         /*margin-right: 50px;*/

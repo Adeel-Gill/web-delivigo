@@ -1,10 +1,10 @@
 <template>
     <div class="row">
-        <div class="col-md-6 shadow" >
+        <div class="col-md-6 col-12 shadow" >
             <img src="../../../public/images/loginregister.png" class="side-image" alt="image not available">
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-5">
+<!--        <div class="col-md-1"></div>-->
+        <div class="col-md-6 col-12">
             <app-top-nav></app-top-nav>
             <div>
                 <router-view @updateTheCounter="emitCounter"></router-view>
@@ -30,9 +30,9 @@
 
 <style scoped>
 .side-image{
-    margin-left: 50px;
+    /*margin-left: 50px;*/
     height: 640px;
-    width: 500px;
+    width: 100%;
 }
     .shadow{
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

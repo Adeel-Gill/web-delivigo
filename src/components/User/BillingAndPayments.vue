@@ -1,37 +1,40 @@
 <template>
-    <div>
-<!--        <div ref="card">-->
-<!--         </div>-->
-<!--        <button class="btn btn-submit" @click="showToken"> save card-->
-<!--        </button>-->
-        <div class="pl-5 m-top m-bottom col-md-8">
-            <div class="row">
+    <div class="col-12 col-sm-12 col-md-9">
+        <div class="container-md mt-4 pt-3 pb-5">
+            <div class="card p-2 p-md-5 ">
+                <div class="row justify-content-center">
+            <!--<div class="row">
                 <div class="col-md-10">
                     <h1 class="profile-heading d-inline-block">Billing and Payments</h1>
                     <b-button class="btn btn-submit float-right" @click="createCard" ><i class="fas fa-plus mr-3"></i>Add Card</b-button>
-                    <!--                <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Card</button>-->
                 </div>
-            </div>
-            <div class="col-md-10" v-if="isAvailable">
+            </div>-->
+            <div class="col-md-10 col-12" v-if="isAvailable">
+                <div class="heading line">
+                    <h1 class="profile-heading d-inline">Billing and Payments</h1>
+                    <button class="btn btn-submit float-right" @click="createCard" ><i class="fas fa-plus mr-3"></i>Add Card</button>
+                </div>
                 <div v-if="allCards.length > 0">
-                    <div class="address-block row" v-for="card in allCards" :key="card.Id">
-                        <div class="col-md-8" >
+                    <div class="address-block row pt-4 m-0 w-100" v-for="card in allCards" :key="card.Id">
+                        <div class="col-sm-10" >
                             <div class="card-image">
                                 <img :src="getImgUrl(card.Brand.toLowerCase())">
                             </div>
-                            <p class="address-par text-muted">{{card.Brand}} .... .... {{card.CardNumber}}</p>
-                            <p class="address-par text-muted">Expires in {{card.Month}}/{{card.Year}}</p>
+                            <p class="address-par">{{card.Brand}} .... .... {{card.CardNumber}}</p>
+                            <p class="address-par">Expires in {{card.Month}}/{{card.Year}}</p>
                         </div>
-                        <div class="col-md-2 icon">
+                        <div class="col-sm-2 icon">
+                            <div class="cross">
                             <button @click="deleteCard(card.Id)" :disabled ="card.IsDefault"><i class="fas fa-times-circle cancel"></i></button>
-                            <div class="radio">
+                            </div>
+                                <div class="radio">
                                 <input type="radio" :checked = card.IsDefault @click="markDefaultCard(card)" >
                                 <label>Default</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div v-else class="address-block row">
+                <div v-else class="address-block row pt-4 m-0 w-100">
                     <div class="col-md-8">
 
                     </div>
@@ -40,17 +43,20 @@
             <!-- Modal -->
         </div>
         <div>
-            <b-modal hide-footer refs="modal" class="my-modal"  @exit="close" id="modal-1" title="Create Card">
+            <b-modal hide-footer centered refs="modal" class="my-modal"  @exit="close" id="modal-1" title="Create Card">
                 <div ref="card" :disabled = "isLoading"></div>
                 <hr>
+                <div class="btn-modal">
                 <buttonSpinner
+                        class="btn btn-submit"
                         :loading="isLoading"
                         :disabled="isLoading"
                         :styled="true"
                         @click.native="showToken">Save Card
                 </buttonSpinner>
+                </div>
             </b-modal>
-            <b-modal hide-footer refs="modal" class="my-modal"  @exit="close" id="modal-2" title="Update Email">
+            <b-modal hide-footer centered refs="modal" class="my-modal"  @exit="close" id="modal-2" title="Update Email">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -65,6 +71,7 @@
                 <div class="btn-modal">
                     <hr>
                     <buttonSpinner
+                            class="btn btn-submit"
                             :loading="isLoading"
                             :disabled="disableButton"
                             :styled="true"
@@ -74,6 +81,8 @@
             </b-modal>
         </div>
 </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -418,67 +427,58 @@
 </script>
 
 <style scoped>
-   /* @font-face {
-        font-family: pantonb;
-        src:url("../../assets/fonts/Panton-Bold.ttf");
+    .container-md{
+        background-color: rgb(247,248,250);
     }
-    .row{
-        font-family:pantonb ;
-    }*/
-    .m-top{
-        margin-top: 30px;
-    }
-    .m-bottom{
-        margin-bottom: 100px;
-    }
-    /*.col-md-4{*/
-    /*    padding: 0;*/
-    /*}*/
     .profile-heading{
         color: #5860ff;
-        font-size: 34px;
+        font-size: 32px;
         font-weight: 500;
         margin-bottom: 50px;
     }
+    .line{
+        border-bottom: 1px solid #BCBDBF;
+        padding-bottom:12px;
+    }
     .address-block{
         border-bottom: 1px solid #9C9C9C;
-        /*margin-bottom: 30px;*/
+        margin-bottom: 10px;
+    }
+    .address-block h6{
+        font-size: 18px;
+        color: #000;
+        font-weight: 400;
     }
     .address-block p{
         font-size: 16px;
         padding-left: 5px;
         display: inline-block;
-    }
-    .button .btn-submit{
-        margin-right: 50px;
-        background-color: #5860ff;
-        color: white;
-
+        margin-bottom: 0;
+        color: #000;
     }
     .btn-submit:hover{
         background-color: #4F55C2;
         color: white;
     }
-    .button{
-        margin-top: 50px;
-        margin-bottom: 100px;
-    }
-    .button button{
-        border-radius: 30px;
-        width: 150px;
-    }
+
     .btn-submit{
         background-color: #5860ff;
         color: white;
         border-radius: 30px;
-        /*width: 150px;*/
-        padding-right: 25px;
-        padding-left: 25px;
+    }
+    .btn-modal .btn-submit{
+        background-color: #5860ff!important;
+        color: white !important;
+        border-radius: 7px !important;
+        padding: 0.5rem 1rem;
+        line-height: 1.5;
+        font-size: 18px;
     }
     .card-image{
         display: inline-block;
-        width: 50px;
-        height: 50px;
+        width: 42px;
+        height: 42px;
+        margin-right: 5px;
     }
     .card-image img{
         width: 100%;
@@ -486,10 +486,7 @@
     }
     .icon{
         display: inline-block;
-        position: absolute;
-        right: 0;
         text-align: right;
-        padding-right: 0;
     }
     .icon i{
         margin: 0 15px 0 0;
@@ -527,9 +524,26 @@
         justify-content: flex-end;
         margin: 10px 0 20px 0;
     }
+    @media screen and (max-width: 760px){
+        .profile-heading{
+            font-size: 27px;
+        }
+    }
     @media screen and (max-width: 576px) {
-        .m-top{
-            margin-top: 50px;
+        .radio{
+            display: inline-block;
+            margin-left: 15px;
+            margin-top: -6px;
+        }
+        .radio input{
+            position: relative;
+            top: 4px;
+        }
+        .cross{
+            display: inline-block;
+        }
+        .heading button{
+            float: none !important;
         }
     }
 </style>

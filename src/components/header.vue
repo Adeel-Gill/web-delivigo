@@ -16,13 +16,14 @@
             <p class="text-center">Deliver to:&nbsp;<span>Faisal town Lahore Pakistan</span></p>
           </div>
           <!-- Right aligned nav items -->
-          <b-navbar-nav class="ml-auto" id="navbar-dropdown">
+          <b-navbar-nav class="" id="navbar-dropdown">
             <b-nav-item-dropdown text="ENG" right class="pt-1">
               <b-dropdown-item href="#">EN</b-dropdown-item>
               <b-dropdown-item href="#">ES</b-dropdown-item>
               <b-dropdown-item href="#">RU</b-dropdown-item>
               <b-dropdown-item href="#">FA</b-dropdown-item>
             </b-nav-item-dropdown>
+<!--            <div class="d-inline-block buttons">-->
             <b-nav-item to="/profile" v-if="isLogin === true? true: false" class="profile-link">
               <div>
                 <img :src="getImage()" @error="getImage('noImage')" class="rounded-circle" height="50" width="50"/>
@@ -32,6 +33,7 @@
             <b-nav-item to="/signin" activClass="active" v-if="isLoggedOut === true || isLoggedOut == undefined? true: false" class="singin ">Sign In</b-nav-item>
             <b-nav-item to="/signup" activClass="active" v-if="isLoggedOut === true || isLoggedOut == undefined? true: false" class="register">Register</b-nav-item>
             <b-nav-item  activClass="active" v-if="isLogin === true? true: false" class="register pl-2 pt-1" @click="signOut">Sign Out</b-nav-item>
+<!--            </div>-->
           </b-navbar-nav>
         </b-collapse>
       </div>
@@ -208,6 +210,7 @@
     /*height: 65px;*/
     background-repeat: no-repeat;
     background-size: cover;
+    /*background-position: center;*/
   }
   .filter-header div#nav-collapse li.nav-item.singin a.nav-link {
     border: 2px solid transparent;
@@ -232,4 +235,51 @@
   }
   .address-line p span{
   }
+  .navbar-nav{
+    margin-left: auto;
+  }
+@media screen and (max-width: 992px){
+  .address-line p{
+    padding: 0;
+    margin-top: 0;
+  }
+  .navbar-nav{
+    margin: auto;
+    display: inline-block;
+    padding-bottom: 10px;
+    width: 100%;
+  }
+  .dropup .dropright .dropdown .dropleft{
+    border-right:unset !important;
+  }
+  .navbar-nav li{
+    display: inline-block;
+  }
+  .singin a{
+    padding: 4px 16px !important;
+  }
+  .register a{
+    padding: 5px 16px !important;
+  }
+  .dropdown-menu li{
+    display: block;
+  }
+  .singin{
+    float: right;
+    order: -1;
+  }
+  .register{
+    float: right;
+  }
+  /*.profile-link{*/
+  /*  float: right;*/
+  /*}*/
+
+}
+  /*position: absolute;
+  z-index: 100;
+  background-color: black;
+  top: 76px;
+  width: 100%;
+  left: 0px;*/
 </style>

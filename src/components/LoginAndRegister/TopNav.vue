@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="top-nav">
         <nav class="navbar ">
             <ul class="navbar-nav flex-row">
                 <router-link class="nav-item"
@@ -64,5 +64,9 @@
     }
     .active a{
         color: #5860ff;
+    }
+    .top-nav{
+        display: table;
+        margin: 0 auto;
     }
 </style>

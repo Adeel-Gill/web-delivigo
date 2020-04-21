@@ -1,7 +1,7 @@
 <template>
-    <div class="col-12 col-sm-12 col-md-9">
+    <div class="col-12 col-sm-12 col-md-9 mt-5 mt-md-0">
     <div class="container-md mt-4 pt-3 pb-5">
-        <div class="card p-5">
+        <div class="card p-2 p-md-5">
             <div class="row py-2">
             <div class="col-md-3 col-sm-12 col-12 profile-pic">
                 <div class="pic-container">
@@ -16,9 +16,9 @@
             <div class="col-md-9 col-sm-12 col-12">
                 <div class="heading line">
                     <h1 class="profile-heading d-inline">My Profile</h1>
-                    <button  class="btn edit-btn" @click="enableEditable" :style="{display: [!isEditable? 'block': 'none']}">Edit</button>
-                    <button  class="btn edit-btn" @click="updateUser" :disabled="disableSave" :style="{display: [isEditable? 'block': 'none']}">Save</button>
-                    <button  class="btn edit-btn" @click="disableEditable" :style="{display: [isEditable? 'block': 'none']}">Cancel</button>
+                    <button  class="btn edit-btn" @click="enableEditable" :style="{display: [!isEditable? 'block': 'none']}"><i class="fas fa-pencil-alt mr-3"></i>Edit</button>
+                    <button  class="btn edit-btn" @click="updateUser" :disabled="disableSave" :style="{display: [isEditable? 'block': 'none']}"><i class="far fa-save mr-3"></i>Save</button>
+                    <button  class="btn edit-btn" @click="disableEditable" :style="{display: [isEditable? 'block': 'none']}"><i class="fas fa-times mr-3"></i>Cancel</button>
                 </div>
                 <div class="form-field mt-5 pr-3">
                     <form>
@@ -599,7 +599,7 @@
     }
 
 .profile-heading {
-    color: #0b0d0f;
+    color: #5860ff;
     font-size: 32px;
     font-weight: 500;
     margin-bottom: 50px;
@@ -609,9 +609,12 @@
     float: right;
     margin-right: 10px;
     color: white;
+    border-radius: 30px;
+    padding-right: 15px;
+    /*padding-left: 25px;*/
 }
 .edit-btn:hover{
-    background-color: #494FC9;
+    background-color: #0056b3;
     color: #fff;
 }
     .line{

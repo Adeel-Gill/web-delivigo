@@ -95,9 +95,18 @@
                                 <div class="total">
                                     <span class="float-right">{{currentOrderObject.Order.TotalPrice.toFixed(2)}}</span>
                                 </div>
+                                <div class="float-right button">
+                                    <button class="btn btn-primary mr-2"><i class="fas fa-download"></i> &nbsp;Receipt</button>
+                                    <router-link :to="{path:'/orderTracking/'+currentOrderObject.Order.OrderId,query:{cusID:currentOrderObject.Customer.CustomerId}}">
+                                        <button class="btn btn-primary"
+                                                :disabled="(statuses.OrderDelivered === currentOrderObject.Order.OrderStatusId)">
+                                            Track Order
+                                        </button>
+                                    </router-link>
+                                </div>
                             </div>
                         </div>
-                        <div class="float-right">
+                        <!--<div class="float-right">
                         <button class="btn btn-primary mr-2"><i class="fas fa-download"></i> &nbsp;Receipt</button>
                         <router-link :to="{path:'/orderTracking/'+currentOrderObject.Order.OrderId,query:{cusID:currentOrderObject.Customer.CustomerId}}">
                             <button class="btn btn-primary"
@@ -105,7 +114,7 @@
                                 Track Order
                             </button>
                         </router-link>
-                        </div>
+                        </div>-->
                     </div>
 
                 </div>
@@ -332,6 +341,17 @@
     .total span{
         font-size: 19px;
         padding-top: 15px;
+    }
+    .button{
+        position: absolute;
+        bottom: 40px;
+        right: 0;
+    }
+    .button button{
+        background-color: #5860ff;
+    }
+    .button button:hover{
+        background-color:#0056b3 ;
     }
     .card{
         box-shadow: 4px 1px 10px 1px #DEDEDE;

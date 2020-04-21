@@ -1,24 +1,29 @@
 <template>
-    <div class="container">
-        <div class="popular">
-            <div class="title">
-                <h2>Discounted Restaurants</h2>
-                <p>Restaurants with deals</p>
-            </div>
-            <div class="restaurants-list" v-if="notEmpty">
-                <div class="row" >
-                    <restaurant v-for="(restaurant,index) in discounted" :key="index" :restaurant="restaurant" ></restaurant>
-                </div>
-            </div>
-            <div class="row" v-else>
-                <app-empty-error></app-empty-error>
-            </div>
-            <paginate
-                :page-count="total"
-                :container-class="'pagination'"
-                :click-handler="callAPI">
-            </paginate>
+    <div class="container-fluid mx-3">
+        <div class="row">
+           <div class="col-12 col-sm-12 col-md-9">
+               <div class="popular">
+                   <div class="title">
+                       <h2>Discounted Restaurants</h2>
+                       <p>Restaurants with deals</p>
+                   </div>
+                   <div class="restaurants-list" v-if="notEmpty">
+                       <div class="row" >
+                           <restaurant v-for="(restaurant,index) in discounted" :key="index" :restaurant="restaurant" ></restaurant>
+                       </div>
+                   </div>
+                   <div class="row" v-else>
+                       <app-empty-error></app-empty-error>
+                   </div>
+                   <paginate
+                           :page-count="total"
+                           :container-class="'pagination'"
+                           :click-handler="callAPI">
+                   </paginate>
+               </div>
+           </div>
         </div>
+
     </div>
 </template>
 
@@ -111,11 +116,14 @@
         color: #080808;
     }
     .title h2{
-        font-size: 35px;
-        font-weight: bold;
+        font-size: 32px;
+        font-weight: 500;
         text-transform: uppercase;
+        color: black;
     }
     .title p{
-        font-size: 23px;
+        font-size: 22px;
+        color: black;
+        font-weight: 400;
     }
 </style>

@@ -1,22 +1,22 @@
 @@ -0,0 +1,15 @@
 <template>
-    <div>
-    <div class="pad m-top p-bottom col-md-8">
-        <div class="row">
-            <div class="col-md-10">
-                <h1 class="profile-heading d-inline-block">Saved Address</h1>
+        <div class="col-12 col-sm-12 col-md-9">
+            <div class="container-md mt-4 pt-3 pb-5">
+                <div class="card p-2 p-md-5 ">
+            <div class="row justify-content-center">
+        <div class="col-md-10 col-12">
+            <div class="heading line">
+                <h1 class="profile-heading d-inline">Delivery Address</h1>
                 <button class="btn btn-submit float-right" @click="showModal"><i class="fas fa-plus mr-3"></i>Add Address</button>
-                    <!--                    <button type="submit" class="btn btn-submit"><i class="fas fa-plus mr-3"></i>Add Address</button>-->
             </div>
-        </div>
-        <div class="col-md-10">
-            <div class="address-block row" v-for="address in allAddresses" :key="address.Id">
-                <div class="col-md-9">
+            <div class="address-block row pt-4 m-0 w-100" v-for="address in allAddresses" :key="address.Id">
+
+                <div class="col-sm-10">
                 <h6 class="address-heading">{{address.Apartment}}</h6>
-                <p class="address-par text-muted">{{address.AddressLine}}</p>
+                <p class="address-par">{{address.AddressLine}}</p>
                 </div>
-                <div class="col-md-2 icon">
-                    <button @click="deleteAddress(address.Id)" :disabled="address.IsDefault"><i class="fas fa-times-circle cancel"></i></button>
+                <div class="col-sm-2 icon">
+                    <div class="cross"><button @click="deleteAddress(address.Id)" :disabled="address.IsDefault"><i class="fas fa-times-circle cancel"></i></button></div>
                     <div class="radio">
                         <input type="radio" id="rad" :checked="address.IsDefault" @click="setDefaultAddress(address.Id)">
                         <label>Default</label>
@@ -24,8 +24,9 @@
                 </div>
             </div>
         </div>
+
     </div>
-        <b-modal size="lg" hide-footer class="my-modal" id="modal-1" title="Add new Address">
+        <b-modal size="lg" hide-footer centered class="my-modal" id="modal-1" title="Add new Address">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -59,6 +60,7 @@
                 </div> -->
                 <div class="btn-modal">
                     <buttonSpinner
+                            class="btn btn-submit btn-sm"
                             :loading="isLoading"
                             :disabled="isLoading"
                             :styled="true"
@@ -68,6 +70,8 @@
             </div>
         </b-modal>
     </div>
+            </div>
+        </div>
 </template>
 
 <script>
@@ -284,45 +288,35 @@
 </script>
 
 <style scoped>
-   /* @font-face {
-        font-family: pantonb;
-        src:url("../../assets/fonts/Panton-Bold.ttf");
+    .container-md{
+        background-color: rgb(247,248,250);
     }
-    .row{
-        font-family:pantonb ;
-    }*/
-    .m-top{
-        margin-top: 30px;
-    }
-    .pad{
-        padding-left:40px;
-        padding-right: 40px;
-    }
-    .p-bottom{
-        padding-bottom: 100px;
-    }
-    /*.col-md-4{*/
-    /*    padding: 0;*/
-    /*}*/
-    .profile-heading{
+    .profile-heading {
         color: #5860ff;
-        font-size: 34px;
+        font-size: 32px;
         font-weight: 500;
         margin-bottom: 50px;
+    }
+    .line{
+        border-bottom: 1px solid #BCBDBF;
+        padding-bottom:12px;
     }
     .address-block{
         border-bottom: 1px solid #9C9C9C;
         margin-bottom: 10px;
     }
     .address-block h6{
-        font-size: 19px;
-        /*margin-top: 20px;*/
+        font-size: 17px;
+        color: #000;
+        font-weight: 400;
     }
     .address-block p{
         font-size: 16px;
         padding-left: 5px;
         display: inline-block;
         margin-bottom: 0;
+        color: #000;
+        font-weight: lighter;
     }
     /*.input-group-append{*/
     /*    !*color: #1c0095;*!*/
@@ -330,7 +324,7 @@
     /*}*/
     .button .btn-submit{
         margin-right: 50px;
-        background-color: #007bff;
+        background-color: #5860ff;
         color: white;
 
     }
@@ -351,20 +345,21 @@
         width: 150px;
     }
     .btn-submit{
-        background-color: #007bff;
+        background-color: #5860ff;
         color: white;
         border-radius: 30px;
-        /*width: 150px;*/
-        padding-right: 25px;
-        padding-left: 25px;
+    }
+    .btn-modal .btn-submit{
+        background-color: #5860ff!important;
+        color: white !important;
+        border-radius: 7px !important;
+        padding: 0.5rem 1rem;
+        line-height: 1.5;
+        font-size: 18px;
     }
     .icon{
         display: inline-block;
-        position: absolute;
-        right: 0;
         text-align: right;
-        /*padding-right: 0;*/
-        /*margin-top: 20px;*/
     }
     .icon i{
         /*margin: 0 15px 0 0;*/
@@ -409,6 +404,12 @@
         box-shadow: none;
         -webkit-box-shadow: none;
     }
+
+    @media screen and (max-width: 760px){
+        .profile-heading{
+            font-size: 27px;
+        }
+    }
     @media screen and (max-width: 576px) {
         .radio{
             display: inline-block;
@@ -419,8 +420,11 @@
             position: relative;
             top: 4px;
         }
-        .m-top{
-            margin-top: 50px;
+        .cross{
+            display: inline-block;
+        }
+        .heading button{
+            float: none !important;
         }
     }
 </style>

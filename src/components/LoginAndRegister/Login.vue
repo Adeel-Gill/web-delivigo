@@ -1,30 +1,34 @@
 <template>
     <div class="pl-5 m-top">
         <div class="row">
+            <div class="col-12 px-5">
             <form action="" v-on:submit.prevent class="myProfile">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <label class="errorMessage" id="emailError"></label>
-                    <input type="email"
-                           class="form-control"
-                           v-model="userData.email"
-                           placeholder="abc@mail.com"
-                            v-on:input="checkEmail()"
-                           id="email" required>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control"
+                               v-model="userData.email"
+                               placeholder="abc@mail.com"
+                               v-on:input="checkEmail()"
+                               id="email" required>
+                        <label class="errorMessage" id="emailError"></label>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="npwd">Password</label>
-                    <label class="errorMessage" id="passwordError"></label>
-                    <input type="password"
-                           class="form-control"
-                           placeholder="Password Here...!"
-                            v-on:input="checkPassword()"
-                           v-model="userData.password" id="npwd" required>
+                <div class="form-group row">
+                    <label for="npwd" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password"
+                               class="form-control"
+                               placeholder="Password Here...!"
+                               v-on:input="checkPassword()"
+                               v-model="userData.password" id="npwd" required>
+                        <label class="errorMessage" id="passwordError"></label>
+                    </div>
                 </div>
                 <div class="button text-center">
                     <button type="submit" @click="checkCredentials" :disabled="disableSubmit" class="btn btn-submit">SIGN IN</button>
                     <span class="or">OR</span>
-                    <facebook-login class="fb"
+                    <facebook-login class="fb p-0 mt-3"
                                     appId="649127768995419"
                                     @login="onLogin"
                                     @logout="onLogout"
@@ -40,7 +44,7 @@
 <!--                </v-facebook-login-scope>-->
 
             </form>
-
+            </div>
         </div>
     </div>
 </template>
@@ -306,19 +310,27 @@
     .m-top{
         margin-top: 30px;
     }
-    .myProfile input{
-        border: 0;
-        border-bottom: 1px solid #e6e6e6;
-        padding-left: 0;
-        width: 400px;
-        border-radius: 0;
-        color: #999999;
-        font-size: 16px;
-        background:none;
-    }
-    .myProfile input:focus{
-        border-bottom: 1px solid #5860ff;
-    }
+   .form-group label{
+       align-self: center;
+       color: black;
+       font-weight: 500;
+       font-size: 17px;
+   }
+   .form-group input{
+       border: 0;
+       border-bottom: 1px solid #BCBDBF;
+       border-radius: 0;
+       font-size: 16px;
+       background:none;
+       color: #000;
+   }
+   .form-group input:focus{
+       border-bottom: 1px solid #5860ff;
+   }
+   .form-control:focus{
+       box-shadow: none;
+       -webkit-box-shadow: none;
+   }
     .button .btn-submit{
         background-color: #5860ff;
         color: white;
@@ -335,10 +347,6 @@
     .button button{
         border-radius: 30px;
         width: 150px;
-    }
-    .form-control:focus{
-        box-shadow: none;
-        -webkit-box-shadow: none;
     }
     .edit-btn i{
         margin-left:20px ;
