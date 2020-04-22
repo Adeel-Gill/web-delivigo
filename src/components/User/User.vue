@@ -42,6 +42,10 @@ import { EventBus } from '../../main';
             this.$on("changeTheCounter", response => {
                 console.log("hereUSer",repsonse);
             })
+        },
+        mounted() {
+            localStorage.setItem("isAddress", "false");
+                this.$emit("changeCounter",0);
         }
     }
 </script>

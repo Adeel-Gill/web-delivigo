@@ -12,8 +12,8 @@
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
-          <div class="mx-auto address-line">
-            <p class="text-center">Deliver to:&nbsp;<span>Faisal town Lahore Pakistan</span></p>
+          <div class="mx-auto address-line" v-if="visibleAddress">
+            <p class="text-center">Deliver to:&nbsp;<span>{{address}}</span></p>
           </div>
           <!-- Right aligned nav items -->
           <b-navbar-nav class="" id="navbar-dropdown">
@@ -55,6 +55,8 @@
         isLogin: this.$store.state.isLogin,
         isLoggedOut: this.$store.state.isLoggedOut,
         user: {},
+        visibleAddress: false,
+        address: '',
         image: ''
       }
     },
@@ -88,6 +90,12 @@
         }
         // this.isLogin = [localStorage.getItem(isLogin) === tr]this.$store.state.isLogin;
         // this.isLoggedOut = this.$store.state.isLoggedOut;
+        if(localStorage.getItem('isAddress') === "true") {
+          this.visibleAddress = true;
+          this.address = localStorage.getItem("localAddress");
+        } else {
+          this.visibleAddress = false;
+        }
         console.log(this.isLogin,this.isLoggedOut);
       },
       getImage(img) {

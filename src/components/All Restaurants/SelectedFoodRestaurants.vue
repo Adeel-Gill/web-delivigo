@@ -42,6 +42,8 @@
         },
         methods: {
             async fetchRestaurantsByCategoryName(name) {
+                localStorage.setItem("isAddress", "false");
+                this.$emit("changeCounter",0);
                 console.log('name1 : '+name);
                 fetchRestaurantsByCategory(name).then(response => {
                     console.log('name2 : '+name);

@@ -39,6 +39,8 @@
         },
         methods: {
             fetchCities() {
+                localStorage.setItem("isAddress", "false");
+                this.$emit("changeCounter",0);
                 fetchResturantsData().then(response => {
                     this.cities = response.Cities;
                     console.log(this.cities.length);

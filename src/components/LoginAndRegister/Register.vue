@@ -2,7 +2,7 @@
     <div class="m-top">
         <div class="row">
             <div class="col-12 px-5">
-            <form action="" v-on:submit.prevent class="myProfile">
+            <form action="" name="registerForm" v-on:submit.prevent class="myProfile">
                 <div class="form-group row">
                     <label for="fullname" class="col-sm-2 col-form-label">Full Name</label>
                     <div class="col-sm-10">
@@ -60,8 +60,11 @@
                         <input type="checkbox"
                                class="form-check-input"
                                ref="termsChecked"
+                               name="terms"
+                                v-on:input="checkTerms()"
                                id="materialUnchecked" required>I agree to the <a href="#" @click="loadTermsModal">terms of services</a> and <a href="#" @click="loadPolicyModal">privacy policy.</a>
                     </span>
+                    <label class="errorMessage" id="termsCheckError"></label>
                 </div>
                 <div class="button text-center">
                     <button type="submit" :disabled="disableSubmit" @click="registerUser" class="btn btn-submit">SIGN UP</button>
@@ -160,10 +163,24 @@ import facebookLogin from 'facebook-login-vuejs';
                 numberCheck: false,
                 emailCheck: false,
                 passwordCheck: false,
+                termsCheck : false,
                 payload: null,
             }
         },
         methods: {
+            checkTerms() {
+                var isChecked = document.registerForm.terms.checked;
+                if(isChecked) {
+                    this.termsCheck = true;
+                    document.getElementById('termsCheckError').style.visibility = "hidden";
+
+                } else {
+                    document.getElementById('termsCheckError').style.visibility = "visible";
+                    document.getElementById('termsCheckError').innerHTML = "Please select this field";
+                    this.termsCheck = false;
+                }
+                this.checkAll();
+            },
             async registerUser() {
                 this.userData.firstName = this.userData.fullName.substr(0,this.userData.fullName.indexOf(' '));
                 this.userData.lastName = this.userData.fullName.substr(this.userData.fullName.indexOf(' ')+1);
@@ -371,7 +388,7 @@ import facebookLogin from 'facebook-login-vuejs';
                 this.$bvModal.show("modal-2");
             },
             checkAll() {
-                if(this.emailCheck && this.numberCheck && this.nameCheck && this.passwordCheck) {
+                if(this.emailCheck && this.numberCheck && this.nameCheck && this.passwordCheck && this.termsCheck) {
                     this.disableSubmit = false;
                 } else {
                     this.disableSubmit = true;

@@ -16,7 +16,7 @@
                 <p class="address-par">{{address.AddressLine}}</p>
                 </div>
                 <div class="col-sm-2 icon">
-                    <div class="cross"><button @click="deleteAddress(address.Id)" :disabled="address.IsDefault"><i class="fas fa-times-circle cancel"></i></button></div>
+                    <div class="cross" v-if="!address.IsDefault"><button @click="deleteAddress(address.Id)"><i class="fas fa-times-circle cancel"></i></button></div>
                     <div class="radio">
                         <input type="radio" id="rad" :checked="address.IsDefault" @click="setDefaultAddress(address.Id)">
                         <label>Default</label>

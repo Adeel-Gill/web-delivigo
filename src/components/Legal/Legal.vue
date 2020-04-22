@@ -38,6 +38,8 @@
         },
         methods: {
             changeActive(type) {
+                localStorage.setItem("isAddress", "false");
+                this.$emit("changeCounter",0);
                 switch(type) {
                     case 'p': {
                         this.isPolicy = true;

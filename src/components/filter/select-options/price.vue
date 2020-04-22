@@ -48,9 +48,9 @@
       </div>
 </template>
 <script>
-
-  import VueSlider from 'vue-slider-component'
-  import 'vue-slider-component/theme/default.css'
+  import { EventBus } from '../../../main';
+  import VueSlider from 'vue-slider-component';
+  import 'vue-slider-component/theme/default.css';
   export default {
     data () {
       return {
@@ -67,6 +67,7 @@
   methods: {
       callAPI(value) {
         console.log('methodCalled',value);
+        this.text = value[0] + "$"+ " - "+value[1]+"$"
         this.$emit('callAPI', value);
         this.$root.$emit('price',value);
       }
@@ -77,6 +78,11 @@
     created() {
 
       this.formatter = value => `$${value}`
+    },
+    mounted() {
+      EventBus.$on("resetFilter", () => {
+            this.text = "Price";
+        })
     }
   }
 </script>

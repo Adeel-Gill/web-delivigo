@@ -41,6 +41,8 @@
         },
         methods: {
             async fetchAllData() {
+                localStorage.setItem("isAddress", "false");
+                this.$emit("changeCounter",0);
                 fetchAllData().then(response => {
                     if(response.FoodCategories.length>0) {
                         this.foodCategoriesData = response.FoodCategories;

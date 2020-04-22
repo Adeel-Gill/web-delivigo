@@ -4,18 +4,18 @@
             <div v-if="notEmpty">
                 <banner />
                 <div class="filter-section">
-                    <div class="text-right clear-all">
-                        <a href="#">Clear all</a>
+                    <div v-if="isVisible" class="text-right clear-all">
+                        <p @click="resetFilter">Clear all</p>
                     </div>
                     <div class="row">
                         <div class="col-12 col-sm-4">
-                            <sort @callAPI = "callSortAPI" />
+                            <sort @callAPI = "callSortAPI" :key="resetCount" />
                         </div>
                         <div class="col-12 col-sm-4">
-                            <food @callAPI = "callFoodAPI" />
+                            <food @callAPI = "callFoodAPI" :key="resetCount" />
                         </div>
                         <div class="col-12 col-sm-4">
-                            <price @callAPI = "callAPI"/>
+                            <price @callAPI = "callAPI" :key="resetCount"/>
                         </div>
                     </div>
                 </div>
@@ -72,6 +72,7 @@ import food from "./select-options/food";
 import price from "./select-options/price";
 import emptyError from "../error/emptyError";
 import {fetchAllData} from "../api/Home";
+import {EventBus} from "../../main";
 
 export default {
     components:{
@@ -100,7 +101,9 @@ export default {
             latitude: '',
             min: 0,
             max: 0,
+            resetCount: 0,
             foodName: '',
+            isVisible: false,
             sort: null,
         }
     },
@@ -114,15 +117,28 @@ export default {
         this.unChangeFooter();
     },
     methods: {
+        resetFilter() {
+            this.min = 0;
+            this.max = 0;
+            this.foodName = '';
+            this.sort = null;
+            EventBus.$emit("resetFilter","");
+            this.fetchAllData();
+            this.isVisible = false;
+        },
         callFoodAPI(food) {
           console.log(food);
-          this.food = food.replace(/\s+/g, '');
+          this.foodName = food.replace(/\s+/g, '');
+          console.log("foodNameHere",this.foodName);
+        //   this.foodName = this.food;
           this.fetchAllData();
+          this.isVisible = true;
         },
         callSortAPI(sort) {
           console.log(sort);
           this.sort = sort;
           this.fetchAllData();
+          this.isVisible = true;
         },
         callAPI(value) {
             console.log('here',value);
@@ -130,9 +146,13 @@ export default {
             this.max = value[1];
             console.log(this.min,this.max);
             this.fetchAllData();
+            this.isVisible = true;
         },
-            changeHeader() {
-      this.$eventBus.$emit('checkComponent', 'filter');
+        changeHeader() {
+            localStorage.setItem("isAddress", "true");
+            this.$emit("changeCounter",0);
+            this.$eventBus.$emit('checkComponent', 'filter');
+      
         },
             unChangeHeader() {
       this.$eventBus.$emit('checkComponent', 'default');
@@ -148,7 +168,7 @@ export default {
                 this.longitude = this.$route.query.longitude;
                 this.latitude = this.$route.query.latitude;
                 console.log(this.min,this.max);
-                fetchAllData(this.city,this.longitude,this.latitude,this.min,this.max,this.sort,this.food).then(response => {
+                fetchAllData(this.city,this.longitude,this.latitude,this.min,this.max,this.sort,this.foodName).then(response => {
                     if(response != null) {
                         this.fetchedData = response;
                         if(response.NewOpen.length>0) {
@@ -233,10 +253,11 @@ export default {
         font-weight: 500;
         font-size: 17px;
     }
-    .clear-all a {
+    .clear-all p {
         color: #0030b4;
         display: inline-block;
         margin: 0 0 6px 0;
+        cursor: pointer;
         /*font-family: "Panton";*/
         font-weight: 500;
         font-size: 17px;

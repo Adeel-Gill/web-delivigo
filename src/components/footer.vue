@@ -19,10 +19,14 @@
                         <div class="quickLinks">
                             <h4>Information</h4>
                             <ul>
-                                <li><a href="#">My Account</a></li>
-                                <li><a href="#">Order History</a></li>
+                                <li><router-link to="/profile">My Account</router-link>
+                                <li><router-link to="/currentOrder">Order History</router-link>
+                                <li><router-link to="/termsAndConditions?docType=t">Terms & Conditions</router-link>
+                                <li><router-link to="/privacyPolicy?docType=p">Privacy Policy</router-link>
+                                <!-- <li><a href="#">My Account</a></li> -->
+                                <!-- <li><a href="#">Order History</a></li>
                                 <li><a href="#">Terms & Conditions</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Privacy Policy</a></li> -->
                                 <li><a href="#">FAQ's</a></li>
                             </ul>
                         </div>
