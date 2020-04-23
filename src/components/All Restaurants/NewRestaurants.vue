@@ -38,6 +38,8 @@
         },
         methods: {
             fetchAllData() {
+                localStorage.setItem("isAddress", "false");
+                this.$emit("changeCounter",0);
                 fetchNewIOpenRestaurantsData().then(response => {
                     if(response.Restaurants.length>0) {
                         this.restaurantsData = response.Restaurants;

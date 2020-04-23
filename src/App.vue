@@ -8,7 +8,7 @@
     </div>
     <div class="content">
       <div class="contentSection">
-        <router-view @changeCounter="updateCount"></router-view>
+        <router-view @changeCounter="updateCount" @homeChange="updateCount"></router-view>
       </div>
     </div>
 
@@ -43,6 +43,10 @@ export default {
           console.log(num);
           this.changeCount = num;
           localStorage.setItem("changeCount", num);
+          EventBus.$on("homeChange", () => {
+            localStorage.setItem("isAddress", "false");
+              this.$emit("changeCounter",0);
+          })
     }
   },
      components:{

@@ -16,6 +16,7 @@
     </div>
 </template>
 <script>
+import { EventBus } from '../../../main';
 export default {
     data(){
         return{
@@ -50,8 +51,14 @@ export default {
     },
     methods: {
         callAPI(food) {
+            this.text = food;
             this.$emit('callAPI', food);
         }
+    },
+    mounted() {
+        EventBus.$on("resetFilter", () => {
+            this.text = "Food";
+        })
     }
 }
 </script>

@@ -74,6 +74,8 @@
         },
         methods: {
             changeHeader() {
+                localStorage.setItem("isAddress", "false");
+                this.$emit("changeCounter",0);
                 this.$eventBus.$emit('checkComponent', 'selected');
             },
             unChangeHeader() {

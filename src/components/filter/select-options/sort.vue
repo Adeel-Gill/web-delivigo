@@ -16,6 +16,7 @@
     </div>
 </template>
 <script>
+import { EventBus } from '../../../main';
 export default {
     data(){
         return{
@@ -50,8 +51,14 @@ export default {
     },
     methods: {
         callAPI(sort) {
+            this.text = this.filters[sort-1].filterWith;
             this.$emit('callAPI',sort);
         }
+    },
+    mounted() {
+        EventBus.$on("resetFilter", () => {
+            this.text = "Sort";
+        })
     }
 }
 </script>

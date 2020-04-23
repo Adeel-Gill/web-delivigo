@@ -38,6 +38,8 @@
         },
         methods: {
             fetchAllData() {
+                localStorage.setItem("isAddress", "false");
+                this.$emit("changeCounter",0);
                 fetchResturantsData().then(response => {
                     if(response.FeaturedRestaurants.length > 0) {
                         this.restaurantsData = response.FeaturedRestaurants;

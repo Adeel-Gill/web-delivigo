@@ -24,8 +24,8 @@
                             <p class="address-par">Expires in {{card.Month}}/{{card.Year}}</p>
                         </div>
                         <div class="col-sm-2 icon">
-                            <div class="cross">
-                            <button @click="deleteCard(card.Id)" :disabled ="card.IsDefault"><i class="fas fa-times-circle cancel"></i></button>
+                            <div class="cross" v-if="!card.IsDefault">
+                            <button @click="deleteCard(card.Id)" ><i class="fas fa-times-circle cancel"></i></button>
                             </div>
                                 <div class="radio">
                                 <input type="radio" :checked = card.IsDefault @click="markDefaultCard(card)" >

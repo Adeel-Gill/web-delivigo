@@ -108,6 +108,7 @@
               this.latitude = this.data.geometry.coordinates[1];
               if((this.longitude != null && this.latitude != null)) {
                   this.$router.push({path: '/filter',query: {longitude: this.longitude, latitude: this.latitude}});
+                  this.$emit("updateTheCounter", "");
                   this.$root.$on('popularData', popularRestaurants => {
                       console.log('inLandingBannerOn'+popularRestaurants);
                       EventBus.$emit('popularData',popularRestaurants);
@@ -158,6 +159,8 @@
                       console.log('Address :: ',response);
                       if(response.data.features.length > 0) {
                           this.userAddress = response.data.features[0].place_name;
+                          localStorage.setItem("isAddress", true);
+                          localStorage.setItem("localAddress", this.userAddress);
                           this.geocoder.inputString = this.userAddress;
                           document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].value = this.userAddress;
                           console.log('Address of User',this.userAddress,this.geocoder.inputString,document.getElementsByClassName("mapboxgl-ctrl-geocoder--input"));

@@ -131,7 +131,7 @@
                         <p class="float-right d-inline p-0"><router-link to="/delivery">Add New</router-link></p>
                     </div>
                     <div class="col-12 p-0">
-                        <VueSlickCarousel v-bind="settings">
+                        <div class="owl-carousel owl-theme">
                             <div v-for="address in allAddresses" :class="['card-width']" :key="address.Id">
                                 <div>
                                     <div class="card card-block">
@@ -149,7 +149,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </VueSlickCarousel>
+                        </div>
                     </div>
                 </div>
 
@@ -175,7 +175,7 @@
                     </div>
 
                     <div class="col-12 p-0">
-                        <VueSlickCarousel v-bind="settings">
+                        <div class="owl-carousel2 owl-theme">
                             <div v-for="card in allCards" :class="['card-width']" :key="card.Id">
                                 <div id="a123" >
                                     <div class="card card-block">
@@ -195,7 +195,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </VueSlickCarousel>
+                        </div>
                     </div>
                 </div>
 
@@ -289,6 +289,10 @@
     import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
     import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
     import {fetchRestaurantById} from "../api/FilterRestaurants";
+    import 'owl.carousel/dist/assets/owl.carousel.css';
+    import 'owl.carousel/dist/assets/owl.carousel2.css';
+    import 'owl.carousel';
+    import 'jquery';
 
     export default {
         data(){
@@ -758,6 +762,28 @@
                                 this.disablePlaceOrder = true;
                             } else {
                                 this.allAddresses = response;
+                                $(document).ready(function(){
+                                    $('.owl-carousel').owlCarousel({
+                                        loop:true,
+                                        dots: false,
+                                        autoplay:false,
+                                        responsiveClass:false,
+                                        margin:20,
+                                        nav:false,
+                                        lazyLoad:true,
+                                        responsive:{
+                                            0:{
+                                                items:1
+                                            },
+                                            600:{
+                                                items:2
+                                            },
+                                            1000:{
+                                                items:2
+                                            }
+                                        }
+                                    });
+                                });
                                 if(this.allAddresses.length > 0) {
                                     this.allAddresses = response;
                                     this.addID = this.allAddresses[0].Id;
@@ -775,6 +801,28 @@
                                             if(this.allCards.length > 0) {
                                                 console.log('cards',this.allCards);
                                                 this.allCards = response.CustomerCards;
+                                                $(document).ready(function(){
+                                                    $('.owl-carousel2').owlCarousel({
+                                                        loop:true,
+                                                        dots: false,
+                                                        autoplay:false,
+                                                        responsiveClass:false,
+                                                        margin:20,
+                                                        nav:false,
+                                                        lazyLoad:true,
+                                                        responsive:{
+                                                            0:{
+                                                                items:1
+                                                            },
+                                                            600:{
+                                                                items:2
+                                                            },
+                                                            1000:{
+                                                                items:2
+                                                            }
+                                                        }
+                                                    });
+                                                });
                                                 calculateDistance(this.lon1,this.lat1,this.lon2,this.lat2,'k').then(response => {
                                                     console.log('start6');
                                                     this.disablePlaceOrder = true;

@@ -1,6 +1,6 @@
 <template>
     <div v-if="">
-        <landing-banner></landing-banner>
+        <landing-banner @updateTheCounter="emitCounter"></landing-banner>
         <app-available-cities></app-available-cities>
 <!--        <popular-Restaurant  ></popular-Restaurant>-->
         <delivery-process></delivery-process>
@@ -19,6 +19,7 @@ import Download from './appStore.vue';
 import {fetchResturantsData} from "../components/api/Landing";
 import availableCities from "./availableCities";
 import whatIsDelivigo from "./whatIsDelivigo";
+import {EventBus} from "../main";
 
 
 export default {
@@ -38,8 +39,12 @@ export default {
         }
     },
     methods: {
+        
         async fetchResturantsData() {
+            localStorage.setItem("isAddress", "false");
+                this.$emit("changeCounter",0);
             fetchResturantsData().then(response => {
+                // EventBus.$emit("homeChange","");
                 this.popularRestaurants = response.PopularNearYou;
                 this.$root.$emit('cities',response.Cities);
                 console.log('popularData'+ this.popularRestaurants);
@@ -60,10 +65,20 @@ export default {
                 text: message,
                 duration: 2000
             })
-        }
+        },
+        emitCounter() {
+                this.$emit("changeCounter",0);
+            },
+            resetCounter() {
+                localStorage.setItem("isAddress", "false");
+                this.emitCounter();
+            }
     },
     created() {
         this.fetchResturantsData();
+    },
+    mounted() {
+
     }
 }
 </script>
