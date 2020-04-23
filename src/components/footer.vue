@@ -42,7 +42,7 @@
                     <div class="col-12 col-md-3 infoLink">
                         <div class="quickLinks">
                         <h4 class="pb-3">Contact Information</h4>
-                        <p><i class="fas fa-phone pr-4"></i> (+21) 323232323</p>
+                        <p><i class="fas fa-phone pr-4"></i> +358 46 6334501</p>
                         <p><i class="fas fa-envelope pr-4"></i> support@delivigo.com </p>
                         <p><i class="far fa-clock pr-4"></i> Mon-Sun/ 24hr  </p>
                         </div>
@@ -204,6 +204,7 @@ export default {
     text-align: center;
     display: inline-block;
     padding-top:6px;
+    padding-right: 2px;
 }
 .social >*{
     margin-right: 10px;
@@ -236,24 +237,3 @@ export default {
     display: block;
 }*/
 </style>
-
-/*.quickLinks{
-float: right;
-margin-top: 48px;
-margin-bottom: 28px;
-}
-.quickLinks ul{
-padding: 0;
-margin: 0;
-}
-.quickLinks ul li{
-display: inline-block;
-padding: 0 25px 0 0;
-}
-.quickLinks a{
-!*font-family: Panton;*!
-font-weight: normal;
-font-size: 18px;
-color: #cccccc;
-line-height: 43px;
-}*/

@@ -249,7 +249,7 @@
     padding-bottom: 10px;
     width: 100%;
   }
-  .dropup .dropright .dropdown .dropleft{
+  .dropdown{
     border-right:unset !important;
   }
   .navbar-nav li{
