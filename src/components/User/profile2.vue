@@ -643,7 +643,7 @@
 }
     .password-btn{
         position: absolute;
-        bottom: 40px;
+        bottom: 80px;
         background-color:#5860ff;
         color: #fff;
         margin: 0 20px;

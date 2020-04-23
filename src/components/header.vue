@@ -279,6 +279,9 @@
   .register{
     float: right;
   }
+  .profile-link{
+    float: right;
+  }
   /*.profile-link{*/
   /*  float: right;*/
   /*}*/
