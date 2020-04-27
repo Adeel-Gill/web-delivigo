@@ -52,9 +52,10 @@
   import VueSlider from 'vue-slider-component';
   import 'vue-slider-component/theme/default.css';
   export default {
+    props: ['newLang'],
     data () {
       return {
-        text:'Price',
+        text:this.newLang.price,
         min: 0,
         max: 250,
         value: [100, 170],
@@ -65,6 +66,9 @@
       }
     },
   methods: {
+    setText() {
+            this.text = this.newLang.price;
+        },
       callAPI(value) {
         console.log('methodCalled',value);
         this.text = value[0] + "$"+ " - "+value[1]+"$"
@@ -80,8 +84,10 @@
       this.formatter = value => `$${value}`
     },
     mounted() {
+      this.setText();
       EventBus.$on("resetFilter", () => {
-            this.text = "Price";
+            // this.text = "Price";
+            this.setText();
         })
     }
   }

@@ -13,15 +13,15 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <div class="mx-auto address-line" v-if="visibleAddress">
-            <p class="text-center">Deliver to:&nbsp;<span>{{address}}</span></p>
+            <p class="text-center">{{local.deliverTo}}:&nbsp;<span>{{address}}</span></p>
           </div>
           <!-- Right aligned nav items -->
           <b-navbar-nav class="" id="navbar-dropdown">
-            <b-nav-item-dropdown text="ENG" right class="pt-1">
-              <b-dropdown-item href="#">EN</b-dropdown-item>
-              <b-dropdown-item href="#">ES</b-dropdown-item>
+            <b-nav-item-dropdown :text="value" right class="pt-1">
+              <b-dropdown-item v-for="(item, index) in availLang" :key="index" @click="setLang(item)">{{item}}</b-dropdown-item>
+              <!-- <b-dropdown-item href="#">ES</b-dropdown-item>
               <b-dropdown-item href="#">RU</b-dropdown-item>
-              <b-dropdown-item href="#">FA</b-dropdown-item>
+              <b-dropdown-item href="#">FA</b-dropdown-item> -->
             </b-nav-item-dropdown>
 <!--            <div class="d-inline-block buttons">-->
             <b-nav-item to="/profile" v-if="isLogin === true? true: false" class="profile-link">
@@ -30,13 +30,14 @@
                 <!--                    <img src="//placehold.it/50" />-->
                   </div>
             </b-nav-item>
-            <b-nav-item to="/signin" activClass="active" v-if="isLoggedOut === true || isLoggedOut == undefined? true: false" class="singin ">Sign In</b-nav-item>
-            <b-nav-item to="/signup" activClass="active" v-if="isLoggedOut === true || isLoggedOut == undefined? true: false" class="register">Register</b-nav-item>
-            <b-nav-item  activClass="active" v-if="isLogin === true? true: false" class="register pl-2 pt-1" @click="signOut">Sign Out</b-nav-item>
+            <b-nav-item to="/signin" activClass="active" v-if="isLoggedOut === true || isLoggedOut == undefined? true: false" class="singin ">{{local.signin}}</b-nav-item>
+            <b-nav-item to="/signup" activClass="active" v-if="isLoggedOut === true || isLoggedOut == undefined? true: false" class="register">{{local.register}}</b-nav-item>
+            <b-nav-item  activClass="active" v-if="isLogin === true? true: false" class="register pl-2 pt-1" @click="signOut">{{local.signOut}}</b-nav-item>
 <!--            </div>-->
           </b-navbar-nav>
         </b-collapse>
       </div>
+
     </b-navbar>
   </div>
 </template>
@@ -47,6 +48,7 @@
   import {mapGetters} from "vuex";
   import {baseAddress} from "../main";
   import {defaultUserPic} from "../main";
+  import {lang} from "../components/lang/lang";
 
   export default {
     data() {
@@ -56,14 +58,39 @@
         isLoggedOut: this.$store.state.isLoggedOut,
         user: {},
         visibleAddress: false,
+        availLang: ["EN", "FN", "ES"],
+        value: '',
         address: '',
-        image: ''
+        image: '',
+        local: lang.en,
       }
     },
     methods: {
       ...mapActions([
         'cleanToken'
       ]),
+      setLang(val) {
+        if(val !== localStorage.getItem("lang")) {
+          localStorage.setItem("lang", val);
+          this.checkLang();
+          console.log("lang", this.local);
+          this.$emit("langChange", "");
+        }
+      },
+      checkLang() {
+        var temp = localStorage.getItem("lang");
+        if(temp == null || temp === "EN") {
+          localStorage.setItem("lang", "EN");
+          this.local = lang.en;
+        } else if(temp === "FN" ) {
+          this.local = lang.fn;
+          localStorage.setItem("lang", "FN");
+        } else {
+          this.local = lang.sp;
+          localStorage.setItem("lang", "ES");
+        }
+        this.value = temp;
+      },
       checkIsLogin() {
         
         if (this.$store.state.isLogin !== '' || (localStorage.getItem('isLogin') !== false)) {
@@ -166,7 +193,9 @@
     },
   mounted() {
     this.getStates();
+     this.checkLang();
     this.getImage(',');
+   
       console.log('m',this.isLogin === true? true: false,this.isLoggedOut === true? true: false);
       if((this.isLogin == null || this.isLoggedOut == null)) {
         // this.$store.dispatch('cleanToken');

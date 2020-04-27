@@ -98,6 +98,7 @@
                             </div>
                         </div>
                         <router-link to="/orderTracking">
+                         <button class="btn btn-primary mr-2"><i class="fas fa-download"></i> &nbsp;Receipt</button>
                             <button class="btn btn-primary float-right"
                                     :disabled="(statuses.OrderDelivered === previousOrderObject.Order.OrderStatusId)">
                                 Track Order

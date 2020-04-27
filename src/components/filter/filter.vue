@@ -5,26 +5,26 @@
                 <banner />
                 <div class="filter-section">
                     <div v-if="isVisible" class="text-right clear-all">
-                        <p @click="resetFilter">Clear all</p>
+                        <p @click="resetFilter">{{local.clearAll}}</p>
                     </div>
                     <div class="row">
                         <div class="col-12 col-sm-4">
-                            <sort @callAPI = "callSortAPI" :key="resetCount" />
+                            <sort @callAPI = "callSortAPI" :key="resetCount" :newLang= local />
                         </div>
                         <div class="col-12 col-sm-4">
-                            <food @callAPI = "callFoodAPI" :key="resetCount" />
+                            <food @callAPI = "callFoodAPI" :key="resetCount" :newLang= local />
                         </div>
                         <div class="col-12 col-sm-4">
-                            <price @callAPI = "callAPI" :key="resetCount"/>
+                            <price @callAPI = "callAPI" :key="resetCount" :newLang= local />
                         </div>
                     </div>
                 </div>
-                <popular />
-                <catagories />
+                <popular :key= newCount :newLang= local />
+                <catagories :key= newCount :newLang= local />
                 <div class="restaurants-list" v-if="newNotEmpty">
-                    <h2>{{titleHeading}}</h2>
+                    <h2>{{local.newOnDelivigo}}</h2>
                     <div class="show-more" v-if="newRestaurantsMore">
-                        <router-link to="/newRestaurants">Show More</router-link>
+                        <router-link to="/newRestaurants">{{local.showMore}}</router-link>
                     </div>
                     <div class="clear"></div>
                     <div class="row">
@@ -37,9 +37,9 @@
                     <app-empty-error></app-empty-error>
                 </div>
                 <div class="restaurants-list" v-if="allNotEmoty">
-                    <h2>All Restaurants</h2>
+                    <h2>{{local.allRestaurants}}</h2>
                     <div class="show-more" v-if="allRestaurantsMore">
-                        <router-link to="/restaurants">Show More</router-link>
+                        <router-link to="/restaurants">{{local.showMore}}</router-link>
                     </div>
                     <div class="clear"></div>
                     <div class="row">
@@ -73,7 +73,7 @@ import price from "./select-options/price";
 import emptyError from "../error/emptyError";
 import {fetchAllData} from "../api/Home";
 import {EventBus} from "../../main";
-
+import {lang} from "../lang/lang";
 export default {
     components:{
         Banner,
@@ -105,6 +105,8 @@ export default {
             foodName: '',
             isVisible: false,
             sort: null,
+            local: lang.en,
+            newCount: 0
         }
     },
     mounted() {
@@ -124,6 +126,8 @@ export default {
             this.sort = null;
             EventBus.$emit("resetFilter","");
             this.fetchAllData();
+            this.checkLang();
+            this.resetCount+= 1;
             this.isVisible = false;
         },
         callFoodAPI(food) {
@@ -234,10 +238,40 @@ export default {
                 text: message,
                 duration: 2000
             })
+        },
+        checkLang() {
+            console.log("hereItIs");
+        var temp = localStorage.getItem("lang");
+        if(temp == null || temp === "EN") {
+          localStorage.setItem("lang", "EN");
+          this.local = lang.en;
+        } else if(temp === "FN" ) {
+          this.local = lang.fn;
+          localStorage.setItem("lang", "FN");
+        } else {
+          this.local = lang.sp;
+          localStorage.setItem("lang", "ES");
         }
+        // this.value = temp;
+      },
+        changeTheLang() {
+            console.log("here InFilter");
+            // this.fetchResturantsData();
+            this.checkLang();
+            EventBus.$emit("changeNewLang", "");
+            this.newCount += 1;
+            this.fetchedData = {};
+            this.fetchAllData();
+            this.resetCount += 1;
+            
+        },
     },
     created() {
         this.fetchAllData();
+        this.checkLang();
+        EventBus.$on("changeLang", () => {
+            this.changeTheLang();
+        })
     }
 }
 </script>

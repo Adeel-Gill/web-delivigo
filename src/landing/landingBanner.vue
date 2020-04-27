@@ -15,8 +15,8 @@
 
       </b-carousel-slide>
         <div class="banner-caption">
-            <h1>ORDER DELIVERY & TAKE OUT</h1>
-            <p>Find restaurants, specials, and coupons for free</p>
+            <h1>{{newLang.orderDelivery}}</h1>
+            <p>{{newLang.findRestaurants}}</p>
             <div class="row overlay">
             <div id="map" style="display: none;"></div>
                 <div class="container">
@@ -41,7 +41,7 @@
 <!--            <b-form-input v-model="text" placeholder="I Would like to eat...."></b-form-input>-->
             <div class="col-md-2 col-12 p-0 btn-overlay">
 
-            <b-button class="btn-search" @click="navigateTo">Search</b-button>
+            <b-button class="btn-search" @click="navigateTo">{{newLang.searchButton}}</b-button>
             </div>
                 </div>
                 </div>
@@ -57,10 +57,12 @@
   import {EventBus} from "../main";
   import mapboxgl from "mapbox-gl/dist/mapbox-gl";
   import {map} from "../main";
+  import {lang} from "../components/lang/lang";
   import 'mapbox-gl/dist/mapbox-gl.css'
   import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
   import axios from 'axios'
   export default {
+      props: ['newLang'],
     data() {
       return {
         text:'',
@@ -72,6 +74,7 @@
           longitude: 0,
           latitiude: 0,
           position: null,
+          local: lang.en,
           userAddress: '',
         slides:[
             {
@@ -188,10 +191,25 @@
                 text: message,
                 duration: 2000
             })
+        },
+        checkLang() {
+            console.log("hereItIs");
+        var temp = localStorage.getItem("lang");
+        if(temp == null || temp === "EN") {
+          localStorage.setItem("lang", "EN");
+          this.local = lang.en;
+        } else if(temp === "FN" ) {
+          this.local = lang.fn;
+          localStorage.setItem("lang", "FN");
+        } else {
+          this.local = lang.sp;
+          localStorage.setItem("lang", "ES");
         }
+        // this.value = temp;
+      },
     },
       mounted() {
-
+          this.checkLang();
           mapboxgl.accessToken = 'pk.eyJ1IjoiYXFpYmphdmVkMSIsImEiOiJjazRtZ3Z5YXUwNG9vM21wNTRoODFicnZtIn0.UjSkEQkYpVOmS0QUYpXoHg';
          this.map =  new mapboxgl.Map({
               container: 'map',
@@ -215,7 +233,13 @@
           console.log('map',this.map,'geo',this.geocoder,'Map',MapboxGeocoder);
 
       },
+      created() {
+          EventBus.$emit("changeNewLang", () => {
+              this.checkLang();
+          })
+      },
       updated() {
+        //   this.checkLang();
         console.log('query',this.geocoder.inputString,'lastSelected',this.geocoder.lastSelected);
       }
   }

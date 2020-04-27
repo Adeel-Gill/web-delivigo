@@ -2,8 +2,8 @@
     <div class="container">
         <div class="popular">
             <div class="title">
-                <h2>{{titleHeading}}</h2>
-                <p>{{subHeading}}</p>
+                <h2>{{local.allNew}}</h2>
+                <p>{{local.easiestToFood}}</p>
             </div>
             <div class="clear"></div>
             <div class="restaurants-list" v-if="notEmpty">
@@ -22,6 +22,8 @@
     import Restaurant from '../../components/restaurant/restaurant.vue';
     import {fetchNewIOpenRestaurantsData} from "../api/Home";
     import emptyError from "../error/emptyError";
+     import {EventBus} from "../../main";
+    import {lang} from "../lang/lang";
     export default {
         name: "allNewRestaurants",
         data(){
@@ -30,6 +32,7 @@
                 subHeading: 'The easiest way to your favourite food',
                 restaurantsData: [],
                 notEmpty: true,
+                local: lang.en
             }
         },
         components: {
@@ -62,10 +65,38 @@
                     text: message,
                     duration: 2000
                 })
-            }
+            },
+            checkLang() {
+            console.log("hereItIs");
+                var temp = localStorage.getItem("lang");
+                if(temp == null || temp === "EN") {
+                localStorage.setItem("lang", "EN");
+                this.local = lang.en;
+                } else if(temp === "FN" ) {
+                this.local = lang.fn;
+                localStorage.setItem("lang", "FN");
+                } else {
+                this.local = lang.sp;
+                localStorage.setItem("lang", "ES");
+                }
+                // this.value = temp;
+            },
+            changeTheLang() {
+            console.log("here AllCities");
+            // this.fetchResturantsData();
+            this.checkLang();
+            EventBus.$emit("changeNewLang", "");
+            this.fetchAllData();
+            // this.resetCount += 1;
+            // this.newCount += 1;
+        },
         },
         mounted() {
             this.fetchAllData();
+            this.checkLang();
+            EventBus.$on("changeLang", () => {
+            this.changeTheLang();
+         });
         }
     }
 </script>

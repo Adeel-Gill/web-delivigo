@@ -4,7 +4,7 @@
             <div class="resturant-name-review">
                 <div class="name-desc">
                     <h4>{{restaurant.Name}}</h4>
-                    <p>{{restaurant.FullAddress | truncate}}</p>
+                    <p>French/American</p>
                 </div>
                 <div class="reviews text-right">
                     <a v-b-modal.reviewModal class="links">All Reviews</a>

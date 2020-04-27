@@ -36,6 +36,7 @@ import Legal from "./components/User/Legal";
 import newPolicy from "./components/Documents/newDocuments/Policy";
 import newTermsAndConditions from "./components/Documents/newDocuments/TermsAndConditions";
 import newCookies from "./components/Documents/newDocuments/Cookies";
+import newError from "./components/error/newErrorPage";
 export const routes = [
     { path: '/', component: Home },
     { path: '/loginandreg', component: LoginAndRegister, children: [
@@ -167,7 +168,8 @@ export const routes = [
         ]},
         {path: '/newPolicy', component: newPolicy, query: {docType: 'p'}},
         {path: '/newTerms', component: newTermsAndConditions, query: {docType: 't'}},
-        {path: '/newCookies', component: newCookies, query: {docType: 'c'}}
+        {path: '/newCookies', component: newCookies, query: {docType: 'c'}},
+        {path: '/newError', component: newError}
 
 ]
 function checkLoginRoute() {

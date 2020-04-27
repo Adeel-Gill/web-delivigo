@@ -2,11 +2,11 @@
     <div class="container">
         <div class="popular">
             <div class="title">
-                <h2>{{titleHeading}}</h2>
-                <p>{{subHeading}}</p>
+                <h2>{{newLang.availableCities}}</h2>
+                <p>{{newLang.easiestToFind}}</p>
             </div>
             <div class="show-more" v-if="allcities.length > 3">
-                <router-link to="/allCities" >Show More</router-link>
+                <router-link to="/allCities" >{{newLang.showMore}}</router-link>
             </div>
             <div class="clear"></div>
             <div class="restaurants-list">
@@ -26,6 +26,7 @@
     import emptyError from "../components/error/emptyError";
     export default {
         name: "availableCities",
+        props: ['newLang'],
         components: {
           appEmptyError: emptyError,
         },

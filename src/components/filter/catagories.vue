@@ -1,9 +1,9 @@
 <template>
 <div>
     <div class="catagories" v-if="categoriesNotEmpty">
-        <h2>{{titleSection}}</h2>
+        <h2>{{newLang.categories}}</h2>
         <div class="show-more" v-if="categoriesMore">
-            <router-link to="/foodCategories">Show More</router-link>
+            <router-link to="/foodCategories">{{newLang.showMore}}</router-link>
         </div>
         <div class="clear"></div>
         <div class="row mx-2">
@@ -27,6 +27,7 @@
     import 'owl.carousel';
     import 'jquery';
     export default {
+        props: ['newLang'],
     data(){
         return{
             titleSection:'Categories',

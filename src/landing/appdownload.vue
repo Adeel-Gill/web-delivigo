@@ -4,8 +4,8 @@
             <div class="app-download mx-auto">
                 <div class="row">
                     <div class="col-md-8 col-12 ar-head-text">
-                        <h3>{{download.appHeading}}</h3>
-                        <p>{{download.appDescription}}</p>
+                        <!-- <h3>{{newLang.gotApp}}</h3>
+                        <p>{{newLang.getYours}}</p> -->
 
                     </div>
                     <div class="col-md-4 col-sm-8 col-12 mx-auto py-0">
@@ -23,9 +23,10 @@
     </div>
 </template>
 <script>
-import Dishes from "../components/selected restaurant/dishes";
+// import Dishes from "../components/selected restaurant/dishes";
 export default {
-    components: {Dishes},
+
+    props: ['newLang'],
     data(){
         return{
             download: {

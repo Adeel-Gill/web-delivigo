@@ -8,8 +8,8 @@
                     <div class="col-12 col-md-3">
                         <div class="download">
                             <div class="app-download">
-                                <h3>{{download.appHeading}}</h3>
-                                <p>{{download.appDescription}}</p>
+                                <h3>{{newLang.gotApp}}</h3>
+                                <p>{{newLang.getYours}}</p>
                                 <a href="#" class="margin-right-10px"><img :src="download.iphone" /></a>
                                 <a href="#"><img :src="download.android" /></a>
                             </div>
@@ -17,12 +17,12 @@
                     </div>
                     <div class="col-12 col-md-3 infoLink">
                         <div class="quickLinks">
-                            <h4>Information</h4>
+                            <h4>{{newLang.information}}</h4>
                             <ul>
-                                <li><router-link to="/profile">My Account</router-link>
-                                <li><router-link to="/currentOrder">Order History</router-link>
-                                <li><router-link to="/termsAndConditions?docType=t">Terms & Conditions</router-link>
-                                <li><router-link to="/privacyPolicy?docType=p">Privacy Policy</router-link>
+                                <li><router-link to="/profile">{{newLang.myAccount}}</router-link>
+                                <li><router-link to="/currentOrder">{{newLang.orderHistory}}</router-link>
+                                <li><router-link to="/termsAndConditions?docType=t">{{newLang.termsAndCondition}}</router-link>
+                                <li><router-link to="/privacyPolicy?docType=p">{{newLang.privaryPolicy}}</router-link>
                                 <!-- <li><a href="#">My Account</a></li> -->
                                 <!-- <li><a href="#">Order History</a></li>
                                 <li><a href="#">Terms & Conditions</a></li>
@@ -33,19 +33,19 @@
                     </div>
                     <div class="col-12 col-md-3 infoLink">
                         <div class="quickLinks">
-                            <h4>Helpful Links</h4>
+                            <h4>{{newLang.helpfulLinks}}</h4>
                             <ul>
-                                <li><a href="#">Jobs</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Support</a></li>
-                                <li><a href="#">Merchants</a></li>
-                                <li><a href="#">Couriers</a></li>
+                                <li><a href="#">{{newLang.jobs}}</a></li>
+                                <li><a href="#">{{newLang.blog}}</a></li>
+                                <li><a href="#">{{newLang.support}}</a></li>
+                                <li><a href="#">{{newLang.merchants}}</a></li>
+                                <li><a href="#">{{newLang.couriers}}</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-12 col-md-3 infoLink">
                         <div class="quickLinks">
-                        <h4 class="pb-3">Contact Information</h4>
+                        <h4 class="pb-3">{{newLang.contactInfo}}</h4>
                         <p><i class="fas fa-phone pr-4"></i> +358 46 6334501</p>
                         <p><i class="fas fa-envelope pr-4"></i> support@delivigo.com </p>
                         <p><i class="far fa-clock pr-4"></i> Mon-Sun/ 24hr  </p>
@@ -59,7 +59,7 @@
                 <div class="row py-4">
                     <div class="col-12 order-last order-md-first col-md-4">
                         <div class="copyright">
-                            <p>© DeliviGo 2019 - 2020 All Right reserved</p>
+                            <p>© DeliviGo 2019 - 2020 {{newLang.reights}}</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-4 order-first m-auto">
@@ -92,20 +92,46 @@
     </div>
 </template>
 <script>
+import { EventBus } from '../main';
+import {lang} from "../components/lang/lang";
 export default {
     data(){
         return{
             isFooter:false,
+            newCount: 0,
+            newLang: lang.fn,
             download: {
                 appHeading: 'Have you got the app?',
                 appDescription:'Get yours now - available on the iOS and Android app stores!',
                 iphone:'./images/iphoneApp.png',
-                android: './images/mobileApp.png'
+                android: './images/mobileApp.png',
             }
         }
     },
+    methods: {
+        checkLang() {
+            console.log("hereItFooter");
+        var temp = localStorage.getItem("lang");
+        if(temp == null || temp === "EN") {
+          localStorage.setItem("lang", "EN");
+          this.newLang = lang.en;
+        } else if(temp === "FN" ) {
+          this.newLang = lang.fn;
+          localStorage.setItem("lang", "FN");
+        } else {
+          this.newLang = lang.sp;
+          localStorage.setItem("lang", "ES");
+        }
+        // this.value = temp;
+      },
+        changeTheLang() {
+            console.log("here it footer");
+            this.checkLang();
+        },
+    },
     created() {
         this.isFooter = false;
+        this.changeTheLang();
         this.$eventBus.$on('checkFooter', (footerData) => {
         // do something with the data
             if(footerData === 'footer') {
@@ -114,6 +140,9 @@ export default {
                 this.isFooter = false;
             }
         });
+        EventBus.$on("changeLang", () => {
+            this.changeTheLang();
+        })
     }
 }
 

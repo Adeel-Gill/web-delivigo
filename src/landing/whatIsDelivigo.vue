@@ -4,8 +4,8 @@
             <div class="card">
         <div class="row m-0">
             <div class="col-md-4 col-12 text-justify" style="padding:105px 50px 50px 50px;">
-                <h1>What is&nbsp;DeliviGo?</h1> <br>
-                <p>DeliviGo is a fresh option in food delivery business. We are local company, our roots are deep in the soil of Turku. Delivigo doesn’t deliver just food. Delivigo represents quality time with family and friends, calm everyday life and happy partytime.</p>
+                <h1>{{newLang.whatIs}}&nbsp;DeliviGo?</h1> <br>
+                <p>{{newLang.delivigoDetail}}</p>
             </div>
             <div class="col-md-8 col-12 py-5 pr-md-5 pl-md-0">
                 <video src="/images/delivigo_promotional_video_lr.mp4" poster="/images/video-poster.png" controls muted></video>
@@ -18,7 +18,8 @@
 
 <script>
     export default {
-        name: "whatIsDelivigo"
+        name: "whatIsDelivigo",
+        props: ['newLang']
     }
 </script>
 

@@ -1,12 +1,12 @@
 <template>
     <div v-if="">
-        <landing-banner @updateTheCounter="emitCounter"></landing-banner>
-        <app-available-cities></app-available-cities>
+        <landing-banner @updateTheCounter="emitCounter" :key = newCount :newLang= local></landing-banner>
+        <app-available-cities :key="newCount" :newLang= local></app-available-cities>
 <!--        <popular-Restaurant  ></popular-Restaurant>-->
         <delivery-process></delivery-process>
 <!--        <featured-restaurants></featured-restaurants>-->
-        <app-what-is-delivigo></app-what-is-delivigo>
-        <app-download></app-download>
+        <app-what-is-delivigo :newLang= local :key="newCount"></app-what-is-delivigo>
+        <app-download :newLang= local :key="newCount"></app-download>
     </div>
 </template>
 <script>
@@ -20,9 +20,11 @@ import {fetchResturantsData} from "../components/api/Landing";
 import availableCities from "./availableCities";
 import whatIsDelivigo from "./whatIsDelivigo";
 import {EventBus} from "../main";
+import {lang} from "../components/lang/lang";
 
 
 export default {
+    // props: ['lang'],
     components:{
     landingBanner: Banner,
     // popularRestaurant: Popular,
@@ -35,11 +37,34 @@ export default {
     data(){
         return {
             fearturedRestaurants: null,
-            popularRestaurants: null
+            popularRestaurants: null,
+            newCount : 0,
+            local: lang.en,
         }
     },
     methods: {
-        
+        checkLang() {
+            console.log("hereItIs");
+        var temp = localStorage.getItem("lang");
+        if(temp == null || temp === "EN") {
+          localStorage.setItem("lang", "EN");
+          this.local = lang.en;
+        } else if(temp === "FN" ) {
+          this.local = lang.fn;
+          localStorage.setItem("lang", "FN");
+        } else {
+          this.local = lang.sp;
+          localStorage.setItem("lang", "ES");
+        }
+        // this.value = temp;
+      },
+        changeTheLang() {
+            console.log("here it is");
+            this.fetchResturantsData();
+            this.checkLang();
+            EventBus.$emit("changeNewLang", "");
+            this.newCount += 1;
+        },
         async fetchResturantsData() {
             localStorage.setItem("isAddress", "false");
                 this.$emit("changeCounter",0);
@@ -76,6 +101,10 @@ export default {
     },
     created() {
         this.fetchResturantsData();
+        this.changeTheLang();
+        EventBus.$on("changeLang", () => {
+            this.changeTheLang();
+        })
     },
     mounted() {
 

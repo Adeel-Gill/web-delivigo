@@ -96,7 +96,7 @@
                                     <span class="float-right">{{currentOrderObject.Order.TotalPrice.toFixed(2)}}</span>
                                 </div>
                                 <div class="float-right button">
-                                    <button class="btn btn-primary mr-2"><i class="fas fa-download"></i> &nbsp;Receipt</button>
+                                   
                                     <router-link :to="{path:'/orderTracking/'+currentOrderObject.Order.OrderId,query:{cusID:currentOrderObject.Customer.CustomerId}}">
                                         <button class="btn btn-primary"
                                                 :disabled="(statuses.OrderDelivered === currentOrderObject.Order.OrderStatusId)">

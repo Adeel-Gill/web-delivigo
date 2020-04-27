@@ -2,8 +2,8 @@
     <div class="container-fluid p-0">
         <div class="app-image">
             <div class="img-text">
-            <h3>Have you got the app?</h3>
-            <p>Get yours now - available on the iOS and Android app stores!</p>
+            <h3>{{newLang.gotApp}}</h3>
+            <p>{{newLang.getYours}}</p>
                 <div class="store-image">
                     <a href="#" class="mr-3"><img src="/images/mobileApp.png" /></a>
                     <a href="#"><img src="/images/iphoneApp.png" /></a>
@@ -16,7 +16,8 @@
 
 <script>
     export default {
-        name: "appStore"
+        name: "appStore",
+        props: ['newLang']
     }
 </script>
 

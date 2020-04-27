@@ -2,8 +2,8 @@
     <div class="container">
         <div class="popular">
             <div class="title">
-                <h2>{{titleHeading}}</h2>
-                <p>{{subHeading}}</p>
+                <h2>{{local.allCities}}</h2>
+                <p>{{local.easiestToFind}}</p>
             </div>
             <div class="clear"></div>
             <div class="restaurants-list">
@@ -22,22 +22,40 @@
     import City from "../City/City";
     import emptyError from "../error/emptyError";
     import {fetchResturantsData} from "../api/Landing";
-
+    import {EventBus} from "../../main";
+    import {lang} from "../lang/lang";
     export default {
         name: "AllCities",
         components: {
             appCity: City,
             appEmptyError: emptyError,
+
         },
         data() {
             return {
                 cities: [],
                 titleHeading: 'All Available Cities',
                 subHeading: 'The easiest way to find us',
-                count: 0
+                count: 0,
+                local: lang.en
             }
         },
         methods: {
+            checkLang() {
+            console.log("hereItIs");
+                var temp = localStorage.getItem("lang");
+                if(temp == null || temp === "EN") {
+                localStorage.setItem("lang", "EN");
+                this.local = lang.en;
+                } else if(temp === "FN" ) {
+                this.local = lang.fn;
+                localStorage.setItem("lang", "FN");
+                } else {
+                this.local = lang.sp;
+                localStorage.setItem("lang", "ES");
+                }
+                // this.value = temp;
+            },
             fetchCities() {
                 localStorage.setItem("isAddress", "false");
                 this.$emit("changeCounter",0);
@@ -67,10 +85,23 @@
                     text: message,
                     duration: 2000
                 })
-            }
+            },
+            changeTheLang() {
+            console.log("here AllCities");
+            // this.fetchResturantsData();
+            this.checkLang();
+            EventBus.$emit("changeNewLang", "");
+            this.fetchCities();
+            // this.resetCount += 1;
+            // this.newCount += 1;
+        },
         },
         created() {
             this.fetchCities();
+            this.checkLang();
+            EventBus.$on("changeLang", () => {
+            this.changeTheLang();
+        })
         }
     }
 </script>

@@ -1,32 +1,67 @@
 <template>
     <div class="sort">
         <b-dropdown size="sm" :text="text" class="m-2" id="dropdown">
-            <b-dropdown-item href="#" class="dropdown-menu-items" v-for="(filter,index) in filters" @click="callAPI(index+1)" :filter="filters" :key="filter.id" >
+            <b-dropdown-item href="#" class="dropdown-menu-items" @click="callAPI(1)" >
                 <div class="dropdown-menu-item">
                     <div class="sort">
-                        <img :src="filter.imagePath">
+                        <img :src="filters[0].imagePath">
                     </div>
                     <div class="sort-hover">
-                        <img :src="filter.imageHover">
+                        <img :src="filters[0].imageHover">
                     </div>
                 </div>
-                <div><p>{{filter.filterWith}}</p></div>
+                <div><p>{{newLang.recommended}}</p></div>
+            </b-dropdown-item>
+            <b-dropdown-item href="#" class="dropdown-menu-items" @click="callAPI(2)" >
+                <div class="dropdown-menu-item">
+                    <div class="sort">
+                        <img :src="filters[1].imagePath">
+                    </div>
+                    <div class="sort-hover">
+                        <img :src="filters[1].imageHover">
+                    </div>
+                </div>
+                <div><p>{{newLang.rating}}</p></div>
+            </b-dropdown-item>
+            <b-dropdown-item href="#" class="dropdown-menu-items" @click="callAPI(3)" >
+                <div class="dropdown-menu-item">
+                    <div class="sort">
+                        <img :src="filters[2].imagePath">
+                    </div>
+                    <div class="sort-hover">
+                        <img :src="filters[2].imageHover">
+                    </div>
+                </div>
+                <div><p>{{newLang.mostPopular}}</p></div>
+            </b-dropdown-item>
+            <b-dropdown-item href="#" class="dropdown-menu-items" @click="callAPI(4)" >
+                <div class="dropdown-menu-item">
+                    <div class="sort">
+                        <img :src="filters[3].imagePath">
+                    </div>
+                    <div class="sort-hover">
+                        <img :src="filters[3].imageHover">
+                    </div>
+                </div>
+                <div><p>{{newLang.deilveryTime}}</p></div>
             </b-dropdown-item>
         </b-dropdown>
+        
     </div>
 </template>
 <script>
 import { EventBus } from '../../../main';
 export default {
+    props: ['newLang'],
     data(){
         return{
-            text:'Sort',
+            text:this.newLang.sort,
             filters:[
                 {
                     id:1,
                     imagePath:'./images/recomd.png',
                     imageHover:'./images/recomd-hover.png',
-                    filterWith:'Recomended'
+                    filterWith:this.newLang.recommended
                 },
                 {
                     id:2,
@@ -46,18 +81,31 @@ export default {
                     imageHover:'./images/time-hover.png',
                     filterWith:'Delivery Time'
                 }
-            ]
+            ],
+            local: this.newLang
         }
     },
     methods: {
+        setText() {
+            this.text = this.newLang.sort;
+        },
         callAPI(sort) {
             this.text = this.filters[sort-1].filterWith;
             this.$emit('callAPI',sort);
+        },
+        changeAll() {
+            this.filters[0].filterWith = this.newLang.recommended;
+            this.filters[1].filterWith = this.newLang.rating;
+            this.filters[2].filterWith = this.newLang.mostPopular;
+            this.filters[3].filterWith = this.newLang.deliveryTime;
+            this.filters[0].id = 5;
         }
     },
     mounted() {
+        this.changeAll();
         EventBus.$on("resetFilter", () => {
-            this.text = "Sort";
+            this.setText();
+            this.changeAll();
         })
     }
 }

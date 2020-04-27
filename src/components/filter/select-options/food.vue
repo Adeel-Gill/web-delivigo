@@ -1,16 +1,49 @@
 <template>
     <div class="food" id="food-filter">
         <b-dropdown size="lg" :text="text" class="m-2" id="dropdown">
-            <b-dropdown-item href="#" class="dropdown-menu-items" v-for="filter in filters" @click="callAPI(filter.filterWith)" :filter="filters" :key="filter.id" >
+            <b-dropdown-item href="#" class="dropdown-menu-items" @click="callAPI(filters[0].filterWith)" >
                 <div class="dropdown-menu-item">
                     <div class="sort">
-                        <img :src="filter.imagePath">
+                        <img :src="filters[0].imagePath">
                     </div>
                     <div class="sort-hover">
-                        <img :src="filter.imageHover">
+                        <img :src="filters[0].imageHover">
                     </div>
                 </div>
-                <div><p>{{filter.filterWith}}</p></div>
+                <div><p>{{newLang.vegetarian}}</p></div>
+            </b-dropdown-item>
+            <b-dropdown-item href="#" class="dropdown-menu-items" @click="callAPI(filters[1].filterWith)" >
+                <div class="dropdown-menu-item">
+                    <div class="sort">
+                        <img :src="filters[1].imagePath">
+                    </div>
+                    <div class="sort-hover">
+                        <img :src="filters[1].imageHover">
+                    </div>
+                </div>
+                <div><p>{{newLang.glutenFree}}</p></div>
+            </b-dropdown-item>
+            <b-dropdown-item href="#" class="dropdown-menu-items" @click="callAPI(filters[2].filterWith)" >
+                <div class="dropdown-menu-item">
+                    <div class="sort">
+                        <img :src="filters[2].imagePath">
+                    </div>
+                    <div class="sort-hover">
+                        <img :src="filters[2].imageHover">
+                    </div>
+                </div>
+                <div><p>{{newLang.vegan}}</p></div>
+            </b-dropdown-item>
+            <b-dropdown-item href="#" class="dropdown-menu-items" @click="callAPI(filters[3].filterWith)" >
+                <div class="dropdown-menu-item">
+                    <div class="sort">
+                        <img :src="filters[3].imagePath">
+                    </div>
+                    <div class="sort-hover">
+                        <img :src="filters[3].imageHover">
+                    </div>
+                </div>
+                <div><p>{{filters[3].filterWith}}</p></div>
             </b-dropdown-item>
         </b-dropdown>
     </div>
@@ -18,9 +51,10 @@
 <script>
 import { EventBus } from '../../../main';
 export default {
+    props: ['newLang'],
     data(){
         return{
-            text:'Food',
+           text:this.newLang.food,
             filters:[
                 {
                     id:1,
@@ -50,14 +84,25 @@ export default {
         }
     },
     methods: {
+        setText() {
+            this.text = this.newLang.food;
+        },
+        changeAll() {
+            this.filters[0].filterWith = this.newLang.vegetarian;
+            this.filters[1].filterWith = this.newLang.glutenFree;
+            this.filters[2].filterWith = this.newLang.vegan;
+            // this.filters[0].id = 5;
+        },
         callAPI(food) {
             this.text = food;
             this.$emit('callAPI', food);
         }
     },
     mounted() {
+        this.changeAll();
         EventBus.$on("resetFilter", () => {
-            this.text = "Food";
+             this.setText();
+            this.changeAll();
         })
     }
 }
