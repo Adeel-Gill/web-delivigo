@@ -440,7 +440,8 @@ a.nav-link{
     bottom: 0;
     right: 0;
     overflow: hidden;
-    margin-top: 100px;
+    margin-top: 50px;
+    margin-bottom: 10%;
 }
 /*drawer layout style end*/
 .vue-star-rating-rating-text[data-v-34cbeed1] {
