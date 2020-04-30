@@ -1,7 +1,7 @@
 <template>
     <div v-if="">
         <landing-banner @updateTheCounter="emitCounter" :key = newCount :newLang= local></landing-banner>
-        <app-available-cities :key="newCount" :newLang= local></app-available-cities>
+        <app-available-cities  :newLang= local></app-available-cities>
 <!--        <popular-Restaurant  ></popular-Restaurant>-->
         <delivery-process></delivery-process>
 <!--        <featured-restaurants></featured-restaurants>-->
@@ -40,6 +40,7 @@ export default {
             popularRestaurants: null,
             newCount : 0,
             local: lang.en,
+            cities: [],
         }
     },
     methods: {
@@ -60,8 +61,10 @@ export default {
       },
         changeTheLang() {
             console.log("here it is");
-            this.fetchResturantsData();
+            // this.fetchResturantsData();
             this.checkLang();
+            // this.$root.$emit('cities',this.cities);
+            // this.$root.$emit('newCities',this.cities);
             EventBus.$emit("changeNewLang", "");
             this.newCount += 1;
         },
@@ -71,6 +74,7 @@ export default {
             fetchResturantsData().then(response => {
                 // EventBus.$emit("homeChange","");
                 this.popularRestaurants = response.PopularNearYou;
+                this.cities = response.Cities;
                 this.$root.$emit('cities',response.Cities);
                 console.log('popularData'+ this.popularRestaurants);
                 this.$root.$emit('popularData',this.popularRestaurants);

@@ -13,7 +13,7 @@
         <div>
             <div @click = "handleToggleDrawer" style="margin-top: 60px; margin-right: 50px">
                 <fab
-                        style="margin-top: 160px; margin-right: 50px"
+                        style="margin-top: 80px; margin-right: 50px"
                         position="top-right"
                         position-type="absolute"
                         ripple-show="true"

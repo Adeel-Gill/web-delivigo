@@ -19,8 +19,8 @@
                         </div>
                     </div>
                 </div>
-                <popular :key= newCount :newLang= local />
-                <catagories :key= newCount :newLang= local />
+                <popular  :newLang= local />
+                <catagories  :newLang= local />
                 <div class="restaurants-list" v-if="newNotEmpty">
                     <h2>{{local.newOnDelivigo}}</h2>
                     <div class="show-more" v-if="newRestaurantsMore">
@@ -259,9 +259,9 @@ export default {
             // this.fetchResturantsData();
             this.checkLang();
             EventBus.$emit("changeNewLang", "");
-            this.newCount += 1;
+            // this.fetchAllData();
+             this.newCount += 1;
             this.fetchedData = {};
-            this.fetchAllData();
             this.resetCount += 1;
             
         },

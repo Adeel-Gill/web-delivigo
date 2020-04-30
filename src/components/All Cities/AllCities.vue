@@ -91,7 +91,7 @@
             // this.fetchResturantsData();
             this.checkLang();
             EventBus.$emit("changeNewLang", "");
-            this.fetchCities();
+            // this.fetchCities();
             // this.resetCount += 1;
             // this.newCount += 1;
         },

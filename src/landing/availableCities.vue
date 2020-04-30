@@ -14,7 +14,7 @@
                     <app-city v-for="city in allcities.slice(0,3)" :key="city.Id" :city="city"></app-city>
                 </div>
                 <div class="row" v-else>
-                    <app-empty-error></app-empty-error>>
+                    <app-empty-error></app-empty-error>
                 </div>
             </div>
         </div>
@@ -27,9 +27,9 @@
     export default {
         name: "availableCities",
         props: ['newLang'],
-        components: {
-          appEmptyError: emptyError,
-        },
+        // components: {
+        //   appEmptyError: emptyError,
+        // },
         data() {
             return {
                 titleHeading: 'Available Cities',
@@ -50,7 +50,8 @@
             }
         },
         components: {
-            appCity: City
+            appCity: City,
+            appEmptyError: emptyError,
         },
         created() {
             this.$root.$on('cities', response => {
@@ -64,6 +65,10 @@
                         this.count++;
                     }
                 }
+            })
+            this.$root.$on('newCities', response => {
+                console.log("newCities", response);
+                this.allcities = response;
             })
         }
     }
