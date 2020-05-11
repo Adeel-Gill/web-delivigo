@@ -3,13 +3,13 @@
         <div class="container-fluid">
             <div class="row text-center mb-5 mt-3">
                 <div class="col-md-4 btn-tab" :class="[isPolicy? 'active-btn' : '']"   id="btn1">
-                    <router-link to="/privacy?docType=p"><a @click="changeActive('p')" id="cOrder"><h3>Privacy Policy</h3></a></router-link>
+                    <router-link to="/privacy?docType=p"><a @click="changeActive('p')" id="cOrder"><h3>{{newLang.privacyPolicy}}</h3></a></router-link>
                 </div>
                 <div class="col-md-4 btn-tab" :class="[isTerms? 'active-btn' : '']"  id="btn2">
-                    <router-link to="/terms?docType=t"><a @click="changeActive('t')" id="pOrder"><h3>Terms and Conditions</h3></a></router-link>
+                    <router-link to="/terms?docType=t"><a @click="changeActive('t')" id="pOrder"><h3>{{newLang.termsAndCondition}}</h3></a></router-link>
                 </div>
                 <div class="col-md-4 btn-tab" :class="[isCookies? 'active-btn' : '']"  id="btn2">
-                    <router-link to="/cookies?docType=c"><a @click="changeActive('c')" id="pOrder"><h3>Cookies</h3></a></router-link>
+                    <router-link to="/cookies?docType=c"><a @click="changeActive('c')" id="pOrder"><h3>{{newLang.cookies}}</h3></a></router-link>
                 </div>
             </div>
         </div>
@@ -28,6 +28,7 @@
 <script>
     export default {
         name: "Legal",
+        props: ['newLang'],
         data() {
             return {
                 isPolicy: false,

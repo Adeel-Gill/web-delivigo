@@ -1,9 +1,9 @@
 <template>
     <div class="required-info">
         <div class="venue-info">
-            <h3>{{venue.venuInfo}}</h3>
+            <h3>{{newLang.venuInfo}}</h3>
             <div class="address-info">
-                <h3>{{venue.addressHeading}}</h3>
+                <h3>{{newLang.addressHeading}}</h3>
                 <p>{{restaurant.FullAddress}}
                     <span class="map">
 <!--                        <app-map to="/map"></app-map>-->
@@ -11,12 +11,12 @@
                         query: {long: restaurant.Longitude,
                         lat: restaurant.Latitude,resaddress: restaurant.FullAddress,
                         name: restaurant.Name,
-                        }}">{{venue.seeMap}}</router-link>
+                        }}">{{newLang.seeMap}}</router-link>
                     </span>
                 </p>
             </div>
             <div class="opening-info">
-                <h3>{{venue.opening}}</h3>
+                <h3>{{newLang.opening}}</h3>
                 <div id="tabes-venue">
                     <b-tabs content-class="mt-3">
                         <b-tab title="Restaurant" active>
@@ -35,14 +35,14 @@
                                 <div class="contant-num">
                                     <p>{{restaurant.PhoneNumber}}</p>
                                     <button class="link"
-                                            @click="changeShowAll">{{venue.moreInfo}}</button>
+                                            @click="changeShowAll">{{newLang.moreInfo}}</button>
                                 </div>
                             </div>
                         </b-tab>
                         <b-tab title="Delivery">
                             <div class="delivery-time">
                                 <p>
-                                    <span class="float-left">{{venue.delivery}}</span>
+                                    <span class="float-left">{{newLang.freeDelivery}}</span>
                                     <span class="float-right">{{restaurant.DeliveryTime}} Mins</span>
                                 </p>
                             </div>
@@ -55,6 +55,7 @@
 </template>
 <script>
     export default {
+        props: ['newLang'],
         data(){
             return{
                 restaurant: {},

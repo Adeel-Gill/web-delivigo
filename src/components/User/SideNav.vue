@@ -10,35 +10,35 @@
                                  tag="li"
                                  active-class="active"
                                  exact>
-                        <a class="nav-link">My Profile</a>
+                        <a class="nav-link">{{newLang.myProfile}}</a>
                     </router-link>
                     <router-link class="nav-item"
                                  to="/delivery"
                                  tag="li"
                                  active-class="active"
                                  exact>
-                        <a class="nav-link" >Delivery Address</a>
+                        <a class="nav-link" >{{newLang.deliveryAddress}}</a>
                     </router-link>
                     <router-link class="nav-item"
                                  to="/billing"
                                  tag="li"
                                  active-class="active"
                                  exact>
-                        <a class="nav-link">Billing And Payments</a>
+                        <a class="nav-link">{{newLang.billingAndPayment}}</a>
                     </router-link>
                     <router-link class="nav-item"
                                  to="/currentOrder"
                                  tag="li"
                                  active-class="active"
                                  exact>
-                        <a class="nav-link">Order History</a>
+                        <a class="nav-link">{{newLang.orderHistory}}</a>
                     </router-link>
                     <router-link class="nav-item"
                                  to="/discount"
                                  tag="li"
                                  active-class="active"
                                  exact>
-                        <a class="nav-link">Discount</a>
+                        <a class="nav-link">{{newLang.discount}}</a>
                     </router-link>
 <!--                    <router-link class="nav-item"-->
 <!--                                 to="/diamond"-->
@@ -59,7 +59,7 @@
                                  tag="li"
                                  active-class="active"
                                  exact>
-                        <a class="nav-link">Legal</a>
+                        <a class="nav-link">{{newLang.legal}}</a>
                     </router-link>
                 </ul>
             </nav>
@@ -111,6 +111,7 @@
     import { Push } from 'vue-burger-menu';
     export default {
         name: "SideNav",
+        props: ['newLang'],
         components: {
             Push
         },

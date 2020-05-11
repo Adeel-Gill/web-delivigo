@@ -6,8 +6,8 @@
             <div class="row justify-content-center">
         <div class="col-md-10 col-12">
             <div class="heading line">
-                <h1 class="profile-heading d-inline">Delivery Address</h1>
-                <button class="btn btn-submit float-right" @click="showModal"><i class="fas fa-plus mr-3"></i>Add Address</button>
+                <h1 class="profile-heading d-inline">{{newLang.deliveryAddress}}</h1>
+                <button class="btn btn-submit float-right" @click="showModal"><i class="fas fa-plus mr-3"></i>{{newLang.addAddress}}</button>
             </div>
             <div class="address-block row pt-4 m-0 w-100" v-for="address in allAddresses" :key="address.Id">
 
@@ -19,19 +19,19 @@
                     <div class="cross" v-if="!address.IsDefault"><button @click="deleteAddress(address.Id)"><i class="fas fa-times-circle cancel"></i></button></div>
                     <div class="radio">
                         <input type="radio" id="rad" :checked="address.IsDefault" @click="setDefaultAddress(address.Id)">
-                        <label>Default</label>
+                        <label>{{newLang.default}}</label>
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
-        <b-modal size="lg" hide-footer centered class="my-modal" id="modal-1" title="Add new Address">
+        <b-modal size="lg" hide-footer centered class="my-modal" id="modal-1" :title="newLang.addNewAddress">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Address</label>
+                            <label>{{newLang.address}}</label>
                             <app-map-nav @mapObj = "setMapData"></app-map-nav>
     <!--                        <div id="map" style="display: none;"></div>-->
     <!--                        <div id="geocoder" class="geocoder col-md-12" @select="showValues"></div>-->
@@ -64,7 +64,7 @@
                             :loading="isLoading"
                             :disabled="isLoading"
                             :styled="true"
-                            @click.native="saveAddress">Save
+                            @click.native="saveAddress">{{newLang.save}}
                     </buttonSpinner>
                 </div>
             </div>
@@ -84,6 +84,7 @@
     import {EventBus, map} from '../../main'
     export default {
         name: "DeliveryAddress",
+        props: ['newLang'],
         components: {
             buttonSpinner: VueLoadingButton,
             appMapNav: MapNavigation,
@@ -122,7 +123,7 @@
                     this.country = this.mapData.context[3].text;
                     console.log(this.mapData,this.city,this.state,this.country);
                 } else {
-                    this.showNotification('error','Error','Please enter nearby address!');
+                    this.showNotification('error',this.newLang.error,this.newLang.nearByAddress);
                     this.mapData = {};
                     this.city = this.state = this.country = '';
                 }
@@ -138,88 +139,88 @@
                     this.addressObj.Apartment = this.mapData.text;
                     saveAddress(this.addressObj).then(response => {
                         if(response.HasErrors ) {
-                            this.showNotification('error','Error','Saving Address failed');
+                            this.showNotification('error',this.newLang.error,this.newLang.addressSaveError);
                             this.isLoading = false;
                         } else {
                             this.$store.dispatch('setAddressID', response.Id);
                             setDefaultAddress(Number(localStorage.getItem('id')), this.$store.state.addressId).then(response => {
                                 if(response.HasError) {
-                                    this.showNotification('error','Error', 'Address is not setted as default');
+                                    this.showNotification('error',this.newLang.error, this.newLang.addressDefaultError);
                                     this.isLoading = false;
                                 } else {
                                     getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
                                         if(response.HasError) {
-                                            this.showNotification('error','Error','Address fetch failed!');
+                                            this.showNotification('error',this.newLang.error,this.newLang.addressFetchError);
                                             this.isLoading = false;
                                         } else {
                                             if(response.length <= 0) {
                                                 this.isLoading = false;
-                                                this.showNotification('error','Error','No address is available to show please add address');
+                                                this.showNotification('error',this.newLang.error,this.newLang.addressesNotAvailable);
                                             } else {
                                                 this.isLoading = false;
                                                 this.allAddresses = response;
                                                 console.log('allAddresses',this.allAddresses);
-                                                this.showNotification('success', 'Success', 'Address saved and setted as default!');
+                                                this.showNotification('success', this.newLang.success, this.newLang.addressSaved);
                                                 this.hideModal();
                                             }
                                         }
                                     }, error => {
                                         console.log(error);
                                         this.isLoading = false;
-                                        this.showNotification('error','Error','Error occurred while fetching address please try later');
+                                        this.showNotification('error',this.newLang.error,this.newLang.addressFetchFailed);
                                     })
                                 }
                             }, error => {
                                 console.log(error);
                                 this.isLoading = false;
-                                this.showNotification('error','Error','Address not has been default');
+                                this.showNotification('error',this.newLang.error,this.newLang.addressNotDefault);
                             })
                         }
                     }, error => {
                         console.log(error);
                         this.isLoading = false;
-                        this.showNotification('error','Error','Saving address failed')
+                        this.showNotification('error',this.newLang.error,this.newLang.addressSaveError)
                     })
                 }
             },
             setDefaultAddress(id) {
               setDefaultAddress(Number(localStorage.getItem('id')), id).then(response => {
                   if(response.HasErrors) {
-                      this.showNotification('error','Error', 'Card is not set as default!');
+                      this.showNotification('error',this.newLang.error, this.newLang.addressFetchError);
                   } else {
                       getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
                           if(response.HasErrors) {
-                              this.showNotification('error','Error', 'Address fetching failed!');
+                              this.showNotification('error',this.newLang.error, this.newLang.addressFetchError);
                           } else {
                               if(response.length <= 0) {
                                   this.isLoading = false;
-                                  this.showNotification('error','Error','No address is available to show please add address');
+                                  this.showNotification('error',this.newLang.error,this.newLang.addressesNotAvailable);
                               } else {
                                   this.allAddresses = response;
-                                  this.showNotification('success','Success','Address is now default!');
+                                  this.showNotification('success',this.newLang.success,this.newLang.addressIsDefault);
                               }
                           }
                       }, error => {
                           console.log(error);
-                          this.showNotification('error','Error','Address is default but fetching address failed try later!')
+                          this.showNotification('error',this.newLang.error,this.newLang.addressIsSavedNotDefault)
                       })
                   }
               }, error => {
                   console.log(error);
-                  this.showNotification('error','Error', 'Card is not setted as default!');
+                  this.showNotification('error',this.newLang.error, this.newLang.addressDefaultError);
               })
             },
             showAllAddresses() {
                 console.log('here');
               getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
                   if(response.HasErrors ) {
-                      this.showNotification('error','Error', 'Address fetching failed!');
+                      this.showNotification('error',this.newLang.error, this.newLang.addressFetchError);
                   } else {
                       if(response.length <= 0) {
                           this.isLoading = false;
-                          this.showNotification('error','Error','No address is available to show please add address');
+                          this.showNotification('error',this.newLang.error,this.newLang.addressesNotAvailable);
                       } else {
-                          this.showNotification('success','Success', 'All addresses are shown!');
+                          this.showNotification('success',this.newLang.success, this.newLang.addressShown);
                           this.allAddresses = response;
                       }
                   }
@@ -229,7 +230,7 @@
               })
             },
             deleteAddress(id) {
-                this.$dialog.confirm('Address will be deleted permanently. Continue?',{
+                this.$dialog.confirm(this.newLang.addressDeleteAlert,{
                     loader: true
                 }).then(dialog => {
                     dialog.loading(true);
@@ -237,19 +238,19 @@
                         if(response.HasErrors) {
                             dialog.loading(false);
                             dialog.close();
-                            this.showNotification('error','Error','Error occurred deletion of address is failed!');
+                            this.showNotification('error',this.newLang.error,this.newLang.addressDeleteError);
                         } else {
                             dialog.loading(false);
                             dialog.close();
-                            this.showNotification('success', 'Success', 'Address is successfully deleted!');
+                            this.showNotification('success', this.newLang.success, this.newLang.addressDeleted);
                             this.showAllAddresses();
                         }
                     }, error => {
                         console.log(error);
-                        this.showNotification('error','Error','Error occurred please try later!')
+                        this.showNotification('error',this.newLang.error,this.newLang.errorOccurred)
                     })
                 }).catch(() => {
-                    this.showNotification('info', 'Info', 'Address deletion cancelled');
+                    this.showNotification('info', this.newLang.info, this.newLang.addressDeleteCancel);
                 })
             },
             showModal() {

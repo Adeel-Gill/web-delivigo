@@ -5,9 +5,9 @@
         </div>
 <!--        <div class="col-md-1"></div>-->
         <div class="col-md-6 col-12">
-            <app-top-nav></app-top-nav>
+            <app-top-nav :newLang= local ></app-top-nav>
             <div>
-                <router-view @updateTheCounter="emitCounter"></router-view>
+                <router-view @updateTheCounter="emitCounter" :newLang= local ></router-view>
             </div>
         </div>
     </div>
@@ -15,16 +15,43 @@
 
 <script>
     import TopNav from "./TopNav";
+    import {lang} from "../lang/lang";
+    import {EventBus} from "../../main";
     export default {
         name: "Index",
         components: {
             appTopNav: TopNav
         },
+        data() {
+            return {
+                local: lang.en,
+            }
+        },
         methods: {
             emitCounter() {
                 this.$emit("changeCounter",0);
-            }
-        }
+            },
+            checkLang() {
+            console.log("hereItIs");
+                var temp = localStorage.getItem("lang");
+                if(temp == null || temp === "EN") {
+                localStorage.setItem("lang", "EN");
+                this.local = lang.en;
+                } else if(temp === "FN" ) {
+                this.local = lang.fn;
+                localStorage.setItem("lang", "FN");
+                } else {
+                this.local = lang.sp;
+                localStorage.setItem("lang", "ES");
+                }
+            },
+        },
+        created() {
+             this.checkLang();
+        EventBus.$on("changeLang", () => {
+            this.checkLang();
+            })
+        },
     }
 </script>
 

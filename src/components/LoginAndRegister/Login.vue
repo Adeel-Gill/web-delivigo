@@ -4,7 +4,7 @@
             <div class="col-12 px-5">
             <form action="" v-on:submit.prevent class="myProfile">
                 <div class="form-group row">
-                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <label for="email" class="col-sm-2 col-form-label">{{newLang.email}}</label>
                     <div class="col-sm-10">
                         <input type="email" class="form-control"
                                v-model="userData.email"
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="npwd" class="col-sm-2 col-form-label">Password</label>
+                    <label for="npwd" class="col-sm-2 col-form-label">{{newLang.password}}</label>
                     <div class="col-sm-10">
                         <input type="password"
                                class="form-control"
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="button text-center">
-                    <button type="submit" @click="checkCredentials" :disabled="disableSubmit" class="btn btn-submit">SIGN IN</button>
+                    <button type="submit" @click="checkCredentials" :disabled="disableSubmit" class="btn btn-submit">{{newLang.signin}}</button>
                     <span class="or">OR</span>
                     <facebook-login class="fb p-0 mt-3"
                                     appId="649127768995419"
@@ -60,6 +60,7 @@
      import {validEmail} from "../util/validate";
     export default {
         name: "Login",
+        props: ['newLang'],
         components: {
           // VFacebookLogin
           //   VFacebookLoginScope
@@ -128,7 +129,7 @@
                 if(this.checkObject()) {
                      checkCredentials(this.userData).then(response => {
                         if(response.HasErrors === false) {
-                            this.showNotification('success', 'Success', 'Sign in successfully');
+                            this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
                             console.log('id',response.Id);
                             localStorage.setItem('userProfile',response.UrlImage);
                             this.$store.dispatch('storeToken',response);
@@ -147,14 +148,14 @@
 
                         } else {
                             
-                            this.showNotification('error', 'Error', 'Sign in failed');
+                            this.showNotification('error', this.newLang.error, this.newLang.singInFailed);
                         }
                     }, error => {
                          console.log(error);
-                         this.showNotification('error','Error','Error occurred please try later!');
+                         this.showNotification('error',this.newLang.error,this.newLang.errorOccurred);
                      })
                 } else {
-                    this.showNotification('warn', 'Warning', 'Please fill all the fields!');
+                    this.showNotification('warn', this.newLang.warning, this.newLang.emptyFields);
                 }
             },
             checkObject() {
@@ -204,7 +205,7 @@
                             this.fbUserData.ImageUrl = userInformation.picture.data.url;
                             facebookAPILogin(this.fbUserData).then(response => {
                                 if(response.HasErrors === false) {
-                                    this.showNotification('success', 'Success', 'Sign in successfully');
+                                    this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
                                     console.log('id',response.Id);
                                     localStorage.setItem('userProfile',response.UrlImage);
                                     this.$store.dispatch('storeToken',response);
@@ -212,11 +213,11 @@
                                     localStorage.setItem("fbLogin", true);
                                     this.$router.go();
                                 } else {
-                                    this.showNotification('error', 'Error', 'Sign in failed');
+                                    this.showNotification('error', this.newLang.error, this.newLang.singInFailed);
                                 }
                             }, error => {
                                 console.log('error',error);
-                                this.showNotification('error', 'Error', 'Sign in failed');
+                                this.showNotification('error', this.newLang.error, this.newLang.singInFailed);
                             })
                         }
                         console.log('url',this.url);
@@ -250,7 +251,7 @@
                    return true;
                 } else {
                    document.getElementById('emailError').style.visibility = "visible";
-                   document.getElementById('emailError').innerHTML = "Email invalid...!";
+                   document.getElementById('emailError').innerHTML = this.newLang.emailError;
                    document.getElementById('email').style.borderColor = "red";
                 //    this.disableButton = true;
                 this.emailCheck = false;
@@ -261,17 +262,17 @@
                 var res = false;
                 if(this.userData.password === "") {
                     document.getElementById('passwordError').style.visibility = "visible";
-                    document.getElementById('passwordError').innerHTML = "Password Cannot Be Empty...!";
+                    document.getElementById('passwordError').innerHTML = this.newLang.passwordEmptyError;
                     document.getElementById('npwd').style.borderColor = "red";
                     this.passwordCheck = false;
                 } else if(!this.userData.password.match(/^[a-zA-Z0-9\s#]+$/)) {
                     document.getElementById('passwordError').style.visibility = "visible";
-                    document.getElementById('passwordError').innerHTML = "Wrong Input alphabets only...!";
+                    document.getElementById('passwordError').innerHTML = this.newLang.passwordWrongInput;
                     document.getElementById('npwd').style.borderColor = "red";
                     this.passwordCheck = false;
                 } else if(this.userData.password.length < 6) {
                     document.getElementById('passwordError').style.visibility = "visible";
-                    document.getElementById('passwordError').innerHTML = "Password must be upto 6 ..!";
+                    document.getElementById('passwordError').innerHTML = this.newLang.passwordLengthError;
                     document.getElementById('npwd').style.borderColor = "red";
                     this.passwordCheck = false;
                 } else {

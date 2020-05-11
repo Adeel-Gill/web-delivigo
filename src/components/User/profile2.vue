@@ -8,22 +8,22 @@
                     <img :src="getImage(userData.UrlImage)" @error="getImage('')" id="showImage" class="w-100 h-100">
                     <div class="overlay"><!--@change="showImage(e)"-->
                         <input type="file"  id="image-upload" ref="file" accept="image/*" @change="onFileChange" hidden>
-                        <button class="btn"  @click="imageUpload()"><i class="fas fa-camera"></i>&nbsp;Upload picture</button>
+                        <button class="btn"  @click="imageUpload()"><i class="fas fa-camera"></i>&nbsp;{{newLang.upload}}</button>
                     </div>
                 </div>
-                <button v-b-modal.change-password :disabled="isFbUser" class="btn password-btn">Change Password</button>
+                <button v-b-modal.change-password :disabled="isFbUser" class="btn password-btn">{{newLang.changePassword}}</button>
             </div>
             <div class="col-md-9 col-sm-12 col-12">
                 <div class="heading line">
-                    <h1 class="profile-heading d-inline">My Profile</h1>
-                    <button  class="btn edit-btn" @click="enableEditable" :style="{display: [!isEditable? 'block': 'none']}"><i class="fas fa-pencil-alt mr-3"></i>Edit</button>
-                    <button  class="btn edit-btn" @click="updateUser" :disabled="disableSave" :style="{display: [isEditable? 'block': 'none']}"><i class="far fa-save mr-3"></i>Save</button>
-                    <button  class="btn edit-btn" @click="disableEditable" :style="{display: [isEditable? 'block': 'none']}"><i class="fas fa-times mr-3"></i>Cancel</button>
+                    <h1 class="profile-heading d-inline">{{newLang.myProfile}}</h1>
+                    <button  class="btn edit-btn" @click="enableEditable" :style="{display: [!isEditable? 'block': 'none']}"><i class="fas fa-pencil-alt mr-3"></i>{{newLang.edit}}</button>
+                    <button  class="btn edit-btn" @click="updateUser" :disabled="disableSave" :style="{display: [isEditable? 'block': 'none']}"><i class="far fa-save mr-3"></i>{{newLang.save}}</button>
+                    <button  class="btn edit-btn" @click="disableEditable" :style="{display: [isEditable? 'block': 'none']}"><i class="fas fa-times mr-3"></i>{{newLang.cancel}}</button>
                 </div>
                 <div class="form-field mt-5 pr-3">
                     <form>
                         <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">Name</label>
+                            <label for="name" class="col-sm-2 col-form-label">{{newLang.name}}</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" 
                                 id="fullName" 
@@ -40,13 +40,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="email" class="col-sm-2 col-form-label">Email</label>
+                            <label for="email" class="col-sm-2 col-form-label">{{newLang.email}}</label>
                             <div class="col-sm-10">
                                 <input type="email" class="form-control" id="email" :value="userData.Email" disabled >
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="phone" class="col-sm-2 col-form-label">Phone No</label>
+                            <label for="phone" class="col-sm-2 col-form-label">{{newLang.mobileNumber}}</label>
                             <div class="col-sm-10">
                                 <input type="text" 
                                 class="form-control" 
@@ -75,11 +75,11 @@
             </div>
         </div>
         </div>
-        <b-modal id="change-password" size="300px" centered title="Change Password">
+        <b-modal id="change-password" size="300px" centered :title="newLang.changePassword">
             <div class="form-field">
                 <form>
                      <div class="form-group row">
-                        <label for="oldPassword" class="col-sm-4 col-form-label">Old Password</label>
+                        <label for="oldPassword" class="col-sm-4 col-form-label">{{newLang.oldPassword}}</label>
                         
                         <div class="col-sm-8">
                             <input type="password" 
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="newPassword" class="col-sm-4 col-form-label">New Password</label>
+                        <label for="newPassword" class="col-sm-4 col-form-label">{{newLang.newPassword}}</label>
                         
                         <div class="col-sm-8">
                             <input type="password" 
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="confirmPassword" class="col-sm-4 col-form-label">Confirm Password</label>
+                        <label for="confirmPassword" class="col-sm-4 col-form-label">{{newLang.confirmPassword}}</label>
                         <div class="col-sm-8">
                             <input type="password" 
                             class="form-control"  
@@ -117,7 +117,7 @@
             </div>
             <template v-slot:modal-footer="{ ok}">
                 <b-button size="sm" variant="primary" @click="updatePassword()" :disabled="disableButton">
-                    Change Password
+                   {{newLang.changePassword}}
                 </b-button>
             </template>
         </b-modal>
@@ -133,6 +133,7 @@
     import {EventBus} from "../../main";
     export default {
         name: "profile2",
+        props: ['newLang'],
         data() {
             return {
                 validated: true,
@@ -203,18 +204,18 @@
                     formData.append('Id', localStorage.getItem("id"));
                     updateProfileImage(formData).then(response => {
                         if(response.HasErrors === true) {
-                            this.showNotification("info","Error","Error occurred try again");
+                            this.showNotification("info",this.newLang.error,this.newLang.errorOccurred);
                         } else {
                             console.log(response);
                             this.fetchUserProfile();
                             this.emitEvent();
-                            this.showNotification("success","Success","Image updated successfully...!");
+                            this.showNotification("success",this.newLang.success,this.newLang.imageSuccess);
                         }
                         
                         // this.$Event.$emit('changeCounter',0);
                         // this.$router.go();
                     }, error => {
-                        this.showNotification("info","Error","Error occurred try again")
+                        this.showNotification("info",this.newLang.error,this.newLang.errorOccurred)
                         localStorage.setItem("userChanged", false);
                     })
                 }
@@ -223,14 +224,14 @@
                 updateProfile(this.updateUserData).then(response => {
                     console.log(response);
                     if(response.HasErrors === true) {
-                        this.showNotification("info","Error","Error occurred try again");
+                        this.showNotification("info",this.newLang.error,this.newLang.errorOccurred);
                     } else {
-                        this.showNotification("success","Success","Profile updated successfully...!");
+                        this.showNotification("success",this.newLang.success,this.newLang.profileUpdated);
                         this.disableEditable();
                         this.fetchUserProfile();
                     }
                 }, error => {
-                    this.showNotification("info","Error","Error occurred try again");
+                    this.showNotification("info",this.newLang.error,this.newLang.errorOccurred);
                 })
             },
             onFileChange(e) {
@@ -280,7 +281,7 @@
                      
                 }, error => {
                     console.log(error);
-                    this.showNotification('error','Error','Error occurred please try later!');
+                    this.showNotification('error',this.newLang.error,this.newLang.errorOccurred);
                 })
             },
             showNotification(type, title, message) {
@@ -316,17 +317,17 @@
                  var res = false;
                 if(this.changePasswordObj.OldPassword === "") {
                     document.getElementById('oldPasswordError').style.visibility = "visible";
-                    document.getElementById('oldPasswordError').innerHTML = "Password Cannot Be Empty...!";
+                    document.getElementById('oldPasswordError').innerHTML = this.newLang.passwordEmptyError;
                     document.getElementById('oldPassword').style.borderColor = "red";
                     this.oldPasswordCheck = false;
                 } else if(!this.changePasswordObj.OldPassword.match(/^[a-zA-Z0-9\s#]+$/)) {
                     document.getElementById('oldPasswordError').style.visibility = "visible";
-                    document.getElementById('oldPasswordError').innerHTML = "Wrong Input alphabets only...!";
+                    document.getElementById('oldPasswordError').innerHTML = this.newLang.passwordWrongInput;
                     document.getElementById('oldPassword').style.borderColor = "red";
                     this.oldPasswordCheck = false;
                 } else if(this.changePasswordObj.OldPassword.length < 6) {
                     document.getElementById('oldPasswordError').style.visibility = "visible";
-                    document.getElementById('oldPasswordError').innerHTML = "Password must be upto 6 ..!";
+                    document.getElementById('oldPasswordError').innerHTML = this.newLang.passwordLengthError;
                     document.getElementById('oldPassword').style.borderColor = "red";
                     this.oldPasswordCheck = false;
                 } else {
@@ -343,22 +344,22 @@
                  var res = false;
                 if(this.changePasswordObj.NewPassword === "") {
                     document.getElementById('newPasswordError').style.visibility = "visible";
-                    document.getElementById('newPasswordError').innerHTML = "Password Cannot Be Empty...!";
+                    document.getElementById('newPasswordError').innerHTML = this.newLang.passwordEmptyError;
                     document.getElementById('newPassword').style.borderColor = "red";
                     this.newPasswordCheck = false;
                 } else if(!this.changePasswordObj.NewPassword.match(/^[a-zA-Z0-9\s#]+$/)) {
                     document.getElementById('newPasswordError').style.visibility = "visible";
-                    document.getElementById('newPasswordError').innerHTML = "Wrong Input alphabets only...!";
+                    document.getElementById('newPasswordError').innerHTML = this.newLang.passwordWrongInput;
                     document.getElementById('newPassword').style.borderColor = "red";
                     this.newPasswordCheck = false;
                 } else if(this.changePasswordObj.NewPassword.length < 6) {
                     document.getElementById('newPasswordError').style.visibility = "visible";
-                    document.getElementById('newPasswordError').innerHTML = "Password must be upto 6 ..!";
+                    document.getElementById('newPasswordError').innerHTML = this.newLang.passwordLengthError;
                     document.getElementById('newPassword').style.borderColor = "red";
                     this.newPasswordCheck = false;
                 } else if(this.changePasswordObj.NewPassword !== this.changePasswordObj.ConfirmPassword) {
                     document.getElementById('newPasswordError').style.visibility = "visible";
-                    document.getElementById('newPasswordError').innerHTML = "Password must be equal ..!";
+                    document.getElementById('newPasswordError').innerHTML =this.newLang.passwordEqualError;
                     document.getElementById('newPassword').style.borderColor = "red";
                     this.newPasswordCheck = false;
                 } else {
@@ -379,22 +380,22 @@
                  var res = false;
                 if(this.changePasswordObj.ConfirmPassword === "") {
                     document.getElementById('confirmPasswordError').style.visibility = "visible";
-                    document.getElementById('confirmPasswordError').innerHTML = "Password Cannot Be Empty...!";
+                    document.getElementById('confirmPasswordError').innerHTML = this.newLang.passwordEmptyError;
                     document.getElementById('confirmPassword').style.borderColor = "red";
                     this.confirmPasswordCheck = false;
                 } else if(!this.changePasswordObj.ConfirmPassword.match(/^[a-zA-Z0-9\s#]+$/)) {
                     document.getElementById('confirmPasswordError').style.visibility = "visible";
-                    document.getElementById('confirmPasswordError').innerHTML = "Wrong Input alphabets only...!";
+                    document.getElementById('confirmPasswordError').innerHTML = this.newLang.passwordWrongInput;
                     document.getElementById('confirmPassword').style.borderColor = "red";
                     this.confirmPasswordCheck = false;
                 } else if(this.changePasswordObj.ConfirmPassword.length < 6) {
                     document.getElementById('confirmPasswordError').style.visibility = "visible";
-                    document.getElementById('confirmPasswordError').innerHTML = "Password must be upto 6 ..!";
+                    document.getElementById('confirmPasswordError').innerHTML = this.newLang.passwordLengthError;
                     document.getElementById('confirmPassword').style.borderColor = "red";
                     this.confirmPasswordCheck = false;
                 } else if(this.changePasswordObj.NewPassword !== this.changePasswordObj.ConfirmPassword) {
                     document.getElementById('confirmPasswordError').style.visibility = "visible";
-                    document.getElementById('confirmPasswordError').innerHTML = "Password must be equal ..!";
+                    document.getElementById('confirmPasswordError').innerHTML = this.newLang.passwordEqualError;
                     document.getElementById('confirmPassword').style.borderColor = "red";
                     this.confirmPasswordCheck = false;
                 }  else {
@@ -415,17 +416,17 @@
                 var res = false;
                 if(this.user.fullName === "") {
                     document.getElementById('nameError').style.visibility = "visible";
-                    document.getElementById('nameError').innerHTML = "Name Field Cannot Be Empty...!";
+                    document.getElementById('nameError').innerHTML = this.newLang.nameEmptyError;
                     document.getElementById('name').style.borderColor = "red";
                     this.nameCheck = false;
                 } else if(!this.user.fullName.match(/^[a-zA-Z\s]+$/)) {
                     document.getElementById('nameError').style.visibility = "visible";
-                    document.getElementById('nameError').innerHTML = "Wrong Input Enter Alphabets Only...!";
+                    document.getElementById('nameError').innerHTML = this.newLang.nameWrongInput;
                     document.getElementById('name').style.borderColor = "red";
                     this.nameCheck = false;
                 } else if(this.user.fullName.length < 3) {
                     document.getElementById('nameError').style.visibility = "visible";
-                    document.getElementById('nameError').innerHTML = "Wrong Input Enter minimum 3 Alphabets ..!";
+                    document.getElementById('nameError').innerHTML = this.newLang.nameLengthError;
                     document.getElementById('name').style.borderColor = "red";
                     this.nameCheck = false;
                 } else {
@@ -442,17 +443,17 @@
                 var res = false;
                 if(this.user.mobile === "") {
                     document.getElementById('numberError').style.visibility = "visible";
-                    document.getElementById('numberError').innerHTML = "Number Field Cannot Be Empty...!";
+                    document.getElementById('numberError').innerHTML = this.newLang.numberEmptyError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
                 }else if(!this.user.mobile.match(/^[0-9]+$/)) {
                     document.getElementById('numberError').style.visibility = "visible";
-                    document.getElementById('numberError').innerHTML = "Wrong Input Enter Numbers Only...!";
+                    document.getElementById('numberError').innerHTML = this.newLang.numberWrongInpur;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
                 } else if(this.user.mobile.length < 11) {
                     document.getElementById('numberError').style.visibility = "visible";
-                    document.getElementById('numberError').innerHTML = "Wrong Input Enter minimum 11 Numbers ..!";
+                    document.getElementById('numberError').innerHTML = this.newLang.numberLengthError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
                 } else {
@@ -497,18 +498,18 @@
                 this.changePasswordObj.Id = localStorage.getItem("id");
                 changePassword(this.changePasswordObj).then(response => {
                     if(response.HasErrors === true) {
-                        this.showNotification("info","Error","Error occurred please try later!");
+                        this.showNotification("info",this.newLang.error,this.newLang.errorOccurred);
                     } else {
                         this.openDialog();
                     }
                 }, error => {
                     console.log(error);
                     this.disableButton = false;
-                    this.showNotification("info","Error","Error occurred please try later!");
+                    this.showNotification("info",this.newLang.error,this.newLang.errorOccurred);
                 })
             },
             openDialog() {
-                    this.$dialog.alert("Password reset successfully. Please login again with new password.", {
+                    this.$dialog.alert(this.newLang.passwordAlert, {
                         loader: true
                     })
                     .then(dialog => {
@@ -520,16 +521,16 @@
                 if(localStorage.getItem('cart') === 'null' || localStorage.getItem('cart') == null) {
                 this.$store.dispatch('cleanToken');
                 this.$store.dispatch('clearCart');
-                this.showNotification('success','Success','Sign out successfully');
+                this.showNotification('success',this.newLang.success,this.newLang.signOutSuccess);
                 this.$router.go();
                 } else {
-                this.$dialog.confirm('There are items in cart if you proceed the cart will be clear. Continue?', {
+                this.$dialog.confirm(this.newLang.cartNotEmpty, {
                     loader: true
                 }).then(dialog => {
                     dialog.loading(true);
                     this.$store.dispatch('cleanToken');
                     this.$store.dispatch('clearCart');
-                    this.showNotification('success','Success','Sign out successfully');
+                    this.showNotification('success',this.newLang.success,this.newLang.signOutSuccess);
                     dialog.loading(false);
                     dialog.close();
                     this.$router.go();

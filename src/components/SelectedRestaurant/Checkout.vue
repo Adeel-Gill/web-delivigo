@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="text-center">
-                    <h3>Order is on its way</h3>
-                    <p class="text-muted">Showing location</p>
+                    <h3>{{local.orderOnItsWay}}</h3>
+                    <p class="text-muted">{{local.showingLocation}}</p>
                 </div>
                 <div class="w-100">
                     <app-custom-map :cus="cusData" :res="resData" :driver="driverData"></app-custom-map>
@@ -69,8 +69,7 @@
             </div>
             <div class="col-md-6">
                 <h1>Cutlery</h1>
-                <p>Help us to reduce plastic waste - only request
-                    cutlery when you really need it.
+                <p>{{local.helpUs}}
                 </p>
                 <!--                <button class="btn btn-primary"><i class="fas fa-motorcycle"></i> Delivery</button>-->
                 <!--                <span>~ $30</span>-->
@@ -79,25 +78,24 @@
                 <div class="card-deck text-center">
                     <div class="card" v-if="orderObject.Order.IsDelivery">
                         <div class="card-header bg-primary text-white">
-                            <h4><i class="fas fa-motorcycle"></i> Delivery</h4>
+                            <h4><i class="fas fa-motorcycle"></i> {{local.delivery}}</h4>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{orderObject.Order.ETATime}}~{{orderObject.Order.ETATime + 5}} mins</h5>
-                            <p class="card-text">Your food will be deliverd as per the saved home address</p>
+                        <div class="card-body"> 
+                            <h5 class="card-title">{{orderObject.Order.ETATime}}~{{orderObject.Order.ETATime + 5}} {{local.mins}}</h5>
+                            <p class="card-text">{{local.yourFood}}</p>
                             <button type="button" class="btn btn-lg btn-block btn-primary"
-                                    :disabled="orderObject.Order.OrderStatusId !== statuses.OrderDelivered">Grab it</button>
+                                    :disabled="orderObject.Order.OrderStatusId !== statuses.OrderDelivered">{{local.grabIt}}</button>
                         </div>
                     </div>
 
                     <div class="card" v-else>
                         <div class="card-header bg-primary text-white">
-                            <h4><i class="fas fa-shopping-bag"></i> PickUp</h4>
+                            <h4><i class="fas fa-shopping-bag"></i> {{local.pickup}}</h4>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">~ 10 Min</h5>
-                            <p class="card-text">We will be happy to be in service for your
-                                pick up.</p>
-                            <button type="button" class="btn btn-lg btn-block btn-primary">Grab it</button>
+                            <p class="card-text">{{local.weWillBeHappy}}</p>
+                            <button type="button" class="btn btn-lg btn-block btn-primary">{{local.grabIt}}</button>
                         </div>
                     </div>
                 </div>
@@ -110,9 +108,11 @@
     import {getOrderTracking} from "../api/OrderTracking";
     import {orderStatus} from "../Order/OrderStatus";
     import CustomMap from "../Map/CustomMap";
-
+    import {lang} from "../lang/lang";
+    import {EventBus} from "../../main";
     export default {
         name: "Checkout",
+        // props: ['newLang'],
         components: {
             appCustomMap: CustomMap
         },
@@ -134,6 +134,7 @@
                     "longitude": 0,
                     "latitude": 0,
                 },
+                local: lang.en,
             }
         },
         methods: {
@@ -149,52 +150,52 @@
                     switch (this.orderObject.Order.OrderStatusId) {
                         case this.statuses.OrderReceived: {
                             this.progress = 12;
-                            this.statusText = "Order is arrived!";
+                            this.statusText = this.local.orderIsArrived;
                             break;
                         }
                         case this.statuses.Open: {
                             this.progress = 1;
-                            this.statusText = "Order is open!";
+                            this.statusText = this.local.orderIsOpen;
                             break;
                         }
                         case this.statuses.RestaurantAccept: {
                             this.progress = 2;
-                            this.statusText = "Order is open!";
+                            this.statusText = this.local.orderIsOpen;
                             break;
                         }
                         case this.statuses.AssignedToRestaurant: {
                             this.progress = 3;
-                            this.statusText = "Order is assigned to restaurant!";
+                            this.statusText = this.local.orderIsAssignedRestaurant;
                             break;
                         }
                         case this.statuses.Cooking: {
                             this.progress = 4;
-                            this.statusText = "Restaurant start cooking your order!";
+                            this.statusText = this.local.restaurantStartCooking;
                             break;
                         }
                         case this.statuses.FoodReady: {
                             this.progress = 5;
-                            this.statusText = "Order is cooked and ready for pickup/delivery!"
+                            this.statusText = this.local.orderIsCooked;
                             break;
                         }
                         case this.statuses.DriverAccept: {
                             this.progress = 6;
-                            this.statusText = "Driver accept your order request";
+                            this.statusText = this.local.driverAccept;
                             break;
                         }
                         case this.statuses.GoingPickup: {
                             this.progress = 7;
-                            this.statusText = "Driver is on its way to pickup your order"
+                            this.statusText = this.local.driverOnItsWayPickup;
                             break;
                         }
                         case this.statuses.DriverPickup: {
                             this.progress = 8;
-                            this.statusText = "Order is picked up by driver"
+                            this.statusText = this.local.orderIsPicked;
                             break;
                         }
                         case this.statuses.GoingDelivered: {
                             this.progress = 9;
-                            this.statusText = "Driver is on its way to deliver order"
+                            this.statusText = this.local.driverOnItsWatDeliver;
                             break;
                         }
                         case this.statuses.OrderDelivered: {
@@ -207,7 +208,7 @@
                     }
                 }, error => {
                     console.log(error);
-                    this.showNotification('error','Error','Error occurred please try later!');
+                    this.showNotification('error',this.local.error,this.local.errorOccurred);
                 })
             },
             showNotification(type, title, message) {
@@ -218,13 +219,38 @@
                     text: message,
                     duration: 2000
                 })
-            }
+            },
+            checkLang() {
+            console.log("hereItIs");
+                var temp = localStorage.getItem("lang");
+                if(temp == null || temp === "EN") {
+                localStorage.setItem("lang", "EN");
+                this.local = lang.en;
+                } else if(temp === "FN" ) {
+                this.local = lang.fn;
+                localStorage.setItem("lang", "FN");
+                } else {
+                this.local = lang.sp;
+                localStorage.setItem("lang", "ES");
+                }
+                // this.value = temp;
+            },
         },
         mounted() {
             console.log('here');
             console.log('trackID',this.$route.params.id, this.$route.query.cusID);
             this.getOrderTrackingDetail(this.$route.query.cusID,this.$route.params.id)
-        }
+        },
+        created() {
+             this.checkLang();
+        EventBus.$on("changeLang", () => {
+            this.checkLang();
+        })
+            // EventBus.$on('StartOverlay', response => {
+            //     this.loader = response;
+            //     console.log('StartOverlay'+this.loader);
+            // })
+        },
     }
 </script>
 

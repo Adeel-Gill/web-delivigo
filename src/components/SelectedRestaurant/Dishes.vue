@@ -11,7 +11,7 @@
                     <p>{{dishDetail.Description}}</p>
                 </div>
                 <div class="extra-order">
-                    <h6>GLI EXTRA - Custom Options</h6>
+                    <h6>{{newLang.gliExtraOptions}}</h6>
                     <div class="extra-checkbox" v-for="(customOption, customIndex)  in customOptions" v-bind:key="customOption">
                         <div>
 
@@ -26,7 +26,7 @@
                             <div class="clear"></div>
                         </div>
                     </div>
-                    <h6>GLI EXTRA - AddOns</h6>
+                    <h6>{{newLang.gliExtraAddOn}}</h6>
                     <div class="extra-checkbox" v-for="(addon, index) in addOns" v-bind:key="addon">
                         <div>
                             <span class="float-left">{{addon.Name}}</span>
@@ -36,11 +36,11 @@
                             <div class="clear"></div>
                         </div>
                     </div>
-                    <h6>GLI EXTRA - Scale</h6>
+                    <h6>{{newLang.gliExtraScale}}</h6>
                     <div class="extra-checkbox" v-for="(scale, scaleIndex) in scales" v-bind:key="scale.Id">
                         <div>
                             <span class="float-left">{{scale.Name}} </span>
-                            <span class="float-right">€{{scale.UnitPrice}}.00 Per unit</span>
+                            <span class="float-right">€{{scale.UnitPrice}}.00 {{newLang.perScale}}</span>
                             <div style="margin-right: 30px; margin-left: 30px" v-for="(option, index) in scale.Options" :key="option.Id">
                                 <div class="clear"></div>
                                 <span class="float-left">{{option.Name}} - €{{option.Value}}</span>
@@ -57,7 +57,7 @@
                     <button class="btn" @click="increment(dishDetail.Price)">&#xff0b;</button>
                 </div>
                 <div class="add-item-btn">
-                    <button class="btn" @click="saveToCart()" >Add item -  € {{getTotalPrice}}.00</button>
+                    <button class="btn" @click="saveToCart()" >{{newLang.addItem}} -  € {{getTotalPrice}}.00</button>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
                             <p>{{select.Price}}</p>
                         </div>
                         <div class="buy-btn">
-                            <button >Buy</button>
+                            <button >{{newLang.buy}}</button>
                         </div>
                         <div class="clear"></div>
                     </div>
@@ -90,6 +90,7 @@
     import {mapGetters} from "vuex";
 
     export default {
+        props: ['newLang'],
         data(){
             return{
                 quantity: this.$store.state.quantity,

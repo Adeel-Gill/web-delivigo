@@ -33,9 +33,9 @@
                     @mask-click="handleMaskClick">
                 <div class="drawer" slot="drawer" style="">
                     <div class="head">
-                        <h3 class="d-inline-block">Basket</h3>
+                        <h3 class="d-inline-block">{{newLang.basket}}</h3>
                         <!--                        <router-link to="/checkout"></router-link>-->
-                        <button type="button" class="btn btn-checkout float-right" :disabled="doProceed" @click="startCheckout" >Proceed to checkout</button>
+                        <button type="button" class="btn btn-checkout float-right" :disabled="doProceed" @click="startCheckout" >{{newLang.proceedToCheckout}}</button>
                     </div>
                     <div class="drawer-body px-3">
                         <!-- card start-->
@@ -47,7 +47,7 @@
                                             @removeInCart="removeItem(index)"></app-cart-items>
                         </div>
                         <div v-else>
-                            <h3>Add items in cart first...!</h3>
+                            <h3>{{newLang.addItems}}</h3>
                         </div>
                         <!-- end-->
                     </div>
@@ -59,13 +59,13 @@
         </div>
         <b-modal id="instruction" ref="modal"
                  @ok="handleOk"
-                 title="Enter Intstructions">
+                 :title="newLang.enterInstructions">
             <form ref="form" @submit.stop.prevent="handleSubmit">
                 <b-form-group
                         :state="nameState"
-                        label="Intruction"
+                        :label="newLang.instruction"
                         label-for="name-input"
-                        invalid-feedback="Instruction is required"
+                        :invalid-feedback="newLang.instructionRequired"
                 >
                     <b-form-input
                             id="name-input"
@@ -76,30 +76,30 @@
                 </b-form-group>
             </form>
         </b-modal>
-        <b-modal size="lg" scrollable hide-footer class="my-modal" body-class="p-0" id="checkout" title="Checkout">
+        <b-modal size="lg" scrollable hide-footer class="my-modal" body-class="p-0" id="checkout" :title="newLang.checkout">
             <div class="container--fluid">
                 <div class="map-place">
                     <img src="../../../public/images/map.png">
                 </div>
                 <div class="row mx-0 btn-main">
                     <div class="col-6 p-0 btn-group">
-                        <button type="button" class="btn btn-lg" @click="forDelivery" :class="[isDelivery ? 'active' : 'notActive']" ><h3 class="m-0">Delivery</h3><h3 class="m-0"> Around 30 Min</h3><p class="m-0"><small>total distance would be 10km</small></p></button>
+                        <button type="button" class="btn btn-lg" @click="forDelivery" :class="[isDelivery ? 'active' : 'notActive']" ><h3 class="m-0">{{newLang.delivery}}</h3><h3 class="m-0"> {{newLang.around}}</h3><p class="m-0"><small>total distance would be 10km</small></p></button>
                     </div>
                     <div class="col-6 p-0 btn-group">
-                        <button type="button" class="btn btn-lg " @click="forPickup" :class="[!isDelivery ? 'active' : 'notActive']"><h3 class="m-0">Pickup</h3><h4 class="m-0"></h4></button>
+                        <button type="button" class="btn btn-lg " @click="forPickup" :class="[!isDelivery ? 'active' : 'notActive']"><h3 class="m-0">{{newLang.pickup}}</h3><h4 class="m-0"></h4></button>
                     </div>
                 </div>
 
             </div>
             <div class="container p-4">
-                <h2 class="sec-heading mb-2"><i class="far fa-calendar-check"></i> Scheduled order: Today&nbsp;<i class="fas fa-plus"></i></h2>
+                <h2 class="sec-heading mb-2"><i class="far fa-calendar-check"></i> {{newLang.scheduleOrder}}&nbsp;<i class="fas fa-plus"></i></h2>
                 <VueCtkDateTimePicker
                         v-model="time"
                         only-time="true"
-                        label="Select time"
+                        :label="newLang.selectTime"
                         output-format="hh:mm:ss"
                         format="hh:mm a"></VueCtkDateTimePicker>
-                <p class="text-muted mt-1">Desired delivery time + 10 min</p>
+                <p class="text-muted mt-1">{{newLang.desiredDeliveryTime}}</p>
                 <div class="row" style="box-sizing: border-box;">
                     <app-checkout-cart-item v-for="(item, index) in cartItems" :key="item.Meal"
                                             :itemIndex="index"
@@ -107,10 +107,10 @@
                                             :item="item.Meal"></app-checkout-cart-item>
                 </div>
                 <div class="pl-4">
-                <a href="#" class="link-color"><h2><i class="fas fa-plus"></i> Add more items</h2></a>
+                <a href="#" class="link-color"><h2><i class="fas fa-plus"></i> {{newLang.addMoreItems}}</h2></a>
                 <div v-if="emptyInstruction">
                     <h2><p @click="showInstruction" class="link-color" >
-                        <i class="fas fa-pepper-hot"></i> Add special cooking Intructions</p></h2>
+                        <i class="fas fa-pepper-hot"></i> {{newLang.addSpecial}}</p></h2>
                 </div>
                 <div v-else>
                     <a @click="showInstruction" class="link-color" >
@@ -118,7 +118,7 @@
                 </div>
                 </div>
                 <div class="row mt-4">
-                <h2 class="sec-heading">People Also Added</h2>
+                <h2 class="sec-heading">{{newLang.peopleAlsoAdded}}</h2>
                     <div class="col-12">
                         <VueSlickCarousel v-bind="settings">
 
@@ -127,8 +127,8 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-12 col-12 pb-2">
-                        <h2 class="d-inline-block sec-heading">Shipping Address</h2>
-                        <p class="float-right d-inline p-0"><router-link to="/delivery">Add New</router-link></p>
+                        <h2 class="d-inline-block sec-heading">{{newLang.shippingAddress}}</h2>
+                        <p class="float-right d-inline p-0"><router-link to="/delivery">{{newLang.addNew}}</router-link></p>
                     </div>
                     <div class="col-12 p-0">
                         <div class="owl-carousel owl-theme">
@@ -139,10 +139,10 @@
                                             <p class="m-0 text-truncate">{{address.Apartment}}</p>
                                             <p class="m-0 text-truncate">{{address.AddressLine}}</p>
                                             <div v-if="!address.IsDefault" class="default-btn">
-                                                <button class="btn btn-primary" @click="newDefaultAddress(address.Id, address.IsDefault)" :checked="address.IsDefault">Set Default</button>
+                                                <button class="btn btn-primary" @click="newDefaultAddress(address.Id, address.IsDefault)" :checked="address.IsDefault">{{newLang.setDefault}}</button>
                                             </div>
                                             <div v-else class="default-btn">
-                                                <button class="btn btn-dark" disabled>Default</button>
+                                                <button class="btn btn-dark" disabled>{{newLang.default}}</button>
                                                 {{setAddressID(address)}}
                                             </div>
                                         </div>
@@ -156,7 +156,7 @@
 
                 <div class="row mt-4">
                     <div class="col-8 pb-2">
-                        <h2 class="d-inline-block sec-heading">Contact Info</h2>
+                        <h2 class="d-inline-block sec-heading">{{newLang.contactInfo}}</h2>
                     </div>
 
                     <div class="col-12 py-0 px-4">
@@ -170,8 +170,8 @@
 
                 <div class="row mt-4">
                     <div class="col-md-12 col-12 pb-2">
-                        <h2 class="d-inline-block sec-heading">Payment Method</h2>
-                        <p class="float-right p-0"><router-link to="/billing">Add New</router-link></p>
+                        <h2 class="d-inline-block sec-heading">{{newLang.paymentMethod}}</h2>
+                        <p class="float-right p-0"><router-link to="/billing">{{newLang.addNew}}</router-link></p>
                     </div>
 
                     <div class="col-12 p-0">
@@ -181,14 +181,14 @@
                                     <div class="card card-block">
                                         <div class="card-body">
                                             <p class="m-0">{{card.Brand}} .... .... {{card.CardNumber}}</p>
-                                            <p class="m-0">Expires in {{card.Month}}/{{card.Year}}</p>
+                                            <p class="m-0">{{newLang.expiresIn}} {{card.Month}}/{{card.Year}}</p>
 
                                             <div v-if="!card.IsDefault" class="default-btn">
-                                                <button class="btn btn-primary"  @click="newDefaultCard(card,card.IsDefault)" :checked="(card.IsDefault)">Set Default</button>
+                                                <button class="btn btn-primary"  @click="newDefaultCard(card,card.IsDefault)" :checked="(card.IsDefault)">{{newLang.setDefault}}</button>
                                                 <!--                                            <label class="d-inline-block">Default</label>-->
                                             </div>
                                             <div v-else class="default-btn">
-                                                <button class="btn btn-dark" disabled>Default</button>
+                                                <button class="btn btn-dark" disabled>{{newLang.default}}</button>
                                                 {{setCardID(card.Id)}}
                                             </div>
                                         </div>
@@ -201,12 +201,12 @@
 
                 <div class="row mt-4">
                     <div class="col-12 pb-2">
-                        <h2 class="sec-heading">Prices in EUR, Incl. taxes</h2>
+                        <h2 class="sec-heading">{{newLang.pricesIn}}</h2>
                     </div>
                 </div>
                 <div class="row invoice">
                     <div class="col-8">
-                        <p>Item Subtotal</p>
+                        <p>{{newLang.itemSubtotal}}</p>
                     </div>
                     <div class="col-4 price">
                         <p>{{subTotal}}</p>
@@ -214,7 +214,7 @@
                 </div>
                 <div class="row invoice">
                     <div class="col-8">
-                        <p>Small delivery Order extra </p>
+                        <p>{{newLang.smallDelivery}} </p>
                     </div>
                     <div class="col-4 price">
                         <p>{{smallDeliveryOrderExtra}}</p>
@@ -223,7 +223,7 @@
 
                 <div class="row invoice">
                     <div class="col-8">
-                        <p>Delivery</p>
+                        <p>{{newLang.delivery}}</p>
                         <p class="small-text">Address lorem ipsum</p>
                     </div>
                     <div class="col-4 price">
@@ -232,7 +232,7 @@
                 </div>
                 <div class="row invoice">
                     <div class="col-8">
-                        <p>Basic Delivery Fee</p>
+                        <p>{{newLang.basicDeliveryFee}}</p>
                     </div>
                     <div class="col-4 price">
                         <p>{{basicDeliveryFee}}</p>
@@ -240,8 +240,8 @@
                 </div>
                 <div class="row invoice">
                     <div class="col-8">
-                        <p>Extra KM Delivery Free</p>
-                        <p class="small-text">Order deliver more than 10km will cost extra to deliver</p>
+                        <p>{{newLang.extraKmDeliveryFee}}</p>
+                        <p class="small-text">{{newLang.orderDeliver10KM}}</p>
                     </div>
                     <div class="col-4 price">
 
@@ -250,7 +250,7 @@
                 </div>
                 <div class="row invoice">
                     <div class="col-8">
-                        <p>Total</p>
+                        <p>{{newLang.total}}</p>
                     </div>
                     <div class="col-4 price">
                         <p>{{totalPrice.toFixed(2)}}</p>
@@ -259,7 +259,7 @@
 
                 <div class="row w-100 btn-continue">
 
-                    <button type="button" :disabled="disablePlaceOrder" @click="placeOrder()" class="btn mx-auto" >Place the Order</button>
+                    <button type="button" :disabled="disablePlaceOrder" @click="placeOrder()" class="btn mx-auto" >{{newLang.placeOrder}}</button>
                 </div>
             </div>
         </b-modal>
@@ -295,6 +295,7 @@
     import 'jquery';
 
     export default {
+        props: ['newLang'],
         data(){
             return{
                 foodTypes:[],

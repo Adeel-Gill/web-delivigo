@@ -11,8 +11,8 @@
             </div>-->
             <div class="col-md-10 col-12" v-if="isAvailable">
                 <div class="heading line">
-                    <h1 class="profile-heading d-inline">Billing and Payments</h1>
-                    <button class="btn btn-submit float-right" @click="createCard" ><i class="fas fa-plus mr-3"></i>Add Card</button>
+                    <h1 class="profile-heading d-inline">{{newLang.billingAndPayment}}</h1>
+                    <button class="btn btn-submit float-right" @click="createCard" ><i class="fas fa-plus mr-3"></i>{{newLang.addCard}}</button>
                 </div>
                 <div v-if="allCards.length > 0">
                     <div class="address-block row pt-4 m-0 w-100" v-for="card in allCards" :key="card.Id">
@@ -21,7 +21,7 @@
                                 <img :src="getImgUrl(card.Brand.toLowerCase())">
                             </div>
                             <p class="address-par">{{card.Brand}} .... .... {{card.CardNumber}}</p>
-                            <p class="address-par">Expires in {{card.Month}}/{{card.Year}}</p>
+                            <p class="address-par">{{newLang.expiresIn}} {{card.Month}}/{{card.Year}}</p>
                         </div>
                         <div class="col-sm-2 icon">
                             <div class="cross" v-if="!card.IsDefault">
@@ -29,7 +29,7 @@
                             </div>
                                 <div class="radio">
                                 <input type="radio" :checked = card.IsDefault @click="markDefaultCard(card)" >
-                                <label>Default</label>
+                                <label>{{newLang.default}}</label>
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
             <!-- Modal -->
         </div>
         <div>
-            <b-modal hide-footer centered refs="modal" class="my-modal"  @exit="close" id="modal-1" title="Create Card">
+            <b-modal hide-footer centered refs="modal" class="my-modal"  @exit="close" id="modal-1" :title="newLang.createCard">
                 <div ref="card" :disabled = "isLoading"></div>
                 <hr>
                 <div class="btn-modal">
@@ -52,16 +52,16 @@
                         :loading="isLoading"
                         :disabled="isLoading"
                         :styled="true"
-                        @click.native="showToken">Save Card
+                        @click.native="showToken">{{newLang.saveCard}}
                 </buttonSpinner>
                 </div>
             </b-modal>
-            <b-modal hide-footer centered refs="modal" class="my-modal"  @exit="close" id="modal-2" title="Update Email">
+            <b-modal hide-footer centered refs="modal" class="my-modal"  @exit="close" id="modal-2" :title="newLang.updateEmail">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label for="email">{{newLang.email}}</label>
                                 <label class="errorMessage" id="emailError"></label>
                                 <input type="text" required class="form-control" v-model="Email" v-on:input="validateEmail()" id="email">
                             </div>
@@ -75,7 +75,7 @@
                             :loading="isLoading"
                             :disabled="disableButton"
                             :styled="true"
-                            @click.native="saveEmail">Save Email
+                            @click.native="saveEmail">{{newLang.saveEmail}}
                     </buttonSpinner>
                 </div>
             </b-modal>
@@ -100,6 +100,7 @@
         card = undefined;
     export default {
         name: "BillingAndPayments",
+        props: ['newLang'],
         components: {
             buttonSpinner: VueLoadingButton,
         },
@@ -163,7 +164,7 @@
               // return true;
             },
             deleteCard(id) {
-                this.$dialog.confirm('Card will be deleted permanently. Continue?', {
+                this.$dialog.confirm(this.newLang.cardDeleteAlert, {
                     loader: true
                 })
                 .then(dialog => {
@@ -172,35 +173,35 @@
                         if(response.HasErrors) {
                             dialog.loading(false);
                             dialog.close();
-                            this.showNotification('error', 'Error', 'Card deletion failed!');
+                            this.showNotification('error', this.newLang.error, this.newLang.cardDeletionFailed);
                         } else {
                             dialog.loading(false);
                             dialog.close();
-                            this.showNotification('success', 'Success', 'Card Successfully Deleted');
+                            this.showNotification('success', this.newLang.success, this.newLang.cardDeletionSuccess);
                             this.fetchCustomerCards();
                         }
                     })
                 }).catch(() => {
-                    this.showNotification('info', 'Info', 'Card Deletion Cancelled');
+                    this.showNotification('info', this.newLang.info, this.newLang.cardDeletionCancelled);
                 });
             },
             fetchCustomerCards() {
                 retrieveCustomerAllCards(localStorage.getItem('id')).then(response => {
                     if(response.CustomerCards.HasErrors) {
-                        this.showNotification('error','Error','card retrieval failed!');
+                        this.showNotification('error',this.newLang.error,this.newLang.cardRetrievalFailed);
                     } else {
                         console.log('length',response.CustomerCards.length)
                         if(response.CustomerCards.length>0) {
-                            this.showNotification('success','Success', 'All cards are fetched and shown');
+                            this.showNotification('success',this.newLang.success, this.newLang.cardsFetched);
                             this.allCards = response.CustomerCards;
                             this.isAvailable = true;
                         } else {
-                            this.showNotification('error','Error', 'No cards available to show! Please add cards first');
+                            this.showNotification('error',this.newLang.error, this.newLang.cardsNotAvailable);
                         }
                     }
                 }, error => {
                     onsole.log(error);
-                    this.showNotification('error','Error','Card fetching failed!');
+                    this.showNotification('error',this.newLang.error,this.newLang.cardsFetchError);
                 })
             },
             markDefaultCard(response) {
@@ -209,9 +210,9 @@
                 this.card.CardId = response.Id;
                 markDefaultCard(this.card).then(response => {
                     if(response.HasErrors) {
-                        this.showNotification('error', 'Error', 'Error occurred please try again later!');
+                        this.showNotification('error', this.newLang.error, this.newLang.errorOccurred);
                     } else {
-                        this.showNotification('success','Success', 'Card is now set as default!');
+                        this.showNotification('success',this.newLang.success, this.newLang.cardIsDefault);
                         this.fetchCustomerCards();
                     }
                 })
@@ -223,7 +224,7 @@
             SaveAndShowCards() {
                 saveCardData(this.cardData).then(response => {
                     if(response.HasErrors) {
-                       this.showNotification('error','Error','Card is created but not saved');
+                       this.showNotification('error',this.newLang.error,this.newLang.cardCreatedNotSaved);
                     } else {
                         if(this.checked) {
                             this.card.CustomerId = response.CustomerId;
@@ -231,16 +232,16 @@
                             this.card.CardId = response.Id;
                             markDefaultCard(this.card).then(response => {
                                 if(response.HasErrors) {
-                                    this.showNotification('error', 'Error', 'Error occurred please try again later!');
+                                    this.showNotification('error', this.newLang.error, this.newLang.errorOccurred);
                                 } else {
-                                    this.showNotification('success','Success', 'Card is now set as default!');
+                                    this.showNotification('success',this.newLang.success, this.newLang.cardIsDefault);
                                     this.fetchCustomerCards();
                                     this.$bvModal.hide('modal-1');
                                     this.isAvailable = true;
                                 }
                             }, error => {
                                 onsole.log(error);
-                                this.showNotification('error','Error','Card is not set as default');
+                                this.showNotification('error',this.newLang.error,this.newLang.cardDefaultError);
                             })
                         } else {
                             this.fetchCustomerCards();
@@ -249,7 +250,7 @@
                     }
                 }, error => {
                     console.log(error);
-                    this.showNotification('error','Error','Card is created but not saved');
+                    this.showNotification('error',this.newLang.error,this.newLang.cardCreatedNotSaved);
                 })
             },
             assignResponseToCardObj(response) {
@@ -266,7 +267,7 @@
                 console.log('cardOwnerData', card);
                    await stripe.createSource(card).then(response => {
                         if(response.error) {
-                            this.showNotification('error','Error', 'Card creation failed!');
+                            this.showNotification('error',this.newLang.error, this.newLang.cardCreatedNotSaved);
                         } else {
                             this.cardData.CardNumber = response.source.card.last4;
                             this.cardData.Brand  = response.source.card.brand;
@@ -318,28 +319,28 @@
                     
                     if(response.HasErrors == true) {
                         this.isLoading = false;
-                        this.showNotification("error","Error","Error occurred please try later!");
+                        this.showNotification("error",this.newLang.error,this.newLang.errorOccurred);
                     } else {
                         // this.isLoading = false;
                         verifyStripe(localStorage.getItem('id')).then(response => {
                             console.log("hereInVerify");
                             if(response.HasErrors == true) {
                                 this.isLoading = false;
-                                this.showNotification("error","Error","Error occurred please try later!");
+                                this.showNotification("error",this.newLang.error,this.newLang.errorOccurred);
                             } else {
                                 this.isLoading = false;
-                                this.showNotification("success","Success","Email updated successfully!");
+                                this.showNotification("success",this.newLang.success,this.newLang.emailUpdated);
                                 this.$bvModal.hide("modal-2");
                                 this.createCard();
                             }
                         }, error => {
                             this.isLoading = false;
-                            this.showNotification("error","Error","Error occurred please try later!");
+                            this.showNotification("error",this.newLang.error,this.newLang.errorOccurred);
                         })
                     }
                 }, error => {
                     this.isLoading = false;
-                    this.showNotification("error","Error","Error occurred please try later!");
+                    this.showNotification("error",this.newLang.error,this.newLang.errorOccurred);
                 })
             },
             validateEmail() {
@@ -353,7 +354,7 @@
                    return true;
                 } else {
                    document.getElementById('emailError').style.visibility = "visible";
-                   document.getElementById('emailError').innerHTML = "Email invalid...!";
+                   document.getElementById('emailError').innerHTML = this.newLang.emailError;
                    document.getElementById('email').style.borderColor = "red";
                    this.disableButton = true;
                    return false;
@@ -362,7 +363,7 @@
             createCard() {
                 var res = this.checkStripe();
                 if(res == 2) {
-                    this.showNotification('error','Error','Error occurred please try later');
+                    this.showNotification('error',this.newLang.error,this.newLang.errorOccurred);
                 } else {
                     if(res == false) {
                         this.$bvModal.show('modal-2');
@@ -371,15 +372,15 @@
                         setTimeout(()=> {
                             if(this.setOnce) {
                                 card.mount(this.$refs.card);
-                                this.showNotification('info','Info','Card is setted as once');
+                                // this.showNotification('info','Info','Card is setted as once');
                             } else {
                                 if(localStorage.getItem('creationCounter') === '0') {
-                                    this.showNotification('info','Info','Card is not created firstly');
+                                    // this.showNotification('info','Info','Card is not created firstly');
                                     card = elements.create('card');
                                     card.mount(this.$refs.card);
                                     localStorage.setItem('creationCounter', '1');
                                 } else {
-                                    this.showNotification('info','Info','Card is not creation counter already started');
+                                    // this.showNotification('info','Info','Card is not creation counter already started');
                                     card = elements.create('card');
                                     card.mount(this.$refs.card);
                                 }

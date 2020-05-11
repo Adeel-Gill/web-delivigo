@@ -3,16 +3,16 @@
     <div class="container-fluid">
     <div class="row text-center mb-5 mt-3">
         <div class="col-md-6 btn-tab" :class="[btnActive? 'active-btn' : '']"   id="btn1">
-           <router-link to="/currentOrder"><a @click="changeActive('c')" id="cOrder"><h3>Current Order</h3></a></router-link>
+           <router-link to="/currentOrder"><a @click="changeActive('c')" id="cOrder"><h3>{{newLang.currentOrder}}</h3></a></router-link>
         </div>
         <div class="col-md-6 btn-tab" :class="[!btnActive? 'active-btn' : '']"  id="btn2">
-            <router-link to="/previousOrder"><a @click="changeActive('p')" id="pOrder"><h3>Previous Order</h3></a></router-link>
+            <router-link to="/previousOrder"><a @click="changeActive('p')" id="pOrder"><h3>{{newLang.previousOrder}}</h3></a></router-link>
         </div>
     </div>
     </div>
     <div class="tab-content">
         <div class="container fade show d-block">
-            <router-view></router-view>
+            <router-view :newLang = newLang></router-view>
 <!--            <app-current-order></app-current-order>-->
         </div>
         <div class="container fade show d-none" id="previousOrder">
@@ -27,6 +27,7 @@
     import PreviousOrder from "../Order/PreviousOrder";
     export default {
         name: "DiamondAward",
+        props: ['newLang'],
         components: {
           appCurrentOrder: CurrentOrder,
           appPreviousOrder: PreviousOrder
@@ -34,6 +35,7 @@
         data() {
             return {
                 btnActive: true,
+                local: this.newLang,
             }
         },
         methods: {

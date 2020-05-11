@@ -1,6 +1,6 @@
 <template>
     <div class="popular-dishes">
-        <h5>{{favrtDishes}}</h5>
+        <h5>{{newLang.popularOnly}}</h5>
         <ul>
             <li v-for="dish in dishes.slice(0,2)" :key="dish" >
                 {{dish.Name}}
@@ -10,6 +10,7 @@
 </template>
 <script>
     export default {
+        props: ['newLang'],
         data(){
             return{
                 favrtDishes:'Popular',

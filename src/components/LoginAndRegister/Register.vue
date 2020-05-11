@@ -4,7 +4,7 @@
             <div class="col-12 px-5">
             <form action="" name="registerForm" v-on:submit.prevent class="myProfile">
                 <div class="form-group row">
-                    <label for="fullname" class="col-sm-2 col-form-label">Full Name</label>
+                    <label for="fullname" class="col-sm-2 col-form-label">{{newLang.fullName}}</label>
                     <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="number" class="col-sm-2 col-form-label">Mobile Number</label>
+                    <label for="number" class="col-sm-2 col-form-label">{{newLang.mobileNumber}}</label>
                     <div class="col-sm-10">
                         <input type="text"
                                class="form-control"
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="email" class="col-sm-2 col-form-label">Email Address</label>
+                    <label for="email" class="col-sm-2 col-form-label">{{newLang.emailAddress}}</label>
                     <div class="col-sm-10">
                         <input type="email"
                                class="form-control"
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="npwd" class="col-sm-2 col-form-label">Password</label>
+                    <label for="npwd" class="col-sm-2 col-form-label">{{newLang.password}}</label>
                     <div class="col-sm-10">
                         <input type="password" class="form-control"
                                placeholder="Password Here...!"
@@ -62,12 +62,12 @@
                                ref="termsChecked"
                                name="terms"
                                 v-on:input="checkTerms()"
-                               id="materialUnchecked" required>I agree to the <a href="#" @click="loadTermsModal">terms of services</a> and <a href="#" @click="loadPolicyModal">privacy policy.</a>
+                               id="materialUnchecked" required>{{newLang.iAgree}} <a href="#" @click="loadTermsModal">{{newLang.terms}}</a> {{newLang.and}} <a href="#" @click="loadPolicyModal">{{newLang.privacy}}.</a>
                     </span>
                     <label class="errorMessage" id="termsCheckError"></label>
                 </div>
                 <div class="button text-center">
-                    <button type="submit" :disabled="disableSubmit" @click="registerUser" class="btn btn-submit">SIGN UP</button>
+                    <button type="submit" :disabled="disableSubmit" @click="registerUser" class="btn btn-submit">{{newLang.signUp}}</button>
                         <span class="or">OR</span>
                     <facebook-login class="fb p-0 mt-3"
                                     appId="649127768995419"
@@ -111,6 +111,7 @@
 import facebookLogin from 'facebook-login-vuejs';
     export default {
         name: "Register",
+        props: ['newLang'],
          components: {
           // VFacebookLogin
           //   VFacebookLoginScope
@@ -176,7 +177,7 @@ import facebookLogin from 'facebook-login-vuejs';
 
                 } else {
                     document.getElementById('termsCheckError').style.visibility = "visible";
-                    document.getElementById('termsCheckError').innerHTML = "Please select this field";
+                    document.getElementById('termsCheckError').innerHTML = this.newLang.checkBoxError;
                     this.termsCheck = false;
                 }
                 this.checkAll();
@@ -190,18 +191,18 @@ import facebookLogin from 'facebook-login-vuejs';
                         this.result = response.HasErrors;
                         this.message = response.ResultMessages[0].Message;
                         if(response.HasErrors === false) {
-                            this.showNotification('success','Success','Signup success!');
+                            this.showNotification('success',this.newLang.success,this.newLang.signUpSucces);
                             EventBus.$emit('userImage',baseAddress+response.ImageUrl);
                             this.$router.push({path:'/signin'});
                         } else {
-                            this.showNotification('error','Error','Signup failed!');
+                            this.showNotification('error',this.newLang.error,this.newLang.signUpFailed);
                         }
                     }, error=> {
                         console.log(error);
-                        this.showNotification('error','Error','Signup failed!');
+                        this.showNotification('error',this.newLang.error,this.newLang.signUpFailed);
                     })
                 } else {
-                    this.showNotification('error','Error','Please fill all the fields first!');
+                    this.showNotification('error',this.newLang.error,this.newLang.emptyFields);
                 }
 
             },
@@ -243,7 +244,7 @@ import facebookLogin from 'facebook-login-vuejs';
                             this.fbUserData.ImageUrl = userInformation.picture.data.url;
                             facebookAPILogin(this.fbUserData).then(response => {
                                 if(response.HasErrors === false) {
-                                    this.showNotification('success', 'Success', 'Sign in successfully');
+                                    this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
                                     console.log('id',response.Id);
                                     localStorage.setItem('userProfile',response.UrlImage);
                                     this.$store.dispatch('storeToken',response);
@@ -251,11 +252,11 @@ import facebookLogin from 'facebook-login-vuejs';
                                     localStorage.setItem("fbLogin", true);
                                     this.$router.go();
                                 } else {
-                                    this.showNotification('error', 'Error', 'Sign in failed');
+                                    this.showNotification('error', this.newLang.error, this.newLang.singInFailed);
                                 }
                             }, error => {
                                 console.log('error',error);
-                                this.showNotification('error', 'Error', 'Sign in failed');
+                                this.showNotification('error', this.newLang.error, this.newLang.singInFailed);
                             })
                         }
                         console.log('url',this.url);
@@ -289,17 +290,17 @@ import facebookLogin from 'facebook-login-vuejs';
                 var res = false;
                 if(this.userData.fullName === "") {
                     document.getElementById('nameError').style.visibility = "visible";
-                    document.getElementById('nameError').innerHTML = "Name Field Cannot Be Empty...!";
+                    document.getElementById('nameError').innerHTML = this.newLang.nameEmptyError;
                     document.getElementById('fullname').style.borderColor = "red";
                     this.nameCheck = false;
                 } else if(!this.userData.fullName.match(/^[a-zA-Z\s]+$/)) {
                     document.getElementById('nameError').style.visibility = "visible";
-                    document.getElementById('nameError').innerHTML = "Wrong Input Enter Alphabets Only...!";
+                    document.getElementById('nameError').innerHTML = this.newLang.nameWrongInput;
                     document.getElementById('fullname').style.borderColor = "red";
                     this.nameCheck = false;
                 } else if(this.userData.fullName.length < 3) {
                     document.getElementById('nameError').style.visibility = "visible";
-                    document.getElementById('nameError').innerHTML = "Wrong Input Enter minimum 3 Alphabets ..!";
+                    document.getElementById('nameError').innerHTML = this.newLang.nameLengthError;
                     document.getElementById('fullname').style.borderColor = "red";
                     this.nameCheck = false;
                 } else {
@@ -315,17 +316,17 @@ import facebookLogin from 'facebook-login-vuejs';
                 var res = false;
                 if(this.userData.mobile === "") {
                     document.getElementById('numberError').style.visibility = "visible";
-                    document.getElementById('numberError').innerHTML = "Number Field Cannot Be Empty...!";
+                    document.getElementById('numberError').innerHTML = this.newLang.numberEmptyError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
                 }else if(!this.userData.mobile.match(/^[0-9]+$/)) {
                     document.getElementById('numberError').style.visibility = "visible";
-                    document.getElementById('numberError').innerHTML = "Wrong Input Enter Numbers Only...!";
+                    document.getElementById('numberError').innerHTML = this.newLang.numberWrongInpur;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
                 } else if(this.userData.mobile.length < 11) {
                     document.getElementById('numberError').style.visibility = "visible";
-                    document.getElementById('numberError').innerHTML = "Wrong Input Enter minimum 11 Numbers ..!";
+                    document.getElementById('numberError').innerHTML = this.newLang.numberLengthError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
                 } else {
@@ -347,7 +348,7 @@ import facebookLogin from 'facebook-login-vuejs';
                    return true;
                 } else {
                    document.getElementById('emailError').style.visibility = "visible";
-                   document.getElementById('emailError').innerHTML = "Email invalid...!";
+                   document.getElementById('emailError').innerHTML = this.newLang.emailError;
                    document.getElementById('email').style.borderColor = "red";
                 //    this.disableButton = true;
                 this.emailCheck = false;
@@ -358,17 +359,17 @@ import facebookLogin from 'facebook-login-vuejs';
                 var res = false;
                 if(this.userData.password === "") {
                     document.getElementById('passwordError').style.visibility = "visible";
-                    document.getElementById('passwordError').innerHTML = "Password Cannot Be Empty...!";
+                    document.getElementById('passwordError').innerHTML = this.newLang.passwordEmptyError;
                     document.getElementById('npwd').style.borderColor = "red";
                     this.passwordCheck = false;
                 } else if(!this.userData.password.match(/^[a-zA-Z0-9\s#]+$/)) {
                     document.getElementById('passwordError').style.visibility = "visible";
-                    document.getElementById('passwordError').innerHTML = "Wrong Input alphabets only...!";
+                    document.getElementById('passwordError').innerHTML = this.newLang.passwordWrongInput;
                     document.getElementById('npwd').style.borderColor = "red";
                     this.passwordCheck = false;
                 } else if(this.userData.password.length < 6) {
                     document.getElementById('passwordError').style.visibility = "visible";
-                    document.getElementById('passwordError').innerHTML = "Password must be upto 6 ..!";
+                    document.getElementById('passwordError').innerHTML = this.newLang.passwordLengthError;
                     document.getElementById('npwd').style.borderColor = "red";
                     this.passwordCheck = false;
                 } else {

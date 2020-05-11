@@ -18,10 +18,10 @@
                                         <star-rating :rating="rating" v-model="rating"  :star-size="35" :rtl="true"></star-rating>
                                     </div>
                                     <div class="form-group">
-                                        <textarea  class="form-control review" v-model="review" id="review" :disabled="isLoading" placeholder="your review"></textarea>
+                                        <textarea  class="form-control review" v-model="review" id="review" :disabled="isLoading" :placeholder="newLang.yourReview"></textarea>
 
                                     </div>
-                                    <button class="btn btn-primary float-right" @click="submitReview(previousOrderObject.Order.RestaurantId, previousOrderObject.Order.OrderId)" :disabled="isLoading">Review</button>
+                                    <button class="btn btn-primary float-right" @click="submitReview(previousOrderObject.Order.RestaurantId, previousOrderObject.Order.OrderId)" :disabled="isLoading">{{newLang.review}}</button>
 <!--                                    <button class="btn btn-primary">Review</button>-->
                                 </div>
                             </div>
@@ -37,8 +37,8 @@
                                         </div>
                                         <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
                                             <div class="pl-3 sub-catg pb-3">
-                                                <p class="d-inline-block text-muted">Quantity</p><span class="float-right text-muted">{{orderItem.Quantity}}</span><br>
-                                                <p class="d-inline-block text-muted">Other Charges</p><span class="float-right text-muted">{{otherCharges}}</span>
+                                                <p class="d-inline-block text-muted">{{newLang.quantity}}</p><span class="float-right text-muted">{{orderItem.Quantity}}</span><br>
+                                                <p class="d-inline-block text-muted">{{newLang.otherCharges}}</p><span class="float-right text-muted">{{otherCharges}}</span>
                                                 <div v-if="orderItem.CustomOption.length > 0">
                                                     <div v-for="customOption in orderItem.CustomOption" :key="customOption.Id">
                                                         <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
@@ -51,7 +51,7 @@
                                     <div class="line">
                                         <div v-if="orderItem.AddOns.length > 0" >
                                             <div class="px-1 ml-1 collapse-head" role="tab">
-                                                <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{addOnTitle}}</a>
+                                                <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{newLang.addOnTitle}}</a>
                                                 <!--                                                <span class="float-right">$44</span>-->
                                                 <span class="float-right">${{addOnsPrices.length == 1? addOnsPrices[0] : addOnsPrices[itemIndex]}}</span>
                                             </div>
@@ -73,7 +73,7 @@
                                     <div class="line">
                                         <div v-if="isScales">
                                             <div class="px-1 ml-1 collapse-head" role="tab">
-                                                <a v-b-toggle.accordion-3><div class="numberCircle">3</div>{{scalesTitle}}</a>
+                                                <a v-b-toggle.accordion-3><div class="numberCircle">3</div>{{newLang.scales}}</a>
                                                 <span class="float-right">$33</span>
                                             </div>
                                             <b-collapse id="accordion-3" visible accordion="my-accordion" role="tabpanel">
@@ -98,15 +98,15 @@
                             </div>
                         </div>
                         <router-link to="/orderTracking">
-                         <button class="btn btn-primary mr-2"><i class="fas fa-download"></i> &nbsp;Receipt</button>
+                         <button class="btn btn-primary mr-2"><i class="fas fa-download"></i> &nbsp;{{newLang.reciept}}</button>
                             <button class="btn btn-primary float-right"
                                     :disabled="(statuses.OrderDelivered === previousOrderObject.Order.OrderStatusId)">
-                                Track Order
+                                {{newLang.trackOrder}}
                             </button>
                         </router-link>
                         <button class="btn btn-primary float-left" @click="reorder(previousOrderObject.Order.OrderId)"
                                 :disabled="(statuses.OrderDelivered !== previousOrderObject.Order.OrderStatusId)">
-                            Reorder
+                            {{newLang.reorder}}
                         </button>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
         components: {
             appEmptyError: noItemError
         },
-        props: ['previousOrder','isEmptyArray','all70'],
+        props: ['previousOrder','isEmptyArray','all70', 'newLang'],
         data() {
             return {
                 addOnPrice: 0,
@@ -262,40 +262,40 @@
               this.rating = rating;
             },
             reorder(id) {
-                this.$dialog.confirm('Reorder this. Continue?', {
+                this.$dialog.confirm(this.newLang.reorderAlert, {
                     loader: true
                 }).then(dialog => {
                     dialog.loading(true);
                     reOrder(id).then(response => {
                         if(response) {
-                            this.showNotification('success','Success','Successfully reordered!');
+                            this.showNotification('success',this.newLang.success,this.newLang.reorderSuccess);
                             this.$router.push('/currentOrder');
                         } else {
-                            this.showNotification('error','Error','Reordering failed!');
+                            this.showNotification('error',this.newLang.error,this.newLang.reorderFailed);
                         }
                         dialog.loading(false);
                         dialog.close();
                     }, error => {
-                        this.showNotification('error','Error','Reordering failed!');
+                        this.showNotification('error',this.newLang.error,this.newLang.reorderFailed);
                         dialog.loading(false);
                         dialog.close();
                     })
                 }).catch(() => {
-                    this.showNotification('info','Info','Reordering cancelled!');
+                    this.showNotification('info',this.newLang.info,this.newLang.reorderCancelled);
                     // dialog.close();
                 })
 
             },
             submitReview(resId,orderId) {
                 if(this.rating === 0) {
-                    this.showNotification('info','Field Missing','Please select stars to rate')
+                    this.showNotification('info',this.newLang.starMissingFields,this.newLang.starError)
                 } else {
                     if(this.review.length < 5 && this.review.length>0) {
-                        this.showNotification('Info', 'Info','Review length too short')
+                        this.showNotification('info', this.newLang.info,this.newLang.reviewErrorShortLength)
                     } else if (this.review.length> 100) {
-                        this.showNotification('Info', 'Info','Review length too long')
+                        this.showNotification('info', this.newLang.info,this.newLang.reviewErrorLongLength)
                     } else {
-                        this.$dialog.confirm('Submit review. Continue?', {
+                        this.$dialog.confirm(this.newLang.reviewSubmitAlert, {
                             loader: true
                         }).then(dialog => {
                             dialog.loading(true);
@@ -306,28 +306,26 @@
                             this.reviewObj.OrderID = orderId;
                             submitReview(this.reviewObj).then(response => {
                                 if(response.hasErrors) {
-                                    this.showNotification('error','Error','Review failed to submit!');
+                                    this.showNotification('error',this.newLang.error,this.newLang.reviewSubmitError);
                                     dialog.loading(false);
                                 } else {
                                     this.updateReview.OrderNumber = orderId;
                                     updateReview(this.updateReview).then(response => {
                                         if(response.hasErrors) {
-                                            this.showNotification('error','Error','Review failed to submit!');
+                                            this.showNotification('error',this.newLang.error,this.newLang.reviewSubmitError);
                                             dialog.loading(false);
-                                        } else {
-
-                                        }
+                                        } 
                                     }, error => {
-                                        this.showNotification('error','Error','Review failed to submit!');
+                                        this.showNotification('error',this.newLang.error,this.newLang.reviewSubmitError);
                                         dialog.loading(false);
                                     })
                                 }
                             }, error => {
-                                this.showNotification('error','Error','Review failed to submit!');
+                                this.showNotification('error',this.newLang.error,this.newLang.reviewSubmitError);
                                 dialog.loading(false);
                             })
                         }).catch(() => {
-                            this.showNotification('info','Info','Review submit cancelled');
+                            this.showNotification('info',this.newLang.info,this.newLang.reviewCancelledError);
                             dialog.loading(false);
                         })
 

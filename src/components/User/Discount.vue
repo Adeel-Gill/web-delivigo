@@ -4,8 +4,8 @@
            <div class="col-12 col-sm-12 col-md-9">
                <div class="popular">
                    <div class="title">
-                       <h2>Discounted Restaurants</h2>
-                       <p>Restaurants with deals</p>
+                       <h2>{{newLang.discounted}}</h2>
+                       <p>{{newLang.restaurantDeals}}</p>
                    </div>
                    <div class="restaurants-list" v-if="notEmpty">
                        <div class="row" >
@@ -33,6 +33,7 @@
     import restaurant from "../restaurant/restaurant";
     export default {
         name: "Discount",
+        props: ['newLang'],
         components: {
             restaurant,
             appEmptyError: emptyError
@@ -71,14 +72,14 @@
                       this.notEmpty = true;
                       this.discounted = response.Restaurants;
                       this.total = parseInt(this.getPageRange(response.Pagination.TotalRecords));
-                      this.showNotification('success','Success','Restaurants with deals are available');
+                      this.showNotification('success',this.newLang.success,this.newLang.dealsAvailable);
                   } else {
                       this.notEmpty = false;
-                      this.showNotification('info','No deals','Come back later to check!')
+                      this.showNotification('info',this.newLang.noDeals,this.newLang.comeBackLater)
                   }
               }, error => {
                   this.notEmpty = false;
-                  this.showNotification('error','Error','Error occurred please try later!');
+                  this.showNotification('error',this.newLang.error,this.newLang.errorOccurred);
               })
             },
             showNotification(type, title, message) {

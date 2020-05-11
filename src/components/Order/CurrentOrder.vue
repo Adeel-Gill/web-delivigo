@@ -21,7 +21,7 @@
                                         <!--                                    <star-rating :increment="0.5"></star-rating>-->
                                     </div>
                                     <div class="form-group">
-                                        <textarea  class="form-control review" disabled placeholder="your review"></textarea>
+                                        <textarea  class="form-control review" disabled :placeholder="newLang.yourReview"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -37,8 +37,8 @@
                                         </div>
                                         <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
                                             <div class="pl-3 sub-catg pb-3">
-                                                <p class="d-inline-block text-muted">Quantity</p><span class="float-right text-muted">{{orderItem.Quantity}}</span><br>
-                                                <p class="d-inline-block text-muted">Other Charges</p><span class="float-right text-muted">{{(currentOrderObject.Order.TotalPrice.toFixed(2)-(orderItem.Price + addOnTotal))}}</span>
+                                                <p class="d-inline-block text-muted">{{newLang.quantity}}</p><span class="float-right text-muted">{{orderItem.Quantity}}</span><br>
+                                                <p class="d-inline-block text-muted">{{newLang.otherCharges}}</p><span class="float-right text-muted">{{(currentOrderObject.Order.TotalPrice.toFixed(2)-(orderItem.Price + addOnTotal))}}</span>
                                                 <div v-if="orderItem.CustomOption.length > 0">
                                                     <div v-for="customOption in customOptions" :key="customOption.Id">
                                                         <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
@@ -51,7 +51,7 @@
                                     <div class="line">
                                         <div v-if="orderItem.AddOns.length > 0" >
                                             <div class="px-1 ml-1 collapse-head" role="tab">
-                                                <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{addOnTitle}}</a>
+                                                <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{newLang.addOnTitle}}</a>
 <!--                                                <span class="float-right">$44</span>-->
                                                 <span class="float-right">${{addOnsPrices.length == 1? addOnsPrices[0] : addOnsPrices[itemIndex]}}</span>
                                             </div>
@@ -73,7 +73,7 @@
                                     <div class="line">
                                         <div v-if="isScales">
                                             <div class="px-1 ml-1 collapse-head" role="tab">
-                                                <a v-b-toggle.accordion-3><div class="numberCircle">3</div>{{scalesTitle}}</a>
+                                                <a v-b-toggle.accordion-3><div class="numberCircle">3</div>{{newLang.scales}}</a>
                                                 <span class="float-right">$33</span>
                                             </div>
                                             <b-collapse id="accordion-3" visible accordion="my-accordion" role="tabpanel">
@@ -97,10 +97,10 @@
                                 </div>
                                 <div class="float-right button">
                                    
-                                    <router-link :to="{path:'/orderTracking/'+currentOrderObject.Order.OrderId,query:{cusID:currentOrderObject.Customer.CustomerId}}">
+                                    <router-link :to="{path:'/orderTracking/'+currentOrderObject.Order.OrderId,query:{cusID:currentOrderObject.Customer.CustomerId}}" :newLang = newLang>
                                         <button class="btn btn-primary"
                                                 :disabled="(statuses.OrderDelivered === currentOrderObject.Order.OrderStatusId)">
-                                            Track Order
+                                            {{newLang.trackOrder}}
                                         </button>
                                     </router-link>
                                 </div>
@@ -134,7 +134,7 @@
         components: {
             appEmptyError: noItemError
         },
-        props: ['currentOrder','isEmptyArray','all70'],
+        props: ['currentOrder','isEmptyArray','all70', 'newLang'],
         data() {
             return {
                 addOnPrice: 0,

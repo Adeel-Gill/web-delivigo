@@ -1,25 +1,25 @@
 <template>
     <div class="restaurnt-selected" >
-        <banner />
+        <banner :newLang= local />
         <div class="container-fluid">
             <div class="row pb-3">
                 <div class="col-md-3 pr-3 popular">
 <!--                    <popular-foods></popular-foods>-->
                 </div>
                 <div class="col-md-6 pl-3">
-                    <restaurnt-name></restaurnt-name>
+                    <restaurnt-name :newLang= local></restaurnt-name>
                 </div>
                 <!--                <div class="col-lg-3 col-md-3"></div>-->
             </div>
             <div class="row menu-sec justify-content-end">
                 <div class="col-md-3">
-                    <popular-foods></popular-foods>
+                    <popular-foods :newLang= local ></popular-foods>
                 </div>
                 <div class="col-md-6 float-right">
-                    <dishes />
+                    <dishes :newLang= local />
                 </div>
                 <div class="col-md-3 float-right">
-                    <venue />
+                    <venue :newLang= local />
                 </div>
             </div>
         </div>
@@ -35,13 +35,14 @@
     import {fetchRestaurantById} from "../api/FilterRestaurants";
     import {fetchRestaurantMealsById} from "../api/CustomMeal";
     import {fetchRestaurantReviews} from "../api/Reviews";
-
+    import {lang} from "../lang/lang";
     export default {
         data() {
             return {
                 resId: null,
                 loader: false,
                 mealID: null,
+                local: lang.en,
             }
         },
         components:{
@@ -54,6 +55,10 @@
 
         },
         created() {
+             this.checkLang();
+        EventBus.$on("changeLang", () => {
+            this.checkLang();
+        })
             // EventBus.$on('StartOverlay', response => {
             //     this.loader = response;
             //     console.log('StartOverlay'+this.loader);
@@ -73,6 +78,21 @@
             this.unChangeHeader();
         },
         methods: {
+            checkLang() {
+            console.log("hereItIs");
+        var temp = localStorage.getItem("lang");
+        if(temp == null || temp === "EN") {
+          localStorage.setItem("lang", "EN");
+          this.local = lang.en;
+        } else if(temp === "FN" ) {
+          this.local = lang.fn;
+          localStorage.setItem("lang", "FN");
+        } else {
+          this.local = lang.sp;
+          localStorage.setItem("lang", "ES");
+        }
+        // this.value = temp;
+      },
             changeHeader() {
                 localStorage.setItem("isAddress", "false");
                 this.$emit("changeCounter",0);

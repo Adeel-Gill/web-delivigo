@@ -3,6 +3,7 @@
         <app-current-order v-for="orders in allOrders" :key="orders.Order.OrderId"
                            :currentOrder="orders"
                            :all70="getLocalAll70()"
+                           :newLang = newLang
                            :is-empty-array="allOrders.length>0"></app-current-order>
     </div>
 
@@ -15,6 +16,7 @@
 
     export default {
         name: "currentOrder",
+        props: ['newLang'],
         data() {
             return {
                 isEmpty: true,
@@ -30,7 +32,7 @@
                 getOrderHistory(Number(localStorage.getItem('id'))).then(response => {
                     if(response.HasErrors) {
                         this.isEmpty = true;
-                        this.showNotification('error', 'Error', 'Error occurred please try later!')
+                        this.showNotification('error', this.newLang.error, this.newLang.errorOccurred)
                     } else {
                         if(response.length > 0) {
                             this.isEmpty = false;
@@ -47,20 +49,20 @@
 
                             } else {
                                 this.allOrders = response;
-                                this.showNotification('success','Success','Current orders shown successfully!');
+                                this.showNotification('success',this.newLang.success,this.newLang.currentOrdersShown);
                                 localStorage.setItem('all70',false.toString());
                             }
                         } else {
                             this.isEmpty = true;
                             this.allOrders = [];
-                            this.showNotification('error','Error','No orders are currently placed to show');
+                            this.showNotification('error',this.newLang.error,this.newLang.noOrdersAvailable);
                         }
                     }
                 }, error => {
                     console.log('error',error);
                     this.isEmpty = true;
                     this.allOrders = [];
-                    this.showNotification('error','Error','Error occurred please try later!');
+                    this.showNotification('error',this.newLang.error, this.newLang.errorOccurred);
                 })
             },
             getLocalAll70() {

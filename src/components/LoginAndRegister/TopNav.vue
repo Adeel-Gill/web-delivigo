@@ -7,14 +7,14 @@
                 tag="li"
                 active-class="active"
                 exact>
-                    <a class="nav-link">Sign In</a>
+                    <a class="nav-link">{{newLang.signin}}</a>
                 </router-link>
             <router-link class="nav-item"
                 to="/signup"
                 tag="li"
                 active-class="active"
                 exact>
-                    <a class="nav-link">Sign Up</a>
+                    <a class="nav-link">{{newLang.signUp}}</a>
                 </router-link>
             </ul>
         </nav>
@@ -23,7 +23,8 @@
 
 <script>
     export default {
-        name: "TopNav"
+        name: "TopNav",
+        props: ['newLang']
     }
 </script>
 

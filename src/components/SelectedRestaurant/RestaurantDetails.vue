@@ -7,7 +7,7 @@
                     <p>French/American</p>
                 </div>
                 <div class="reviews text-right">
-                    <a v-b-modal.reviewModal class="links">All Reviews</a>
+                    <a v-b-modal.reviewModal class="links">{{newLang.allReviews}}</a>
                 </div>
                 <div class="clear"></div>
             </div>
@@ -32,7 +32,7 @@
                                 {{delivery}}
                             </p><p v-else>
                             <i class="fas fa-euro-sign"></i>
-                            No Free Delivery!
+                            {{newLang.noFreeDelivery}}
                         </p>
                         </div>
 
@@ -41,14 +41,14 @@
                         <div class="mints">
                             <p>
                                 <i class="far fa-clock"></i>
-                                {{restaurant.DeliveryTime}} Mins
+                                {{restaurant.DeliveryTime}} {{newLang.mins}}
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <b-modal id="reviewModal" scrollable title="All Review" refs="modal" size="lg" hide-footer>
+        <b-modal id="reviewModal" scrollable :title="newLang.allReviews" refs="modal" size="lg" hide-footer>
             <div v-if="allReviews.length>0">
                 <review v-for="(review,index) in allReviews" :key="index" :review="review"  ></review>
             </div>
@@ -58,7 +58,7 @@
                         <div class="col-md-10 px-1 text-justify">
                             <div class="clearfix"></div>
                             <p class="card-text">
-                                No reviews available to show!
+                                {{newLang.noReviews}}
                             </p>
                         </div>
                     </div>
@@ -85,6 +85,7 @@
 <script>
     import review from "../Reviews/review";
     export default {
+        props: ['newLang'],
         data(){
             return{
                 restaurant: {},
