@@ -173,7 +173,8 @@ export default {
 .infoLink h4{
     font-size: 21px;
     font-weight: 500;
-    color: rgb(235 155 70);
+    /*color: rgb(235 155 70);*/
+    color:#2875b3;
 }
 .quickLinks p{
     color: #cccccc;
@@ -183,7 +184,8 @@ export default {
 }
 .quickLinks p i {
     font-size: 20px;
-    color: rgb(235 155 70);
+    /*color: rgb(235 155 70);*/
+    color:#2875b3;
 }
 .quickLinks{
     display: table;
@@ -208,8 +210,9 @@ export default {
     /*font-family: "PantonSemi";*/
     font-weight: 500;
     font-size: 30px;
-    color: rgb(235 155 70);
+    /*color: rgb(235 155 70);*/
     margin: 0;
+    color:#2875b3;
 }
 .app-download p {
     /*font-family: "Roboto";*/
@@ -231,7 +234,8 @@ export default {
 }
 .social .circle{
     border-radius: 50%;
-    background-color: rgb(251 150 8);
+    /*background-color: rgb(251 150 8);*/
+    background-color: #2668A3;
     width: 30px;
     height: 30px;
     text-align: center;

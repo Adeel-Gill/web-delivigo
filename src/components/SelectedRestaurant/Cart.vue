@@ -11,9 +11,9 @@
             </div>
         </div>
         <div>
-            <div @click = "handleToggleDrawer" style="margin-top: 60px; margin-right: 50px">
+            <div @click = "handleToggleDrawer" style="margin-top: 60px;">
                 <fab
-                        style="margin-top: 80px; margin-right: 50px"
+                        style="margin-top: 80px;"
                         position="top-right"
                         position-type="absolute"
                         ripple-show="true"
@@ -47,7 +47,7 @@
                                             @removeInCart="removeItem(index)"></app-cart-items>
                         </div>
                         <div v-else>
-                            <h3>{{newLang.addItems}}</h3>
+                            <h3 class="drwer-else">{{newLang.addItems}}</h3>
                         </div>
                         <!-- end-->
                     </div>
@@ -951,7 +951,7 @@
         background-size: cover;
         height: 600px;
         border-radius: 0px 550px 550px 0;
-        box-shadow: 37px 17px 7px 0px rgba(0, 0, 0, 0.05);
+        box-shadow: 19px 6px 5px 2px rgba(0, 0, 0, 0.05);
         width: 97%;
     }
 
@@ -976,7 +976,7 @@
         text-decoration: none;
         display: inline-block;
         padding: 10px 20px;
-        background: red;
+        background: #2875b3;
         margin: 0 20px 0 5px;
         color: white;
         font-weight: bold;
@@ -988,7 +988,7 @@
         text-decoration: none;
         display: inline-block;
         padding: 5px 15px;
-        background: red;
+        background: #2875b3;
         margin: 0 20px 0 5px;
         color: white;
         font-size: 18px;
@@ -1179,7 +1179,10 @@
         color: white;
         font-weight: 400;
     }
-
+    .drwer-else{
+        font-size: 18px;
+        font-weight: 500;
+    }
     .default-btn{
         display: grid;
         margin-top: 5px;

@@ -57,18 +57,21 @@ a.nav-link{
 }
 .singin a{
     padding: 6px 25px !important;
-    border: 2px solid #df3e03 !important;
+    border: 2px solid #2875b3 !important;
     border-radius: 5px;
     font-size: 16px;
 }
 .singin a:hover{
-    background-color: #df3e03;
+    background-color: #24558A;
 }
 .register a{
     padding: 8px 23px !important;
-    background: #df3e03;
+    background: #2875b3;
     border-radius: 5px;
     font-size: 16px;
+}
+.register a:hover{
+    background-color: #24558A;
 }
 #carousel-1 .carousel-caption {
     top: 35%;
@@ -273,6 +276,9 @@ a.nav-link{
     height: 65% !important;
     top:7px;
     left: 10px !important;
+}
+button:disabled{
+    background-color: gray !important;
 }
 @media screen and (min-width: 1200px) and (max-width: 1299px) {
     .container {

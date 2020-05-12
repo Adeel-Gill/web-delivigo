@@ -66,25 +66,34 @@
                             autoplayTimeout:2000,
                             autoplayHoverPause:true,
                             responsiveClass:false,
-                            margin:10,
+                            margin:70,
                             nav:false,
                             lazyLoad:true,
-                            items:6,
+                            items:5,
                             responsive:{
                                 0:{
                                     items:2,
+                                    margin:10,
                                 },
                                 400:{
-                                    items:3
+                                    items:2,
+                                    margin:40,
                                 },
-                                600:{
-                                    items:4
+                                500:{
+                                    items:3,
+                                    margin:40,
                                 },
                                 800:{
-                                    items:5
+                                    margin:50,
+                                    items:4
                                 },
                                 1000:{
-                                    items:6
+                                    margin:60,
+                                    items:4
+                                },
+                                1050:{
+                                    margin:70,
+                                    items:5
                                 }
                             }
                         });

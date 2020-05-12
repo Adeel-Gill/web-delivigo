@@ -64,7 +64,7 @@
         text-align: left;
     }
     .active a{
-        color: #5860ff;
+        color: #5860ff !important;
     }
     .top-nav{
         display: table;

@@ -419,6 +419,7 @@ import facebookLogin from 'facebook-login-vuejs';
        color: black;
        font-weight: 500;
        font-size: 17px;
+       word-break: break-word;
    }
    .form-group input{
        border: 0;
