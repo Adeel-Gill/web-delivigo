@@ -15,7 +15,7 @@
                         </div>
                         <div class="row">
                             <div class="col-5 padding-top-botom">
-                                <p style="display: block;" class="font-light text-truncate">{{restaurant.Tags}}</p>
+                                <p style="display: block;" class="font-light text-truncate">French</p>
                             </div>
                             <div class="col-3 padding-top-botom">
                                 <i class="fas fa-euro-sign"></i>
@@ -68,7 +68,7 @@
             }
         },
         mounted() {
-            console.log(baseAddress,'::',this.baseUrl,'::',this.image);
+            console.log(baseAddress,'::',this.baseUrl,'::',this.image   );
         }
     }
 </script>

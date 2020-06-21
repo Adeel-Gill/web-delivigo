@@ -1,7 +1,7 @@
 <template>
 <div>
+    <h2>{{newLang.categories}}</h2>
     <div class="catagories" v-if="categoriesNotEmpty">
-        <h2>{{newLang.categories}}</h2>
         <div class="show-more" v-if="categoriesMore">
             <router-link to="/foodCategories">{{newLang.showMore}}</router-link>
         </div>
