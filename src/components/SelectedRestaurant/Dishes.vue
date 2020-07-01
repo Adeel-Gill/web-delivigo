@@ -68,8 +68,10 @@
                 </div>
                 <div class="about-dish">
                     <div class="descp-about" >
-                        <p>{{select.Name}}</p>
+                        <h3 style="padding:4px 0 0 0">{{select.Name}}</h3>
+                        <p style="padding:0px">{{select.Description}}</p>
                         <div class="price-dish">
+                        
                             <p>{{select.Price}}</p>
                         </div>
                         <div class="buy-btn">

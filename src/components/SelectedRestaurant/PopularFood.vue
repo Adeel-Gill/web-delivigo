@@ -2,7 +2,7 @@
     <div class="popular-dishes">
         <h5>{{newLang.popularOnly}}</h5>
         <ul>
-            <li v-for="dish in dishes.slice(0,2)" :key="dish" >
+            <li v-for="dish in dishes" :key="dish" >
                 {{dish.Name}}
             </li>
         </ul>
@@ -30,7 +30,7 @@
             }
         },
         mounted() {
-            this.$root.$on('popularFood', response => {
+            this.$root.$on('mealMenu', response => {
                 if(response.length>0) {
                     this.dishes = response;
                 } else {
