@@ -7,7 +7,7 @@
                         v-for="foodType in foodTypes.slice(0,6)"
                         style="margin-top: 5px"
                         :key="foodType.Id"
-                        @click="navigateTo(foodType.Id)" >{{foodType.Name}}</button>
+                         >{{foodType.Name}}</button>
             </div>
         </div>
         <div>
@@ -888,7 +888,7 @@
                 }
             },
             getImage() {
-                this.image =  baseAddress + this.resData.ImageUrl
+                this.image =  "https://www.foodizza.com" + this.resData.ImageUrl.replace(/ /g, '%20')
                 console.log('UrlIS',this.resData,this.image);
                 return this.image;
             },

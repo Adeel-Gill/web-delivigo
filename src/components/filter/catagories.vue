@@ -56,7 +56,7 @@
         this.$root.$on('foodCategoriesData', foodCategoriesData => {
             if(foodCategoriesData.length>0) {
                 this.foodCategories = foodCategoriesData;
-                if(foodCategoriesData.length > 5) {
+                if(foodCategoriesData.length > 0) {
                     this.categoriesMore = true;
                     $(document).ready(function(){
                         $('.owl-carousel2').owlCarousel({

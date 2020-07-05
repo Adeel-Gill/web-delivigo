@@ -3,8 +3,8 @@
         <div class="description-about">
             <div class="resturant-name-review">
                 <div class="name-desc">
-                    <h4>{{restaurant.Name}}</h4>
-                    <p>{{restaurant.TagLine}}</p>
+                    <h4>{{restaurantObject.Name}}</h4>
+                    <p>{{restaurantObject.TagLine}}</p>
                 </div>
                 <div class="reviews text-right">
                     <a v-b-modal.reviewModal class="links">{{newLang.allReviews}}</a>
@@ -12,7 +12,7 @@
                 <div class="clear"></div>
             </div>
             <div class="restaurnt-address">
-                <p><i class="fas fa-map-marker-alt"></i>{{restaurant.FullAddress | truncate2}}</p>
+                <p><i class="fas fa-map-marker-alt"></i>{{restaurantObject.FullAddress | truncate2}}</p>
             </div>
             <div class="rating-times">
                 <div class="row">
@@ -20,8 +20,8 @@
                         <div class="rating">
                             <p>
                                 <i class="fas fa-star"></i>
-                                <span class="pl-1">{{restaurant.Rating}} </span>
-                                <span class="light">({{restaurant.ReviewCount}})</span>
+                                <span class="pl-1">{{restaurantObject.Rating}} </span>
+                                <span class="light">({{restaurantObject.ReviewCount}})</span>
                             </p>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                         <div class="mints">
                             <p>
                                 <i class="far fa-clock"></i>
-                                {{restaurant.DeliveryTime}} {{newLang.mins}}
+                                {{restaurantObject.DeliveryTime}} {{newLang.mins}}
                             </p>
                         </div>
                     </div>
@@ -89,6 +89,15 @@
         data(){
             return{
                 restaurant: {},
+                restaurantObject: {
+                    "Name": "",
+                    "TagLine": "",
+                    "FullAddress": "",
+                    "Rating": 0,
+                    "ReviewCount": 0,
+                    "DeliveryTime": 0,
+
+                },
                 name:'Jean-Georges',
                 subHeading: 'French/New American',
                 reviews:'All reviews',
@@ -111,6 +120,7 @@
                     this.showNotification('error','Error','No restaurant detail is available to show!');
                 } else {
                     this.restaurant = response;
+                    this.checkObj();
                     this.freeDelivery = this.restaurant.IsDeliveryFree;
                 }
 
@@ -128,6 +138,21 @@
                     text: message,
                     duration: 2000
                 })
+            },
+            checkObj() {
+                if(this.restaurant.Name) {
+                    this.restaurantObject.Name = this.restaurant.Name;
+                } if(this.restaurant.TagLine) {
+                    this.restaurantObject.TagLine = this.restaurant.TagLine;
+                } if(this.restaurant.FullAddress) {
+                    this.restaurantObject.FullAddress = this.restaurant.FullAddress;
+                } if(this.restaurant.Rating) {
+                    this.restaurantObject.Rating = this.restaurant.Rating;
+                } if(this.restaurant.DeliveryTime) {
+                    this.restaurantObject.DeliveryTime = this.restaurant.DeliveryTime;
+                } if(this.restaurant.ReviewCount) {
+                    this.restaurantObject.ReviewCount = this.restaurant.ReviewCount;
+                }
             }
         },
         filters: {
