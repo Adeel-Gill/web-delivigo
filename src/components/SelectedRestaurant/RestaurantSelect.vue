@@ -4,12 +4,10 @@
         <div class="container-fluid">
             <div class="row pb-3">
                 <div class="col-md-3 pr-3 popular">
-<!--                    <popular-foods></popular-foods>-->
                 </div>
                 <div class="col-md-6 pl-3">
-                    <restaurnt-name :newLang= local></restaurnt-name>
+                    <restaurnt-name :newLang= local> </restaurnt-name>
                 </div>
-                <!--                <div class="col-lg-3 col-md-3"></div>-->
             </div>
             <div class="row menu-sec justify-content-end">
                 <div class="col-md-3">

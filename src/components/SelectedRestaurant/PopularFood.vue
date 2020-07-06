@@ -2,13 +2,14 @@
     <div class="popular-dishes">
         <h5>{{newLang.popularOnly}}</h5>
         <ul>
-            <li v-for="dish in dishes.slice(0,2)" :key="dish" >
+            <li v-for="dish in dishes" :key="dish"  @click="navigateTo(dish.Id)">
                 {{dish.Name}}
             </li>
         </ul>
     </div>
 </template>
 <script>
+import {fetchRestaurantMealsById} from "../api/CustomMeal";
     export default {
         props: ['newLang'],
         data(){
@@ -27,10 +28,29 @@
                     text: message,
                     duration: 2000
                 })
+            },
+            navigateTo(id) {
+                console.log('insideNavigateMethod', id);
+                if(id) {
+                    this.$router.push({path:'/restaurant/'+this.$route.params.id,query:{mealID:id}});
+                    this.fetchRestaurantMealById(this.$route.params.id,id);
+                } else {
+                    alert('Please select menu other than popular!');
+                }
+            },
+            async fetchRestaurantMealById(resId, mealId) {
+                console.log('bothIDs'+resId+mealId);
+                fetchRestaurantMealsById(resId, mealId).then(response => {
+                    this.$root.$emit('popularFood',response.Meals);
+                    this.$root.$emit('isCustomMeal', true);
+                }, error => {
+                    console.log(error);
+                    this.showNotification('error','Error','Error occurred please try later');
+                })
             }
         },
         mounted() {
-            this.$root.$on('popularFood', response => {
+            this.$root.$on('mealMenu', response => {
                 if(response.length>0) {
                     this.dishes = response;
                 } else {

@@ -7,7 +7,7 @@
         <router-link to="/populars">{{newLang.showMore}}</router-link>
       </div>
       <div class="clear"></div>
-      <div class="restaurants-list" v-if="popularNotEmpty">
+      <div class="restaurants-list" v-if="popularMore">
 <!--        <div class="row">-->
 <!--        <carousel :autoplay="true" :nav="false" :responsive="{0:{items:1,nav:false},600:{items:2,nav:true},1000:{items:3,nav:false}}">-->
           <div class="owl-carousel3 owl-theme">
@@ -17,7 +17,7 @@
 <!--        </div>-->
       </div>
       <div class="row" v-else>
-        <app-empty-error></app-empty-error>
+        <!-- <app-empty-error></app-empty-error> -->
       </div>
     </div>
 </template>
@@ -54,11 +54,16 @@ export default {
       })
     },
     setData(popularRestaurants) {
+      console.log('popularLength', popularRestaurants.length);
       if(popularRestaurants.length>0) {
         this.restaurants = popularRestaurants;
-        if(popularRestaurants.length > 3) {
+        this.popularMore = this.popularNotEmpty =  true;
+        console.log('restaurants', this.restaurants);
+        if(popularRestaurants.length >= 3) {
           this.popularMore = true;
+          console.log('here we are1');
           $(document).ready(function(){
+            console.log('here we are');
               $('.owl-carousel3').owlCarousel({
                   loop:true,
                   dots: false,
@@ -84,14 +89,14 @@ export default {
           });
         }
       } else {
-        this.popularNotEmpty = false;
+        this.popularNotEmpty = this.popularMore =false;
         this.showNotification('error','Error','No popular restaurants available to show!');
       }
     }
   },
   mounted() {
     this.$root.$on('popularData', popularRestaurants => {
-      console.log('inFilterPopularOn'+popularRestaurants);
+      console.log('inFilterPopularOn',popularRestaurants);
       this.restaurants = [];
       this.setData(popularRestaurants);
     })

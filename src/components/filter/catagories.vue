@@ -1,7 +1,7 @@
 <template>
 <div>
+    <h2>{{newLang.categories}}</h2>
     <div class="catagories" v-if="categoriesNotEmpty">
-        <h2>{{newLang.categories}}</h2>
         <div class="show-more" v-if="categoriesMore">
             <router-link to="/foodCategories">{{newLang.showMore}}</router-link>
         </div>
@@ -56,7 +56,7 @@
         this.$root.$on('foodCategoriesData', foodCategoriesData => {
             if(foodCategoriesData.length>0) {
                 this.foodCategories = foodCategoriesData;
-                if(foodCategoriesData.length > 5) {
+                if(foodCategoriesData.length > 0) {
                     this.categoriesMore = true;
                     $(document).ready(function(){
                         $('.owl-carousel2').owlCarousel({

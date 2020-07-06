@@ -176,6 +176,7 @@ export default {
                     if(response != null) {
                         this.fetchedData = response;
                         if(response.NewOpen.length>0) {
+                            console.log('new');
                             this.newRestaurants = this.fetchedData.NewOpen;
                             if(this.newRestaurants.length > 3) {
                                 this.newRestaurantsMore = true;
@@ -186,7 +187,7 @@ export default {
                         }
                         if(response.Restaurants.length > 0) {
                             this.allRestaurants = this.fetchedData.Restaurants;
-                            if(this.allRestaurants.length > 3) {
+                            if(this.allRestaurants.length >= 3) {
                                 this.allRestaurantsMore = true;
                                 $(document).ready(function(){
                                     $('.owl-carousel').owlCarousel({

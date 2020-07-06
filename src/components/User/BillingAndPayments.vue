@@ -9,7 +9,7 @@
                     <b-button class="btn btn-submit float-right" @click="createCard" ><i class="fas fa-plus mr-3"></i>Add Card</b-button>
                 </div>
             </div>-->
-            <div class="col-md-10 col-12" v-if="isAvailable">
+            <div class="col-md-10 col-12" v-if="">
                 <div class="heading line">
                     <h1 class="profile-heading d-inline">{{newLang.billingAndPayment}}</h1>
                     <button class="btn btn-submit float-right" @click="createCard" ><i class="fas fa-plus mr-3"></i>{{newLang.addCard}}</button>
