@@ -264,6 +264,9 @@
     padding-top: 6px;
     padding-bottom:6px;
   }
+  .address-line {
+    width: 60%;
+  }
   .address-line p{
     color: white;
     font-size: 18px;
