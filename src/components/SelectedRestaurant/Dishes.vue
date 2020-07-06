@@ -602,7 +602,7 @@
     .dish-image img {
         width: 100%;
         border-radius: 10px;
-        height: 133px;
+        height: 157px;
     }
     .about-dish {
         /*float: right;*/
@@ -613,19 +613,19 @@
     }
     .descp-about{
         min-width: 100%;
-        min-height: 149px;
+        min-height: 175px;
         border-radius: 10px;
         background-color: antiquewhite;
         padding-left: 40px;
+        padding-right: 10px;
     }
     .descp-about p {
         color: #787878;
         /*font-family: "Roboto";*/
-        font-size: 19px;
+        font-size: 16px;
         margin: 0 auto;
-        line-height: 20px;
+        line-height: 17px;
         text-align: left;
-        /*max-width: 250px;*/
         padding: 30px 0 0 0;
     }
     .price-dish {
@@ -696,12 +696,12 @@
     @media screen and (max-width: 760px) and (min-width: 561px){
 
     }
-    @media screen and (max-width: 560px) and (min-width: 401px){
+    @media screen and (max-width: 560px) and (min-width: 460px){
         .dish-image img{
-            height: 120px;
+            height: 138px;
         }
         .descp-about{
-            min-height: 137px;
+            min-height: 157px;
         }
 
         .add-item-btn button {
@@ -709,9 +709,40 @@
             font-size: 20px;
         }
     }
-    @media screen and (max-width: 400px){
+    @media screen and (max-width: 460px){
+
+        .descp-about {
+            padding-top: 40px;
+            min-height: unset;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .about-dish {
+            position: absolute;
+            top: 37%;
+            width: 100%;
+        }
+
+        .dish-image {
+            max-width: 65%;
+            max-height: 157px;
+            position: absolute;
+            top: 0;
+            left: 17%;
+            right: 17%;
+        }
+
         .dish-image img{
-            height: 105px;
+            height: 157px;
+        }
+
+        .dish-selection {
+            min-height: 350px;
+        }
+
+        .dishes {
+            min-height: 350px;
         }
         .descp-about{
             min-height: 120px;
@@ -722,4 +753,5 @@
             font-size: 20px;
         }
     }
+
 </style>

@@ -193,6 +193,7 @@
     .name-desc {
         font-family:'Roboto', sans-serif;
         float: left;
+        width: 70%;
     }
     .name-desc h4 {
         font-family:'Roboto', sans-serif;
@@ -219,6 +220,7 @@
     .reviews {
         float: right;
         padding: 25px 0;
+        width: 30%;
     }
     .reviews a {
         color: #2125c3 !important;

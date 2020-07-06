@@ -151,7 +151,7 @@
     }
     .menu-sec{
         position: relative;
-        top: 125px;
+        top: 145px;
         margin-bottom: 123px;
     }
     .popular{
@@ -161,25 +161,37 @@
         padding:0 60px;
     }
 
+    @media screen and (max-width: 1240px) and (min-width: 1150px) {
+        .menu-sec{
+            top: 170px;
+        }
+    }
+
+    @media screen and (max-width: 1150px) and (min-width: 960px) {
+        .menu-sec{
+            top: 190px;
+        }
+    }
+
     @media screen and (max-width: 960px)and (min-width: 901px) {
         .menu-sec{
-            top: 77px;
+            top: 160px;
         }
     }
 
     @media screen and (max-width: 901px) and (min-width: 863px) {
         .menu-sec{
             position: relative;
-            top: 106px;
+            top: 150px;
         }
     }
     @media screen and (max-width: 863px) and (min-width: 768px) {
         .menu-sec{
             position: relative;
-            top: 141px;
+            top: 195px;
         }
     }
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 768px) and (min-width: 543px) {
         .menu-sec{
             position: relative;
             top: 70px;
@@ -188,10 +200,22 @@
             padding:0 20px;
         }
     }
+    @media screen and (max-width: 543px) and (min-width: 402px) {
+        .menu-sec{
+            position: relative;
+            top: 120px;
+        }
+        .container-fluid{
+            padding:0 20px;
+        }
+    }
     @media screen and (max-width: 402px) and (min-width: 371px){
         .menu-sec{
             position: relative;
-            top: 60px;
+            top: 107px;
+        }
+        .container-fluid{
+            padding:0 20px;
         }
     }
     @media screen and (max-width: 371px) and (min-width: 334px) {
@@ -199,11 +223,17 @@
             position: relative;
             top: 93px;
         }
+        .container-fluid{
+            padding:0 20px;
+        }
     }
     @media screen and (max-width: 334px) {
         .menu-sec{
             position: relative;
-            top: 118px;
+            top: 122px;
+        }
+        .container-fluid{
+            padding:0 20px;
         }
     }
 </style>

@@ -1215,6 +1215,9 @@
         .invoice p{
             padding-left: 30px;
         }
+        .food-type{
+            left: 50px;
+        }
     }
     @media screen and (max-width: 576px) and (min-width: 430px){
         .slected-bg{
@@ -1236,6 +1239,9 @@
         }
         .invoice p{
             padding-left: 20px;
+        }
+        .food-type{
+            left: 30px;
         }
     }
     @media screen and (max-width: 430px) and (min-width: 380px){
