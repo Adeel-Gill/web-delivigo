@@ -14,12 +14,10 @@
                 </div>
                 <div class="row">
                     <div class="col-5 padding-top-botom">
-                        <p class="font-light text-truncate" style="display: block;">{{newRestaurant.Tags}}</p>
+                        <p class="font-light text-truncate" style="display: block;">{{newRestaurant.TagLine}}</p>
                     </div>
                     <div class="col-3 padding-top-botom">
-                        <i class="fas fa-euro-sign"></i>
-                        <i class="fas fa-euro-sign"></i>
-                        <i class="fas fa-euro-sign"></i>
+                        <i >{{newRestaurant.ApproximateCostPerPerson}}</i>
                     </div>
                     <div class="col-4 padding-top-botom">
                         <p class="font-size-9"><i class="far fa-clock"></i> {{newRestaurant.Time}}</p>
