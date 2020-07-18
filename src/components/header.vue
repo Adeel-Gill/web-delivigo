@@ -135,7 +135,7 @@
             if(localStorage.getItem("userChanged") === "true") {
                 return this.image = baseAddress + img;
             } else {
-                return this.image = img;
+                return this.image = baseAddress +img;
             }
           } else {
               return this.image =  baseAddress + img;
