@@ -1,6 +1,6 @@
 <template>
     <div class="restaurnt-selected" >
-        <banner :newLang= local />
+        <banner :newLang= local :resDetail = restaurant />
         <div class="container-fluid">
             <div class="row pb-3">
                 <div class="col-md-3 pr-3 popular">
@@ -41,6 +41,7 @@
                 loader: false,
                 mealID: null,
                 local: lang.en,
+                restaurant: null
             }
         },
         components:{
@@ -104,6 +105,7 @@
                     fetchRestaurantReviews(1).then(response => {
                         this.$root.$emit('reviews',response);
                     })
+                    this.restaurant = response.Restaurant;
                     this.$root.$emit('mealMenu', response.MealMenu);
                     this.$root.$emit('popularFood', response.Popular);
                     this.$root.$emit('restaurant', response.Restaurant);

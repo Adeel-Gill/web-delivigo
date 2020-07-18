@@ -2,7 +2,7 @@
     <div>
         <div class="slected-bg" :style="{'background-image': 'url('+`${getImage()}`+')'}">
             <div class="food-type">
-                <p><span>€</span><span> €</span><span> €</span><span>€</span></p>
+                <p><span>{{resDetail.ApproximateCostPerPerson}}</span></p>
                 <button
                         v-for="foodType in foodTypes.slice(0,6)"
                         style="margin-top: 5px"
@@ -295,7 +295,7 @@
     import 'jquery';
 
     export default {
-        props: ['newLang'],
+        props: ['newLang', 'resDetail'],
         data(){
             return{
                 foodTypes:[],
