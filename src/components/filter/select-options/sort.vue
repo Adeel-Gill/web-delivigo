@@ -150,5 +150,7 @@ li.dropdown-menu-items{
 li.dropdown-menu-items a{
     padding: 0 !important;
 }
-
+li.dropdown-menu-items:last-child {
+    margin-right: 0;
+}
 </style>

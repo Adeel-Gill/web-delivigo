@@ -118,7 +118,7 @@
                         <div class="card-footer">
                             <div class="input-group">
                                 <div class="input-group-append">
-                                    <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+                                    <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i><i class="far fa-image"></i></span>
                                 </div>
                                 <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
                                 <div class="input-group-append">
@@ -229,13 +229,13 @@
     background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
     background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);*/
 
-    /*background: #0f0c29;
+    background: #0f0c29;
     background: -webkit-linear-gradient(to right, #0f0c29, #302b63, #24243e);
-    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);*/
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
 
-    background: #141E30;
+    /*background: #141E30;
     background: -webkit-linear-gradient(to right, #243B55, #141E30);
-    background: linear-gradient(to right, #243B55, #141E30);
+    background: linear-gradient(to right, #243B55, #141E30);*/
 
     /*background: #606c88;
     background: -webkit-linear-gradient(to right, #3f4c6b, #606c88);
@@ -245,11 +245,43 @@
     background: -webkit-linear-gradient(to left, #1CB5E0, #000046);
     background: linear-gradient(to left, #1CB5E0, #000046);*/
 
+    /*background-image: linear-gradient( 179.6deg,  rgba(0,19,26,1) -4.9%, rgba(0,77,105,1) 108.4% );*/
+
 
 }
+
 .msg_card_body{
     overflow-y: auto;
 }
+
+
+
+.msg_card_body::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+.msg_card_body::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+.msg_card_body::-webkit-scrollbar-thumb
+{
+    background-color: #F90;
+    background-image: -webkit-linear-gradient(45deg,
+    rgba(255, 255, 255, .2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, .2) 50%,
+    rgba(255, 255, 255, .2) 75%,
+    transparent 75%,
+    transparent)
+}
+
+
 .card-header{
     border-radius: 15px 15px 0 0 !important;
     border-bottom: 0 !important;
@@ -274,7 +306,13 @@
     background-color: rgba(0,0,0,0.3) !important;
     border:0 !important;
     color: white !important;
+}
+.attach_btn i {
+    font-size: 20px;
     cursor: pointer;
+}
+.attach_btn i:first-child {
+    padding-right: 15px;
 }
 .send_btn{
     border-radius: 0 15px 15px 0 !important;
@@ -282,6 +320,9 @@
     border:0 !important;
     color: white !important;
     cursor: pointer;
+    font-size: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
 }
 
 .contacts{

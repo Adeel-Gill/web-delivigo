@@ -10,12 +10,12 @@
                          >{{foodType.Name}}</button>
             </div>
         </div>
-        <div>
+        <div class="cart-btn">
             <div @click = "handleToggleDrawer" style="margin-top: 60px;">
                 <fab
                         style="margin-top: 80px;"
                         position="top-right"
-                        position-type="absolute"
+                        position-type="fixed"
                         ripple-show="true"
                         ripple-color="dark"
                         bg-color="#8ba939"
@@ -23,7 +23,10 @@
                         fixed-tooltip="true"
                         main-icon="shopping_cart"
                         enable-rotation="false"
-                ></fab>
+
+                >
+                </fab>
+
             </div>
             <vue-drawer-layout
                     ref="drawer"
@@ -944,6 +947,23 @@
     }
 </script>
 <style scoped>
+    .drawer-layout {
+        position: fixed !important;
+        z-index: 900;
+    }
+
+    .item-no {
+        background: red;
+        border-radius: 50%;
+        color: white;
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        top: 0;
+        right: 0px;
+        z-index: 1000;
+    }
     .slected-bg {
         position: relative;
         background-repeat: no-repeat;
@@ -1316,8 +1336,6 @@
             padding-left: 10px;
         }
     }
-
-
 
 
 

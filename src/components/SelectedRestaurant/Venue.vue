@@ -214,6 +214,7 @@
     .delivery-time span {
         display: block;
         margin-top: 15px;
+        margin-bottom: 40px;
     }
 
     button.link {
