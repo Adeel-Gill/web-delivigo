@@ -117,7 +117,7 @@
             },
             setMapData(obj) {
                 this.mapData = JSON.parse(obj);
-                if(this.mapData.place_type[0] === "poi") {
+                if(this.mapData.place_type[0]) {
                     this.city = this.mapData.context[1].text;
                     this.state = this.mapData.context[2].text;
                     this.country = this.mapData.context[3].text;
@@ -125,6 +125,7 @@
                 } else {
                     this.showNotification('error',this.newLang.error,this.newLang.nearByAddress);
                     this.mapData = {};
+                    this.isLoading = false;
                     this.city = this.state = this.country = '';
                 }
 
