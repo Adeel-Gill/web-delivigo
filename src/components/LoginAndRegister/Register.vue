@@ -250,7 +250,7 @@ import facebookLogin from 'facebook-login-vuejs';
                                     this.$store.dispatch('storeToken',response);
                                     this.$router.push({path:'/'});
                                     localStorage.setItem("fbLogin", true);
-                                    this.$router.go();
+                                    // this.$router.go();
                                 } else {
                                     this.showNotification('error', this.newLang.error, this.newLang.singInFailed);
                                 }

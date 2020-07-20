@@ -38,7 +38,7 @@
                 </div>
                 <div class="restaurants-list" v-if="allNotEmoty">
                     <h2>{{local.allRestaurants}}</h2>
-                    <div class="show-more" v-if="allRestaurantsMore">
+                    <div class="show-more"  v-if="allRestaurantsMore">
                         <router-link to="/restaurants">{{local.showMore}}</router-link>
                     </div>
                     <div class="clear"></div>

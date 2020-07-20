@@ -82,6 +82,7 @@ export const UserInfo = new Vuex.Store({
         },
         clearCart: (state) => {
           state.cartData = [];
+          localStorage.setItem('items', null);
           localStorage.setItem('cart',null);
         },
         removeCartItem: (state, payload) => {

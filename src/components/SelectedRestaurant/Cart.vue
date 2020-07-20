@@ -410,6 +410,13 @@
                     // console.log('allImages',this.allImages);
                 })
             });
+            this.$root.$on("itemAddedToCart", response => {
+                console.log("here received");
+                this.setCount();
+                // graphElem.addEventListener('click', function (event) {
+                //     event.target.setAttribute('data-before', 'anything');
+                // });
+            })
             console.log('redID',this.resID,this.$store.state.cartData);
             console.log('redID',this.resID == null);
             console.log('insideTimeOUT',this.$store.state.cartData.length ,this.resID == null);
@@ -433,8 +440,27 @@
                 this.paramID = this.$route.params.id;
                 this.fetchRestaurantByParam(this.paramID);
             }
+           
+        },
+        mounted() {
+             this.setCount();
         },
         methods: {
+            setCount() {
+                
+                
+                console.log('items',localStorage.getItem('items'));
+                setTimeout(() => {
+                    console.log(document.getElementsByClassName('fab-wrapper'));
+                    if(localStorage.getItem('items')) {
+
+                    document.getElementsByClassName('fab-wrapper')[0].attributes[5].value = localStorage.getItem('items');
+                    } else {
+                        document.getElementsByClassName('fab-wrapper')[0].attributes[5].value = localStorage.getItem('items');
+                        // document.getElementsByClassName('fab-wrapper')[0].setAttribute('cart-count','0');
+                    }
+                }, 1000);  
+            },
             itemRemoveInOrder(i) {
                 this.$dialog.confirm('Item will be removed from order. Continue?', {
                     loader: true

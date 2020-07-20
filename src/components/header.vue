@@ -173,7 +173,7 @@
             this.showNotification('success','Success','Sign out successfully');
             dialog.loading(false);
             dialog.close();
-            this.$router.go();
+            // this.$router.go();
           }).catch(() => {
             this.showNotification('info','Info','Signout cancelled');
           })
@@ -187,7 +187,7 @@
           title: title,
           text: message,
           duration: 2000,
-
+        
         })
       }
     },

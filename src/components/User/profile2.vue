@@ -522,7 +522,7 @@
                 this.$store.dispatch('cleanToken');
                 this.$store.dispatch('clearCart');
                 this.showNotification('success',this.newLang.success,this.newLang.signOutSuccess);
-                this.$router.go();
+                // this.$router.go();
                 } else {
                 this.$dialog.confirm(this.newLang.cartNotEmpty, {
                     loader: true
@@ -533,7 +533,7 @@
                     this.showNotification('success',this.newLang.success,this.newLang.signOutSuccess);
                     dialog.loading(false);
                     dialog.close();
-                    this.$router.go();
+                    // this.$router.go();
                 }).catch(() => {
                     this.openDialog();
                 })
