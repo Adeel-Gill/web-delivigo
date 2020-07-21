@@ -14,6 +14,10 @@
     src:url("fonts/Panton-Bold.otf");
 }*/
 
+
+:root {
+    --cart-count: 0;
+}
 @font-face {
     font-family: HH-Samuel;
     src:url("fonts/hh-Samuel-font.ttf")
@@ -471,7 +475,8 @@ button:disabled{
 }
 
 .fab-wrapper:before {
-    content: attr(cart-count) "0";
+    /*content: attr(cart-count) "0";*/
+    content: var(--cart-count);
     background-color: red;
     border-radius: 50%;
     color: white;
