@@ -9,7 +9,8 @@
                 <h1 class="profile-heading d-inline">{{newLang.deliveryAddress}}</h1>
                 <button class="btn btn-submit float-right" @click="showModal"><i class="fas fa-plus mr-3"></i>{{newLang.addAddress}}</button>
             </div>
-            <div class="address-block row pt-4 m-0 w-100" v-for="address in allAddresses" :key="address.Id">
+            <div v-if="allAddresses.length">
+                <div class="address-block row pt-4 m-0 w-100" v-for="address in allAddresses" :key="address.Id">
 
                 <div class="col-sm-10">
                 <h6 class="address-heading">{{address.Apartment}}</h6>
@@ -22,6 +23,10 @@
                         <label>{{newLang.default}}</label>
                     </div>
                 </div>
+            </div>
+            </div>
+            <div v-else>
+                <emptyError></emptyError>
             </div>
         </div>
 
@@ -80,6 +85,7 @@
     import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
     import VueLoadingButton from 'vue-loading-button';
     import MapNavigation from "../Map/MapNavigation";
+    import emptyError from "../error/emptyError.vue";
     import {saveAddress, setDefaultAddress, getAllCustomerAddresses, deleteAddress} from "../api/DeliveryAddress";
     import {EventBus, map} from '../../main'
     export default {
@@ -88,6 +94,7 @@
         components: {
             buttonSpinner: VueLoadingButton,
             appMapNav: MapNavigation,
+            emptyError
         },
         data() {
             return {
