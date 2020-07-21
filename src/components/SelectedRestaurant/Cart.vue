@@ -12,13 +12,13 @@
         </div>
         <div class="cart-btn">
             <div @click = "handleToggleDrawer" style="margin-top: 60px;">
-                <v-badge
+                <!--<v-badge
                 color="green"
                 left
                 overlap
                 >
                 <v-icon large>fas fa-shopping-cart</v-icon>
-            </v-badge>
+            </v-badge>-->
                 <fab
                         style="margin-top: 80px;"
                         position="top-right"
@@ -460,12 +460,15 @@
                 console.log('items',localStorage.getItem('items'));
                 console.log('element',document.getElementsByClassName('fab-wrapper'));
                 console.log(document.getElementsByClassName('fab-wrapper'));
-                if(localStorage.getItem('items')) {
-                    document.documentElement.style.setProperty('cart-count', '');
-                    document.documentElement.style.setProperty('cart-count', localStorage.getItem('items'));  
+                let root = document.documentElement;
+                if(localStorage.getItem('items') > 0) {
+                    root.style.setProperty('--cart-count', "'"+localStorage.getItem('items')+"'");
+                    // document.documentElement.style.setProperty('cart-count', '');
+                    // document.documentElement.style.setProperty('cart-count', localStorage.getItem('items'));
                 // document.getElementsByClassName('fab-wrapper')[0].setAttribute('cart-count','6');
                 } else {
-                    document.getElementsByClassName('fab-wrapper')[0].attributes[5].value = '0';
+                    root.style.setProperty('--cart-count', "'0'");
+                    // document.getElementsByClassName('fab-wrapper')[0].attributes[5].value = '0';
                     // document.getElementsByClassName('fab-wrapper')[0].setAttribute('cart-count','0');
                 }
             },
