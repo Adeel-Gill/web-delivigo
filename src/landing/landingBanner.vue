@@ -162,7 +162,11 @@
               this.addressObj.CustomerId = localStorage.getItem("id");
               saveAddress(this.addressObj).then(response => {
                   console.log(response);
+                  localStorage.setItem('saveAddress', 'false');
               });
+          } else {
+              localStorage.setItem('addressObj', JSON.stringify(this.addressObj));
+              localStorage.setItem('saveAddress', 'true');
           }
         },
         isEmpty(obj) {
@@ -190,7 +194,7 @@
                           this.userAddress = response.data.features[0].place_name;
                           localStorage.setItem("isAddress", true);
                           this.addressObj.AddressLine = response.data.features[0].place_name;
-                          this.addressObj.Lngitude = response.data.features[0].center[0];
+                          this.addressObj.Longitude = response.data.features[0].center[0];
                           this.addressObj.Latitude = response.data.features[0].center[1];
                           this.addressObj.Apartment = response.data.features[0].text;
                           

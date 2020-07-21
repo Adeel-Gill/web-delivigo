@@ -351,6 +351,7 @@
                 cartData: [],
                 restaurantImages: [],
                 resID: null,
+                isOpen: false,
                 mealID: null,
                 settings: {
                     "edgeFriction": 0.35,
@@ -455,8 +456,6 @@
         },
         methods: {
             setCount() {
-                
-                
                 console.log('items',localStorage.getItem('items'));
                 console.log('element',document.getElementsByClassName('fab-wrapper'));
                 console.log(document.getElementsByClassName('fab-wrapper'));
@@ -471,6 +470,7 @@
                     // document.getElementsByClassName('fab-wrapper')[0].attributes[5].value = '0';
                     // document.getElementsByClassName('fab-wrapper')[0].setAttribute('cart-count','0');
                 }
+                console.log('element',document.getElementsByClassName('fab-wrapper'));
             },
             itemRemoveInOrder(i) {
                 this.$dialog.confirm('Item will be removed from order. Continue?', {
@@ -784,13 +784,16 @@
             async startCheckout() {
                 console.log('start');
                 this.$bvModal.show('checkout');
+                 this.hideToggle();
                 if(localStorage.getItem('id') == null|| localStorage.getItem('id') === 'null' || localStorage.getItem('isLogin') === false) {
                     this.showNotification('info','Info','Please login first to place order');
+                    localStorage.setItem('isRes', this.paramID);
                     this.$router.push('/signin')
                 } else {
+                    localStorage.setItem('isRes', 'false');
                     this.cartItems = this.$store.state.cartData;
                     this.basicDeliveryFee = deliveryCharges.basicDeliveryFee;
-                    this.hideToggle();
+                   
                     console.log('start2');
                     console.log('cartItems',this.cartItems);
                     fetchUserProfile(Number(localStorage.getItem('id'))).then(response => {
@@ -936,11 +939,22 @@
                 this.$bvModal.hide('checkout');
             },
             handleToggleDrawer() {
-                this.checkCart();
-                console.log('insideToggle',this.$refs.drawer);
-                this.$refs.drawer.toggle();
+                if(!this.isOpen) {
+                    this.checkCart();
+                    console.log('insideToggle',this.$refs.drawer);
+                    this.$refs.drawer.toggle();
+                    document.getElementsByClassName('drawer-layout')[0].style.display = 'block';
+                    this.isOpen = true;
+                } else {
+                    
+                    this.hideToggle();
+                }
+                
             },
             hideToggle() {
+                console.log('hide toggle');
+                this.isOpen = false;
+                document.getElementsByClassName('drawer-layout')[0].style.display = 'none';
                 this.$refs.drawer.toggle();
             },
             handleMaskClick() {

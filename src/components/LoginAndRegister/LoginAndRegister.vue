@@ -29,9 +29,16 @@
                 local: lang.en,
             }
         },
+        mounted() {
+            this.emitCounter();
+        },
         methods: {
             emitCounter() {
+                console.log('received');
+                localStorage.setItem('isAddress', 'false');
                 this.$emit("changeCounter",0);
+                // localStorage.setItem('isAddress', 'false')
+                console.log('received');
             },
             checkLang() {
             console.log("hereItIs");
