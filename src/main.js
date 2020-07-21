@@ -6,6 +6,7 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import vuetify from '@/plugins/vuetify' // path to vuetify export
+import 'vuetify/dist/vuetify.min.css'
 import * as gMap from 'vue2-google-maps'
 import VShowSlide from 'v-show-slide'
 import {UserInfo} from "./components/store/UserInfo";

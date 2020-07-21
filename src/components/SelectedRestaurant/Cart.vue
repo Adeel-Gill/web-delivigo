@@ -12,6 +12,13 @@
         </div>
         <div class="cart-btn">
             <div @click = "handleToggleDrawer" style="margin-top: 60px;">
+                <v-badge
+                color="green"
+                left
+                overlap
+                >
+                <v-icon large>fas fa-shopping-cart</v-icon>
+            </v-badge>
                 <fab
                         style="margin-top: 80px;"
                         position="top-right"
@@ -292,6 +299,7 @@
     import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
     import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
     import {fetchRestaurantById} from "../api/FilterRestaurants";
+    import 'vuetify/dist/vuetify.min.css'
     import 'owl.carousel/dist/assets/owl.carousel.css';
     import 'owl.carousel/dist/assets/owl.carousel2.css';
     import 'owl.carousel';
@@ -450,16 +458,16 @@
                 
                 
                 console.log('items',localStorage.getItem('items'));
-                setTimeout(() => {
-                    console.log(document.getElementsByClassName('fab-wrapper'));
-                    if(localStorage.getItem('items')) {
-
-                    document.getElementsByClassName('fab-wrapper')[0].attributes[5].value = localStorage.getItem('items');
-                    } else {
-                        document.getElementsByClassName('fab-wrapper')[0].attributes[5].value = localStorage.getItem('items');
-                        // document.getElementsByClassName('fab-wrapper')[0].setAttribute('cart-count','0');
-                    }
-                }, 1000);  
+                console.log('element',document.getElementsByClassName('fab-wrapper'));
+                console.log(document.getElementsByClassName('fab-wrapper'));
+                if(localStorage.getItem('items')) {
+                    document.documentElement.style.setProperty('cart-count', '');
+                    document.documentElement.style.setProperty('cart-count', localStorage.getItem('items'));  
+                // document.getElementsByClassName('fab-wrapper')[0].setAttribute('cart-count','6');
+                } else {
+                    document.getElementsByClassName('fab-wrapper')[0].attributes[5].value = '0';
+                    // document.getElementsByClassName('fab-wrapper')[0].setAttribute('cart-count','0');
+                }
             },
             itemRemoveInOrder(i) {
                 this.$dialog.confirm('Item will be removed from order. Continue?', {
@@ -1394,4 +1402,5 @@
         /*height: 100px;*/
         /*background-color: #8f8f90;*/
     }
+    
 </style>
