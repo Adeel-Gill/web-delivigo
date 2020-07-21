@@ -16,7 +16,7 @@
 
 
 :root {
-    --cart-count: 0;
+    --cart-count: "1";
 }
 @font-face {
     font-family: HH-Samuel;
@@ -470,9 +470,9 @@ button:disabled{
     min-height: 100vh;
 }
 
-.fab-wrapper {
-    /*position: relative !important;*/
-}
+/*.fab-wrapper {
+    background-color: #0f0c29 !important;
+}*/
 
 .fab-wrapper:before {
     /*content: attr(cart-count) "0";*/
@@ -485,7 +485,7 @@ button:disabled{
     line-height: 20px;
     text-align: center;
     top: 0;
-    right: 0px;
+    right: 0;
     z-index: 1000;
 }
 
