@@ -76,7 +76,7 @@
                                     @sdk-loaded="sdkLoaded">
                     </facebook-login>
                 </div>
-
+                <!-- <v-facebook-login app-id="649127768995419"></v-facebook-login> -->
             </form>
             </div>
         </div>
@@ -110,11 +110,12 @@
     import TermsAndConditions from '@/components/Documents/TermsAndConditions'
     import Policy from '@/components/Documents/Policy'
 import facebookLogin from 'facebook-login-vuejs';
+import VFacebookLogin from 'vue-facebook-login-component'
     export default {
         name: "Register",
         props: ['newLang'],
          components: {
-          // VFacebookLogin
+          VFacebookLogin,
           //   VFacebookLoginScope
             facebookLogin,
             TermsAndConditions,
@@ -279,9 +280,9 @@ import facebookLogin from 'facebook-login-vuejs';
                                             localStorage.setItem('addressObj', JSON.stringify({}));
                                             localStorage.setItem(saveAddress, 'false');
                                         })
-                                    }
                                         this.$router.push({path: '/restaurant/'+localStorage.getItem('isRes')});
                                         localStorage.setItem('isRes', 'false');
+                                        }   
                                     }
                                     
                                 } else {

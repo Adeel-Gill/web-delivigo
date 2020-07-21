@@ -162,7 +162,7 @@
                                 this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
                                 this.$store.dispatch('storeToken',response);
                                 this.$emit('updateTheCounter', '');
-                                if(localStorage.getItem('saveAddress') === 'true') {
+                                if(localStorage.getItem('saceAddress') === 'true') {
                                     var addressData = JSON.parse(localStorage.getItem('addressObj'));
                                     addressData.CustomerId = response.Id;
                                     saveAddress(addressData).then(response => {
@@ -170,9 +170,10 @@
                                         localStorage.setItem('addressObj', JSON.stringify({}));
                                         localStorage.setItem(saveAddress, 'false');
                                     })
-                                }
-                                this.$router.push({path: '/restaurant/'+localStorage.getItem('isRes')});
-                                localStorage.setItem('isRes', 'false');
+                                } else {
+                                    this.$router.push({path: '/restaurant/'+localStorage.getItem('isRes')});
+                                    localStorage.setItem('isRes', 'false');
+                                } 
                             }
                             
 
@@ -262,13 +263,14 @@
                                         var addressData = JSON.parse(localStorage.getItem('addressObj'));
                                         addressData.CustomerId = response.Id;
                                         saveAddress(addressData).then(response => {
-                                            console.log(response);
-                                            localStorage.setItem('addressObj', {});
-                                            localStorage.setItem(saveAddress, 'false');
-                                        })
-                                    }
-                                        this.$router.push({path: '/restaurant/'+localStorage.getItem('isRes')});
-                                        localStorage.setItem('isRes', 'false');
+                                                console.log(response);
+                                                localStorage.setItem('addressObj', {});
+                                                localStorage.setItem(saveAddress, 'false');
+                                            })
+                                            this.$router.push({path: '/restaurant/'+localStorage.getItem('isRes')});
+                                            localStorage.setItem('isRes', 'false');
+                                        }
+                                        
                                     }
                                     
                                 } else {

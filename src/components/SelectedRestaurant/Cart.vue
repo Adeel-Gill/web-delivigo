@@ -408,7 +408,7 @@
             }
         },
         created() {
-            this.$root.$on('mealMenu', response => {
+            this.$root.$on('tags', response => {
                 this.foodTypes = response;
             });
             console.log('inCreated');

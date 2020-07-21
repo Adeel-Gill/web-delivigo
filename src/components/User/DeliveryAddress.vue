@@ -26,6 +26,9 @@
             </div>
             </div>
             <div v-else>
+                <!-- <transition name="bounce">
+                    <p v-if="show">JA JA TURR JA</p>
+                </transition> -->
                 <emptyError></emptyError>
             </div>
         </div>
@@ -85,7 +88,7 @@
     import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
     import VueLoadingButton from 'vue-loading-button';
     import MapNavigation from "../Map/MapNavigation";
-    import emptyError from "../error/emptyError.vue";
+    import addressEmpty from "../error/addressEmpty.vue";
     import {saveAddress, setDefaultAddress, getAllCustomerAddresses, deleteAddress} from "../api/DeliveryAddress";
     import {EventBus, map} from '../../main'
     export default {
@@ -94,7 +97,7 @@
         components: {
             buttonSpinner: VueLoadingButton,
             appMapNav: MapNavigation,
-            emptyError
+            emptyError: addressEmpty
         },
         data() {
             return {
@@ -105,6 +108,7 @@
                 allAddresses: [],
                 country: '',
                 isLoading: false,
+                show: false,
                 mapData: {},
                 addressObj: {
                     "AddressLine": "string",
@@ -171,7 +175,9 @@
                                                 this.showNotification('success', this.newLang.success, this.newLang.addressSaved);
                                                 this.hideModal();
                                             }
+
                                         }
+                                        this.show = true;
                                     }, error => {
                                         console.log(error);
                                         this.isLoading = false;
@@ -436,4 +442,21 @@
             float: none !important;
         }
     }
+    .bounce-enter-active {
+  animation: bounce-in .5s;
+}
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>

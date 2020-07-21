@@ -92,7 +92,7 @@
     import VueLoadingButton from 'vue-loading-button';
     import {checkIfStripeExist, verifyStripe} from "../api/CheckStripe"
     import {validEmail} from "../util/validate"
-    import emptyError from "../error/emptyError.vue"
+    import cardEmpty from "../error/cardEmpty.vue"
     import {updateEmail} from "../api/UpdateEmail"
     let stripe = Stripe(`pk_test_TYPazNES7wQJ4WyN83oLTlEa`),
         elements = stripe.elements(),
@@ -102,7 +102,7 @@
         props: ['newLang'],
         components: {
             buttonSpinner: VueLoadingButton,
-            emptyError
+            emptyError: cardEmpty
         },
         data() {
             return {
