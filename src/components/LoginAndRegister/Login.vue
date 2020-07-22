@@ -131,13 +131,14 @@
                 if(this.checkObject()) {
                      checkCredentials(this.userData).then(response => {
                         if(response.HasErrors === false) {
-                            if(localStorage.getItem('isRes') === 'false') {
-                                console.log('id',response.Id);
+                            if(localStorage.getItem('isRes') === 'false' || localStorage.getItem('isRes') == null) {
+                                console.log('trueid',response.Id);
                                 localStorage.setItem('userProfile',response.UrlImage);
                                 // console.log('cart',JSON.parse(localStorage.getItem('cart').replace (/(^')|('$)/g, '')));
                                 // console.log('cart',JSON.parse(JSON.stringify(localStorage.getItem('cart'))));
 
                                 console.log('cart',JSON.parse(localStorage.getItem('cart')));
+                                 this.$store.dispatch('storeToken',response);
                                 if(localStorage.getItem('saveAddress') === 'true') {
                                     console.log('test1');
                                     var addressData = JSON.parse(localStorage.getItem('addressObj'));
@@ -148,8 +149,9 @@
                                         localStorage.setItem('addressObj', JSON.stringify({}));
                                         localStorage.setItem(saveAddress, 'false');
                                     })
+                                    this.$emit('updateTheCounter', '');
                                 }
-                                this.$store.dispatch('storeToken',response);
+                               
                                 // localStorage.setItem("changeCount", Number(localStorage.getItem("changeCount"))++);
                                 this.$router.push({path:'/'});
                                 //  var num =Number(localStorage.getItem("changeCount"));
@@ -162,7 +164,7 @@
                                 this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
                                 this.$store.dispatch('storeToken',response);
                                 this.$emit('updateTheCounter', '');
-                                if(localStorage.getItem('saceAddress') === 'true') {
+                                if(localStorage.getItem('saveAddress') === 'true') {
                                     var addressData = JSON.parse(localStorage.getItem('addressObj'));
                                     addressData.CustomerId = response.Id;
                                     saveAddress(addressData).then(response => {
@@ -170,6 +172,8 @@
                                         localStorage.setItem('addressObj', JSON.stringify({}));
                                         localStorage.setItem(saveAddress, 'false');
                                     })
+                                    this.$router.push({path: '/restaurant/'+localStorage.getItem('isRes')});
+                                    localStorage.setItem('isRes', 'false');
                                 } else {
                                     this.$router.push({path: '/restaurant/'+localStorage.getItem('isRes')});
                                     localStorage.setItem('isRes', 'false');
@@ -241,6 +245,7 @@
                                         console.log('id',response.Id);
                                         localStorage.setItem('userProfile',response.UrlImage);
                                         this.$store.dispatch('storeToken',response);
+                                        this.$emit('updateTheCounter', '');
                                         if(localStorage.getItem('saveAddress') === 'true') {
                                         var addressData = JSON.parse(localStorage.getItem('addressObj'));
                                         addressData.CustomerId = response.Id;
@@ -256,6 +261,7 @@
                                     } else {
                                         this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
                                         console.log('id',response.Id);
+                                        this.$emit('updateTheCounter', '');
                                         localStorage.setItem('userProfile',response.UrlImage);
                                         this.$store.dispatch('storeToken',response);
                                         localStorage.setItem("fbLogin", true);

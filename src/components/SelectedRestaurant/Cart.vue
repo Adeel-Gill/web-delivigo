@@ -453,6 +453,7 @@
         },
         mounted() {
              this.setCount();
+             this.hideToggle();
         },
         methods: {
             setCount() {
@@ -461,7 +462,7 @@
                 console.log(document.getElementsByClassName('fab-wrapper'));
                 let root = document.documentElement;
                 if(localStorage.getItem('items') > 0) {
-                    root.style.setProperty('--cart-count', "'"+localStorage.getItem('items')+"'");
+                    root.style.setProperty('--cart-count', "'"+(Number(localStorage.getItem('items')) + 1)+"'");
                     // document.documentElement.style.setProperty('cart-count', '');
                     // document.documentElement.style.setProperty('cart-count', localStorage.getItem('items'));
                 // document.getElementsByClassName('fab-wrapper')[0].setAttribute('cart-count','6');
@@ -480,6 +481,7 @@
                     this.$store.dispatch('removeCartItem',i);
                     this.checkCartAfterOrderItemDeletion();
                     this.showNotification('success','Success','Item removed.');
+                    this.setCount();
                     dialog.close();
                 }).catch(() => {
                     this.showNotification('info','Info','Deletion cancelled');

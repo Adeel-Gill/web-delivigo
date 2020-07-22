@@ -254,6 +254,7 @@ import VFacebookLogin from 'vue-facebook-login-component'
                                         console.log('id',response.Id);
                                         localStorage.setItem('userProfile',response.UrlImage);
                                         this.$store.dispatch('storeToken',response);
+                                        this.$emit('updateTheCounter', '');
                                         if(localStorage.getItem('saveAddress') === 'true') {
                                         var addressData = JSON.parse(localStorage.getItem('addressObj'));
                                         addressData.CustomerId = response.Id;
@@ -272,6 +273,7 @@ import VFacebookLogin from 'vue-facebook-login-component'
                                         localStorage.setItem('userProfile',response.UrlImage);
                                         this.$store.dispatch('storeToken',response);
                                         localStorage.setItem("fbLogin", true);
+                                        this.$emit('updateTheCounter', '');
                                         if(localStorage.getItem('saveAddress') === 'true') {
                                         var addressData = JSON.parse(localStorage.getItem('addressObj'));
                                         addressData.CustomerId = response.Id;
