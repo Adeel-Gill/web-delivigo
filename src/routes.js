@@ -19,8 +19,8 @@ import checkout from "./components/SelectedRestaurant/Checkout";
 import BillingAndPayments from "./components/User/BillingAndPayments";
 import LoginAndRegister from "./components/LoginAndRegister/LoginAndRegister";
 import Login from "./components/LoginAndRegister/Login";
-import SearchPhone from "./components/LoginAndRegister/SearchPhone.vue";
-import ResetPassword from "./components/LoginAndRegister/ResetPassword.vue";
+import SearchPhone from "./components/SearchAndReset/SearchPhone.vue";
+import ResetPassword from "./components/SearchAndReset/ResetPassword.vue";
 import Register from "./components/LoginAndRegister/Register";
 import OrderTracking from "./components/Order/OrderTracking";
 import DiamondAward from "./components/User/DiamondAward";
@@ -50,22 +50,7 @@ export const routes = [
                         next();
                     }
                 } },
-                { path: '/searchPhone', component: SearchPhone, beforeEnter(to, from, next) {
-                    console.log('searchPhone',localStorage.getItem('token'));
-                    if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
-                        next('/');
-                    } else {
-                        next();
-                    }
-                }},
-                { path: '/resetPassword', component: ResetPassword, beforeEnter(to, from, next) {
-                    console.log('reset',localStorage.getItem('token'));
-                    if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
-                        next('/');
-                    } else {
-                        next();
-                    }
-                }},
+                
             { path: '/signup', component: Register, beforeEnter(to, from, next) {
                     console.log('signup',localStorage.getItem('token'));
                     if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
@@ -80,6 +65,22 @@ export const routes = [
                 next('/');
             } else {
                 next()
+            }
+        }},
+        { path: '/searchPhone', component: SearchPhone, beforeEnter(to, from, next) {
+            console.log('searchPhone',localStorage.getItem('token'));
+            if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
+                next('/');
+            } else {
+                next();
+            }
+        }},
+        { path: '/resetPassword', component: ResetPassword, beforeEnter(to, from, next) {
+            console.log('reset',localStorage.getItem('token'));
+            if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
+                next('/');
+            } else {
+                next();
             }
         }},
     { path: '/filter', component: Filter },
