@@ -40,13 +40,13 @@
                                  exact>
                         <a class="nav-link">{{newLang.discount}}</a>
                     </router-link>
-                    <router-link class="nav-item"
+                    <!-- <router-link class="nav-item"
                                  to="/diamond"
                                  tag="li"
                                  active-class="active"
                                  exact>
                         <a class="nav-link">Diamond Award</a>
-                    </router-link>
+                    </router-link> -->
                     <router-link class="nav-item"
                                  to="/support"
                                  tag="li"
