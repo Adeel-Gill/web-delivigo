@@ -278,6 +278,7 @@
                     console.log('profile',response);
                     this.userData = response;
                     localStorage.setItem('userProfile', this.userData.UrlImage);
+                    localStorage.setItem('name', this.userData.FullName);
                      
                 }, error => {
                     console.log(error);

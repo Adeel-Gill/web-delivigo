@@ -122,7 +122,7 @@
                                 </div>
                                 <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
                                 <div class="input-group-append">
-                                    <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+                                    <span class="input-group-text send_btn"><i class="fas fa-location-arrow" @click="sendMessage"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -134,8 +134,51 @@
 </template>
 
 <script>
+import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr'
     export default {
-        name: "Support"
+        name: "Support",
+        data() {
+            return {
+                connection:  null,
+            }
+        },
+        mounted() {
+
+            this.establishConnection(); 
+        },
+        methods: {
+            sendMessage() {
+                console.log('sending message');
+                this.connection.invoke('SendPrivateMessage', '0', 'customer', 'Ja ja turr ja').catch(error => {
+                    this.showNotification('error', 'Send Error', error);
+                })
+            },
+            establishConnection() {
+                console.log('starting connection');
+                try {
+                    this.connection = new HubConnectionBuilder().withUrl('https://www.foodizza.com')
+                                .configureLogging(LogLevel.Information).build();
+                    this.connection.start().catch(error => {
+                        this.showNotification('error', 'Error Start', error);
+                    });
+                    this.connection.invoke('Connect',localStorage.getItem('name'),localStorage.getItem('id'), 'customer').catch(error => {
+                        this.showNotification('error', 'Error Connect', error);
+                    })
+                    this.showNotification('success', 'Success', 'Connection established successfully!');
+                } catch(err) {
+                    this.showNotification('error', 'Error', err);
+                }
+            },
+            showNotification(type, title, message) {
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
+                })
+            }
+        }
     }
 </script>
 
