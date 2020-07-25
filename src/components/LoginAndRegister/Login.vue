@@ -44,6 +44,7 @@
 <!--                </v-facebook-login-scope>-->
 
             </form>
+            <router-link to="/searchPhone" >Forgot Password? </router-link>
             </div>
         </div>
     </div>

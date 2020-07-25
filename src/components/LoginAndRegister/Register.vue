@@ -23,7 +23,7 @@
                         <input type="text"
                                class="form-control"
                                v-model="userData.mobile"
-                               placeholder="e.g 03121234123"
+                               placeholder="e.g +3121234123"
                                v-on:input="checkMobileNumber()"
                                id="number" required>
                         <label class="errorMessage" id="numberError"></label>
@@ -172,6 +172,7 @@ import VFacebookLogin from 'vue-facebook-login-component'
         },
         mounted() {
             this.$emit("updateTheCounter",'');
+            localStorage.setItem('isRegOtp', null);
         },
         methods: {
             checkTerms() {
@@ -198,7 +199,9 @@ import VFacebookLogin from 'vue-facebook-login-component'
                         if(response.HasErrors === false) {
                             this.showNotification('success',this.newLang.success,this.newLang.signUpSucces);
                             EventBus.$emit('userImage',baseAddress+response.ImageUrl);
-                            this.$router.push({path:'/signin'});
+                            localStorage.setItem('mobileNumber', this.userData.mobile);
+                            localStorage.setItem('isRegOtp', 'true');
+                            this.$router.push({path:'/confirmOtp'});
                         } else {
                             this.showNotification('error',this.newLang.error,this.newLang.signUpFailed);
                         }
@@ -355,9 +358,14 @@ import VFacebookLogin from 'vue-facebook-login-component'
                     document.getElementById('numberError').innerHTML = this.newLang.numberEmptyError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                }else if(!this.userData.mobile.match(/^[0-9]+$/)) {
+                }/*else if(!this.userData.mobile.match(/^[0-9]+$/)) {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberWrongInpur;
+                    document.getElementById('number').style.borderColor = "red";
+                    this.numberCheck = false;
+                }*/ else if(this.userData.mobile[0] !== '+') {
+                    document.getElementById('numberError').style.visibility = "visible";
+                    document.getElementById('numberError').innerHTML = this.newLang.numberFormatError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
                 } else if(this.userData.mobile.length < 11) {

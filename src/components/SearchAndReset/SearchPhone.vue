@@ -6,14 +6,16 @@
                     <h3 class="card-title">Forgot Password</h3>
                     <p class="card-text">We will send a OTP code to this number. So make sure correct number would be given.</p>
                     <label for="forgotPassword">Phone Number</label>
+                    <label class="errorMessage" id="numberError"></label>
                     <div class="input-group">
-                        <div class="input-group-prepend">
+                        <!-- <div class="input-group-prepend">
                             <span class="input-group-text" id="plusSign">+</span>
-                        </div>
-                        <input type="text" class="form-control" id="forgotPassword" placeholder="352 74638333" aria-label="Phone Number" aria-describedby="plusSign">
+                        </div> -->
+                        <input type="text" class="form-control" v-model="numberObj.Number" v-on:input="checkMobileNumber" id="number" placeholder="+352 74638333" aria-label="Phone Number" aria-describedby="plusSign"><br>
+                        
                     </div>
                     <div class="w-50 mx-auto">
-                        <button type="button" class="btn">Send</button>
+                        <button type="button" :disabled="isDisabled" @click="getOtp" class="btn">Send</button>
                     </div>
                 </div>
             </div>
@@ -42,8 +44,93 @@
 </template>
 
 <script>
+import {lang} from "../lang/lang";
+import {EventBus} from "../../main";
+import {getOtp} from "../api/GetOtp";
 export default {
-    name: "SearchPhone"
+    name: "SearchPhone",
+    data() {
+        return {
+            isDisabled: true,
+            local: lang.en,
+            numberObj: {
+                "Number": ''
+            }
+        }
+    },
+    created() {
+             this.checkLang();
+        EventBus.$on("changeLang", () => {
+            this.checkLang();
+            })
+    },
+    methods: {
+        getOtp() {
+            getOtp(this.numberObj).then(response => {
+                if(response.HasErrors) {
+                    this.showNotification('error', 'Error', 'Error occurred please try later!')
+                } else {
+                    localStorage.setItem('mobileNumber', this.numberObj.Number);
+                    localStorage.setItem('isRegOtp', 'true');
+                    this.$router.push({path: '/resetPassword'});
+                }
+            })
+        },
+        checkMobileNumber() {
+                var res = false;
+                if(this.numberObj.Number === "") {
+                    document.getElementById('numberError').style.visibility = "visible";
+                    document.getElementById('numberError').innerHTML = this.local.numberEmptyError;
+                    document.getElementById('number').style.borderColor = "red";
+                    this.isDisabled = true;
+                }/*else if(!this.userData.mobile.match(/^[0-9]+$/)) {
+                    document.getElementById('numberError').style.visibility = "visible";
+                    document.getElementById('numberError').innerHTML = this.newLang.numberWrongInpur;
+                    document.getElementById('number').style.borderColor = "red";
+                    this.numberCheck = false;
+                }*/ else if(this.numberObj.Number[0] !== '+') {
+                    document.getElementById('numberError').style.visibility = "visible";
+                    document.getElementById('numberError').innerHTML = this.local.numberFormatError;
+                    document.getElementById('number').style.borderColor = "red";
+                    this.isDisabled = true;
+                } else if(this.numberObj.Number.length < 11) {
+                    document.getElementById('numberError').style.visibility = "visible";
+                    document.getElementById('numberError').innerHTML = this.local.numberLengthError;
+                    document.getElementById('number').style.borderColor = "red";
+                    this.isDisabled = true;
+                } else {
+                    document.getElementById('numberError').style.visibility = "hidden";
+                    document.getElementById('numberError').innerHTML = "";
+                    document.getElementById('number').style.borderColor = "grey";
+                    this.isDisabled = false;
+                    res = true;
+                }
+                return res;
+            },
+        checkLang() {
+            console.log("hereItIs");
+                var temp = localStorage.getItem("lang");
+                if(temp == null || temp === "EN") {
+                localStorage.setItem("lang", "EN");
+                this.local = lang.en;
+                } else if(temp === "FN" ) {
+                this.local = lang.fn;
+                localStorage.setItem("lang", "FN");
+                } else {
+                this.local = lang.sp;
+                localStorage.setItem("lang", "ES");
+                }
+            },
+            showNotification(type, title, message) {
+                this.$notify({
+                    group: 'foo',
+                    type: type,
+                    title: title,
+                    text: message,
+                    duration: 2000
+                })
+            },
+    }
 }
 </script>
 <style scoped>

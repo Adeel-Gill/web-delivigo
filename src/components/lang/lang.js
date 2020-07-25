@@ -230,6 +230,7 @@ export const lang = {
         driverOnItsWayPickup: "Driver is on its way to pickup your order",
         orderIsPicked: "Order is picked up by driver",
         driverOnItsWatDeliver: "Driver is on its way to deliver order",
+        numberFormatError: "Number format not correct. Example: +3333333333",
         delivigoDetail: "DeliviGo is a fresh option in food delivery business. We are local company, our roots are deep in the soil of Turku. Delivigo doesn’t deliver just food. Delivigo represents quality time with family and friends, calm everyday life and happy partytime.",
     },
     fn: {
@@ -463,6 +464,7 @@ export const lang = {
         driverOnItsWayPickup: "Kuljettaja on matkalla noutamaan tilauksesi",
         orderIsPicked: "Tilauksen noutaa kuljettaja",
         driverOnItsWatDeliver: "Kuljettaja on matkalla toimittamaan tilausta",
+        numberFormatError: "Numeromuoto ei ole oikea. Esimerkki: +3333333333",
         delivigoDetail: "DeliviGo on tuore vaihtoehto ruoan toimitusalalla. Olemme paikallinen yritys, juuret ovat syvällä Turun maaperässä. Delivigo ei toimita vain ruokaa. Delivigo edustaa laadukasta aikaa perheen ja ystävien kanssa, rauhallista arkea ja iloista juhlallisuutta.",
     },
     sp: {
@@ -696,6 +698,7 @@ export const lang = {
         driverOnItsWayPickup: "El conductor está en camino de recoger su pedido.",
         orderIsPicked: "El conductor está en camino de recoger su pedido.",
         driverOnItsWatDeliver: "El conductor está en camino de entregar el pedido",
+        numberFormatError: "Formato de número incorrecto. Ejemplo: +3333333333",
         delivigoDetail: "DeliviGo es una nueva opción en el negocio de entrega de alimentos. Somos una empresa local, nuestras raíces están en lo profundo de la tierra de Turku. Delivigo no entrega solo comida. Delivigo representa tiempo de calidad con familiares y amigos, calma la vida cotidiana y felices fiestas.",
 
     }

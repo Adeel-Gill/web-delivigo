@@ -70,6 +70,7 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    // debugger;
     console.log('response',response)
     const res = response
     EventBus.$emit('StartOverlay', false);
