@@ -9,7 +9,8 @@
                 <h1 class="profile-heading d-inline">{{newLang.deliveryAddress}}</h1>
                 <button class="btn btn-submit float-right" @click="showModal"><i class="fas fa-plus mr-3"></i>{{newLang.addAddress}}</button>
             </div>
-            <div class="address-block row pt-4 m-0 w-100" v-for="address in allAddresses" :key="address.Id">
+            <div v-if="allAddresses.length">
+                <div class="address-block row pt-4 m-0 w-100" v-for="address in allAddresses" :key="address.Id">
 
                 <div class="col-sm-10">
                 <h6 class="address-heading">{{address.Apartment}}</h6>
@@ -22,6 +23,13 @@
                         <label>{{newLang.default}}</label>
                     </div>
                 </div>
+            </div>
+            </div>
+            <div v-else>
+                <!-- <transition name="bounce">
+                    <p v-if="show">JA JA TURR JA</p>
+                </transition> -->
+                <emptyError></emptyError>
             </div>
         </div>
 
@@ -80,6 +88,7 @@
     import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
     import VueLoadingButton from 'vue-loading-button';
     import MapNavigation from "../Map/MapNavigation";
+    import addressEmpty from "../error/addressEmpty.vue";
     import {saveAddress, setDefaultAddress, getAllCustomerAddresses, deleteAddress} from "../api/DeliveryAddress";
     import {EventBus, map} from '../../main'
     export default {
@@ -88,6 +97,7 @@
         components: {
             buttonSpinner: VueLoadingButton,
             appMapNav: MapNavigation,
+            emptyError: addressEmpty
         },
         data() {
             return {
@@ -98,6 +108,7 @@
                 allAddresses: [],
                 country: '',
                 isLoading: false,
+                show: false,
                 mapData: {},
                 addressObj: {
                     "AddressLine": "string",
@@ -117,7 +128,7 @@
             },
             setMapData(obj) {
                 this.mapData = JSON.parse(obj);
-                if(this.mapData.place_type[0] === "poi") {
+                if(this.mapData.place_type[0]) {
                     this.city = this.mapData.context[1].text;
                     this.state = this.mapData.context[2].text;
                     this.country = this.mapData.context[3].text;
@@ -125,6 +136,7 @@
                 } else {
                     this.showNotification('error',this.newLang.error,this.newLang.nearByAddress);
                     this.mapData = {};
+                    this.isLoading = false;
                     this.city = this.state = this.country = '';
                 }
 
@@ -163,7 +175,9 @@
                                                 this.showNotification('success', this.newLang.success, this.newLang.addressSaved);
                                                 this.hideModal();
                                             }
+
                                         }
+                                        this.show = true;
                                     }, error => {
                                         console.log(error);
                                         this.isLoading = false;
@@ -428,4 +442,21 @@
             float: none !important;
         }
     }
+    .bounce-enter-active {
+  animation: bounce-in .5s;
+}
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>

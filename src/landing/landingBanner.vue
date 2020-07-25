@@ -58,7 +58,8 @@
   import mapboxgl from "mapbox-gl/dist/mapbox-gl";
   import {map} from "../main";
   import {lang} from "../components/lang/lang";
-  import 'mapbox-gl/dist/mapbox-gl.css'
+  import 'mapbox-gl/dist/mapbox-gl.css';
+  import {saveAddress} from "../components/api/DeliveryAddress";
   import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
   import axios from 'axios'
   export default {
@@ -76,6 +77,16 @@
           position: null,
           local: lang.en,
           userAddress: '',
+          addressObj: {
+              "AddressLine":"",
+              "Longitude":0.0,
+              "Latitude": 0.0,
+              "CustomerId":0,
+              "BludingNumber":"string",
+              "Apartment":"",
+              "Floor":"string",
+              "IsDefault":true
+          },
         slides:[
             {
                 // heading:'ORDER DELIVERY & TAKE OUT',
@@ -106,10 +117,14 @@
         navigateTo() {
           this.data = JSON.parse(this.geocoder.lastSelected);
           console.log('data',this.data);
+         
           if(this.data != null) {
+              console.log("inside if");
+            localStorage.setItem("localAddress", this.data.place_name);
               this.longitude = this.data.geometry.coordinates[0];
               this.latitude = this.data.geometry.coordinates[1];
               if((this.longitude != null && this.latitude != null)) {
+                  this.saveAddress();
                   this.$router.push({path: '/filter',query: {longitude: this.longitude, latitude: this.latitude}});
                   this.$emit("updateTheCounter", "");
                   this.$root.$on('popularData', popularRestaurants => {
@@ -124,6 +139,7 @@
               if(this.position != null) {
                   console.log("inside condition");
                   if((this.position.coords.longitude != null && this.position.coords.latitude != null)) {
+                      this.saveAddress();
                       this.$router.push({path: '/filter',query: {longitude: this.position.coords.longitude, latitude: this.position.coords.latitude}});
                       this.$root.$on('popularData', popularRestaurants => {
                           console.log('inLandingBannerOn'+popularRestaurants);
@@ -137,6 +153,20 @@
                   this.showNotification('error','Error','Please select nearby location...!');
               }
 
+          }
+
+          
+        },
+        saveAddress() {
+            if(localStorage.getItem("isLogin") === "true") {
+              this.addressObj.CustomerId = localStorage.getItem("id");
+              saveAddress(this.addressObj).then(response => {
+                  console.log(response);
+                  localStorage.setItem('saveAddress', 'false');
+              });
+          } else {
+              localStorage.setItem('addressObj', JSON.stringify(this.addressObj));
+              localStorage.setItem('saveAddress', 'true');
           }
         },
         isEmpty(obj) {
@@ -159,10 +189,15 @@
               console.log('position', this.position.coords.longitude,this.position.coords.latitude);
               axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${this.position.coords.longitude}%2C${this.position.coords.latitude}.json?access_token=pk.eyJ1IjoiYXFpYmphdmVkMSIsImEiOiJjazRtZ3Z5YXUwNG9vM21wNTRoODFicnZtIn0.UjSkEQkYpVOmS0QUYpXoHg`)
                   .then(response => {
-                      console.log('Address :: ',response);
+                      console.log('Address :: ',response.data);
                       if(response.data.features.length > 0) {
                           this.userAddress = response.data.features[0].place_name;
                           localStorage.setItem("isAddress", true);
+                          this.addressObj.AddressLine = response.data.features[0].place_name;
+                          this.addressObj.Longitude = response.data.features[0].center[0];
+                          this.addressObj.Latitude = response.data.features[0].center[1];
+                          this.addressObj.Apartment = response.data.features[0].text;
+                          
                           localStorage.setItem("localAddress", this.userAddress);
                           this.geocoder.inputString = this.userAddress;
                           document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].value = this.userAddress;

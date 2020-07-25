@@ -10,12 +10,19 @@
                          >{{foodType.Name}}</button>
             </div>
         </div>
-        <div>
+        <div class="cart-btn">
             <div @click = "handleToggleDrawer" style="margin-top: 60px;">
+                <!--<v-badge
+                color="green"
+                left
+                overlap
+                >
+                <v-icon large>fas fa-shopping-cart</v-icon>
+            </v-badge>-->
                 <fab
                         style="margin-top: 80px;"
                         position="top-right"
-                        position-type="absolute"
+                        position-type="fixed"
                         ripple-show="true"
                         ripple-color="dark"
                         bg-color="#8ba939"
@@ -23,7 +30,10 @@
                         fixed-tooltip="true"
                         main-icon="shopping_cart"
                         enable-rotation="false"
-                ></fab>
+
+                >
+                </fab>
+
             </div>
             <vue-drawer-layout
                     ref="drawer"
@@ -289,6 +299,7 @@
     import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
     import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
     import {fetchRestaurantById} from "../api/FilterRestaurants";
+    import 'vuetify/dist/vuetify.min.css'
     import 'owl.carousel/dist/assets/owl.carousel.css';
     import 'owl.carousel/dist/assets/owl.carousel2.css';
     import 'owl.carousel';
@@ -340,6 +351,7 @@
                 cartData: [],
                 restaurantImages: [],
                 resID: null,
+                isOpen: false,
                 mealID: null,
                 settings: {
                     "edgeFriction": 0.35,
@@ -395,7 +407,7 @@
             }
         },
         created() {
-            this.$root.$on('mealMenu', response => {
+            this.$root.$on('tags', response => {
                 this.foodTypes = response;
             });
             console.log('inCreated');
@@ -407,6 +419,13 @@
                     // console.log('allImages',this.allImages);
                 })
             });
+            this.$root.$on("itemAddedToCart", response => {
+                console.log("here received");
+                this.setCount();
+                // graphElem.addEventListener('click', function (event) {
+                //     event.target.setAttribute('data-before', 'anything');
+                // });
+            })
             console.log('redID',this.resID,this.$store.state.cartData);
             console.log('redID',this.resID == null);
             console.log('insideTimeOUT',this.$store.state.cartData.length ,this.resID == null);
@@ -430,8 +449,30 @@
                 this.paramID = this.$route.params.id;
                 this.fetchRestaurantByParam(this.paramID);
             }
+           
+        },
+        mounted() {
+             this.setCount();
+             this.hideToggle();
         },
         methods: {
+            setCount() {
+                console.log('items',localStorage.getItem('items'));
+                console.log('element',document.getElementsByClassName('fab-wrapper'));
+                console.log(document.getElementsByClassName('fab-wrapper'));
+                let root = document.documentElement;
+                if(localStorage.getItem('items') > 0) {
+                    root.style.setProperty('--cart-count', "'"+(Number(localStorage.getItem('items')) + 1)+"'");
+                    // document.documentElement.style.setProperty('cart-count', '');
+                    // document.documentElement.style.setProperty('cart-count', localStorage.getItem('items'));
+                // document.getElementsByClassName('fab-wrapper')[0].setAttribute('cart-count','6');
+                } else {
+                    root.style.setProperty('--cart-count', "'0'");
+                    // document.getElementsByClassName('fab-wrapper')[0].attributes[5].value = '0';
+                    // document.getElementsByClassName('fab-wrapper')[0].setAttribute('cart-count','0');
+                }
+                console.log('element',document.getElementsByClassName('fab-wrapper'));
+            },
             itemRemoveInOrder(i) {
                 this.$dialog.confirm('Item will be removed from order. Continue?', {
                     loader: true
@@ -440,6 +481,7 @@
                     this.$store.dispatch('removeCartItem',i);
                     this.checkCartAfterOrderItemDeletion();
                     this.showNotification('success','Success','Item removed.');
+                    this.setCount();
                     dialog.close();
                 }).catch(() => {
                     this.showNotification('info','Info','Deletion cancelled');
@@ -744,13 +786,16 @@
             async startCheckout() {
                 console.log('start');
                 this.$bvModal.show('checkout');
+                 this.hideToggle();
                 if(localStorage.getItem('id') == null|| localStorage.getItem('id') === 'null' || localStorage.getItem('isLogin') === false) {
                     this.showNotification('info','Info','Please login first to place order');
+                    localStorage.setItem('isRes', this.paramID);
                     this.$router.push('/signin')
                 } else {
+                    localStorage.setItem('isRes', 'false');
                     this.cartItems = this.$store.state.cartData;
                     this.basicDeliveryFee = deliveryCharges.basicDeliveryFee;
-                    this.hideToggle();
+                   
                     console.log('start2');
                     console.log('cartItems',this.cartItems);
                     fetchUserProfile(Number(localStorage.getItem('id'))).then(response => {
@@ -896,11 +941,22 @@
                 this.$bvModal.hide('checkout');
             },
             handleToggleDrawer() {
-                this.checkCart();
-                console.log('insideToggle',this.$refs.drawer);
-                this.$refs.drawer.toggle();
+                if(!this.isOpen) {
+                    this.checkCart();
+                    console.log('insideToggle',this.$refs.drawer);
+                    this.$refs.drawer.toggle();
+                    document.getElementsByClassName('drawer-layout')[0].style.display = 'block';
+                    this.isOpen = true;
+                } else {
+                    
+                    this.hideToggle();
+                }
+                
             },
             hideToggle() {
+                console.log('hide toggle');
+                this.isOpen = false;
+                document.getElementsByClassName('drawer-layout')[0].style.display = 'none';
                 this.$refs.drawer.toggle();
             },
             handleMaskClick() {
@@ -944,6 +1000,23 @@
     }
 </script>
 <style scoped>
+    .drawer-layout {
+        position: fixed !important;
+        z-index: 900;
+    }
+
+    .item-no {
+        background: red;
+        border-radius: 50%;
+        color: white;
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        top: 0;
+        right: 0px;
+        z-index: 1000;
+    }
     .slected-bg {
         position: relative;
         background-repeat: no-repeat;
@@ -1324,8 +1397,6 @@
 
 
 
-
-
     /*.card-sec{
         display: flex;
         flex-wrap: nowrap;
@@ -1350,4 +1421,5 @@
         /*height: 100px;*/
         /*background-color: #8f8f90;*/
     }
+    
 </style>

@@ -324,7 +324,8 @@
                         this.showNotification('info','Info','Place order now to add other restaurant items!');
                     })
                 }
-
+                this.$root.$emit("itemAddedToCart");
+                localStorage.setItem("items", this.$store.state.cartData.length);
             },
             checkArrayResponse(arr,type) {
                 if(arr.length>0) {

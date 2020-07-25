@@ -21,7 +21,7 @@
                                 <i class="fas">{{restaurant.ApproximateCostPerPerson}}</i>
                             </div>
                             <div class="col-4 padding-top-botom">
-                                <p class="font-size-9"><i class="far fa-clock"></i> {{restaurant.Time}}</p>
+                                <p class="font-size-9"><i class="far fa-clock"></i> {{restaurant.DeliveryTime}}</p>
                             </div>
                         </div>
                     </div>

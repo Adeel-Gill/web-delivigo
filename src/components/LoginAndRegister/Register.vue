@@ -23,7 +23,7 @@
                         <input type="text"
                                class="form-control"
                                v-model="userData.mobile"
-                               placeholder="e.g 03121234123"
+                               placeholder="e.g +3121234123"
                                v-on:input="checkMobileNumber()"
                                id="number" required>
                         <label class="errorMessage" id="numberError"></label>
@@ -76,7 +76,7 @@
                                     @sdk-loaded="sdkLoaded">
                     </facebook-login>
                 </div>
-
+                <!-- <v-facebook-login app-id="649127768995419"></v-facebook-login> -->
             </form>
             </div>
         </div>
@@ -106,14 +106,16 @@
     import {EventBus} from "../../main";
     import {validEmail} from "../util/validate";
     import {facebookAPILogin} from "../api/FacebookLogin";
+    import {saveAddress} from "../api/DeliveryAddress.js";
     import TermsAndConditions from '@/components/Documents/TermsAndConditions'
     import Policy from '@/components/Documents/Policy'
 import facebookLogin from 'facebook-login-vuejs';
+import VFacebookLogin from 'vue-facebook-login-component'
     export default {
         name: "Register",
         props: ['newLang'],
          components: {
-          // VFacebookLogin
+          VFacebookLogin,
           //   VFacebookLoginScope
             facebookLogin,
             TermsAndConditions,
@@ -168,6 +170,10 @@ import facebookLogin from 'facebook-login-vuejs';
                 payload: null,
             }
         },
+        mounted() {
+            this.$emit("updateTheCounter",'');
+            localStorage.setItem('isRegOtp', null);
+        },
         methods: {
             checkTerms() {
                 var isChecked = document.registerForm.terms.checked;
@@ -193,7 +199,9 @@ import facebookLogin from 'facebook-login-vuejs';
                         if(response.HasErrors === false) {
                             this.showNotification('success',this.newLang.success,this.newLang.signUpSucces);
                             EventBus.$emit('userImage',baseAddress+response.ImageUrl);
-                            this.$router.push({path:'/signin'});
+                            localStorage.setItem('mobileNumber', this.userData.mobile);
+                            localStorage.setItem('isRegOtp', 'true');
+                            this.$router.push({path:'/confirmOtp'});
                         } else {
                             this.showNotification('error',this.newLang.error,this.newLang.signUpFailed);
                         }
@@ -244,13 +252,44 @@ import facebookLogin from 'facebook-login-vuejs';
                             this.fbUserData.ImageUrl = userInformation.picture.data.url;
                             facebookAPILogin(this.fbUserData).then(response => {
                                 if(response.HasErrors === false) {
-                                    this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
-                                    console.log('id',response.Id);
-                                    localStorage.setItem('userProfile',response.UrlImage);
-                                    this.$store.dispatch('storeToken',response);
-                                    this.$router.push({path:'/'});
-                                    localStorage.setItem("fbLogin", true);
-                                    this.$router.go();
+                                    if(localStorage.getItem('isRes' === 'false')) {
+                                        this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
+                                        console.log('id',response.Id);
+                                        localStorage.setItem('userProfile',response.UrlImage);
+                                        this.$store.dispatch('storeToken',response);
+                                        this.$emit('updateTheCounter', '');
+                                        if(localStorage.getItem('saveAddress') === 'true') {
+                                        var addressData = JSON.parse(localStorage.getItem('addressObj'));
+                                        addressData.CustomerId = response.Id;
+                                        saveAddress(addressData).then(response => {
+                                            console.log(response);
+                                            localStorage.setItem('addressObj', JSON.stringify({}));
+                                            localStorage.setItem(saveAddress, 'false');
+                                        })
+                                    }
+                                        this.$router.push({path:'/'});
+                                        localStorage.setItem("fbLogin", true);
+                                        // this.$router.go();
+                                    } else {
+                                        this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
+                                        console.log('id',response.Id);
+                                        localStorage.setItem('userProfile',response.UrlImage);
+                                        this.$store.dispatch('storeToken',response);
+                                        localStorage.setItem("fbLogin", true);
+                                        this.$emit('updateTheCounter', '');
+                                        if(localStorage.getItem('saveAddress') === 'true') {
+                                        var addressData = JSON.parse(localStorage.getItem('addressObj'));
+                                        addressData.CustomerId = response.Id;
+                                        saveAddress(addressData).then(response => {
+                                            console.log(response);
+                                            localStorage.setItem('addressObj', JSON.stringify({}));
+                                            localStorage.setItem(saveAddress, 'false');
+                                        })
+                                        this.$router.push({path: '/restaurant/'+localStorage.getItem('isRes')});
+                                        localStorage.setItem('isRes', 'false');
+                                        }   
+                                    }
+                                    
                                 } else {
                                     this.showNotification('error', this.newLang.error, this.newLang.singInFailed);
                                 }
@@ -319,9 +358,14 @@ import facebookLogin from 'facebook-login-vuejs';
                     document.getElementById('numberError').innerHTML = this.newLang.numberEmptyError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                }else if(!this.userData.mobile.match(/^[0-9]+$/)) {
+                }/*else if(!this.userData.mobile.match(/^[0-9]+$/)) {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberWrongInpur;
+                    document.getElementById('number').style.borderColor = "red";
+                    this.numberCheck = false;
+                }*/ else if(this.userData.mobile[0] !== '+') {
+                    document.getElementById('numberError').style.visibility = "visible";
+                    document.getElementById('numberError').innerHTML = this.newLang.numberFormatError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
                 } else if(this.userData.mobile.length < 11) {

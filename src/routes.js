@@ -19,6 +19,9 @@ import checkout from "./components/SelectedRestaurant/Checkout";
 import BillingAndPayments from "./components/User/BillingAndPayments";
 import LoginAndRegister from "./components/LoginAndRegister/LoginAndRegister";
 import Login from "./components/LoginAndRegister/Login";
+import SearchPhone from "./components/SearchAndReset/SearchPhone.vue";
+import ResetPassword from "./components/SearchAndReset/ResetPassword.vue";
+import OtpConfirm from "./components/SearchAndReset/OtpConfirm.vue";
 import Register from "./components/LoginAndRegister/Register";
 import OrderTracking from "./components/Order/OrderTracking";
 import DiamondAward from "./components/User/DiamondAward";
@@ -45,9 +48,10 @@ export const routes = [
                     if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
                         next('/');
                     } else {
-                        next()
+                        next();
                     }
-                } }     ,
+                } },
+                
             { path: '/signup', component: Register, beforeEnter(to, from, next) {
                     console.log('signup',localStorage.getItem('token'));
                     if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
@@ -62,6 +66,30 @@ export const routes = [
                 next('/');
             } else {
                 next()
+            }
+        }},
+        { path: '/searchPhone', component: SearchPhone, beforeEnter(to, from, next) {
+            console.log('searchPhone',localStorage.getItem('token'));
+            if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null') {
+                next('/');
+            } else {
+                next();
+            }
+        }},
+        { path: '/confirmOtp', component: OtpConfirm, beforeEnter(to, from, next) {
+            console.log('confirmOtp',localStorage.getItem('token'));
+            if(localStorage.getItem('isRegOtp') && localStorage.getItem('isRegOtp') !== 'null') {
+                next();
+            } else {
+                next('/');
+            }
+        }},
+        { path: '/resetPassword', component: ResetPassword, beforeEnter(to, from, next) {
+            console.log('confirmOtp',localStorage.getItem('token'));
+            if(localStorage.getItem('isRegOtp') && localStorage.getItem('isRegOtp') !== 'null') {
+                next();
+            } else {
+                next('/');
             }
         }},
     { path: '/filter', component: Filter },

@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="button text-center">
-                    <button type="submit" @click="checkCredentials" :disabled="disableSubmit" class="btn btn-submit">{{newLang.signin}}</button>
+                    <button type="submit" @click="checkCredentials" :disabled="false" class="btn btn-submit">{{newLang.signin}}</button>
                     <span class="or">OR</span>
                     <facebook-login class="fb p-0 mt-3"
                                     appId="649127768995419"
@@ -44,6 +44,7 @@
 <!--                </v-facebook-login-scope>-->
 
             </form>
+            <router-link to="/searchPhone" >Forgot Password? </router-link>
             </div>
         </div>
     </div>
@@ -53,6 +54,7 @@
     import {checkCredentials} from "../api/Profile";
     import {mapActions} from "vuex";
     import {facebookAPILogin} from "../api/FacebookLogin";
+    import {saveAddress} from "../api/DeliveryAddress.js";
     import {EventBus} from "../../main";
     // import VFacebookLogin from "vue-facebook-login-component";
     // import { VFBLoginScope as VFacebookLoginScope } from 'vue-facebook-login-component'
@@ -69,8 +71,8 @@
         data() {
             return {
                 userData: {
-                    password: '',
-                    email: '',
+                    password: 'aqib123',
+                    email: 'aqibjaved@gmail.com',
                     DeviceUniqueCode: "web",
                     DeviceToken: "web",
                 },
@@ -107,6 +109,7 @@
             }
         },
         mounted() {
+            this.$emit("updateTheCounter",0);
             if(localStorage.getItem('userProfile') === 'null') {
                 localStorage.setItem('userProfile','');
             }
@@ -129,22 +132,55 @@
                 if(this.checkObject()) {
                      checkCredentials(this.userData).then(response => {
                         if(response.HasErrors === false) {
-                            this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
-                            console.log('id',response.Id);
-                            localStorage.setItem('userProfile',response.UrlImage);
-                            this.$store.dispatch('storeToken',response);
-                            // console.log('cart',JSON.parse(localStorage.getItem('cart').replace (/(^')|('$)/g, '')));
-                            // console.log('cart',JSON.parse(JSON.stringify(localStorage.getItem('cart'))));
+                            if(localStorage.getItem('isRes') === 'false' || localStorage.getItem('isRes') == null) {
+                                console.log('trueid',response.Id);
+                                localStorage.setItem('userProfile',response.UrlImage);
+                                // console.log('cart',JSON.parse(localStorage.getItem('cart').replace (/(^')|('$)/g, '')));
+                                // console.log('cart',JSON.parse(JSON.stringify(localStorage.getItem('cart'))));
 
-                            console.log('cart',JSON.parse(localStorage.getItem('cart')));
-                            // localStorage.setItem("changeCount", Number(localStorage.getItem("changeCount"))++);
-                            this.$router.push({path:'/'});
-                            //  var num =Number(localStorage.getItem("changeCount"));
-                            //  num += 1;
-                            // localStorage.setItem("changeCount", num);
-                             this.$emit('updateTheCounter', '');
-                            // this.$router.go();
-                            // this.storeToken('storeToken',response.AuthToken, response)
+                                console.log('cart',JSON.parse(localStorage.getItem('cart')));
+                                 this.$store.dispatch('storeToken',response);
+                                if(localStorage.getItem('saveAddress') === 'true') {
+                                    console.log('test1');
+                                    var addressData = JSON.parse(localStorage.getItem('addressObj'));
+                                    console.log('test2');
+                                    addressData.CustomerId = response.Id;
+                                    saveAddress(addressData).then(response => {
+                                        console.log(response);
+                                        localStorage.setItem('addressObj', JSON.stringify({}));
+                                        localStorage.setItem(saveAddress, 'false');
+                                    })
+                                    this.$emit('updateTheCounter', '');
+                                }
+                               
+                                // localStorage.setItem("changeCount", Number(localStorage.getItem("changeCount"))++);
+                                this.$router.push({path:'/'});
+                                //  var num =Number(localStorage.getItem("changeCount"));
+                                //  num += 1;
+                                // localStorage.setItem("changeCount", num);
+                                
+                                // this.$router.go();
+                                // this.storeToken('storeToken',response.AuthToken, response)
+                            } else {
+                                this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
+                                this.$store.dispatch('storeToken',response);
+                                this.$emit('updateTheCounter', '');
+                                if(localStorage.getItem('saveAddress') === 'true') {
+                                    var addressData = JSON.parse(localStorage.getItem('addressObj'));
+                                    addressData.CustomerId = response.Id;
+                                    saveAddress(addressData).then(response => {
+                                        console.log(response);
+                                        localStorage.setItem('addressObj', JSON.stringify({}));
+                                        localStorage.setItem(saveAddress, 'false');
+                                    })
+                                    this.$router.push({path: '/restaurant/'+localStorage.getItem('isRes')});
+                                    localStorage.setItem('isRes', 'false');
+                                } else {
+                                    this.$router.push({path: '/restaurant/'+localStorage.getItem('isRes')});
+                                    localStorage.setItem('isRes', 'false');
+                                } 
+                            }
+                            
 
                         } else {
                             
@@ -205,13 +241,45 @@
                             this.fbUserData.ImageUrl = userInformation.picture.data.url;
                             facebookAPILogin(this.fbUserData).then(response => {
                                 if(response.HasErrors === false) {
-                                    this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
-                                    console.log('id',response.Id);
-                                    localStorage.setItem('userProfile',response.UrlImage);
-                                    this.$store.dispatch('storeToken',response);
-                                    this.$router.push({path:'/'});
-                                    localStorage.setItem("fbLogin", true);
+                                    if(localStorage.getItem('isRes')==='false') {
+                                        this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
+                                        console.log('id',response.Id);
+                                        localStorage.setItem('userProfile',response.UrlImage);
+                                        this.$store.dispatch('storeToken',response);
+                                        this.$emit('updateTheCounter', '');
+                                        if(localStorage.getItem('saveAddress') === 'true') {
+                                        var addressData = JSON.parse(localStorage.getItem('addressObj'));
+                                        addressData.CustomerId = response.Id;
+                                        saveAddress(addressData).then(response => {
+                                            console.log(response);
+                                            localStorage.setItem('addressObj', {});
+                                            localStorage.setItem(saveAddress, 'false');
+                                        })
+                                    }
+                                        this.$router.push({path:'/'});
+                                        localStorage.setItem("fbLogin", true);
                                     // this.$router.go();
+                                    } else {
+                                        this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
+                                        console.log('id',response.Id);
+                                        this.$emit('updateTheCounter', '');
+                                        localStorage.setItem('userProfile',response.UrlImage);
+                                        this.$store.dispatch('storeToken',response);
+                                        localStorage.setItem("fbLogin", true);
+                                        if(localStorage.getItem('saveAddress') === 'true') {
+                                        var addressData = JSON.parse(localStorage.getItem('addressObj'));
+                                        addressData.CustomerId = response.Id;
+                                        saveAddress(addressData).then(response => {
+                                                console.log(response);
+                                                localStorage.setItem('addressObj', {});
+                                                localStorage.setItem(saveAddress, 'false');
+                                            })
+                                            this.$router.push({path: '/restaurant/'+localStorage.getItem('isRes')});
+                                            localStorage.setItem('isRes', 'false');
+                                        }
+                                        
+                                    }
+                                    
                                 } else {
                                     this.showNotification('error', this.newLang.error, this.newLang.singInFailed);
                                 }

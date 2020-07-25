@@ -14,7 +14,7 @@
                     <h1 class="profile-heading d-inline">{{newLang.billingAndPayment}}</h1>
                     <button class="btn btn-submit float-right" @click="createCard" ><i class="fas fa-plus mr-3"></i>{{newLang.addCard}}</button>
                 </div>
-                <div v-if="allCards.length > 0">
+                <div v-if="allCards.length">
                     <div class="address-block row pt-4 m-0 w-100" v-for="card in allCards" :key="card.Id">
                         <div class="col-sm-10" >
                             <div class="card-image">
@@ -35,9 +35,7 @@
                     </div>
                 </div>
                 <div v-else class="address-block row pt-4 m-0 w-100">
-                    <div class="col-md-8">
-
-                    </div>
+                   <emptyError></emptyError>
                 </div>
             </div>
             <!-- Modal -->
@@ -94,6 +92,7 @@
     import VueLoadingButton from 'vue-loading-button';
     import {checkIfStripeExist, verifyStripe} from "../api/CheckStripe"
     import {validEmail} from "../util/validate"
+    import cardEmpty from "../error/cardEmpty.vue"
     import {updateEmail} from "../api/UpdateEmail"
     let stripe = Stripe(`pk_test_TYPazNES7wQJ4WyN83oLTlEa`),
         elements = stripe.elements(),
@@ -103,6 +102,7 @@
         props: ['newLang'],
         components: {
             buttonSpinner: VueLoadingButton,
+            emptyError: cardEmpty
         },
         data() {
             return {
