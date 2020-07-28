@@ -27,7 +27,7 @@ import OrderTracking from "./components/Order/OrderTracking";
 import DiamondAward from "./components/User/DiamondAward";
 import AllCities from "./components/All Cities/AllCities";
 import Discount from "./components/User/Discount";
-import LegalDoc from "./components/Legal/Legal"
+import LegalDoc from "./Legal/Legal"
 // import CurrentOrder from "./components/Order/CurrentOrder";
 // import PreviousOrder from "./components/Order/PreviousOrder";
 import currentOrder from "./components/User/currentOrder";
@@ -39,6 +39,9 @@ import Legal from "./components/User/Legal";
 import newPolicy from "./components/Documents/newDocuments/Policy";
 import newTermsAndConditions from "./components/Documents/newDocuments/TermsAndConditions";
 import newCookies from "./components/Documents/newDocuments/Cookies";
+import MobilePolicy from "./Documents/Policy";
+import MobileTermsAndConditions from "./Documents/TermsAndConditions";
+import MobileCookies from "./Documents/Cookies";
 import newError from "./components/error/newErrorPage";
 export const routes = [
     { path: '/', component: Home },
@@ -189,9 +192,9 @@ export const routes = [
     {path: '/foodFilter', component: SelectedFoodRestaurants},
     {path: '/orderTracking/:id', component: checkout},
     { path: '/documents', component: LegalDoc, children: [
-            {path: '/privacyPolicy', component: Policy, query: {docType: 'p'}},
-            {path: '/termsAndConditions', component: TermsAndConditions, query: {docType: 't'}},
-            {path: '/cookiesDoc', component: Cookies, query: {docType: 'c'}},
+            {path: '/privacyPolicy', component: MobilePolicy, query: {docType: 'p'}},
+            {path: '/termsAndConditions', component: MobileTermsAndConditions, query: {docType: 't'}},
+            {path: '/cookiesDoc', component: MobileCookies, query: {docType: 'c'}},
 
         ]},
         {path: '/newPolicy', component: newPolicy, query: {docType: 'p'}},
