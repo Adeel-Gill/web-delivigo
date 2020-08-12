@@ -285,7 +285,7 @@ import 'signalr';
         /*background-color: #CECECF;*/
         /*height: 400px;*/
         position: relative;
-        top: -50px;
+        /*top: -50px;*/
     }
     .agent-pic{
         /*margin-right: 30px;*/

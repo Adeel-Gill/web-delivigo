@@ -8,7 +8,7 @@
                     <p class="card-text">Enter the OTP sent to you Number ({{otpObj.Number}}).</p>
                     <section class="mt-5 p-4" >
                         <p class="">Enter OTP</p>
-                        <div class="input-wrapper" >
+                        <div class="input-wrapper text-center">
                             <PincodeInput
                                 v-model="code"
                                 placeholder="0"
@@ -261,17 +261,18 @@ div.vue-pincode-input-wrapper {
         width: auto;
         margin: 0 auto;
         text-align: center;
-        background-color: rgba(0, 0, 0, 0.1);
+        /*background-color: rgba(0, 0, 0, 0.1);*/
     }
-    input.vue-pincode-input {
+    .vue-pincode-input {
         width: 50px;
         height: 50px;
         padding: 0;
-        margin-right: 25px;
+        margin-right: 25px !important;
         text-align: center;
         border: 1px solid gray;
         border-radius: 5px;
-}
+        background-color: rgba(0, 0, 0, 0.1);
+    }
     .card{
         margin-top: 100px;
         margin-bottom: 100px;

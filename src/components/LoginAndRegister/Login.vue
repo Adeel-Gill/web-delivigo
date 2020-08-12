@@ -25,6 +25,9 @@
                         <label class="errorMessage" id="passwordError"></label>
                     </div>
                 </div>
+                <div class="text-right">
+                    <router-link to="/searchPhone" >Forgot Password? </router-link>
+                </div>
                 <div class="button text-center">
                     <button type="submit" @click="checkCredentials" :disabled="false" class="btn btn-submit">{{newLang.signin}}</button>
                     <span class="or">OR</span>
@@ -44,7 +47,6 @@
 <!--                </v-facebook-login-scope>-->
 
             </form>
-            <router-link to="/searchPhone" >Forgot Password? </router-link>
             </div>
         </div>
     </div>
