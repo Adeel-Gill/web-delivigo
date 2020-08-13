@@ -21,7 +21,7 @@ import StarRating from 'vue-star-rating';
 new Vue({
   vuetify,
 })
-export const baseAddress = 'https://www.foodizza.com/';
+export const baseAddress = 'https://delivigo-api.herokuapp.com';
 export const defaultUserPic = 'images/userpic.png';
 export const defaultRestaurantPic = 'images/restauranticon.png';
 export const defaultDishPic = 'images/dish.png';

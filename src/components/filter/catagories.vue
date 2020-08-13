@@ -56,7 +56,6 @@
         this.$root.$on('foodCategoriesData', foodCategoriesData => {
             if(foodCategoriesData.length>0) {
                 this.foodCategories = foodCategoriesData;
-                if(foodCategoriesData.length > 0) {
                     this.categoriesMore = true;
                     $(document).ready(function(){
                         $('.owl-carousel2').owlCarousel({
@@ -98,7 +97,6 @@
                             }
                         });
                     });
-                }
             } else {
                 this.categoriesNotEmpty = false;
                 this.showNotification('error','Error','No food categories available to show!');

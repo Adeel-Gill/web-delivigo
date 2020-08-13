@@ -6,7 +6,7 @@ import {EventBus} from "../../main";
 
 // create an axios instance
 export const service = axios.create({
-  baseURL: 'https://www.foodizza.com/api/', // Api base_url
+  baseURL: 'https://delivigo-api.herokuapp.com/api/', // Api base_url
   timeout: 50000, // request timeout
 })
 

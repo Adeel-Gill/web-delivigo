@@ -3,7 +3,8 @@
         <div class="show-dish-details" id="display-dish" >
             <a  class="close" @click="hideDish"></a>
             <div class="dish-detail-image" style="margin-top: 25px">
-                <img :src="`${getImage(dishDetail.ImageUrl)}`" @error="getImage('')">
+                <!-- <img :src="`${getImage(dishDetail.ImageUrl)}`" @error="getImage('')"> -->
+                <img src="images/dish.png" @error="getImage('')">
             </div>
             <div class="dish-detail-about">
                 <div class="dish-name-descp">
@@ -27,7 +28,7 @@
                         </div>
                     </div>
                     <h6>{{newLang.gliExtraAddOn}}</h6>
-                    <div class="extra-checkbox" v-for="(addon, index) in addOns" v-bind:key="addon">
+                    <div class="extra-checkbox" v-for="(addon, index) in addOns" v-bind:key="addon.Id">
                         <div>
                             <span class="float-left">{{addon.Name}}</span>
                             <span class="float-left">&nbsp (+ €{{addon.Price}}.00)</span>
@@ -64,7 +65,7 @@
         <div class="dishes"  v-for="select in selected" :key="select.Id" @click="displayDish(select.Id)">
             <div class="dish-selection" >
                 <div class="dish-image">
-                    <img :src="`https://www.foodizza.com/` + select.ImageUrl">
+                    <img :src="select.ImageUrl">
                 </div>
                 <div class="about-dish">
                     <div class="descp-about" >
@@ -90,7 +91,7 @@
     import {fetchMealById} from "../api/CustomMeal";
     import {defaultDishPic} from "../../main";
     import {mapGetters} from "vuex";
-
+    import {postCartItem} from "../api/Cart";
     export default {
         props: ['newLang'],
         data(){
@@ -105,6 +106,7 @@
                 newScales: [],
                 baseLink: baseAddress,
                 dishObj: {},
+                cartItems: [],
                 image: '',
                 baseUrl: '',
                 selected: [], // Must be an array reference!
@@ -169,6 +171,7 @@
         },
         methods: {
             setAddOnOption(id,addonId) {
+                console.log('inside here',id,addonId);
                 this.$store.dispatch('setAddOnOption', {
                     id: id,
                     addonId: addonId
@@ -215,6 +218,7 @@
             },
             resetMealObject() {
                 this.meal = {
+                    "CustomerId": localStorage.getItem('id'),
                     "Meal":
                         {
                             "Id": null,
@@ -257,23 +261,24 @@
             },
             setMealObject(obj) {
                 console.log('start',obj);
-                this.meal.Meal.Id = obj.Meal.Id;
-                this.meal.Meal.Name = obj.Meal.Name;
-                this.meal.Meal.RestroId = obj.Meal.RestroId;
+                this.meal.CustomerId = localStorage.getItem('id');
+                this.meal.Meal.Id = obj.meal.Id;
+                this.meal.Meal.Name = obj.meal.Name;
+                this.meal.Meal.RestroId = obj.meal.RestroId;
                 this.meal.Meal.Price = this.$store.state.totalPrice;
-                this.meal.Meal.MealCategoryId = obj.Meal.MealCategoryId;
-                this.meal.Meal.ImageUrl = baseAddress + obj.Meal.ImageUrl;
+                this.meal.Meal.MealCategoryId = obj.meal.MealCategoryId;
+                this.meal.Meal.ImageUrl = obj.meal.ImageUrl;
                 this.meal.Meal.IsRecommend = true;
                 this.meal.Meal.IsFeatured = true;
                 this.meal.Meal.IsCustomDish = true;
                 this.meal.Meal.IsAvailable = true;
                 this.meal.Meal.Quantity = this.quantity;
-                this.meal.Meal.MealMainId = obj.Meal.MealMainId;
-                this.meal.Meal.Description = obj.Meal.Description;
-                this.meal.Meal.Discount = obj.Meal.Discount;
-                this.meal.Meal.Rating = obj.Meal.Rating;
+                this.meal.Meal.MealMainId = obj.meal.MealMainId;
+                this.meal.Meal.Description = obj.meal.Description;
+                this.meal.Meal.Discount = obj.meal.Discount;
+                this.meal.Meal.Rating = obj.meal.Rating;
                 this.meal.Meal.TimeDuration = 30;
-                this.meal.Meal.Tags = obj.Meal.Tags;
+                this.meal.Meal.Tags = obj.meal.Tags;
                 console.log('here1',this.addOnIds,this.newCustomOptions,this.newScales);
                 this.meal.AddOnIds = (this.$store.state.addOnIds);
                 this.meal.CustomOptions= (this.$store.state.newCustomOptions);
@@ -282,27 +287,46 @@
                 console.log('here2');
 
                 console.log('here3Object',this.meal);
+                debugger;
                 this.$store.dispatch('clearOrderItems')
             },
+            PostCart() {
+                postCartItem(this.meal).then(response => {
+                         debugger;
+                        if(!response.HasError) {
+
+                            this.cartItems = response.result;
+                            this.$root.$emit('cartItems', this.cartItems);
+                            this.showNotification('success', 'Success', 'Item added to cart');
+                            document.getElementById("display-dish").style.display = "none";
+                            this.resetMealObject();
+                        } else {
+                            this.showNotification('error', 'Error', 'Item adding to cart failed');
+                        }
+                    })
+            },
             saveToCart() {
-                if(this.$store.state.cartData.length <= 0) {
+                if(this.cartItems.length <= 0) {
                     console.log('received',);
                     this.resetMealObject();
                     this.setMealObject(this.dishObj);
                     console.log('mealObject',this.meal);
-                    this.$store.dispatch('saveInCart',this.meal);
-                    document.getElementById("display-dish").style.display = "none";
-                    this.showNotification('success','Success','Item added in cart...!');
-                    this.resetMealObject();
-                    this.quantity = 1;
+                    this.PostCart();
+                    debugger;
+                    // this.$store.dispatch('saveInCart',this.meal);
+                    // document.getElementById("display-dish").style.display = "none";
+                    // this.showNotification('success','Success','Item added in cart...!');
+                    // this.resetMealObject();
+                    // this.quantity = 1;
                 }
-                else if(this.dishObj.Meal.RestroId === this.$store.state.cartData[0].Meal.RestroId) {
+                else if(this.dishObj.meal.RestroId === this.cartItems[0].RestroId) {
                     console.log('received',);
                     this.setMealObject(this.dishObj);
-                    console.log('mealObject',this.meal);
-                    this.$store.dispatch('saveInCart',this.meal);
-                    document.getElementById("display-dish").style.display = "none";
-                    this.showNotification('success','Success','Item added in cart...!');
+                    this.PostCart();
+                    // console.log('mealObject',this.meal);
+                    // this.$store.dispatch('saveInCart',this.meal);
+                    // document.getElementById("display-dish").style.display = "none";
+                    // this.showNotification('success','Success','Item added in cart...!');
                     this.resetMealObject();
                     this.quantity = 1;
                 } else {
@@ -346,25 +370,26 @@
             async displayDish(dishId){
                 this.$store.dispatch('clearOrderItems');
                 fetchMealById(dishId).then(response => {
-                    if(this.checkObjectResponse(response.Meal,'dish detail')) {
-                        this.dishObj = response;
-                        this.dishDetail = response.Meal;
+                    if(this.checkObjectResponse(response.result.meal,'dish detail')) {
+                        this.dishObj = response.result;
+                        this.dishDetail = response.result.meal;
                         this.price = this.dishPrice = this.dishDetail.Price;
-                        this.scales = response.Scale;
-                        this.newScales = response.Scale;
-                        this.newAddOnIds = response.AddOns;
-                        this.newCustomOptions = response.CustomOptions;
+                        this.scales = response.result.Scale;
+                        this.newScales = response.result.Scale;
+                        this.newAddOnIds = this.addOns = response.result.addOns;
+                        this.newCustomOptions = this.customOptions = response.result.CustomOptions;
                         this.$store.dispatch('setOrderItems',{customOption:this.newCustomOptions,
                             addOn:this.newAddOnIds,
                             scale:this.newScales,
                             dishPrice: this.dishPrice});
                         console.log('afterSet',this.$store.state.newCustomOptions,this.$store.state.newAddOnIds,this.$store.state.newScales);
                     }
-                    if(this.checkArrayResponse(response.AddOns,'addons')) {
-                        this.addOns = response.AddOns;
+                    if(this.checkArrayResponse(response.result.addOns,'addons')) {
+                        this.addOns = respons.result.addOns;
+                        console.log('newAddOns', this.addOns);
                     }
-                    if(this.checkArrayResponse(response.CustomOptions, 'custom options')) {
-                        this.customOptions = response.CustomOptions;
+                    if(this.checkArrayResponse(response.result.CustomOptions, 'custom options')) {
+                        this.customOptions = response.result.CustomOptions;
                     }
 
                 }, error => {
@@ -382,7 +407,8 @@
                     this.image = defaultDishPic
                     return this.image;
                 } else {
-                    this.image = baseAddress + img;
+                    // this.image = img;
+                    this.image = defaultDishPic
                     return this.image;
                 }
             },
@@ -439,6 +465,9 @@
                     }
                 }
                 // this.resetMealObject();
+            })
+            this.$root.$on('cartItems', response => {
+                this.cartItems = response;
             })
             // this.$root.$on('isCustomMeal', response => {
             //     this.isCustomMeal = response;

@@ -8,7 +8,7 @@
                 <div class="catagory-text">
                     <h5>{{foodCategories.Name}}</h5>
                     <h6>{{foodCategories.Count}} Restaurants</h6>
-                    <p><i class="fas fa-star"></i> {{foodCategories.StatusCode}}</p>
+                    <!-- <p><i class="fas fa-star"></i> {{foodCategories.StatusCode}}</p> -->
                 </div>
             </div>
         </router-link>
@@ -47,7 +47,7 @@
                     console.log('imageinsideIf',this.image,'param',img);
                     return this.image;
                 } else {
-                     this.image = baseAddress + img;
+                     this.image = img;
                     console.log('imageinsideelse',this.image,'param',img);
                     return this.image;
                 }

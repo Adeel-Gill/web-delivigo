@@ -21,7 +21,7 @@
 <script>
     import City from "../City/City";
     import emptyError from "../error/emptyError";
-    import {fetchResturantsData} from "../api/Landing";
+    import {fetchCitiesData} from "../api/Landing";
     import {EventBus} from "../../main";
     import {lang} from "../lang/lang";
     export default {
@@ -59,11 +59,11 @@
             fetchCities() {
                 localStorage.setItem("isAddress", "false");
                 this.$emit("changeCounter",0);
-                fetchResturantsData().then(response => {
-                    this.cities = response.Cities;
+                fetchCitiesData().then(response => {
+                    this.cities = response.result;
                     console.log(this.cities.length);
                     if(this.cities.length > 0) {
-                        this.cities = response.Cities;
+                        this.cities = response.result;
                     } else {
                         if(this.count === 0) {
                             this.showNotification('error','Error','No cities are available to show!');

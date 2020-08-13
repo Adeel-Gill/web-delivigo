@@ -19,7 +19,8 @@
 </template>
 
 <script>
-    import {fetchResturantsData} from "../api/Landing";
+    // import {fetchResturantsData} from "../api/Landing";
+    import {fetchAllData} from "../api/Home";
     import Restaurant from '../../components/restaurant/restaurant.vue';
     import emptyError from "../error/emptyError";
     import {EventBus} from "../../main";
@@ -43,9 +44,9 @@
             fetchAllData() {
                 localStorage.setItem("isAddress", "false");
                 this.$emit("changeCounter",0);
-                fetchResturantsData().then(response => {
-                    if(response.PopularNearYou.length>0) {
-                        this.restaurantsData = response.PopularNearYou;
+                fetchAllData().then(response => {
+                    if(response.result.PopularNearYou.length>0) {
+                        this.restaurantsData = response.result.PopularNearYou;
                     } else {
                         this.notEmpty = false;
                         this.showNotification('error','Error','No popular restaurants available to show!');

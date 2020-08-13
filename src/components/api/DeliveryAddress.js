@@ -2,7 +2,7 @@ import {service} from "../util/request";
 
 export function saveAddress(data) {
     return service({
-        url: 'AddCustomerAddressInfo',
+        url: 'AddressInfo',
         method: 'post',
         data
     })

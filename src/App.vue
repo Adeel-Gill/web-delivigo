@@ -24,7 +24,11 @@ import Loader from "./components/Loader/Loader";
 import {EventBus} from "./main";
 import {lang} from "./components/lang/lang";
 import vueCustomScrollBar from 'vue-custom-scrollbar';
-
+import * as firebase from "firebase/app";
+// Add the Firebase services that you want to use
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/messaging";
 export default {
   data() {
     return {

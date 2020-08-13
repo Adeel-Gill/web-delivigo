@@ -1,10 +1,11 @@
 <template>
     <div>
-        <div class="slected-bg" :style="{'background-image': 'url('+`${getImage()}`+')'}">
+        <!-- <div class="slected-bg" :style="{'background-image': 'url('+`${getImage()}`+')'}"> -->
+        <div class="slected-bg" style="{background-image: 'url('+`images/dish.png`+')'}">
             <div class="food-type">
                 <p><span>{{resDetail.ApproximateCostPerPerson}}</span></p>
                 <button
-                        v-for="foodType in foodTypes.slice(0,6)"
+                        v-for="foodType in foodTypes"
                         style="margin-top: 5px"
                         :key="foodType.Id"
                          >{{foodType.Name}}</button>
@@ -49,12 +50,12 @@
                     </div>
                     <div class="drawer-body px-3">
                         <!-- card start-->
-                        <div v-if="notEmpty">
+                        <div v-if="cartItems.length">
                             <app-cart-items v-for="(item,index) in cartItems"
-                                            :key="item.Meal"
+                                            :key="item.Id"
                                             :itemIndex="index"
-                                            :item="item.Meal"
-                                            @removeInCart="removeItem(index)"></app-cart-items>
+                                            :item="item"
+                                            @removeInCart="removeItem(item.Id,item.CartId)"></app-cart-items>
                         </div>
                         <div v-else>
                             <h3 class="drwer-else">{{newLang.addItems}}</h3>
@@ -111,10 +112,10 @@
                         format="hh:mm a"></VueCtkDateTimePicker>
                 <p class="text-muted mt-1">{{newLang.desiredDeliveryTime}}</p>
                 <div class="row" style="box-sizing: border-box;">
-                    <app-checkout-cart-item v-for="(item, index) in cartItems" :key="item.Meal"
+                    <app-checkout-cart-item v-for="(item, index) in cartItems" :key="item.Id"
                                             :itemIndex="index"
                                             @removeItemInCart="itemRemoveInOrder(index)"
-                                            :item="item.Meal"></app-checkout-cart-item>
+                                            :item="item"></app-checkout-cart-item>
                 </div>
                 <div class="pl-4">
                 <a href="#" class="link-color"><h2><i class="fas fa-plus"></i> {{newLang.addMoreItems}}</h2></a>
@@ -288,6 +289,8 @@
     import {BBadge} from 'bootstrap-vue';
     import {defaultRestaurantPic} from "../../main";
     import cartItem from "../Cart/cartItem";
+    import {getCart} from "../api/Cart";
+    import {deleteCartItem} from "../api/Cart";
     import {retrieveCustomerAllCards} from "../api/CardAndPayments";
     import {getAllCustomerAddresses} from "../api/DeliveryAddress";
     import {fetchUserProfile} from "../api/Profile";
@@ -331,6 +334,7 @@
                 lon2: 0,
                 lat2: 0,
                 km: 0,
+                cartItems: [],
                 smallDeliveryOrderExtra: 0,
                 basicDeliveryFee: 0,
                 extraKmDeliveryFee: 0,
@@ -344,7 +348,6 @@
                 }],
                 allImages: [],
                 paramID: null,
-                cartItems: [],
                 userData: {},
                 resData: {},
                 newResData: {},
@@ -409,6 +412,7 @@
         created() {
             this.$root.$on('tags', response => {
                 this.foodTypes = response;
+                console.log('tags', this.foodTypes);
             });
             console.log('inCreated');
             this.$root.$on('restaurantImages', response => {
@@ -419,6 +423,10 @@
                     // console.log('allImages',this.allImages);
                 })
             });
+            this.$root.$on("cartItems", response => {
+                this.cartItems = response;
+                console.log('cartItems', this.cartItems);
+            })
             this.$root.$on("itemAddedToCart", response => {
                 console.log("here received");
                 this.setCount();
@@ -487,15 +495,24 @@
                     this.showNotification('info','Info','Deletion cancelled');
                 })
             },
-            removeItem(i) {
+            removeItem(id,cartId) {
                 this.$dialog.confirm('Item will be removed from cart. Continue?', {
                     loader: true
                 }).then(dialog => {
                     dialog.loading(false);
-                    this.$store.dispatch('removeCartItem',i);
-                    this.checkCartAfterDeletion();
-                    this.showNotification('success','Success','Item removed from cart');
-                    dialog.close();
+                    // this.$store.dispatch('removeCartItem',i);
+                    deleteCartItem(localStorage.getItem('id'),cartId,id).then(response => {
+                        if(!response.HasError) {
+                            this.cartItems = response.result;
+                            this.checkCartAfterDeletion(response.result);
+                            this.showNotification('success','Success','Item removed from cart');
+                            dialog.close();
+                        } else {
+                            this.showNotification('error','Error','Item removing failed');
+                            dialog.close();   
+                        }
+                    })
+                    
                 }).catch(() => {
                     this.showNotification('info','Info','Deletion cancelled');
                 })
@@ -505,11 +522,11 @@
             fetchRestaurantByParam(id) {
                 fetchRestaurantById(id).then(response => {
                     if(this.$store.state.cartData.length > 0) {
-                        this.resData = response.Restaurant;
+                        this.resData = response.result.Restaurant;
                     } else {
-                        this.lon1 = response.Restaurant.Longitude;
-                        this.lat1 = response.Restaurant.Latitude;
-                        this.resData = response.Restaurant;
+                        this.lon1 = response.result.Restaurant.Longitude;
+                        this.lat1 = response.result.Restaurant.Latitude;
+                        this.resData = response.result.Restaurant;
                     }
                     console.log('resData',id,this.resData);
                 },error => {
@@ -520,8 +537,8 @@
             fetchRestaurant(id) {
                 fetchRestaurantById(id).then(response => {
 
-                    this.lon1 = response.Restaurant.Longitude;
-                    this.lat1 = response.Restaurant.Latitude;
+                    this.lon1 = response.result.Restaurant.Longitude;
+                    this.lat1 = response.result.Restaurant.Latitude;
                     console.log('resData',id,this.resData);
                 },error => {
                     console.log(error);
@@ -546,7 +563,6 @@
                     this.$store.dispatch('clearCart');
 
                 } else {
-                    this.cartItems = this.$store.state.cartData;
                     for(var i=0; i<this.cartItems.length; i++) {
                         var temp = {};
                         this.subTotal = 0;
@@ -556,14 +572,16 @@
                     this.totalPrice = this.subTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
                 }
             },
-            checkCartAfterDeletion() {
-                if(this.$store.state.cartData.length <= 0) {
+            checkCartAfterDeletion(cartDate) {
+
+                if(this.cartItems <= 0) {
                     this.doProceed = true;
                     this.notEmpty = false;
                     this.cartItems =[];
-                    this.$store.dispatch('clearCart');
+                    // this.$store.dispatch('clearCart');
                 } else {
-                    this.cartItems = this.$store.state.cartData;
+                    this.cartItems = cartData;
+                    this.doProceed = true;
                 }
             },
             checkFormValidity() {
@@ -657,15 +675,14 @@
                 }
             },
             async checkCart() {
-                if(this.$store.state.cartData.length > 0) {
+                if(this.cartItems.length > 0) {
                     this.doProceed = false;
                     this.notEmpty= true;
-                    this.cartItems = this.$store.state.cartData;
                     console.log('cartItems',this.cartItems, this.subTotal);
                     this.subTotal = 0;
                     for(var i=0; i<this.cartItems.length; i++) {
                         var temp = {};
-                        temp = this.cartItems[i].Meal;
+                        temp = this.cartItems[i];
                         this.subTotal += temp.Price;
                     }
                     this.checkSmallOrder();
@@ -793,7 +810,6 @@
                     this.$router.push('/signin')
                 } else {
                     localStorage.setItem('isRes', 'false');
-                    this.cartItems = this.$store.state.cartData;
                     this.basicDeliveryFee = deliveryCharges.basicDeliveryFee;
                    
                     console.log('start2');
@@ -933,7 +949,7 @@
                 }
             },
             getImage() {
-                this.image =  "https://www.foodizza.com" + this.resData.ImageUrl.replace(/ /g, '%20')
+                this.image =  this.resData.ImageUrl.replace(/ /g, '%20')
                 console.log('UrlIS',this.resData,this.image);
                 return this.image;
             },

@@ -57,9 +57,8 @@ export default {
       console.log('popularLength', popularRestaurants.length);
       if(popularRestaurants.length>0) {
         this.restaurants = popularRestaurants;
-        this.popularMore = this.popularNotEmpty =  true;
+        this.popularMore = this.popularNotEmpty =  true; 
         console.log('restaurants', this.restaurants);
-        if(popularRestaurants.length >= 3) {
           this.popularMore = true;
           console.log('here we are1');
           $(document).ready(function(){
@@ -87,7 +86,6 @@ export default {
                   }
               });
           });
-        }
       } else {
         this.popularNotEmpty = this.popularMore =false;
         this.showNotification('error','Error','No popular restaurants available to show!');

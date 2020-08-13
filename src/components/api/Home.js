@@ -1,8 +1,14 @@
 import {service} from "../util/request";
 
-export function fetchAllData(city,long,lat,min,max,sort,food) {
+export function fetchAllFilterData(city,long,lat,min,max,sort,food) {
     return service({
         url: `Home?city=${city}&longitude=${long}&latitude=${lat}&min=${min}&max=${max}&sort=${sort}&food=${food}`,
+        method: 'get',
+    })
+}
+export function fetchAllData() {
+    return service({
+        url: `Home`,
         method: 'get',
     })
 }

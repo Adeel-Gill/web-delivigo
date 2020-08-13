@@ -47,8 +47,8 @@
                 localStorage.setItem("isAddress", "false");
                 this.$emit("changeCounter",0);
                 fetchAllData().then(response => {
-                    if(response.FoodCategories.length>0) {
-                        this.foodCategoriesData = response.FoodCategories;
+                    if(response.result.FoodCategories.length>0) {
+                        this.foodCategoriesData = response.result.FoodCategories;
                     } else {
                         this.notEmpty = false;
                         this.showNotification('error','Error','No food categories available to show!');

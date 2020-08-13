@@ -29,6 +29,7 @@
     import Name from "./RestaurantDetails";
     import Dishes from "./Dishes";
     import Venue from "./Venue";
+    import {getCart} from "../api/Cart";
     import {EventBus} from "../../main";
     import {fetchRestaurantById} from "../api/FilterRestaurants";
     import {fetchRestaurantMealsById} from "../api/CustomMeal";
@@ -102,18 +103,23 @@
             },
             async fetchRestaurantData(id) {
                 fetchRestaurantById(id).then(response => {
-                    fetchRestaurantReviews(1).then(response => {
-                        this.$root.$emit('reviews',response);
+                    // fetchRestaurantReviews(1).then(response => {
+                    //     this.$root.$emit('reviews',response.result);
+                    // })
+                    getCart(localStorage.getItem('id')).then(response => {
+                        if(!response.HasError) {
+                            this.$root.$emit('cartItems', response.result);
+                        } 
                     })
-                    this.restaurant = response.Restaurant;
-                    this.$root.$emit('mealMenu', response.MealMenu);
-                    this.$root.$emit('popularFood', response.Popular);
-                    this.$root.$emit('restaurant', response.Restaurant);
-                    this.$root.$emit('tags', response.RestaurantTag);
-                    this.$root.$emit('restaurantImages', response.RestaurantImagesURL);
+                    this.restaurant = response.result.Restaurant;
+                    this.$root.$emit('mealMenu', response.result.MealMenu);
+                    this.$root.$emit('popularFood', response.result.Popular);
+                    this.$root.$emit('restaurant', response.result.Restaurant);
+                    this.$root.$emit('tags', response.result.RestaurantTag);
+                    this.$root.$emit('restaurantImages', response.result.RestaurantImagesURL);
                     this.$root.$emit('isCustomMeal', false);
 
-                    console.log('restaurant',response.Restaurant);
+                    console.log('restaurant',response.result.Restaurant);
                     if(localStorage.getItem('cart') === 'null' || localStorage.getItem('cart') == null) {
                         this.$store.dispatch('clearCart')
                     } else {

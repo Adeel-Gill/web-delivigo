@@ -44,8 +44,8 @@
               localStorage.setItem("isAddress", "false");
             this.$emit("changeCounter",0);
               fetchAllData().then(response => {
-                  if(response.Restaurants.length>0) {
-                      this.restaurantsData = response.Restaurants;
+                  if(response.result.Restaurant.length>0) {
+                      this.restaurantsData = response.result.Restaurant;
                   } else {
                       this.notEmpty = false;
                       this.showNotification('error','Error','No restaurants available to show!');

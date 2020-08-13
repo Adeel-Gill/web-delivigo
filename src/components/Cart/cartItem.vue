@@ -3,12 +3,12 @@
         <div class="card-body py-0 pl-2">
             <div class="row">
                 <div class="col-4 p-0 card-img">
-                    <img :src="item.ImageUrl">
+                    <img :src="item.MealImageUrl">
                 </div>
                 <div class="col-8 py-2 pr-1 cart-text">
                     <a src="#" @click="removeItem(index)" class="float-right"><i class="fas fa-times"></i></a>
                     <h4>{{item.Name}}</h4>
-                    <p class="text-muted m-0">{{item.Description}}</p>
+                    <!-- <p class="text-muted m-0">{{item.Description}}</p> -->
                     <p class="d-inline-block price m-0 mr-5">{{item.Price}}</p> <span><i class="fas fa-times"></i>{{item.Quantity}}</span>
                 </div>
             </div>

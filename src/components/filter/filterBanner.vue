@@ -13,7 +13,7 @@
           @sliding-end="onSlideEnd"
         >
           <!-- Text slides with image -->
-          <b-carousel-slide v-for="slide in restaurants" :key="slide.Id" :img-src= "baseUrl + slide.ImageUrl" >
+          <b-carousel-slide v-for="slide in restaurants" :key="slide.Id" :img-src= "slide.ImageUrl" >
             <div class="filter-caption w-100 float-right" style="right: 0;">
               <h6>{{slide.Name}}</h6>
               <h3>{{slide.FullAddress}} </h3>

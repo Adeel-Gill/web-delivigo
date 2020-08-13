@@ -8,3 +8,11 @@ export function fetchResturantsData() {
 
     })
 }
+
+export function fetchCitiesData() {
+    return service({
+        url: 'CityById?countryId=4',
+        method: 'get',
+
+    })
+}

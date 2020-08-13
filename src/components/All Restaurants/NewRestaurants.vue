@@ -20,7 +20,8 @@
 
 <script>
     import Restaurant from '../../components/restaurant/restaurant.vue';
-    import {fetchNewIOpenRestaurantsData} from "../api/Home";
+    // import {fetchNewIOpenRestaurantsData} from "../api/Home";
+    import {fetchAllData} from "../api/Home";
     import emptyError from "../error/emptyError";
      import {EventBus} from "../../main";
     import {lang} from "../lang/lang";
@@ -43,9 +44,9 @@
             fetchAllData() {
                 localStorage.setItem("isAddress", "false");
                 this.$emit("changeCounter",0);
-                fetchNewIOpenRestaurantsData().then(response => {
-                    if(response.Restaurants.length>0) {
-                        this.restaurantsData = response.Restaurants;
+                fetchAllData().then(response => {
+                    if(response.result.NewOpen.length>0) {
+                        this.restaurantsData = response.result.NewOpen;
                     } else {
                         this.notEmpty = false;
                         this.showNotification('error','Error','No new restaurants available to show!');

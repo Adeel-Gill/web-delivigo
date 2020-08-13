@@ -172,10 +172,10 @@ export default {
                 this.longitude = this.$route.query.longitude;
                 this.latitude = this.$route.query.latitude;
                 console.log(this.min,this.max);
-                fetchAllData(this.city,this.longitude,this.latitude,this.min,this.max,this.sort,this.foodName).then(response => {
+                fetchAllData().then(response => {
                     if(response != null) {
-                        this.fetchedData = response;
-                        if(response.NewOpen.length>0) {
+                        this.fetchedData = response.result;
+                        if(response.result.NewOpen.length>0) {
                             console.log('new');
                             this.newRestaurants = this.fetchedData.NewOpen;
                             if(this.newRestaurants.length > 3) {
@@ -185,9 +185,8 @@ export default {
                             this.newNotEmpty = false;
                             this.showNotification('error','Error','No new restaurants are available to show');
                         }
-                        if(response.Restaurants.length > 0) {
-                            this.allRestaurants = this.fetchedData.Restaurants;
-                            if(this.allRestaurants.length >= 3) {
+                        if(response.result.Restaurant.length > 0) {
+                            this.allRestaurants = this.fetchedData.Restaurant;
                                 this.allRestaurantsMore = true;
                                 $(document).ready(function(){
                                     $('.owl-carousel').owlCarousel({
@@ -213,7 +212,7 @@ export default {
                                         }
                                     });
                                 });
-                            }
+                            
                         } else {
                             this.allNotEmoty = false;
                             this.showNotification('error','Error','No restaurants are available to show');

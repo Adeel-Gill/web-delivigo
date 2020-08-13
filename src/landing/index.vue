@@ -16,7 +16,7 @@ import Banner from './landingBanner.vue';
 import Process from './delivery.vue';
 // import Featured from './featuredRestaurants.vue';
 import Download from './appStore.vue';
-import {fetchResturantsData} from "../components/api/Landing";
+import {fetchCitiesData} from "../components/api/Landing";
 import availableCities from "./availableCities";
 import whatIsDelivigo from "./whatIsDelivigo";
 import {EventBus} from "../main";
@@ -71,16 +71,10 @@ export default {
         async fetchResturantsData() {
             localStorage.setItem("isAddress", "false");
                 this.$emit("changeCounter",0);
-            fetchResturantsData().then(response => {
+            fetchCitiesData().then(response => {
                 // EventBus.$emit("homeChange","");
-                this.popularRestaurants = response.PopularNearYou;
-                this.cities = response.Cities;
-                this.$root.$emit('cities',response.Cities);
-                console.log('popularData'+ this.popularRestaurants);
-                this.$root.$emit('popularData',this.popularRestaurants);
-
-                this.featuredRestaurants = response.FeaturedRestaurants;
-                this.$root.$emit('featuredData', this.featuredRestaurants);
+                this.cities = response.result;
+                this.$root.$emit('cities',this.cities);
             }, error =>{
                 console.log(error);
                 this.showNotification('error','Error','Error occurred please try later!');
