@@ -2,7 +2,7 @@ import {service} from "../util/request";
 
 export function checkIfStripeExist(id) {
     return service({
-        url: `IsStripeExist/${id}`,
+        url: `IsStripe?CustomerId=${id}`,
         method: 'get',
     })
 }

@@ -594,12 +594,12 @@
             // this.calculateDistance();
         },
         calculateDistance() {
-            calculateDistance(this.lon1,this.lat1,this.lon2,this.lat2,'k').then(response => {
+            calculateDistance(this.lon1,this.lat1,this.lon2,this.lat2).then(response => {
                 this.disablePlaceOrder = true;
-                console.log('here inside calc2', response, Number(response),deliveryCharges.allowedKm,'::',response > deliveryCharges.allowedKm);
-                console.log('here inside calc3', response);
-                if(response > deliveryCharges.allowedKm) {
-                    this.extraKmDeliveryFee = (response - deliveryCharges.allowedKm) * deliveryCharges.extraKmDeliveryFee;
+                console.log('here inside calc2', response, Number(response.result.Distance),deliveryCharges.allowedKm,'::',response > deliveryCharges.allowedKm);
+                console.log('here inside calc33', response.result.Distance);
+                if(response.result.Distance > deliveryCharges.allowedKm) {
+                    this.extraKmDeliveryFee = (response.result.Distance - deliveryCharges.allowedKm) * deliveryCharges.extraKmDeliveryFee;
                     this.disablePlaceOrder = false;
                 } else {
                     console.log('here inside calc4');
@@ -696,21 +696,24 @@
                         this.disablePlaceOrder = false;
                         this.showNotification('error','Error','Card is failed to be set as default!');
                     } else {
-                        retrieveCustomerAllCards(Number(localStorage.getItem('id'))).then(response => {
-                            if(response.HasError) {
-                                this.disablePlaceOrder = false
-                                this.showNotification('error','Error','Error occurred please try later!');
-                            } else {
-                                this.allCards = [];
-                                this.allCards = response.CustomerCards;
-                                this.showNotification('success','Success','Card is default now and shown!');
-                                this.disablePlaceOrder = false;
-                            }
-                        }, error => {
-                            console.log(error);
-                            this.disablePlaceOrder = false;
-                            this.showNotification('error','Error','Error occurred please try later!');
-                        })
+                        this.allCards = [];
+                        this.allCards = response.result;
+                        this.showNotification('success','Success','Card is default now and shown!');
+                        // retrieveCustomerAllCards(card.Id,localStorage.getItem('id')).then(response => {
+                        //     if(response.HasError) {
+                        //         this.disablePlaceOrder = false
+                        //         this.showNotification('error','Error','Error occurred please try later!');
+                        //     } else {
+                        //         this.allCards = [];
+                        //         this.allCards = response.result;
+                        //         this.showNotification('success','Success','Card is default now and shown!');
+                        //         this.disablePlaceOrder = false;
+                        //     }
+                        // }, error => {
+                        //     console.log(error);
+                        //     this.disablePlaceOrder = false;
+                        //     this.showNotification('error','Error','Error occurred please try later!');
+                        // })
                     }
                 }, error => {
                     console.log(error);
@@ -731,7 +734,7 @@
                  } else {
                      getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
                          this.allAddresses = [];
-                         this.allAddresses = response;
+                         this.allAddresses = response.result;
                          this.setAddressID(this.allAddresses[0]);
                          this.showNotification('success','Success','Address is default and shown!');
                          console.log('isDelivery',this.isDelivery);
@@ -791,13 +794,13 @@
                                         if(this.allCards.length > 0) {
                                             console.log('cards',this.allCards);
                                             this.allCards = response.CustomerCards;
-                                            calculateDistance(this.lon1,this.lat1,this.lon2,this.lat2,'k').then(response => {
+                                            calculateDistance(this.lon1,this.lat1,this.lon2,this.lat2).then(response => {
                                                 console.log('start6');
                                                 this.disablePlaceOrder = true;
                                                 console.log('here inside calc2', response, Number(response),deliveryCharges.allowedKm,'::',response > deliveryCharges.allowedKm);
                                                 console.log('here inside calc3', response);
-                                                if(response > deliveryCharges.allowedKm) {
-                                                    this.extraKmDeliveryFee = (response - deliveryCharges.allowedKm) * deliveryCharges.extraKmDeliveryFee;
+                                                if(response.result.Distance > deliveryCharges.allowedKm) {
+                                                    this.extraKmDeliveryFee = (response.result.Distance - deliveryCharges.allowedKm) * deliveryCharges.extraKmDeliveryFee;
                                                     this.disablePlaceOrder = false;
                                                 } else {
                                                     console.log('here inside calc4');

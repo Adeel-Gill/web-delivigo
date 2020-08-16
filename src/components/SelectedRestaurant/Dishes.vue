@@ -287,12 +287,12 @@
                 console.log('here2');
 
                 console.log('here3Object',this.meal);
-                debugger;
+                // debugger;
                 this.$store.dispatch('clearOrderItems')
             },
             PostCart() {
                 postCartItem(this.meal).then(response => {
-                         debugger;
+                        //  debugger;
                         if(!response.HasError) {
 
                             this.cartItems = response.result;
@@ -312,7 +312,7 @@
                     this.setMealObject(this.dishObj);
                     console.log('mealObject',this.meal);
                     this.PostCart();
-                    debugger;
+                    // debugger;
                     // this.$store.dispatch('saveInCart',this.meal);
                     // document.getElementById("display-dish").style.display = "none";
                     // this.showNotification('success','Success','Item added in cart...!');

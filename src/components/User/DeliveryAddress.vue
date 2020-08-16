@@ -9,7 +9,7 @@
                 <h1 class="profile-heading d-inline">{{newLang.deliveryAddress}}</h1>
                 <button class="btn btn-submit float-right" @click="showModal"><i class="fas fa-plus mr-3"></i>{{newLang.addAddress}}</button>
             </div>
-            <div v-if="allAddresses.length">
+            <div v-if="isEmpty">
                 <div class="address-block row pt-4 m-0 w-100" v-for="address in allAddresses" :key="address.Id">
 
                 <div class="col-sm-10">
@@ -108,6 +108,7 @@
                 allAddresses: [],
                 country: '',
                 isLoading: false,
+                isEmpty : false,
                 show: false,
                 mapData: {},
                 addressObj: {
@@ -151,47 +152,56 @@
                     this.addressObj.Apartment = this.mapData.text;
                     saveAddress(this.addressObj).then(response => {
                         if(response.HasErrors ) {
+                            this.isEmpty = false;
                             this.showNotification('error',this.newLang.error,this.newLang.addressSaveError);
                             this.isLoading = false;
                         } else {
-                            this.$store.dispatch('setAddressID', response.Id);
-                            setDefaultAddress(Number(localStorage.getItem('id')), this.$store.state.addressId).then(response => {
-                                if(response.HasError) {
-                                    this.showNotification('error',this.newLang.error, this.newLang.addressDefaultError);
-                                    this.isLoading = false;
-                                } else {
-                                    getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
-                                        if(response.HasError) {
-                                            this.showNotification('error',this.newLang.error,this.newLang.addressFetchError);
-                                            this.isLoading = false;
-                                        } else {
-                                            if(response.length <= 0) {
-                                                this.isLoading = false;
-                                                this.showNotification('error',this.newLang.error,this.newLang.addressesNotAvailable);
-                                            } else {
-                                                this.isLoading = false;
-                                                this.allAddresses = response;
-                                                console.log('allAddresses',this.allAddresses);
-                                                this.showNotification('success', this.newLang.success, this.newLang.addressSaved);
-                                                this.hideModal();
-                                            }
+                            
+                            this.isLoading = false;
+                            this.isEmpty = true;
+                            this.allAddresses = response.result;
+                            console.log('allAddresses',this.allAddresses);
+                            this.showNotification('success', this.newLang.success, this.newLang.addressSaved);
+                            this.hideModal();
+                            this.$store.dispatch('setAddressID', response.result[0].Id);
+                            // setDefaultAddress(Number(localStorage.getItem('id')), this.$store.state.addressId).then(response => {
+                            //     if(response.HasError) {
+                            //         this.showNotification('error',this.newLang.error, this.newLang.addressDefaultError);
+                            //         this.isLoading = false;
+                            //     } else {
+                            //         getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
+                            //             if(response.HasError) {
+                            //                 this.showNotification('error',this.newLang.error,this.newLang.addressFetchError);
+                            //                 this.isLoading = false;
+                            //             } else {
+                            //                 if(response.length <= 0) {
+                            //                     this.isLoading = false;
+                            //                     this.showNotification('error',this.newLang.error,this.newLang.addressesNotAvailable);
+                            //                 } else {
+                            //                     this.isLoading = false;
+                            //                     this.allAddresses = response;
+                            //                     console.log('allAddresses',this.allAddresses);
+                            //                     this.showNotification('success', this.newLang.success, this.newLang.addressSaved);
+                            //                     this.hideModal();
+                            //                 }
 
-                                        }
-                                        this.show = true;
-                                    }, error => {
-                                        console.log(error);
-                                        this.isLoading = false;
-                                        this.showNotification('error',this.newLang.error,this.newLang.addressFetchFailed);
-                                    })
-                                }
-                            }, error => {
-                                console.log(error);
-                                this.isLoading = false;
-                                this.showNotification('error',this.newLang.error,this.newLang.addressNotDefault);
-                            })
+                            //             }
+                            //             this.show = true;
+                            //         }, error => {
+                            //             console.log(error);
+                            //             this.isLoading = false;
+                            //             this.showNotification('error',this.newLang.error,this.newLang.addressFetchFailed);
+                            //         })
+                            //     }
+                            // }, error => {
+                            //     console.log(error);
+                            //     this.isLoading = false;
+                            //     this.showNotification('error',this.newLang.error,this.newLang.addressNotDefault);
+                            // })
                         }
                     }, error => {
                         console.log(error);
+                        this.isEmpty = false;
                         this.isLoading = false;
                         this.showNotification('error',this.newLang.error,this.newLang.addressSaveError)
                     })
@@ -202,40 +212,48 @@
                   if(response.HasErrors) {
                       this.showNotification('error',this.newLang.error, this.newLang.addressFetchError);
                   } else {
-                      getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
-                          if(response.HasErrors) {
-                              this.showNotification('error',this.newLang.error, this.newLang.addressFetchError);
-                          } else {
-                              if(response.length <= 0) {
-                                  this.isLoading = false;
-                                  this.showNotification('error',this.newLang.error,this.newLang.addressesNotAvailable);
-                              } else {
-                                  this.allAddresses = response;
-                                  this.showNotification('success',this.newLang.success,this.newLang.addressIsDefault);
-                              }
-                          }
-                      }, error => {
-                          console.log(error);
-                          this.showNotification('error',this.newLang.error,this.newLang.addressIsSavedNotDefault)
-                      })
+                       this.isLoading = false;
+                        this.allAddresses = response.result;
+                        console.log('allAddresses',this.allAddresses);
+                        this.showNotification('success', this.newLang.success, this.newLang.addressIsDefault);
+                    //   getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
+                    //       if(response.HasErrors) {
+                    //           this.showNotification('error',this.newLang.error, this.newLang.addressFetchError);
+                    //       } else {
+                    //           if(response.length <= 0) {
+                    //               this.isLoading = false;
+                    //               this.showNotification('error',this.newLang.error,this.newLang.addressesNotAvailable);
+                    //           } else {
+                    //               this.allAddresses = response;
+                    //               this.showNotification('success',this.newLang.success,this.newLang.addressIsDefault);
+                    //           }
+                    //       }
+                    //   }, error => {
+                    //       console.log(error);
+                    //       this.showNotification('error',this.newLang.error,this.newLang.addressIsSavedNotDefault)
+                    //   })
                   }
               }, error => {
+                  this.isEmpty = false;
+                  this.isLoading = false;
                   console.log(error);
                   this.showNotification('error',this.newLang.error, this.newLang.addressDefaultError);
               })
             },
             showAllAddresses() {
                 console.log('here');
-              getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
+              getAllCustomerAddresses(localStorage.getItem('id')).then(response => {
                   if(response.HasErrors ) {
                       this.showNotification('error',this.newLang.error, this.newLang.addressFetchError);
                   } else {
                       if(response.length <= 0) {
                           this.isLoading = false;
+                          this.isEmpty = false;
                           this.showNotification('error',this.newLang.error,this.newLang.addressesNotAvailable);
                       } else {
+                          this.isEmpty = true;
                           this.showNotification('success',this.newLang.success, this.newLang.addressShown);
-                          this.allAddresses = response;
+                          this.allAddresses = response.result;
                       }
                   }
               }, error => {
@@ -257,7 +275,7 @@
                             dialog.loading(false);
                             dialog.close();
                             this.showNotification('success', this.newLang.success, this.newLang.addressDeleted);
-                            this.showAllAddresses();
+                            this.allAddresses = response.result;
                         }
                     }, error => {
                         console.log(error);

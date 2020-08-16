@@ -114,7 +114,7 @@
                 <div class="row" style="box-sizing: border-box;">
                     <app-checkout-cart-item v-for="(item, index) in cartItems" :key="item.Id"
                                             :itemIndex="index"
-                                            @removeItemInCart="itemRemoveInOrder(index)"
+                                            @removeItemInCart="itemRemoveInOrder(item.Id,item.CartId)"
                                             :item="item"></app-checkout-cart-item>
                 </div>
                 <div class="pl-4">
@@ -232,7 +232,7 @@
                     </div>
                 </div>
 
-                <div class="row invoice">
+                <!-- <div class="row invoice">
                     <div class="col-8">
                         <p>{{newLang.delivery}}</p>
                         <p class="small-text">Address lorem ipsum</p>
@@ -240,7 +240,7 @@
                     <div class="col-4 price">
                         <p>3.56</p>
                     </div>
-                </div>
+                </div> -->
                 <div class="row invoice">
                     <div class="col-8">
                         <p>{{newLang.basicDeliveryFee}}</p>
@@ -325,6 +325,7 @@
                 restaurant: {},
                 emptyInstruction: true,
                 time: '',
+                scheduleTime: '',
                 notEmpty: true,
                 subTotal: 0,
                 addID: null,
@@ -481,14 +482,13 @@
                 }
                 console.log('element',document.getElementsByClassName('fab-wrapper'));
             },
-            itemRemoveInOrder(i) {
+            itemRemoveInOrder(Id,CartId) {
                 this.$dialog.confirm('Item will be removed from order. Continue?', {
                     loader: true
                 }).then(dialog => {
                     dialog.loading(false);
-                    this.$store.dispatch('removeCartItem',i);
+                    this.removeItem(Id,CartId);
                     this.checkCartAfterOrderItemDeletion();
-                    this.showNotification('success','Success','Item removed.');
                     this.setCount();
                     dialog.close();
                 }).catch(() => {
@@ -555,7 +555,7 @@
                 }
             },
             checkCartAfterOrderItemDeletion() {
-                if(this.$store.state.cartData.length <= 0) {
+                if(this.cartItems.length <= 0) {
                     this.doProceed = true;
                     this.notEmpty = false;
                     this.cartItems =[];
@@ -563,18 +563,18 @@
                     this.$store.dispatch('clearCart');
 
                 } else {
-                    for(var i=0; i<this.cartItems.length; i++) {
-                        var temp = {};
-                        this.subTotal = 0;
-                        temp = this.cartItems[i].Meal;
-                        this.subTotal += temp.Price;
-                    }
-                    this.totalPrice = this.subTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
+                    // for(var i=0; i<this.cartItems.length; i++) {
+                    //     var temp = {};
+                    //     this.subTotal = 0;
+                    //     temp = this.cartItems[i].Meal;
+                    //     this.subTotal += temp.Price;
+                    // }
+                    this.totalPrice = this.cartItems[0].SubTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
                 }
             },
             checkCartAfterDeletion(cartDate) {
 
-                if(this.cartItems <= 0) {
+                if(this.cartItems.length <= 0) {
                     this.doProceed = true;
                     this.notEmpty = false;
                     this.cartItems =[];
@@ -609,41 +609,46 @@
             },
             setPlaceOrderObject(cartItems) {
                 var dateTime = new Date();
+                // this.time = "";
                 if(this.isSchedule) {
-                    this.time = dateTime.getFullYear() + "-"
-                        + (dateTime.getMonth() + 1) + "-" +
-                        dateTime.getDate() + "T" + this.time +
+                    console.log("time::::", this.time);
+                    this.scheduleTime = dateTime.getFullYear() + "-"
+                        + ('0' + (dateTime.getMonth()+1)).slice(-2) + "-" +
+                        ('0' + dateTime.getDate()).slice(-2) + "T" + this.time +
                         ".108Z";
+                        console.log('ScheduleTime', this.scheduleTime);
                 } else {
                     this.time = "";
+                    this.scheduleTime = "";
                 }
                 this.orderObject = {
-                    "RestaurantId" : cartItems[0].Meal.RestroId,
+                    "RestaurantId" : this.cartItems[0].RestroId,
                     "CustomerId": Number(localStorage.getItem('id')),
                     "AddressId": this.addID,
                     "CardId": this.cardID,
+                    "CartId": this.cartItems[0].CartId,
                     "VAT": 5,
                     "IsSchedule": this.isSchedule,
-                    "ScheduleTime": this.time,
+                    "ScheduleTime": this.scheduleTime,
                     "IsDelivery": this.isDelivery,
-                    "ItemSubTotal": this.subTotal,
+                    // "ItemSubTotal": this.subTotal,
                     "SmallOrderExtra": this.smallDeliveryOrderExtra,
                     "BasicDeliveryFee": this.basicDeliveryFee,
                     "ExtraKMDeliveryFee": this.extraKmDeliveryFee,
-                    "TotalPrice": this.totalPrice,
+                    // "TotalPrice": this.totalPrice,
                     "Notes": this.instruction,
-                    "OrderItems": cartItems,
+                    // "OrderItems": cartItems,
                 }
             },
             setAddressID(obj) {
                 this.addID = obj.Id;
                 this.lon2 = obj.Longitude;
                 this.lat2 = obj.Latitude;
-                console.log('here inside calc1');
+                console.log('here inside calc1',obj);
                 // this.calculateDistance();
             },
             calculateDistance() {
-                calculateDistance(this.lon1,this.lat1,this.lon2,this.lat2,'k').then(response => {
+                calculateDistance(this.lon1,this.lat1,this.lon2,this.lat2).then(response => {
                     this.disablePlaceOrder = true;
                     console.log('here inside calc2', response, Number(response),deliveryCharges.allowedKm,'::',response > deliveryCharges.allowedKm);
                     console.log('here inside calc3', response);
@@ -656,7 +661,7 @@
                         this.disablePlaceOrder = false;
                     }
                     this.basicDeliveryFee = deliveryCharges.basicDeliveryFee;
-                    this.totalPrice = this.subTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
+                    this.totalPrice = this.cartItems[0].SubTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
                     console.log(this.extraKmDeliveryFee);
                 }, error => {
                     console.log(error);
@@ -668,8 +673,8 @@
                 this.cardID = id;
             },
             checkSmallOrder() {
-                if(this.subTotal<10) {
-                    this.smallDeliveryOrderExtra = 10 - this.subTotal;
+                if(this.cartItems[0].SubTotal<10) {
+                    this.smallDeliveryOrderExtra = 10 - this.cartItems[0].SubTotal;
                 } else {
                     this.smallDeliveryOrderExtra = 0;
                 }
@@ -678,13 +683,14 @@
                 if(this.cartItems.length > 0) {
                     this.doProceed = false;
                     this.notEmpty= true;
-                    console.log('cartItems',this.cartItems, this.subTotal);
+                    console.log('cartItems',this.cartItems, this.cartItems[0].SubTotal);
                     this.subTotal = 0;
-                    for(var i=0; i<this.cartItems.length; i++) {
-                        var temp = {};
-                        temp = this.cartItems[i];
-                        this.subTotal += temp.Price;
-                    }
+                    this.subTotal = this.cartItems[0].SubTotal
+                    // for(var i=0; i<this.cartItems.length; i++) {
+                    //     var temp = {};
+                    //     temp = this.cartItems[i];
+                    //     this.subTotal += temp.Price;
+                    // }
                     this.checkSmallOrder();
                     // for(let item of this.cartItems) {
                     //     console.log('item',item,'meal',item.Meal,'itemPrice',item.Meal.Price);
@@ -704,7 +710,7 @@
                 this.isDelivery = false;
                 this.extraKmDeliveryFee = 0;
                 this.basicDeliveryFee = 0;
-                this.totalPrice = this.subTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
+                this.totalPrice = this.cartItems[0].SubTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
             },
             placeOrder() {
                 this.disablePlaceOrder = true;
@@ -718,7 +724,7 @@
                     } else {
                         this.$store.dispatch('clearCart');
                         this.showNotification('success','Success','Order is successfully placed! Thankyou!');
-                        console.log('orderObject',this.orderObject);
+                        // console.log('orderObject',this.orderObject);
                         this.$router.push('/currentOrder');
                     }
                 }, error => {
@@ -738,27 +744,31 @@
                     this.card.CustomerId = card.CustomerId;
                     this.card.SourceId = card.CardStripeId;
                     this.card.CardId = card.Id;
-                    markDefaultCard(this.card).then(response => {
+                    markDefaultCard(this.card.CardId, this.card.CustomerId).then(response => {
                         this.disablePlaceOrder = true;
                         if(response.HasErrors) {
                             this.disablePlaceOrder = false;
                             this.showNotification('error','Error','Card is failed to be set as default!');
                         } else {
-                            retrieveCustomerAllCards(Number(localStorage.getItem('id'))).then(response => {
-                                if(response.HasError) {
-                                    this.disablePlaceOrder = false
-                                    this.showNotification('error','Error','Error occurred please try later!');
-                                } else {
-                                    this.allCards = [];
-                                    this.allCards = response.CustomerCards;
-                                    this.showNotification('success','Success','Card is default now and shown!');
-                                    this.disablePlaceOrder = false;
-                                }
-                            }, error => {
-                                console.log(error);
-                                this.disablePlaceOrder = false;
-                                this.showNotification('error','Error','Error occurred please try later!');
-                            })
+                            this.allCards = [];
+                            this.allCards = response.result;
+                            this.showNotification('success','Success','Card is default now and shown!');
+                            this.disablePlaceOrder = false;
+                            // retrieveCustomerAllCards(Number(localStorage.getItem('id'))).then(response => {
+                            //     if(response.HasError) {
+                            //         this.disablePlaceOrder = false
+                            //         this.showNotification('error','Error','Error occurred please try later!');
+                            //     } else {
+                            //         this.allCards = [];
+                            //         this.allCards = response.result;
+                            //         this.showNotification('success','Success','Card is default now and shown!');
+                            //         this.disablePlaceOrder = false;
+                            //     }
+                            // }, error => {
+                            //     console.log(error);
+                            //     this.disablePlaceOrder = false;
+                            //     this.showNotification('error','Error','Error occurred please try later!');
+                            // })
                         }
                     }, error => {
                         console.log(error);
@@ -777,9 +787,8 @@
                             this.disablePlaceOrder = false;
                             this.showNotification('error','Error','Default setting failed please try later!');
                         } else {
-                            getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
                                 this.allAddresses = [];
-                                this.allAddresses = response;
+                                this.allAddresses = response.result;
                                 this.setAddressID(this.allAddresses[0]);
                                 this.showNotification('success','Success','Address is default and shown!');
                                 console.log('isDelivery',this.isDelivery);
@@ -788,10 +797,21 @@
                                 } else {
                                     this.disablePlaceOrder = false;
                                 }
-                            }, error => {
-                                console.log(error);
-                                this.showNotification('error','Error','Please try later error occurred');
-                            })
+                            // getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
+                            //     this.allAddresses = [];
+                            //     this.allAddresses = response.result;
+                            //     this.setAddressID(this.allAddresses[0]);
+                            //     this.showNotification('success','Success','Address is default and shown!');
+                            //     console.log('isDelivery',this.isDelivery);
+                            //     if(this.isDelivery) {
+                            //         this.calculateDistance();
+                            //     } else {
+                            //         this.disablePlaceOrder = false;
+                            //     }
+                            // }, error => {
+                            //     console.log(error);
+                            //     this.showNotification('error','Error','Please try later error occurred');
+                            // })
                         }
                     }, error=> {
                         console.log(error);
@@ -816,14 +836,14 @@
                     console.log('cartItems',this.cartItems);
                     fetchUserProfile(Number(localStorage.getItem('id'))).then(response => {
                         console.log('start3');
-                        this.userData = response;
+                        this.userData = response.result;
                         getAllCustomerAddresses(Number(localStorage.getItem('id'))).then(response => {
                             console.log('start4');
                             if(response.HasErrors) {
                                 this.showNotification('Address fetching please try later!');
                                 this.disablePlaceOrder = true;
                             } else {
-                                this.allAddresses = response;
+                                this.allAddresses = response.result;
                                 $(document).ready(function(){
                                     $('.owl-carousel').owlCarousel({
                                         loop:true,
@@ -847,7 +867,7 @@
                                     });
                                 });
                                 if(this.allAddresses.length > 0) {
-                                    this.allAddresses = response;
+                                    this.allAddresses = response.result;
                                     this.addID = this.allAddresses[0].Id;
                                     this.lon2 = this.allAddresses[0].Longitude;
                                     this.lat2 = this.allAddresses[0].Latitude;
@@ -858,11 +878,11 @@
                                             this.showNotification('error','Error','Error occurred please try later!');
                                             this.disablePlaceOrder = true;
                                         } else {
-                                            this.allCards = response.CustomerCards;
+                                            this.allCards = response.result;
                                             console.log(this.allCards,'herehere',response,' break ::',response.CustomerCards);
                                             if(this.allCards.length > 0) {
                                                 console.log('cards',this.allCards);
-                                                this.allCards = response.CustomerCards;
+                                                this.allCards = response.result;
                                                 $(document).ready(function(){
                                                     $('.owl-carousel2').owlCarousel({
                                                         loop:true,
@@ -885,21 +905,21 @@
                                                         }
                                                     });
                                                 });
-                                                calculateDistance(this.lon1,this.lat1,this.lon2,this.lat2,'k').then(response => {
+                                                calculateDistance(this.lon1,this.lat1,this.lon2,this.lat2).then(response => {
                                                     console.log('start6');
                                                     this.disablePlaceOrder = true;
-                                                    console.log('here inside calc2', response, Number(response),deliveryCharges.allowedKm,'::',response > deliveryCharges.allowedKm);
+                                                    console.log('here inside calc2', Number(response),deliveryCharges.allowedKm,'::',response > deliveryCharges.allowedKm);
                                                     console.log('here inside calc3', response);
-                                                    if(response > deliveryCharges.allowedKm) {
-                                                        this.extraKmDeliveryFee = (response - deliveryCharges.allowedKm) * deliveryCharges.extraKmDeliveryFee;
+                                                    if(response.result.Distance > deliveryCharges.allowedKm) {
+                                                        this.extraKmDeliveryFee = (response.result.Distance - deliveryCharges.allowedKm) * deliveryCharges.extraKmDeliveryFee;
                                                         this.disablePlaceOrder = false;
                                                     } else {
                                                         console.log('here inside calc4');
                                                         this.extraKmDeliveryFee = 0;
                                                         this.disablePlaceOrder = false;
                                                     }
-                                                    this.totalPrice = this.subTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
-                                                    console.log('start7');
+                                                    this.totalPrice = this.cartItems[0].SubTotal + this.extraKmDeliveryFee + this.smallDeliveryOrderExtra + this.basicDeliveryFee;
+                                                    console.log('start7',this.cartItems[0].SubTotal,this.extraKmDeliveryFee,this.smallDeliveryOrderExtra,this.basicDeliveryFee);
                                                 }, error => {
                                                     console.log(error);
                                                     this.showNotification('error','Error','Error occurred please try later!');

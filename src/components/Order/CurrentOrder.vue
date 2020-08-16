@@ -7,11 +7,11 @@
                             <div class="col-md-6">
                                 <!--                    <p style="display:none;">{{decomposeObject(currentOrder)}}</p>-->
                                 <div class="sec1" >
-                                    <h6>{{currentOrderObject.Restaurant.Name}}</h6>
-                                    <p class="text-muted">{{currentOrderObject.Order.OrderPlaceTime}}</p>
+                                    <h6>{{currentOrderObject.Name}}</h6>
+                                    <p class="text-muted">{{currentOrderObject.OrderPlaceTime}}</p>
                                 </div>
                                 <div class="sec1">
-                                    <p class="mt-4">{{currentOrderObject.Order.AddressLine}}</p>
+                                    <p class="mt-4">{{currentOrderObject.AddressLine}}</p>
                                 </div>
                                 <div class="">
                                     <div class="rating mt-4 mb-3">
@@ -29,19 +29,19 @@
 <!--                                {{showObject(currentOrderObject)}}-->
 <!--                            </div>-->
                             <div class="col-md-6">
-                                <div class="collapse-tab" role="tablist"  v-for="(orderItem, itemIndex) in currentOrderObject.Order.OrderItems" :key="itemIndex">
+                                <div class="collapse-tab" role="tablist"  v-for="(orderItem, itemIndex) in currentOrderObject.Meals[0].Items" :key="itemIndex">
                                     <div class="line">
                                         <div class="px-1 ml-1 collapse-head" role="tab">
-                                            <a v-b-toggle.accordion-1><div class="numberCircle">1</div>{{orderItem.Title}}</a>
-                                            <span class="float-right">${{orderItem.Price }}</span>
+                                            <a v-b-toggle.accordion-1><div class="numberCircle">1</div>{{orderItem.MealName}}</a>
+                                            <span class="float-right">${{orderItem.MealPrice }}</span>
                                         </div>
                                         <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
                                             <div class="pl-3 sub-catg pb-3">
                                                 <p class="d-inline-block text-muted">{{newLang.quantity}}</p><span class="float-right text-muted">{{orderItem.Quantity}}</span><br>
-                                                <p class="d-inline-block text-muted">{{newLang.otherCharges}}</p><span class="float-right text-muted">{{(currentOrderObject.Order.TotalPrice.toFixed(2)-(orderItem.Price + addOnTotal))}}</span>
-                                                <div v-if="orderItem.CustomOption.length > 0">
-                                                    <div v-for="customOption in customOptions" :key="customOption.Id">
-                                                        <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
+                                                <p class="d-inline-block text-muted">{{newLang.otherCharges}}</p><span class="float-right text-muted">{{(currentOrderObject.BasicDeliveryFee + currentOrderObject.ExtraKmDeliveryCharges + currentOrderObject.SmallOrderCharges).toFixed(2)}}</span>
+                                                <div v-if="false">
+                                                    <div v-for="customOption in orderItem.Scales" :key="customOption.Id">
+                                                        <p class="d-inline-block text-muted">{{customOption.Scale}}</p><span class="float-right text-muted">${{customOption.ScalePrice}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -53,12 +53,12 @@
                                             <div class="px-1 ml-1 collapse-head" role="tab">
                                                 <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{newLang.addOnTitle}}</a>
 <!--                                                <span class="float-right">$44</span>-->
-                                                <span class="float-right">${{addOnsPrices.length == 1? addOnsPrices[0] : addOnsPrices[itemIndex]}}</span>
-                                            </div>
+                                                <span class="float-right">${{orderItem.AddOnTotal}}</span>
+                                    </div>
                                             <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
                                                 <div class="pl-3 sub-catg pb-3">
                                                     <div v-for="addon in orderItem.AddOns" :key="addon.Id">
-                                                        <p class="d-inline-block text-muted">{{addon.Title}}</p><span class="float-right text-muted">${{addon.Price}}</span>
+                                                        <p class="d-inline-block text-muted">{{addon.AddOnName}}</p><span class="float-right text-muted">${{addon.AddOnPrice}}</span><br>
                                                     </div>
                                                 </div>
                                             </b-collapse>
@@ -71,15 +71,16 @@
                                     </div>
 
                                     <div class="line">
-                                        <div v-if="isScales">
+                                        <div v-if="orderItem.Scales.length">
                                             <div class="px-1 ml-1 collapse-head" role="tab">
                                                 <a v-b-toggle.accordion-3><div class="numberCircle">3</div>{{newLang.scales}}</a>
-                                                <span class="float-right">$33</span>
+                                                <span class="float-right">${{orderItem.ScaleTotal}}</span>
                                             </div>
                                             <b-collapse id="accordion-3" visible accordion="my-accordion" role="tabpanel">
                                                 <div class="pl-3 sub-catg pb-3">
-                                                    <div v-for="scale in scales" :key="scale.Id">
-                                                        <p class="d-inline-block text-muted">{{scale.Name}}</p><span class="float-right text-muted">${{scale.Price}}</span>
+                                                    <div v-for="(scale, i) in orderItem.Scales" :key="i">
+                                                        <p class="d-inline-block text-muted">{{scale.Scale}}</p><span class="float-right text-muted">${{scale.ScalePrice}}</span><br>
+                                                        <p class="d-inline-block text-muted">Value</p><span class="float-right text-muted">${{scale.OptionValue}}</span>
                                                     </div>
 
                                                 </div>
@@ -93,13 +94,14 @@
                                     </div>
                                 </div>
                                 <div class="total">
-                                    <span class="float-right">{{currentOrderObject.Order.TotalPrice.toFixed(2)}}</span>
+                                    <span class="float-left">Total Price</span>
+                                    <span class="float-right">{{currentOrderObject.TotalPrice.toFixed(2)}}</span>
                                 </div>
                                 <div class="float-right button">
                                    
-                                    <router-link :to="{path:'/orderTracking/'+currentOrderObject.Order.OrderId,query:{cusID:currentOrderObject.Customer.CustomerId}}" :newLang = newLang>
+                                    <router-link :to="{path:'/orderTracking/'+currentOrderObject.Id,query:{cusID:cusId}}" :newLang = newLang>
                                         <button class="btn btn-primary"
-                                                :disabled="(statuses.OrderDelivered === currentOrderObject.Order.OrderStatusId)">
+                                                :disabled="(statuses.OrderDelivered === currentOrderObject.OrderStatusId)">
                                             {{newLang.trackOrder}}
                                         </button>
                                     </router-link>
@@ -154,6 +156,7 @@
                 isScales: false,
                 addOnTitle: "AddOns",
                 addOnTotal: 0,
+                cusId: '',
                 emptyAddOnTitle: "No AddOns",
                 isEmpty: this.isEmptyArray,
                 emptyCustomOptionTitle: "No Custom Options",
@@ -167,66 +170,67 @@
                 console.log('hereInFunction',addons);
                 this.orderItems = addons;
 
-                for(var i=0; i<this.orderItems.length; i++) {
-                    this.newAddons = this.orderItems[i].AddOns;
-                    console.log('orderItems,addons',this.orderItems[i],this.newAddons);
-                    for(var j=0; j<this.newAddons.length; j++) {
-                        console.log('addons',this.newAddons);
-                        this.addOnPrice += this.newAddons[j].Price;
-                    }
+                // for(var i=0; i<this.orderItems.length; i++) {
+                //     this.newAddons = this.orderItems[i].AddOns;
+                //     console.log('orderItems,addons',this.orderItems[i],this.newAddons);
+                //     for(var j=0; j<this.newAddons.length; j++) {
+                //         console.log('addons',this.newAddons);
+                //         this.addOnPrice += this.newAddons[j].Price;
+                //     }
 
-                    console.log('checking nan',this.addOnPrice);
+                //     console.log('checking nan',this.addOnPrice);
 
-                    this.addOnsPrices.push(this.addOnPrice);
-                    console.log('addOnPrices',this.addOnsPrices);
-                    this.addOnTotal += this.addOnPrice;
-                    this.addOnPrice = 0;
-                }
+                //     this.addOnsPrices.push(this.addOnPrice);
+                //     console.log('addOnPrices',this.addOnsPrices);
+                //     this.addOnTotal += this.addOnPrice;
+                //     this.addOnPrice = 0;
+                // }
             },
             showObject(obj) {
                 // console.log('currentOrder',currentOrder)
-                console.log('first',obj.Order.OrderItems[0].Title);
-                console.log('first',obj.Order.OrderItems[0].Price);
-                console.log('first',obj.Order.OrderItems[0].Quantity);
-                console.log('first',obj.Order.OrderItems[0].AddOns);
-                console.log('first',obj.Order.OrderItems[0].AddOns[0].Id);
-                console.log('first',obj.Order.OrderItems[0].AddOns[0].Price);
+                // console.log('first',obj.Order.OrderItems[0].Title);
+                // console.log('first',obj.Order.OrderItems[0].Price);
+                // console.log('first',obj.Order.OrderItems[0].Quantity);
+                // console.log('first',obj.Order.OrderItems[0].AddOns);
+                // console.log('first',obj.Order.OrderItems[0].AddOns[0].Id);
+                // console.log('first',obj.Order.OrderItems[0].AddOns[0].Price);
             },
             decomposeObject() {
-                // this.currentOrderObject = obj;
-                console.log('currentOrderObject', this.currentOrderObject);
-                if(this.obj.Order.OrderStatusId !== 70) {
+                // // this.currentOrderObject = obj;
+                // console.log('currentOrderObject', this.currentOrderObject);
+                if(this.obj.OrderStatusId !== 70) {
                     this.currentOrderObject = this.obj;
                     this.isCurrentOrder = true;
-                    console.log('currentOrderAssigned',this.currentOrderObject);
-                    this.calculateAddOnsPrice(this.currentOrderObject.Order.OrderItems);
-                    if(this.currentOrderObject.Order.OrderItems[0].AddOns.length > 0) {
-                        this.isAddons = true;
-                        this.addOns = this.currentOrderObject.Order.OrderItems[0].AddOns;
-                        this.calculateAddOnsPrice(this.currentOrderObject.Order.OrderItems);
-                        console.log('here after method',this.currentOrderObject.Order.OrderItems)
-                        if(this.currentOrderObject.Order.OrderItems[0].CustomOption.length > 0) {
-                            this.isCustomOptions = true;
-                            this.customOptions = this.currentOrderObject.Order.OrderItems[0].CustomOption;
-                            if(this.currentOrderObject.Order.OrderItems[0].Scales.length > 0) {
-                                this.isScales = true;
-                                this.scales = this.currentOrderObject.Order.OrderItems[0].Scales;
-                            } else {
-                                this.scales = [];
-                                this.isScales = false;
-                            }
-                        } else {
-                            this.customOptions = [];
-                            this.isCustomOptions = false;
-                        }
-                    } else {
-                        this.addOns = [];
-                        this.isAddons = false;
-                    }
-                } else {
-                    this.isCurrentOrder = false;
-                    this.currentOrderObject = {};
                 }
+                //     console.log('currentOrderAssigned',this.currentOrderObject);
+                //     this.calculateAddOnsPrice(this.currentOrderObject.Order.OrderItems);
+                //     if(this.currentOrderObject.Order.OrderItems[0].AddOns.length > 0) {
+                //         this.isAddons = true;
+                //         this.addOns = this.currentOrderObject.Order.OrderItems[0].AddOns;
+                //         this.calculateAddOnsPrice(this.currentOrderObject.Order.OrderItems);
+                //         console.log('here after method',this.currentOrderObject.Order.OrderItems)
+                //         if(this.currentOrderObject.Order.OrderItems[0].CustomOption.length > 0) {
+                //             this.isCustomOptions = true;
+                //             this.customOptions = this.currentOrderObject.Order.OrderItems[0].CustomOption;
+                //             if(this.currentOrderObject.Order.OrderItems[0].Scales.length > 0) {
+                //                 this.isScales = true;
+                //                 this.scales = this.currentOrderObject.Order.OrderItems[0].Scales;
+                //             } else {
+                //                 this.scales = [];
+                //                 this.isScales = false;
+                //             }
+                //         } else {
+                //             this.customOptions = [];
+                //             this.isCustomOptions = false;
+                //         }
+                //     } else {
+                //         this.addOns = [];
+                //         this.isAddons = false;
+                //     }
+                // } else {
+                //     this.isCurrentOrder = false;
+                //     this.currentOrderObject = {};
+                // }
             },
             getLocalAll70() {
                 console.log('insidelocal70',localStorage.getItem('all70'));
@@ -240,6 +244,7 @@
         },
         mounted() {
             console.log('isEmpty',this.isEmpty);
+            this.cusId = localStorage.getItem('id');
             if(this.isEmpty) {
                 console.log('object',this.obj);
                 this.decomposeObject();

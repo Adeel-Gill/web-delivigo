@@ -8,11 +8,10 @@ export function saveCardData(data) {
         data
     })
 }
-export function markDefaultCard(data) {
+export function markDefaultCard(cardId,customerId) {
     return service({
-        url: 'MarkDefaultCard',
-        method: 'post',
-        data
+        url: `CustomerCardMarkDefault?CardId=${cardId}&CustomerId=${customerId}`,
+        method: 'get',
     })
 }
 export function retrieveCustomerAllCards(id) {
@@ -21,9 +20,9 @@ export function retrieveCustomerAllCards(id) {
         method: 'get'
     })
 }
-export function deleteCustomerCard(id) {
+export function deleteCustomerCard(cardId,customerId) {
     return service({
-        url: 'DeleteCustomerCard?customerCardId='+id,
+        url: `CustomerCardDelete?CardId=${cardId}&CustomerId=${customerId}`,
         method: 'get'
     })
 }

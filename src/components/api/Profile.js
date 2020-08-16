@@ -2,7 +2,7 @@ import service from "../util/request";
 
 export function fetchUserProfile(id) {
     return service({
-        url: 'Profile?customerId='+id,
+        url: 'Customer/'+id,
         method: 'get'
     })
 }

@@ -7,7 +7,7 @@
                         <img :src="item.MealImageUrl">
                     </div>
                     <div class="col-7 py-2 pr-1 cart-text">
-                        <a src="#" @click="removeItem(itemIndex)" class="float-right"><i class="fas fa-times"></i></a>
+                        <a src="#" @click="removeItem(item)" class="float-right"><i class="fas fa-times"></i></a>
                         <h4>{{item.Name}}</h4>
                         <!-- <p class="text-muted mb-1">{{item.Description}}</p> -->
                         <p class="m-0 d-inline-block price mr-5">{{item.Price}}</p> <span><i class="fas fa-times"></i> {{item.Quantity}}</span>
@@ -25,7 +25,7 @@
         methods: {
             removeItem(i) {
                 console.log('indexSent',i);
-                this.$emit('removeItemInCart',i);
+                this.$emit('removeItemInCart',i.Id,i.CartId);
             }
         }
     }

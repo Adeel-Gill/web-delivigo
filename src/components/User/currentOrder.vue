@@ -1,6 +1,6 @@
 <template>
     <div>
-        <app-current-order v-for="orders in allOrders" :key="orders.Order.OrderId"
+        <app-current-order v-for="orders in allOrders" :key="orders.Id"
                            :currentOrder="orders"
                            :all70="getLocalAll70()"
                            :newLang = newLang
@@ -34,11 +34,11 @@
                         this.isEmpty = true;
                         this.showNotification('error', this.newLang.error, this.newLang.errorOccurred)
                     } else {
-                        if(response.length > 0) {
+                        if(response.result.length > 0) {
                             this.isEmpty = false;
-                            for(var i=0; i< response.length; i++) {
-                                this.allOrders = response;
-                                if(response[i].Order.OrderStatusId === orderStatus.OrderDelivered) {
+                            for(var i=0; i< response.result.length; i++) {
+                                this.allOrders = response.result;
+                                if(response.result[i].OrderStatusId === orderStatus.OrderDelivered) {
                                    this.isAll70 = true;
                                 } else {
                                     this.isAll70 = false;
@@ -48,7 +48,7 @@
                                 localStorage.setItem('all70',true.toString());
 
                             } else {
-                                this.allOrders = response;
+                                this.allOrders = response.result;
                                 this.showNotification('success',this.newLang.success,this.newLang.currentOrdersShown);
                                 localStorage.setItem('all70',false.toString());
                             }

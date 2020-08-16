@@ -123,7 +123,6 @@
                 cardData: {
                     CardNumber: '',
                     Brand: '',
-                    IsDefault: false,
                     CardStripeId: '',
                     CustomerId: localStorage.getItem('id'),
                     Month: '',
@@ -169,8 +168,9 @@
                 })
                 .then(dialog => {
                     dialog.loading(true);
-                    deleteCustomerCard(id).then(response => {
-                        if(response.HasErrors) {
+                    deleteCustomerCard(id,localStorage.getItem('id')).then(response => {
+                        dialog.loading(false);
+                        if(response.HasError) {
                             dialog.loading(false);
                             dialog.close();
                             this.showNotification('error', this.newLang.error, this.newLang.cardDeletionFailed);
@@ -178,8 +178,12 @@
                             dialog.loading(false);
                             dialog.close();
                             this.showNotification('success', this.newLang.success, this.newLang.cardDeletionSuccess);
-                            this.fetchCustomerCards();
+                            this.allCards = response.result
                         }
+                    },error=> {
+                        dialog.loading(false);
+                        this.showNotification('error', this.newLang.error, this.newLang.cardDeletionFailed);
+                        dialog.close();
                     })
                 }).catch(() => {
                     this.showNotification('info', this.newLang.info, this.newLang.cardDeletionCancelled);
@@ -187,13 +191,13 @@
             },
             fetchCustomerCards() {
                 retrieveCustomerAllCards(localStorage.getItem('id')).then(response => {
-                    if(response.CustomerCards.HasErrors) {
+                    if(response.HasErrors) {
                         this.showNotification('error',this.newLang.error,this.newLang.cardRetrievalFailed);
                     } else {
-                        console.log('length',response.CustomerCards.length)
-                        if(response.CustomerCards.length>0) {
+                        console.log('length',response.result.length)
+                        if(response.result.length>0) {
                             this.showNotification('success',this.newLang.success, this.newLang.cardsFetched);
-                            this.allCards = response.CustomerCards;
+                            this.allCards = response.result;
                             this.isAvailable = true;
                         } else {
                             this.showNotification('error',this.newLang.error, this.newLang.cardsNotAvailable);
@@ -208,12 +212,12 @@
                 this.card.CustomerId = response.CustomerId;
                 this.card.SourceId = response.CardStripeId;
                 this.card.CardId = response.Id;
-                markDefaultCard(this.card).then(response => {
-                    if(response.HasErrors) {
+                markDefaultCard(response.Id,response.CustomerId).then(response => {
+                    if(response.HasError) {
                         this.showNotification('error', this.newLang.error, this.newLang.errorOccurred);
                     } else {
                         this.showNotification('success',this.newLang.success, this.newLang.cardIsDefault);
-                        this.fetchCustomerCards();
+                        this.allCards = response.result;
                     }
                 })
             },
@@ -222,12 +226,15 @@
                 return images('./' + cardImage + ".png")
             },
             SaveAndShowCards() {
+                this.isLoading = true;
                 saveCardData(this.cardData).then(response => {
                     if(response.HasErrors) {
+                        this.isLoading = false;
                        this.showNotification('error',this.newLang.error,this.newLang.cardCreatedNotSaved);
                     } else {
                         if(this.checked) {
-                            this.card.CustomerId = response.CustomerId;
+                            this.allCards = response.result;
+                            this.card.CustomerId = response.result.CustomerId;
                             this.card.SourceId = response.CardStripeId;
                             this.card.CardId = response.Id;
                             markDefaultCard(this.card).then(response => {
@@ -235,7 +242,7 @@
                                     this.showNotification('error', this.newLang.error, this.newLang.errorOccurred);
                                 } else {
                                     this.showNotification('success',this.newLang.success, this.newLang.cardIsDefault);
-                                    this.fetchCustomerCards();
+                                    this.allCards = response.result;
                                     this.$bvModal.hide('modal-1');
                                     this.isAvailable = true;
                                 }
@@ -244,8 +251,10 @@
                                 this.showNotification('error',this.newLang.error,this.newLang.cardDefaultError);
                             })
                         } else {
-                            this.fetchCustomerCards();
+                            // this.fetchCustomerCards();
+                            this.allCards = response.result;
                             this.$bvModal.hide('modal-1');
+                            this.isLoading = false;
                         }
                     }
                 }, error => {
@@ -308,7 +317,7 @@
             },
             checkStripe() {
                 checkIfStripeExist(localStorage.getItem('id')).then(response => {
-                    return response.IsSripeId
+                    return response.result;
                 }, error => {
                     return 2;
                 })
@@ -322,21 +331,25 @@
                         this.showNotification("error",this.newLang.error,this.newLang.errorOccurred);
                     } else {
                         // this.isLoading = false;
-                        verifyStripe(localStorage.getItem('id')).then(response => {
-                            console.log("hereInVerify");
-                            if(response.HasErrors == true) {
-                                this.isLoading = false;
-                                this.showNotification("error",this.newLang.error,this.newLang.errorOccurred);
-                            } else {
-                                this.isLoading = false;
-                                this.showNotification("success",this.newLang.success,this.newLang.emailUpdated);
-                                this.$bvModal.hide("modal-2");
-                                this.createCard();
-                            }
-                        }, error => {
-                            this.isLoading = false;
-                            this.showNotification("error",this.newLang.error,this.newLang.errorOccurred);
-                        })
+                        this.isLoading = false;
+                        this.showNotification("success",this.newLang.success,this.newLang.emailUpdated);
+                        this.$bvModal.hide("modal-2");
+                        this.createCard();
+                        // verifyStripe(localStorage.getItem('id')).then(response => {
+                        //     console.log("hereInVerify");
+                        //     if(response.HasErrors == true) {
+                        //         this.isLoading = false;
+                        //         this.showNotification("error",this.newLang.error,this.newLang.errorOccurred);
+                        //     } else {
+                        //         this.isLoading = false;
+                        //         this.showNotification("success",this.newLang.success,this.newLang.emailUpdated);
+                        //         this.$bvModal.hide("modal-2");
+                        //         this.createCard();
+                        //     }
+                        // }, error => {
+                        //     this.isLoading = false;
+                        //     this.showNotification("error",this.newLang.error,this.newLang.errorOccurred);
+                        // })
                     }
                 }, error => {
                     this.isLoading = false;
