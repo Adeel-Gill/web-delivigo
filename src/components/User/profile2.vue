@@ -151,7 +151,7 @@
                     OldPassword: "",
                     NewPassword: "",
                     ConfirmPassword: "",
-                    Id: 0
+                    customerId: 0
                 },
                 isEditable: false,
                 disableSave: true,
@@ -276,7 +276,7 @@
                 }
                 fetchUserProfile(localStorage.getItem('id')).then(response => {
                     console.log('profile',response);
-                    this.userData = response;
+                    this.userData = response.result;
                     localStorage.setItem('userProfile', this.userData.UrlImage);
                     localStorage.setItem('name', this.userData.FullName);
                      
@@ -302,12 +302,12 @@
                 } else {
                     if(localStorage.getItem("fbLogin") === "true") {
                         if(localStorage.getItem("userChanged") === "true") {
-                            return this.image = baseAddress + img;
+                            return this.image =  img;
                         } else {
-                            return  baseAddress +img;
+                            return  img;
                         }
                     } else {
-                        return this.image =  baseAddress + img;
+                        return this.image =  img;
                     }
                 }
             },
@@ -496,7 +496,7 @@
             },
             updatePassword() {
                 this.disableButton = true;
-                this.changePasswordObj.Id = localStorage.getItem("id");
+                this.changePasswordObj.customerId = localStorage.getItem("id");
                 changePassword(this.changePasswordObj).then(response => {
                     if(response.HasErrors === true) {
                         this.showNotification("info",this.newLang.error,this.newLang.errorOccurred);
@@ -521,7 +521,7 @@
             signOut() {
                 if(localStorage.getItem('cart') === 'null' || localStorage.getItem('cart') == null) {
                 this.$store.dispatch('cleanToken');
-                this.$store.dispatch('clearCart');
+                // this.$store.dispatch('clearCart');
                 this.showNotification('success',this.newLang.success,this.newLang.signOutSuccess);
                 // this.$router.go();
                 } else {
@@ -530,7 +530,7 @@
                 }).then(dialog => {
                     dialog.loading(true);
                     this.$store.dispatch('cleanToken');
-                    this.$store.dispatch('clearCart');
+                    // this.$store.dispatch('clearCart');
                     this.showNotification('success',this.newLang.success,this.newLang.signOutSuccess);
                     dialog.loading(false);
                     dialog.close();

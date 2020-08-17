@@ -2,7 +2,15 @@ import {service} from "../util/request";
 
 export function confirmOtp(data) {
     return service({
-        url: `CustomerOtpConfirm`,
+        url: `CustomerConfirmOtp`,
+        method: 'post',
+        data
+    })
+}
+
+export function resendOtp(data) {
+    return service({
+        url: `CustomerResendOtp`,
         method: 'post',
         data
     })

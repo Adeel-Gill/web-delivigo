@@ -24,7 +24,7 @@
         props: ['itemIndex','item'],
         methods: {
             removeItem(i) {
-                console.log('indexSent',i);
+                console.log('indexSent::',i);
                 this.$emit('removeItemInCart',i.Id,i.CartId);
             }
         }

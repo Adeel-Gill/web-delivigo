@@ -8,7 +8,7 @@
                     <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
-                           v-model="userData.fullName"
+                           v-model="userData.FullName"
                            placeholder="Name Here...!"
                            id="fullname"
                            v-on:input="checkName()"
@@ -22,7 +22,7 @@
                     <div class="col-sm-10">
                         <input type="text"
                                class="form-control"
-                               v-model="userData.mobile"
+                               v-model="userData.Mobile"
                                placeholder="e.g +3121234123"
                                v-on:input="checkMobileNumber()"
                                id="number" required>
@@ -36,7 +36,7 @@
                                class="form-control"
                                placeholder="abc@mail.com"
                                v-on:input="checkEmail()"
-                               v-model="userData.email"
+                               v-model="userData.Email"
                                id="email" required>
                         <label class="errorMessage" id="emailError"></label>
                     </div>
@@ -48,7 +48,7 @@
                         <input type="password" class="form-control"
                                placeholder="Password Here...!"
                                v-on:input="checkPassword()"
-                               v-model="userData.password" id="npwd" required>
+                               v-model="userData.Password" id="npwd" required>
                         <label class="errorMessage" id="passwordError"></label>
                     </div>
                 </div>
@@ -125,15 +125,16 @@ import VFacebookLogin from 'vue-facebook-login-component'
         data() {
             return {
                 userData: {
-                    firstName: '',
-                    lastName: '',
-                    fullName: '',
-                    mobile: '',
-                    email: '',
-                    password: '',
-                    deviceToken: 'web',
-                    deviceType: 'web',
-                    deviceUniqueCode: 'web',
+                    FirstName: '',
+                    LastName: '',
+                    FullName: '',
+                    Mobile: '',
+                    Email: '',
+                    Password: '',
+                    DeviceToken: 'web',
+                    DeviceType: 'web',
+                    DeviceUniqueCode: 'web',
+                    CityId: 10
                 },
                 fbUserData: {
                     FirstName: "",
@@ -189,17 +190,17 @@ import VFacebookLogin from 'vue-facebook-login-component'
                 this.checkAll();
             },
             async registerUser() {
-                this.userData.firstName = this.userData.fullName.substr(0,this.userData.fullName.indexOf(' '));
-                this.userData.lastName = this.userData.fullName.substr(this.userData.fullName.indexOf(' ')+1);
+                this.userData.FirstName = this.userData.FullName.substr(0,this.userData.FullName.indexOf(' '));
+                this.userData.LastName = this.userData.FullName.substr(this.userData.FullName.indexOf(' ')+1);
                 console.log('reg',this.userData);
                 if(this.checkObject()) {
                     registerUser(this.userData).then(response => {
                         this.result = response.HasErrors;
                         this.message = response.ResultMessages[0].Message;
-                        if(response.HasErrors === false) {
+                        if(!response.HasError) {
                             this.showNotification('success',this.newLang.success,this.newLang.signUpSucces);
-                            EventBus.$emit('userImage',baseAddress+response.ImageUrl);
-                            localStorage.setItem('mobileNumber', this.userData.mobile);
+                            // EventBus.$emit('userImage',baseAddress+response.ImageUrl);
+                            localStorage.setItem('mobileNumber', this.userData.Mobile);
                             localStorage.setItem('isRegOtp', 'true');
                             this.$router.push({path:'/confirmOtp'});
                         } else {
@@ -215,10 +216,10 @@ import VFacebookLogin from 'vue-facebook-login-component'
 
             },
             checkObject() {
-                if( this.userData.fullName != '' &&
-                    this.userData.mobile != '' &&
-                    this.userData.email !='' &&
-                    this.userData.password !='' &&
+                if( this.userData.FullName != '' &&
+                    this.userData.Mobile != '' &&
+                    this.userData.Email !='' &&
+                    this.userData.Password !='' &&
                     this.$refs.termsChecked.checked != false) {
                     return true;
                 }
@@ -327,17 +328,17 @@ import VFacebookLogin from 'vue-facebook-login-component'
             //validation code start
             checkName() {
                 var res = false;
-                if(this.userData.fullName === "") {
+                if(this.userData.FullName === "") {
                     document.getElementById('nameError').style.visibility = "visible";
                     document.getElementById('nameError').innerHTML = this.newLang.nameEmptyError;
                     document.getElementById('fullname').style.borderColor = "red";
                     this.nameCheck = false;
-                } else if(!this.userData.fullName.match(/^[a-zA-Z\s]+$/)) {
+                } else if(!this.userData.FullName.match(/^[a-zA-Z\s]+$/)) {
                     document.getElementById('nameError').style.visibility = "visible";
                     document.getElementById('nameError').innerHTML = this.newLang.nameWrongInput;
                     document.getElementById('fullname').style.borderColor = "red";
                     this.nameCheck = false;
-                } else if(this.userData.fullName.length < 3) {
+                } else if(this.userData.FullName.length < 3) {
                     document.getElementById('nameError').style.visibility = "visible";
                     document.getElementById('nameError').innerHTML = this.newLang.nameLengthError;
                     document.getElementById('fullname').style.borderColor = "red";
@@ -353,22 +354,22 @@ import VFacebookLogin from 'vue-facebook-login-component'
             },
             checkMobileNumber() {
                 var res = false;
-                if(this.userData.mobile === "") {
+                if(this.userData.Mobile === "") {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberEmptyError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                }/*else if(!this.userData.mobile.match(/^[0-9]+$/)) {
+                }/*else if(!this.userData.Mobile.match(/^[0-9]+$/)) {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberWrongInpur;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                }*/ else if(this.userData.mobile[0] !== '+') {
+                }*/ else if(this.userData.Mobile[0] !== '+') {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberFormatError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                } else if(this.userData.mobile.length < 11) {
+                } else if(this.userData.Mobile.length < 11) {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberLengthError;
                     document.getElementById('number').style.borderColor = "red";
@@ -383,7 +384,7 @@ import VFacebookLogin from 'vue-facebook-login-component'
                 return res;
             },
             checkEmail() {
-                if(validEmail(this.userData.email)) {
+                if(validEmail(this.userData.Email)) {
                    document.getElementById('emailError').style.visibility = "hidden";
                    document.getElementById('emailError').innerHTML = "";
                    document.getElementById('email').style.borderColor = "grey";
@@ -401,17 +402,17 @@ import VFacebookLogin from 'vue-facebook-login-component'
             },
             checkPassword() {
                 var res = false;
-                if(this.userData.password === "") {
+                if(this.userData.Password === "") {
                     document.getElementById('passwordError').style.visibility = "visible";
                     document.getElementById('passwordError').innerHTML = this.newLang.passwordEmptyError;
                     document.getElementById('npwd').style.borderColor = "red";
                     this.passwordCheck = false;
-                } else if(!this.userData.password.match(/^[a-zA-Z0-9\s#]+$/)) {
+                } else if(!this.userData.Password.match(/^[a-zA-Z0-9\s#]+$/)) {
                     document.getElementById('passwordError').style.visibility = "visible";
                     document.getElementById('passwordError').innerHTML = this.newLang.passwordWrongInput;
                     document.getElementById('npwd').style.borderColor = "red";
                     this.passwordCheck = false;
-                } else if(this.userData.password.length < 6) {
+                } else if(this.userData.Password.length < 6) {
                     document.getElementById('passwordError').style.visibility = "visible";
                     document.getElementById('passwordError').innerHTML = this.newLang.passwordLengthError;
                     document.getElementById('npwd').style.borderColor = "red";

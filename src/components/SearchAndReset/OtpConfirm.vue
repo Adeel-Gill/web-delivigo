@@ -20,7 +20,7 @@
                             <input id="codeBox3" type="number" maxlength="1" @keyup="onKeyUpEvent(3, $event)" @focus="onFocusEvent(3)">
                             <input id="codeBox4" type="number" maxlength="1" @keyup="onKeyUpEvent(4, $event)" @focus="onFocusEvent(4)">
                         </form> -->
-                        <p>Resend OTP? </p>
+                        <p @click="resendOtp()">Resend OTP? </p>
                     </section>
                 </div>
             </div>
@@ -32,7 +32,7 @@
 <script>
 import { EventBus } from '../../main';
 import PincodeInput from "vue-pincode-input";
-import {confirmOtp} from "../api/ConfirmOtp";
+import {confirmOtp, resendOtp} from "../api/ConfirmOtp";
 export default {
     name: "OtpConfirm",
     components: {
@@ -44,7 +44,7 @@ export default {
             otp: '',
             code: '',
             otpObj: {
-                'Number': '',
+                'Mobile': '',
                 'Otp': ''
             }
         }
@@ -52,10 +52,10 @@ export default {
     watch: {
         code() {
             if(this.code.length === 4) {
-                this.otpObj.Number = this.mobile;
+                this.otpObj.Mobile = this.mobile;
                 this.otpObj.Otp = this.code;
                 confirmOtp(this.otpObj).then(response => {
-                    if(response.HasErrors) {
+                    if(response.HasError) {
                         this.showNotification('error', 'Error', 'OTP not correct please try again!');
                     } else {
                         localStorage.setItem('mobileNumber', null);
@@ -73,6 +73,18 @@ export default {
         this.mobile=localStorage.getItem('mobileNumber') 
     },
     methods:{
+        resendOtp(){
+            this.otpObj.Mobile = this.mobile;
+            resendOtp(this.otpObj).then(response => {
+                if(response.HasError) {
+                    this.showNotification('error','Error','Otp resend failed');
+                } else {
+                    this.showNotification('success','Success','New otp send to you number '+this.mobile);
+                }
+            },error=> {
+                this.showNotification('error','Error','Otp resend failed');
+            })
+        },
         showNotification(type, title, message) {
                 console.log('after Fail',message);
                 this.$notify({

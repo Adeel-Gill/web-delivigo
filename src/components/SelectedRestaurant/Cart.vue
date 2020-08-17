@@ -470,8 +470,8 @@
                 console.log('element',document.getElementsByClassName('fab-wrapper'));
                 console.log(document.getElementsByClassName('fab-wrapper'));
                 let root = document.documentElement;
-                if(localStorage.getItem('items') > 0) {
-                    root.style.setProperty('--cart-count', "'"+(Number(localStorage.getItem('items')) + 1)+"'");
+                if(this.cartItems.length> 0) {
+                    root.style.setProperty('--cart-count', "'"+(Number(this.cartItems.length))+"'");
                     // document.documentElement.style.setProperty('cart-count', '');
                     // document.documentElement.style.setProperty('cart-count', localStorage.getItem('items'));
                 // document.getElementsByClassName('fab-wrapper')[0].setAttribute('cart-count','6');
@@ -486,11 +486,27 @@
                 this.$dialog.confirm('Item will be removed from order. Continue?', {
                     loader: true
                 }).then(dialog => {
-                    dialog.loading(false);
-                    this.removeItem(Id,CartId);
-                    this.checkCartAfterOrderItemDeletion();
-                    this.setCount();
-                    dialog.close();
+                    // dialog.loading(false);
+                    deleteCartItem(localStorage.getItem('id'),CartId,Id).then(response => {
+                        if(!response.HasError) {
+                            this.cartItems = response.result;
+                            this.checkCartAfterOrderItemDeletion(this.cartItems);
+                            this.setCount();
+                            // dialog.close();
+                            this.showNotification('success','Success','Item removed from cart');
+                            dialog.close();
+                            dialog.loading(false);
+                        } else {
+                            this.showNotification('error','Error','Item removing failed');
+                            dialog.close();  
+                            dialog.loading(false); 
+                        }
+                    },error=> {
+                        this.showNotification('error','Error','Item removing failed');
+                        dialog.close();  
+                        dialog.loading(false); 
+                    })
+                    
                 }).catch(() => {
                     this.showNotification('info','Info','Deletion cancelled');
                 })
@@ -499,7 +515,7 @@
                 this.$dialog.confirm('Item will be removed from cart. Continue?', {
                     loader: true
                 }).then(dialog => {
-                    dialog.loading(false);
+                    
                     // this.$store.dispatch('removeCartItem',i);
                     deleteCartItem(localStorage.getItem('id'),cartId,id).then(response => {
                         if(!response.HasError) {
@@ -507,10 +523,16 @@
                             this.checkCartAfterDeletion(response.result);
                             this.showNotification('success','Success','Item removed from cart');
                             dialog.close();
+                            dialog.loading(false);
                         } else {
                             this.showNotification('error','Error','Item removing failed');
-                            dialog.close();   
+                            dialog.close();  
+                            dialog.loading(false); 
                         }
+                    },error=> {
+                        this.showNotification('error','Error','Item removing failed');
+                        dialog.close();  
+                        dialog.loading(false); 
                     })
                     
                 }).catch(() => {

@@ -16,7 +16,7 @@ export function checkCredentials(data) {
 export function registerUser(data) {
     console.log(data);
     return service({
-        url: 'Customer',
+        url: 'CustomerSignup',
         method: 'post',
         data
     })
