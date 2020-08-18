@@ -11,7 +11,9 @@
             <div class="clear"></div>
             <div class="restaurants-list">
                 <div class="row" v-if="allcities.length>0">
-                    <app-city v-for="city in allcities.slice(0,3)" :key="city.Id" :city="city"></app-city>
+                    <div class="owl-carousel2 owl-theme">
+                    <app-city v-for="city in allcities" :key="city.Id" :city="city"></app-city>
+                    </div>
                 </div>
                 <div class="row" v-else>
                     <app-empty-error></app-empty-error>
@@ -22,8 +24,11 @@
 </template>
 
 <script>
-    import City from "../components/City/City";
+    import City from "../components/City/City-slider";
     import emptyError from "../components/error/emptyError";
+    import 'owl.carousel/dist/assets/owl.carousel2.css';
+    import 'owl.carousel';
+    import 'jquery';
     export default {
         name: "availableCities",
         props: ['newLang'],
@@ -57,6 +62,31 @@
             this.$root.$on('cities', response => {
                 if(response.length > 0) {
                     this.allcities = response;
+                     $(document).ready(function(){
+                console.log('here we are');
+                $('.owl-carousel2').owlCarousel({
+                    loop:true,
+                    dots: false,
+                    autoplay:true,
+                    autoplayTimeout:2000,
+                    autoplayHoverPause:true,
+                    responsiveClass:false,
+                    margin:20,
+                    nav:false,
+                    lazyLoad:true,
+                    responsive:{
+                        0:{
+                            items:1
+                        },
+                        600:{
+                            items:2
+                        },
+                        1000:{
+                            items:3
+                        }
+                    }
+                });
+            });
                 } else {
                     if(this.count === 0) {
                         this.showNotification('error','Error','No cities are available to show!');

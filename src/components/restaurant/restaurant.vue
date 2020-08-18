@@ -21,7 +21,7 @@
                                 <i class="fas">{{restaurant.ApproximateCostPerPerson}}</i>
                             </div>
                             <div class="col-4 padding-top-botom">
-                                <p class="font-size-9"><i class="far fa-clock"></i> {{restaurant.Time}}</p>
+                                <p class="font-size-9"><i class="far fa-clock"></i> {{restaurant.DeliveryTime}}</p>
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@ export default {
                 // console.log('imageinsideIf',this.image,'param',img);
                 return this.image;
             } else {
-                this.image = baseAddress + img;
+                this.image = img;
                 // console.log('imageinsideelse',this.image,'param',img);
                 return this.image;
             }

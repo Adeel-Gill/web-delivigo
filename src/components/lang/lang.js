@@ -41,7 +41,7 @@ export const lang = {
         categories: "Categories",
         newOnDelivigo: "New On Delivigo",
         allRestaurants: "All Restaurants",
-        allCities: "All Avaialable Cities",
+        allCities: "All Available Cities",
         allPopular: "All Popular Restaurants",
         easiestToFood: "The easiest way to your favorite food",
         allCategories: "All Food Categories",
