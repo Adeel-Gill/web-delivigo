@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- <div class="slected-bg" :style="{'background-image': 'url('+`${getImage()}`+')'}"> -->
-        <div class="slected-bg" style="{background-image: 'url('+`images/dish.png`+')'}">
+        <div class="slected-bg" :style="{'background-image': 'url('+`${getImage(resDetail.ImageUrl)}`+')'}">
             <div class="food-type">
                 <p><span>{{resDetail.ApproximateCostPerPerson}}</span></p>
                 <button

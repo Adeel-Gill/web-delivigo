@@ -133,12 +133,12 @@
         } else {
           if(localStorage.getItem("fbLogin") === "true") {
             if(localStorage.getItem("userChanged") === "true") {
-                return this.image = baseAddress + img;
+                return this.image = img;
             } else {
-                return this.image = baseAddress +img;
+                return this.image = img;
             }
           } else {
-              return this.image =  baseAddress + img;
+              return this.image = img;
           }
         }
       },

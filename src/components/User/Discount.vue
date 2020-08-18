@@ -68,9 +68,9 @@
             },
             fetchDiscountedRestaurants() {
               fetchDiscountedRestaurants(this.page,this.size).then(response => {
-                  if(response.Restaurants.length > 0) {
+                  if(response.result.length > 0) {
                       this.notEmpty = true;
-                      this.discounted = response.Restaurants;
+                      this.discounted = response.result;
                       this.total = parseInt(this.getPageRange(response.Pagination.TotalRecords));
                       this.showNotification('success',this.newLang.success,this.newLang.dealsAvailable);
                   } else {

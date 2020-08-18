@@ -140,11 +140,10 @@ import VFacebookLogin from 'vue-facebook-login-component'
                     FirstName: "",
                     LastName: "",
                     FacebookUId: "",
-                    ImageUrl: "",
+                    UrlImage: "",
                     Password: "",
                     Email: "",
-
-
+                    DeviceType: "web",
                     DeviceUniqueCode: "web",
                     DeviceToken: "web",
                 },
@@ -250,18 +249,18 @@ import VFacebookLogin from 'vue-facebook-login-component'
                             this.fbUserData.LastName = userInformation.last_name;
                             this.fbUserData.FacebookUId = this.fbUserData.Password = userInformation.id;
                             this.fbUserData.Email = userInformation.email;
-                            this.fbUserData.ImageUrl = userInformation.picture.data.url;
+                            this.fbUserData.UrlImage = userInformation.picture.data.url;
                             facebookAPILogin(this.fbUserData).then(response => {
-                                if(response.HasErrors === false) {
+                                if(!response.HasError) {
                                     if(localStorage.getItem('isRes' === 'false')) {
                                         this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
-                                        console.log('id',response.Id);
-                                        localStorage.setItem('userProfile',response.UrlImage);
-                                        this.$store.dispatch('storeToken',response);
+                                        console.log('id',response.result.Id);
+                                        localStorage.setItem('userProfile',response.result.UrlImage);
+                                        this.$store.dispatch('storeToken',response.result);
                                         this.$emit('updateTheCounter', '');
                                         if(localStorage.getItem('saveAddress') === 'true') {
                                         var addressData = JSON.parse(localStorage.getItem('addressObj'));
-                                        addressData.CustomerId = response.Id;
+                                        addressData.CustomerId = response.result.Id;
                                         saveAddress(addressData).then(response => {
                                             console.log(response);
                                             localStorage.setItem('addressObj', JSON.stringify({}));
@@ -273,14 +272,14 @@ import VFacebookLogin from 'vue-facebook-login-component'
                                         // this.$router.go();
                                     } else {
                                         this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
-                                        console.log('id',response.Id);
-                                        localStorage.setItem('userProfile',response.UrlImage);
-                                        this.$store.dispatch('storeToken',response);
+                                        console.log('id',response.result.Id);
+                                        localStorage.setItem('userProfile',response.result.UrlImage);
+                                        this.$store.dispatch('storeToken',response.result);
                                         localStorage.setItem("fbLogin", true);
                                         this.$emit('updateTheCounter', '');
                                         if(localStorage.getItem('saveAddress') === 'true') {
                                         var addressData = JSON.parse(localStorage.getItem('addressObj'));
-                                        addressData.CustomerId = response.Id;
+                                        addressData.CustomerId = response.result.Id;
                                         saveAddress(addressData).then(response => {
                                             console.log(response);
                                             localStorage.setItem('addressObj', JSON.stringify({}));

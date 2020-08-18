@@ -47,8 +47,8 @@
                 console.log('name1 : '+name);
                 fetchRestaurantsByCategory(name).then(response => {
                     console.log('name2 : '+name);
-                    if(response.Restaurants.length>0) {
-                        this.restaurantsData = response.Restaurants;
+                    if(response.result.length) {
+                        this.restaurantsData = response.result;
                     } else {
                         this.notEmpty = false;
                         this.showNotification('error','Error','No restaurants available for that food category!');

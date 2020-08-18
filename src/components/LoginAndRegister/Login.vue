@@ -7,7 +7,7 @@
                     <label for="email" class="col-sm-2 col-form-label">{{newLang.email}}</label>
                     <div class="col-sm-10">
                         <input type="email" class="form-control"
-                               v-model="userData.email"
+                               v-model="userData.Email"
                                placeholder="abc@mail.com"
                                v-on:input="checkEmail()"
                                id="email" required>
@@ -21,7 +21,7 @@
                                class="form-control"
                                placeholder="Password Here...!"
                                v-on:input="checkPassword()"
-                               v-model="userData.password" id="npwd" required>
+                               v-model="userData.Password" id="npwd" required>
                         <label class="errorMessage" id="passwordError"></label>
                     </div>
                 </div>
@@ -73,19 +73,21 @@
         data() {
             return {
                 userData: {
-                    password: 'aqib123',
-                    email: 'aqibjaved@gmail.com',
+                    Password: '',
+                    Email: '',
                     DeviceUniqueCode: "web",
                     DeviceToken: "web",
+                    DeviceType: "web"
                 },
                 fbUserData: {
                     FirstName: "",
                     LastName: "",
                     FacebookUId: "",
-                    ImageUrl: "",
+                    UrlImage: "",
                     Password: "",
                     Email: "",
                     DeviceUniqueCode: "web",
+                    DeviceType: "web",
                     DeviceToken: "web",
                 },
 
@@ -133,20 +135,20 @@
                 localStorage.setItem("changeCount", 0)
                 if(this.checkObject()) {
                      checkCredentials(this.userData).then(response => {
-                        if(response.HasErrors === false) {
+                        if(!response.HasError) {
                             if(localStorage.getItem('isRes') === 'false' || localStorage.getItem('isRes') == null) {
-                                console.log('trueid',response.Id);
-                                localStorage.setItem('userProfile',response.UrlImage);
+                                console.log('trueid',response.result.Id);
+                                localStorage.setItem('userProfile',response.result.UrlImage);
                                 // console.log('cart',JSON.parse(localStorage.getItem('cart').replace (/(^')|('$)/g, '')));
                                 // console.log('cart',JSON.parse(JSON.stringify(localStorage.getItem('cart'))));
 
                                 console.log('cart',JSON.parse(localStorage.getItem('cart')));
-                                 this.$store.dispatch('storeToken',response);
+                                 this.$store.dispatch('storeToken',response.result);
                                 if(localStorage.getItem('saveAddress') === 'true') {
                                     console.log('test1');
                                     var addressData = JSON.parse(localStorage.getItem('addressObj'));
                                     console.log('test2');
-                                    addressData.CustomerId = response.Id;
+                                    addressData.CustomerId = response.result.Id;
                                     saveAddress(addressData).then(response => {
                                         console.log(response);
                                         localStorage.setItem('addressObj', JSON.stringify({}));
@@ -169,7 +171,7 @@
                                 this.$emit('updateTheCounter', '');
                                 if(localStorage.getItem('saveAddress') === 'true') {
                                     var addressData = JSON.parse(localStorage.getItem('addressObj'));
-                                    addressData.CustomerId = response.Id;
+                                    addressData.CustomerId = response.result.Id;
                                     saveAddress(addressData).then(response => {
                                         console.log(response);
                                         localStorage.setItem('addressObj', JSON.stringify({}));
@@ -197,7 +199,7 @@
                 }
             },
             checkObject() {
-                if(this.userData.password != '' && this.userData.email != '') {
+                if(this.userData.Password != '' && this.userData.Email != '') {
                     return true;
                 } else {
                     return false;
@@ -240,18 +242,18 @@
                             this.fbUserData.LastName = userInformation.last_name;
                             this.fbUserData.FacebookUId = this.fbUserData.Password = userInformation.id;
                             this.fbUserData.Email = userInformation.email;
-                            this.fbUserData.ImageUrl = userInformation.picture.data.url;
+                            this.fbUserData.UrlImage = userInformation.picture.data.url;
                             facebookAPILogin(this.fbUserData).then(response => {
-                                if(response.HasErrors === false) {
+                                if(!response.HasError) {
                                     if(localStorage.getItem('isRes')==='false') {
                                         this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
-                                        console.log('id',response.Id);
-                                        localStorage.setItem('userProfile',response.UrlImage);
-                                        this.$store.dispatch('storeToken',response);
+                                        console.log('id',response.result.Id);
+                                        localStorage.setItem('userProfile',response.result.UrlImage);
+                                        this.$store.dispatch('storeToken',response.result);
                                         this.$emit('updateTheCounter', '');
                                         if(localStorage.getItem('saveAddress') === 'true') {
                                         var addressData = JSON.parse(localStorage.getItem('addressObj'));
-                                        addressData.CustomerId = response.Id;
+                                        addressData.CustomerId = response.result.Id;
                                         saveAddress(addressData).then(response => {
                                             console.log(response);
                                             localStorage.setItem('addressObj', {});
@@ -263,14 +265,14 @@
                                     // this.$router.go();
                                     } else {
                                         this.showNotification('success', this.newLang.success, this.newLang.signInSuccess);
-                                        console.log('id',response.Id);
+                                        console.log('id',response.result.Id);
                                         this.$emit('updateTheCounter', '');
-                                        localStorage.setItem('userProfile',response.UrlImage);
-                                        this.$store.dispatch('storeToken',response);
+                                        localStorage.setItem('userProfile',response.result.UrlImage);
+                                        this.$store.dispatch('storeToken',response.result);
                                         localStorage.setItem("fbLogin", true);
                                         if(localStorage.getItem('saveAddress') === 'true') {
                                         var addressData = JSON.parse(localStorage.getItem('addressObj'));
-                                        addressData.CustomerId = response.Id;
+                                        addressData.CustomerId = response.result.Id;
                                         saveAddress(addressData).then(response => {
                                                 console.log(response);
                                                 localStorage.setItem('addressObj', {});
@@ -312,7 +314,7 @@
                 this.isConnected = false;
             },
             checkEmail() {
-                if(validEmail(this.userData.email)) {
+                if(validEmail(this.userData.Email)) {
                    document.getElementById('emailError').style.visibility = "hidden";
                    document.getElementById('emailError').innerHTML = "";
                    document.getElementById('email').style.borderColor = "grey";
@@ -330,17 +332,17 @@
             },
             checkPassword() {
                 var res = false;
-                if(this.userData.password === "") {
+                if(this.userData.Password === "") {
                     document.getElementById('passwordError').style.visibility = "visible";
                     document.getElementById('passwordError').innerHTML = this.newLang.passwordEmptyError;
                     document.getElementById('npwd').style.borderColor = "red";
                     this.passwordCheck = false;
-                } else if(!this.userData.password.match(/^[a-zA-Z0-9\s#]+$/)) {
+                } else if(!this.userData.Password.match(/^[a-zA-Z0-9\s#]+$/)) {
                     document.getElementById('passwordError').style.visibility = "visible";
                     document.getElementById('passwordError').innerHTML = this.newLang.passwordWrongInput;
                     document.getElementById('npwd').style.borderColor = "red";
                     this.passwordCheck = false;
-                } else if(this.userData.password.length < 6) {
+                } else if(this.userData.Password.length < 6) {
                     document.getElementById('passwordError').style.visibility = "visible";
                     document.getElementById('passwordError').innerHTML = this.newLang.passwordLengthError;
                     document.getElementById('npwd').style.borderColor = "red";

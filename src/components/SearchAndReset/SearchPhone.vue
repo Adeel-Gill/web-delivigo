@@ -11,7 +11,7 @@
                         <!-- <div class="input-group-prepend">
                             <span class="input-group-text" id="plusSign">+</span>
                         </div> -->
-                        <input type="text" class="form-control" v-model="numberObj.Number" v-on:input="checkMobileNumber" id="number" placeholder="+352 74638333" aria-label="Phone Number" aria-describedby="plusSign"><br>
+                        <input type="text" class="form-control" v-model="numberObj.Mobile" v-on:input="checkMobileNumber" id="number" placeholder="+352 74638333" aria-label="Phone Number" aria-describedby="plusSign"><br>
                         
                     </div>
                     <div class="w-50 mx-auto">
@@ -54,7 +54,7 @@ export default {
             isDisabled: true,
             local: lang.en,
             numberObj: {
-                "Number": ''
+                "Mobile": ''
             }
         }
     },
@@ -67,18 +67,21 @@ export default {
     methods: {
         getOtp() {
             getOtp(this.numberObj).then(response => {
-                if(response.HasErrors) {
+                // debugger;
+                if(response.HasError) {
                     this.showNotification('error', 'Error', 'Error occurred please try later!')
                 } else {
-                    localStorage.setItem('mobileNumber', this.numberObj.Number);
+                    localStorage.setItem('mobileNumber', this.numberObj.Mobile);
                     localStorage.setItem('isRegOtp', 'true');
                     this.$router.push({path: '/resetPassword'});
                 }
+            },error => {
+                this.showNotification('error', 'Error', 'Error occurred please try later!')
             })
         },
         checkMobileNumber() {
                 var res = false;
-                if(this.numberObj.Number === "") {
+                if(this.numberObj.Mobile === "") {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.local.numberEmptyError;
                     document.getElementById('number').style.borderColor = "red";
@@ -88,12 +91,12 @@ export default {
                     document.getElementById('numberError').innerHTML = this.newLang.numberWrongInpur;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                }*/ else if(this.numberObj.Number[0] !== '+') {
+                }*/ else if(this.numberObj.Mobile[0] !== '+') {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.local.numberFormatError;
                     document.getElementById('number').style.borderColor = "red";
                     this.isDisabled = true;
-                } else if(this.numberObj.Number.length < 11) {
+                } else if(this.numberObj.Mobile.length < 11) {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.local.numberLengthError;
                     document.getElementById('number').style.borderColor = "red";

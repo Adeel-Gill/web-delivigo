@@ -24,3 +24,11 @@ export function deleteCartItem(customerId,cartId, cartItemId) {
         method: 'get'
     })
 }
+
+export function emptyCart(cartId) {
+    // console.log('Cart',data);
+    return service({
+        url: `EmptyCart?cartId=${cartId}`,
+        method: 'get'
+    })
+}

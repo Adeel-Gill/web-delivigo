@@ -7,9 +7,9 @@ export function placeOrder(data) {
         data
     })
 }
-export function reOrder(id) {
+export function reOrder(orderId,customerId) {
     return service({
-        url: `ReOrder?orderId=${id}`,
+        url: `ReOrder?orderId=${orderId}&customerId=${customerId}`,
         method: 'get'
     })
 }

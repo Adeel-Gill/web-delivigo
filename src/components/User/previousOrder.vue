@@ -2,11 +2,11 @@
     <div>
         <div v-if="!noPreviousORders">
             <app-previous-order v-for="orders in allOrders"
-                                :key="orders.Order.OrderId"
+                                :key="orders.Id"
                                 :previousOrder="orders"
                                 :all70="getLocalAll70()"
                                 :newLang = newLang
-                                :is-empty-array="allOrders.length>0"
+                                :is-empty-array="allOrders.length"
                                 @recallOrders = "getPreviousOrders"
             ></app-previous-order>
         </div>
@@ -40,23 +40,25 @@
         methods: {
             getPreviousOrders() {
                 getOrderHistory(Number(localStorage.getItem('id'))).then(response => {
-                    if(response.HasErrors) {
+                    if(response.HasError) {
                         this.isEmpty = true;
                         this.showNotification('error', this.newLang.error, this.newLang.errorOccurred)
                     } else {
-                        if(response.length > 0) {
-                            for(var i=0; i< response.length; i++) {
-                                this.allOrders = response;
-                                if(response[i].Order.OrderStatusId === orderStatus.OrderDelivered) {
+                        if(response.result.length ) {
+                            for(var i=0; i< response.result.length; i++) {
+                                // this.allOrders = response.result;
+                                if(Number(response.result[i].OrderStatusId) === orderStatus.OrderDelivered) {
                                     this.isAll70 = true;
+                                    this.allOrders.push(response.result[i]);
                                     this.noPreviousORders = false;
                                 } else {
                                     this.isAll70 = false;
                                 }
                             }
-                            if(!this.noPreviousORders) {
+                            console.log('previousOrders',this.allOrders);
+                            if(this.allOrders.length) {
                                 localStorage.setItem('all70',true.toString());
-                                this.allOrders = response;
+                                // this.allOrders = response.result;
                                 console.log('hereResponse',this.allOrders);
                                 this.showNotification('success',this.newLang.success,this.newLang.previousOrdersShown);
 

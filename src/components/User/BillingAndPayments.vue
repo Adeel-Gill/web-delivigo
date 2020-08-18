@@ -191,7 +191,7 @@
             },
             fetchCustomerCards() {
                 retrieveCustomerAllCards(localStorage.getItem('id')).then(response => {
-                    if(response.HasErrors) {
+                    if(response.HasError) {
                         this.showNotification('error',this.newLang.error,this.newLang.cardRetrievalFailed);
                     } else {
                         console.log('length',response.result.length)
@@ -315,7 +315,7 @@
                     //     this.$bvModal.hide('modal-1');
                     // });
             },
-            checkStripe() {
+            async checkStripe() {
                 checkIfStripeExist(localStorage.getItem('id')).then(response => {
                     return response.result;
                 }, error => {
@@ -326,7 +326,7 @@
                 this.isLoading = true;
                 updateEmail(localStorage.getItem('id'),this.Email).then(response => {
                     
-                    if(response.HasErrors == true) {
+                    if(response.HasError) {
                         this.isLoading = false;
                         this.showNotification("error",this.newLang.error,this.newLang.errorOccurred);
                     } else {
@@ -373,36 +373,69 @@
                    return false;
                 }
             },
-            createCard() {
-                var res = this.checkStripe();
-                if(res == 2) {
-                    this.showNotification('error',this.newLang.error,this.newLang.errorOccurred);
-                } else {
-                    if(res == false) {
-                        this.$bvModal.show('modal-2');
+            async createCard() {
+                var res = await this.checkStripe();
+                checkIfStripeExist(localStorage.getItem('id')).then(response => {
+                    if(response.HasError) {
+                        // this.showNotification('error','Error','')
                     } else {
-                        this.$bvModal.show('modal-1');
-                        setTimeout(()=> {
-                            if(this.setOnce) {
-                                card.mount(this.$refs.card);
-                                // this.showNotification('info','Info','Card is setted as once');
-                            } else {
-                                if(localStorage.getItem('creationCounter') === '0') {
-                                    // this.showNotification('info','Info','Card is not created firstly');
-                                    card = elements.create('card');
+                        if(!response.result) {
+                            this.$bvModal.show('modal-2');
+                        } else {
+                            this.$bvModal.show('modal-1');
+                            setTimeout(()=> {
+                                if(this.setOnce) {
                                     card.mount(this.$refs.card);
-                                    localStorage.setItem('creationCounter', '1');
+                                    // this.showNotification('info','Info','Card is setted as once');
                                 } else {
-                                    // this.showNotification('info','Info','Card is not creation counter already started');
-                                    card = elements.create('card');
-                                    card.mount(this.$refs.card);
+                                    if(localStorage.getItem('creationCounter') === '0') {
+                                        // this.showNotification('info','Info','Card is not created firstly');
+                                        card = elements.create('card');
+                                        card.mount(this.$refs.card);
+                                        localStorage.setItem('creationCounter', '1');
+                                    } else {
+                                        // this.showNotification('info','Info','Card is not creation counter already started');
+                                        card = elements.create('card');
+                                        card.mount(this.$refs.card);
+                                    }
+                                    localStorage.setItem('setOnce', true);
                                 }
-                                localStorage.setItem('setOnce', true);
-                            }
-                            this.setOnce = true;
-                        },200)
+                                this.setOnce = true;
+                            },200);
+                        }
                     }
-                }
+                }, error => {
+                    return 2;
+                })
+                console.log('result here ::',res);
+                // if(res == 2) {
+                //     this.showNotification('error',this.newLang.error,this.newLang.errorOccurred);
+                // } else {
+                //     if(!res) {
+                //         this.$bvModal.show('modal-2');
+                //     } else {
+                //         this.$bvModal.show('modal-1');
+                //         setTimeout(()=> {
+                //             if(this.setOnce) {
+                //                 card.mount(this.$refs.card);
+                //                 // this.showNotification('info','Info','Card is setted as once');
+                //             } else {
+                //                 if(localStorage.getItem('creationCounter') === '0') {
+                //                     // this.showNotification('info','Info','Card is not created firstly');
+                //                     card = elements.create('card');
+                //                     card.mount(this.$refs.card);
+                //                     localStorage.setItem('creationCounter', '1');
+                //                 } else {
+                //                     // this.showNotification('info','Info','Card is not creation counter already started');
+                //                     card = elements.create('card');
+                //                     card.mount(this.$refs.card);
+                //                 }
+                //                 localStorage.setItem('setOnce', true);
+                //             }
+                //             this.setOnce = true;
+                //         },200)
+                //     }
+                // }
                 
             },
             destroyCard() {

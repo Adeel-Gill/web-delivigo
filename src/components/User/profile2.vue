@@ -170,6 +170,8 @@
             imageCheck: false,
             updateUserData: {
                 Mobile: "",
+                FirstName: "",
+                LastName: "",
                 FullName: "",
                 UrlImage: "",
                 Id: ""
@@ -200,10 +202,10 @@
                 if(this.imageCheck) {
                     localStorage.setItem("userChanged", true);
                     let formData = new FormData();
-                    formData.append('file',this.imageFile);
+                    formData.append('image',this.imageFile);
                     formData.append('Id', localStorage.getItem("id"));
                     updateProfileImage(formData).then(response => {
-                        if(response.HasErrors === true) {
+                        if(response.HasError) {
                             this.showNotification("info",this.newLang.error,this.newLang.errorOccurred);
                         } else {
                             console.log(response);
@@ -221,9 +223,11 @@
                 }
             },
             updateProfile() {
+                this.updateUserData.FirstName = this.user.fullName.substr(0,this.user.fullName.indexOf(' '));
+                this.updateUserData.LastName = this.user.fullName.substr(this.user.fullName.indexOf(' ')+1);
                 updateProfile(this.updateUserData).then(response => {
                     console.log(response);
-                    if(response.HasErrors === true) {
+                    if(response.HasError) {
                         this.showNotification("info",this.newLang.error,this.newLang.errorOccurred);
                     } else {
                         this.showNotification("success",this.newLang.success,this.newLang.profileUpdated);
@@ -277,6 +281,7 @@
                 fetchUserProfile(localStorage.getItem('id')).then(response => {
                     console.log('profile',response);
                     this.userData = response.result;
+                    this.userData.FullName = this.userData.FirstName + ' ' + this.userData.LastName;
                     localStorage.setItem('userProfile', this.userData.UrlImage);
                     localStorage.setItem('name', this.userData.FullName);
                      
@@ -447,12 +452,19 @@
                     document.getElementById('numberError').innerHTML = this.newLang.numberEmptyError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                }else if(!this.user.mobile.match(/^[0-9]+$/)) {
+                }else if(this.user.mobile[0] !== '+') {
                     document.getElementById('numberError').style.visibility = "visible";
-                    document.getElementById('numberError').innerHTML = this.newLang.numberWrongInpur;
+                    document.getElementById('numberError').innerHTML = this.newLang.numberFormatError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                } else if(this.user.mobile.length < 11) {
+                }
+                // else if(!this.user.mobile.match(/^[0-9]+$/)) {
+                //     document.getElementById('numberError').style.visibility = "visible";
+                //     document.getElementById('numberError').innerHTML = this.newLang.numberWrongInpur;
+                //     document.getElementById('number').style.borderColor = "red";
+                //     this.numberCheck = false;
+                // } 
+                else if(this.user.mobile.length < 11) {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberLengthError;
                     document.getElementById('number').style.borderColor = "red";

@@ -4,7 +4,7 @@
             <a  class="close" @click="hideDish"></a>
             <div class="dish-detail-image" style="margin-top: 25px">
                 <!-- <img :src="`${getImage(dishDetail.ImageUrl)}`" @error="getImage('')"> -->
-                <img src="images/dish.png" @error="getImage('')">
+                <img :src="getImage(dishDetail.ImageUrl)" @error="getImage('')">
             </div>
             <div class="dish-detail-about">
                 <div class="dish-name-descp">
@@ -31,7 +31,7 @@
                     <div class="extra-checkbox" v-for="(addon, index) in addOns" v-bind:key="addon.Id">
                         <div>
                             <span class="float-left">{{addon.Name}}</span>
-                            <span class="float-left">&nbsp (+ €{{addon.Price}}.00)</span>
+                            <span class="float-left">&&nbsp (+ €{{addon.Price}}.00)</span>
                             <span class="float-right"><input type="checkbox" @change="setAddOnOption(index,addon.Id)"
                                                              name="extra" ref="addOn"  ></span>
                             <div class="clear"></div>
@@ -91,7 +91,7 @@
     import {fetchMealById} from "../api/CustomMeal";
     import {defaultDishPic} from "../../main";
     import {mapGetters} from "vuex";
-    import {postCartItem} from "../api/Cart";
+    import {postCartItem, emptyCart} from "../api/Cart";
     export default {
         props: ['newLang'],
         data(){
@@ -104,6 +104,7 @@
                 newCustomOptions: [],
                 newAddOnIds: [],
                 newScales: [],
+                restaurant: {},
                 baseLink: baseAddress,
                 dishObj: {},
                 cartItems: [],
@@ -211,7 +212,7 @@
             },
             clearMealObject() {
                 console.log('start',this.meal);
-                this.meal = {};
+                // this.meal = {};
                 this.customOptionObject = {};
                 this.singleOptionObject = {};
                 console.log('here3');
@@ -333,17 +334,49 @@
                     this.$dialog.confirm('Items of different restaurants are already in the cart. Clear cart to add new item. Continue?', {
                         loader: true
                     }).then(dialog => {
-                        dialog.loading(false);
-                        this.$store.dispatch('clearCart');
-                        console.log('received',);
-                        this.clearMealObject();
-                        this.createMealObject();
-                        this.setMealObject(this.dishObj);
-                        console.log('mealObject',this.meal);
-                        this.$store.dispatch('saveInCart',this.meal);
-                        document.getElementById("display-dish").style.display = "none";
-                        this.showNotification('success','Success','Item added in cart...!');
-                        dialog.close();
+                        
+                        // this.$store.dispatch('clearCart');
+                        emptyCart(this.cartItems[0].CartId).then(response => {
+                            if(response.HasError) {
+                                dialog.loading(false);
+                                dialog.close();
+                                this.showNotification('error','Error','Cart Clear Failed...!');
+                            } else {
+                                console.log('received',);
+                                this.clearMealObject();
+                                // this.createMealObject();
+                                this.resetMealObject();
+                                this.setMealObject(this.dishObj);
+
+                                console.log('mealObject',this.meal);
+                                postCartItem(this.meal).then(response => {
+                                    //  debugger;
+                                    if(!response.HasError) {
+
+                                        this.cartItems = response.result;
+                                        this.$root.$emit('cartItems', this.cartItems);
+                                        // this.$store.dispatch('saveInCart',this.meal);
+                                        document.getElementById("display-dish").style.display = "none";
+                                        // this.showNotification('success','Success','Item added in cart...!');
+                                        dialog.loading(false);
+                                        dialog.close();
+                                    } else {
+                                        this.showNotification('error', 'Error', 'Item adding to cart failed');
+                                        dialog.loading(false);
+                                        dialog.close();
+                                    }
+                                },error=> {
+                                    this.showNotification('error', 'Error', 'Item adding to cart failed');
+                                    dialog.loading(false);
+                                    dialog.close();
+                                })
+                            }
+                        },error => {
+                            dialog.loading(false);
+                            dialog.close();
+                            this.showNotification('error','Error','Cart Clear Failed...!');
+                        });
+                        
                     }).catch(() => {
                         this.showNotification('info','Info','Place order now to add other restaurant items!');
                     })
@@ -408,7 +441,7 @@
                     return this.image;
                 } else {
                     // this.image = img;
-                    this.image = defaultDishPic
+                    this.image = img
                     return this.image;
                 }
             },
@@ -468,6 +501,9 @@
             })
             this.$root.$on('cartItems', response => {
                 this.cartItems = response;
+            })
+            this.$root.$on('restaurant', response => {
+                this.restaurant = response;
             })
             // this.$root.$on('isCustomMeal', response => {
             //     this.isCustomMeal = response;

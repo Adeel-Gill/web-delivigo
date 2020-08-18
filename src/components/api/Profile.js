@@ -8,7 +8,7 @@ export function fetchUserProfile(id) {
 }
 export function checkCredentials(data) {
     return service({
-        url: 'Login',
+        url: 'CustomerLogin',
         method: 'post',
         data
     })
@@ -24,7 +24,7 @@ export function registerUser(data) {
 export function updateProfileImage(data) {
     console.log(data);
     return service({
-        url: 'CustomerImage/MediaUpload',
+        url: 'CustomerUpdateProfileImage',
         method: 'post',
         data
     })

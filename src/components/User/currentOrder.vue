@@ -30,25 +30,30 @@
         methods: {
             getCurrentOrders() {
                 getOrderHistory(Number(localStorage.getItem('id'))).then(response => {
-                    if(response.HasErrors) {
+                    if(response.HasError) {
                         this.isEmpty = true;
                         this.showNotification('error', this.newLang.error, this.newLang.errorOccurred)
                     } else {
-                        if(response.result.length > 0) {
+                        if(response.result.length ) {
                             this.isEmpty = false;
                             for(var i=0; i< response.result.length; i++) {
-                                this.allOrders = response.result;
-                                if(response.result[i].OrderStatusId === orderStatus.OrderDelivered) {
-                                   this.isAll70 = true;
+                                // this.allOrders = response.result;
+                                if(Number(response.result[i].OrderStatusId) !== orderStatus.OrderDelivered) {
+                                   this.isAll70 = false;
+                                   this.allOrders.push(response.result[i])
                                 } else {
-                                    this.isAll70 = false;
+                                    this.isAll70 = true;
                                 }
                             }
-                            if(this.isAll70) {
+                            console.log('allCurrentOrders1', this.allOrders);
+                            if(!this.allOrders.length) {
+                                this.isAll70 = true;
+                                console.log('allCurrentOrders', this.allOrders);
                                 localStorage.setItem('all70',true.toString());
 
                             } else {
-                                this.allOrders = response.result;
+                                // this.allOrders = response.result;
+                                this.isAll70 = false;
                                 this.showNotification('success',this.newLang.success,this.newLang.currentOrdersShown);
                                 localStorage.setItem('all70',false.toString());
                             }

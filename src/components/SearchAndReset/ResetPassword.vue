@@ -5,19 +5,20 @@
                 <div class="card-body px-5 py-5">
                     <h3 class="card-title">Reset Password</h3>
                     <div v-if="isMatched">
-                    <p class="card-text">Enter the OTP sent to you Number ({{otpObj.Number}}).</p>
-                    <section class="mt-5 p-4" >
-                        <p class="">Enter OTP</p>
-                        <div class="input-wrapper text-center">
-                            <PincodeInput
-                                v-model="code"
-                                placeholder="0"
-                            />
-                        </div>
-                    </section>
+                        <p class="card-text">Enter the OTP sent to you Number ({{otpObj.Mobile}}).</p>
+                        <section class="mt-5 p-4" >
+                            <p class="">Enter OTP</p>
+                            <div class="input-wrapper text-center">
+                                <PincodeInput
+                                    v-model="code"
+                                    placeholder="0"
+                                />
+                            </div>
+                            <p @click="resendOtp()">Resend OTP? </p>
+                        </section>
                     </div>
                     
-                    <div class="w-100 mt-5 reset-password">
+                    <div class="w-100 mt-5 reset-password" v-else>
                         <!-- <form> -->
                             <div class="form-group">
                                 <label for="newPassword">New Password</label>
@@ -45,7 +46,7 @@
 
 <script>
 import PincodeInput from "vue-pincode-input";
-import {confirmOtp} from "../api/ConfirmOtp";
+import {confirmOtp, resendOtp} from "../api/ConfirmOtp";
 import {forgetPassword} from "../api/ForgetPassword";
 import {lang} from "../lang/lang";
 import {EventBus} from "../../main";
@@ -67,6 +68,8 @@ export default {
                         this.isMatched = false;
                         this.showNotification('success', 'Success', 'Otp verified successfully!');
                     }
+                },error=> {
+                    this.showNotification('error', 'Error', 'OTP not correct please try again!');
                 })
                 console.log(this.otpObj.Otp);
             }
@@ -76,7 +79,7 @@ export default {
     data() {
         return {
             otpObj: {
-                'Number': '',
+                'Mobile': '',
                 'Otp': ''
             },
             changePasswordObj: {
@@ -86,7 +89,7 @@ export default {
                 Id: 0
             },
             resetPasswordObj: {
-                "Number": '',
+                "Mobile": '',
                 "Password": ''
             },
             code: '',
@@ -98,20 +101,32 @@ export default {
         }
     },
     mounted() {
-        this.otpObj.Number=localStorage.getItem('mobileNumber');
+        this.otpObj.Mobile=localStorage.getItem('mobileNumber');
         this.checkLang();
         EventBus.$on("changeLang", () => {
             this.checkLang();
             })
     },
     methods:{
+        resendOtp(){
+            this.otpObj.Mobile = localStorage.getItem('mobileNumber');
+            resendOtp(this.otpObj).then(response => {
+                if(response.HasError) {
+                    this.showNotification('error','Error','Otp resend failed');
+                } else {
+                    this.showNotification('success','Success','New otp send to you number '+this.mobile);
+                }
+            },error=> {
+                this.showNotification('error','Error','Otp resend failed');
+            })
+        },
         resetPassword() {
             // debugger;
-            this.resetPasswordObj.Number = this.otpObj.Number;
+            this.resetPasswordObj.Mobile = this.otpObj.Mobile;
             this.resetPasswordObj.Password = this.changePasswordObj.NewPassword;
             forgetPassword(this.resetPasswordObj).then(response => {
                 // debugger;
-                if(response.HasErrors) {
+                if(response.HasError) {
                     this.showNotification('error', 'Error', 'Error occurred please try later!')
                 } else {
                     localStorage.setItem('mobileNumber', null);
@@ -119,6 +134,8 @@ export default {
                     this.showNotification('success','Success','Password reset successfully login now!');
                     this.$router.push({path: '/signin'});
                 }
+            },error => {
+                this.showNotification('error', 'Error', 'Error occurred please try later!')
             })
         },
         checkLang() {

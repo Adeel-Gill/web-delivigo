@@ -190,7 +190,14 @@ export const routes = [
     {path: '/restaurants', component: allRestaurants},
     {path: '/foodCategories', component: allFoodCategories},
     {path: '/foodFilter', component: SelectedFoodRestaurants},
-    {path: '/orderTracking/:id', component: checkout},
+    {path: '/orderTracking', component: checkout,
+    beforeEnter(to, from, next) {
+        if(localStorage.getItem('token') && localStorage.getItem('token') !== 'null'){
+            next();
+        } else {
+            next('/');
+        }
+    }},
     { path: '/documents', component: LegalDoc, children: [
             {path: '/privacyPolicy', component: MobilePolicy, query: {docType: 'p'}},
             {path: '/termsAndConditions', component: MobileTermsAndConditions, query: {docType: 't'}},

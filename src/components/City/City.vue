@@ -31,7 +31,7 @@
                     // console.log('imageinsideIf',this.image,'param',img);
                     return this.image;
                 } else {
-                    this.image = baseAddress + img;
+                    this.image =  img;
                     // console.log('imageinsideelse',this.image,'param',img);
                     return this.image;
                 }

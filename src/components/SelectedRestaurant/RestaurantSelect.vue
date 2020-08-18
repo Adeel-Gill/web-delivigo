@@ -103,9 +103,9 @@
             },
             async fetchRestaurantData(id) {
                 fetchRestaurantById(id).then(response => {
-                    // fetchRestaurantReviews(1).then(response => {
-                    //     this.$root.$emit('reviews',response.result);
-                    // })
+                    fetchRestaurantReviews(id).then(response => {
+                        this.$root.$emit('reviews',response.result);
+                    })
                     getCart(localStorage.getItem('id')).then(response => {
                         if(!response.HasError) {
                             this.$root.$emit('cartItems', response.result);

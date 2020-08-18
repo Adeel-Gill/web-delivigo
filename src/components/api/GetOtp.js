@@ -2,7 +2,7 @@ import {service} from "../util/request";
 
 export function getOtp(data) {
     return service({
-        url: `CustomerOtp`,
+        url: `CustomerResendOtp`,
         method: 'post',
         data
     })

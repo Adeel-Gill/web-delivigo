@@ -84,7 +84,7 @@
                             <h5 class="card-title">{{orderObject.Order.ETATime}}~{{orderObject.Order.ETATime + 5}} {{local.mins}}</h5>
                             <p class="card-text">{{local.yourFood}}</p>
                             <button type="button" class="btn btn-lg btn-block btn-primary"
-                                    :disabled="orderObject.Order.OrderStatusId !== statuses.OrderDelivered">{{local.grabIt}}</button>
+                                    :disabled="Number(orderObject.Order.OrderStatusId) !== statuses.OrderDelivered">{{local.grabIt}}</button>
                         </div>
                     </div>
 
@@ -140,14 +140,17 @@
         methods: {
             getOrderTrackingDetail(cusID, orderID) {
                 getOrderTracking(cusID,orderID).then(response => {
-                    this.orderObject = response;
+                    this.orderObject = response.result[0];
                     this.cusData.longitude = this.orderObject.Order.Longitude;
                     this.cusData.latitude = this.orderObject.Order.Latitude;
                     this.resData.longitude = this.orderObject.Restaurant.Longitude;
                     this.resData.latitude = this.orderObject.Restaurant.Latitude;
-                    this.driverData.longitude = this.orderObject.Restaurant.Longitude;
-                    this.driverData.latitude = this.orderObject.Restaurant.Latitude;
-                    switch (this.orderObject.Order.OrderStatusId) {
+                    if(this.orderObject.Driver) {
+                    this.driverData.longitude = this.orderObject.Driver.Longitude;
+                    this.driverData.latitude = this.orderObject.Driver.Latitude;
+                    }
+                   console.log(this.cusData, this.resData);
+                    switch (Number(this.orderObject.Order.OrderStatusId)) {
                         case this.statuses.OrderReceived: {
                             this.progress = 12;
                             this.statusText = this.local.orderIsArrived;
@@ -238,8 +241,8 @@
         },
         mounted() {
             console.log('here');
-            console.log('trackID',this.$route.params.id, this.$route.query.cusID);
-            this.getOrderTrackingDetail(this.$route.query.cusID,this.$route.params.id)
+            console.log('trackID',this.$route.query.cusID,this.$route.query.orderId);
+            this.getOrderTrackingDetail(this.$route.query.cusID,this.$route.query.orderId)
         },
         created() {
              this.checkLang();

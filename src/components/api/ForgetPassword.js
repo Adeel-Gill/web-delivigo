@@ -2,7 +2,7 @@ import {service} from "../util/request";
 
 export function forgetPassword(data) {
     return service({
-        url: `ForgetPassword`,
+        url: `CustomerForgetPassword`,
         method: 'post',
         data
     })

@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="float-right button">
                                    
-                                    <router-link :to="{path:'/orderTracking/'+currentOrderObject.Id,query:{cusID:cusId}}" :newLang = newLang>
+                                    <router-link :to="{path:'/orderTracking?orderId='+currentOrderObject.Id,query:{cusID:cusId}}" :newLang = newLang>
                                         <button class="btn btn-primary"
                                                 :disabled="(statuses.OrderDelivered === currentOrderObject.OrderStatusId)">
                                             {{newLang.trackOrder}}

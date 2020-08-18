@@ -7,21 +7,21 @@
                             <div class="col-md-6">
                                 <!--                    <p style="display:none;">{{decomposeObject(currentOrder)}}</p>-->
                                 <div class="sec1">
-                                    <h6>{{previousOrderObject.Restaurant.Name}}</h6>
-                                    <p class="text-muted">{{previousOrderObject.Order.OrderPlaceTime}}</p>
+                                    <h6>{{previousOrderObject.Name}}</h6>
+                                    <p class="text-muted">{{previousOrderObject.OrderPlaceTime}}</p>
                                 </div>
                                 <div class="sec1">
-                                    <p class="mt-4">{{previousOrderObject.Order.AddressLine}}</p>
+                                    <p class="mt-4">{{previousOrderObject.AddressLine}}</p>
                                 </div>
                                 <div class="">
                                     <div class="rating mt-4 mb-3">
-                                        <star-rating :rating="rating" v-model="rating"  :star-size="35" :rtl="true"></star-rating>
+                                        <star-rating :rating="rating" v-model="rating" :read-only="isReviewSubmit"  :star-size="35" :rtl="true"></star-rating>
                                     </div>
                                     <div class="form-group">
-                                        <textarea  class="form-control review" v-model="review" id="review" :disabled="isLoading" :placeholder="newLang.yourReview"></textarea>
+                                        <textarea  class="form-control review" v-model="review" id="review" :disabled="isReviewSubmit" :placeholder="newLang.yourReview"></textarea>
 
                                     </div>
-                                    <button class="btn btn-primary float-right" @click="submitReview(previousOrderObject.Order.RestaurantId, previousOrderObject.Order.OrderId)" :disabled="isLoading">{{newLang.review}}</button>
+                                    <button class="btn btn-primary float-right" @click="submitReview(previousOrderObject.ResturantId, previousOrderObject.Id)" :disabled="isReviewSubmit">{{newLang.review}}</button>
 <!--                                    <button class="btn btn-primary">Review</button>-->
                                 </div>
                             </div>
@@ -29,17 +29,17 @@
 <!--                                {{showObject(previousOrder)}}-->
 <!--                            </div>-->
                             <div class="col-md-6">
-                                <div class="collapse-tab" role="tablist" v-for="(orderItem, itemIndex) in previousOrderObject.Order.OrderItems" :key="orderItem.MealId">
+                                <div class="collapse-tab" role="tablist" v-for="(orderItem) in previousOrderObject.Meals[0].Items" :key="orderItem.Id">
                                     <div class="line">
                                         <div class="px-1 ml-1 collapse-head" role="tab">
-                                            <a v-b-toggle.accordion-1><div class="numberCircle">1</div>{{orderItem.Title}}</a>
-                                            <span class="float-right">${{orderItem.Price}}</span>
+                                            <a v-b-toggle.accordion-1><div class="numberCircle">1</div>{{orderItem.MealName}}</a>
+                                            <span class="float-right">${{orderItem.MealPrice}}</span>
                                         </div>
                                         <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
                                             <div class="pl-3 sub-catg pb-3">
                                                 <p class="d-inline-block text-muted">{{newLang.quantity}}</p><span class="float-right text-muted">{{orderItem.Quantity}}</span><br>
-                                                <p class="d-inline-block text-muted">{{newLang.otherCharges}}</p><span class="float-right text-muted">{{otherCharges}}</span>
-                                                <div v-if="orderItem.CustomOption.length > 0">
+                                                <p class="d-inline-block text-muted">{{newLang.otherCharges}}</p><span class="float-right text-muted">{{(previousOrderObject.BasicDeliveryFee + previousOrderObject.ExtraKmDeliveryCharges + previousOrderObject.SmallOrderCharges).toFixed(2)}}</span>
+                                                <div v-if="false">
                                                     <div v-for="customOption in orderItem.CustomOption" :key="customOption.Id">
                                                         <p class="d-inline-block text-muted">paul Crisp</p><span class="float-right text-muted">$44</span>
                                                     </div>
@@ -53,12 +53,12 @@
                                             <div class="px-1 ml-1 collapse-head" role="tab">
                                                 <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{newLang.addOnTitle}}</a>
                                                 <!--                                                <span class="float-right">$44</span>-->
-                                                <span class="float-right">${{addOnsPrices.length == 1? addOnsPrices[0] : addOnsPrices[itemIndex]}}</span>
+                                                <span class="float-right">${{orderItem.AddOnTotal}}</span>
                                             </div>
                                             <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
                                                 <div class="pl-3 sub-catg pb-3">
                                                     <div v-for="addon in orderItem.AddOns" :key="addon.Id">
-                                                        <p class="d-inline-block text-muted">{{addon.Id}}</p><span class="float-right text-muted">${{addon.Price}}</span>
+                                                        <p class="d-inline-block text-muted">{{addon.AddOnName}}</p><span class="float-right text-muted">${{addon.AddOnPrice}}</span>
                                                     </div>
                                                 </div>
                                             </b-collapse>
@@ -71,15 +71,16 @@
                                     </div>
 
                                     <div class="line">
-                                        <div v-if="isScales">
+                                        <div v-if="orderItem.Scales.length">
                                             <div class="px-1 ml-1 collapse-head" role="tab">
                                                 <a v-b-toggle.accordion-3><div class="numberCircle">3</div>{{newLang.scales}}</a>
-                                                <span class="float-right">$33</span>
+                                                <span class="float-right">${{orderItem.ScaleTotal}}</span>
                                             </div>
                                             <b-collapse id="accordion-3" visible accordion="my-accordion" role="tabpanel">
                                                 <div class="pl-3 sub-catg pb-3">
-                                                    <div v-for="scale in scales" :key="scale.Id">
-                                                        <p class="d-inline-block text-muted">{{scale.Name}}</p><span class="float-right text-muted">${{scale.Price}}</span>
+                                                    <div v-for="(scale, i) in orderItem.Scales" :key="i">
+                                                       <p class="d-inline-block text-muted">{{scale.Scale}}</p><span class="float-right text-muted">${{scale.ScalePrice}}</span><br>
+                                                        <p class="d-inline-block text-muted">Value</p><span class="float-right text-muted">${{scale.OptionValue}}</span>
                                                     </div>
 
                                                 </div>
@@ -93,19 +94,19 @@
                                     </div>
                                 </div>
                                 <div class="total">
-                                    <span class="float-right">{{previousOrderObject.Order.TotalPrice.toFixed(2)}}</span>
+                                    <span class="float-left">Total Price</span>
+                                    <span class="float-right">{{previousOrderObject.TotalPrice.toFixed(2)}}</span>
                                 </div>
                             </div>
                         </div>
                         <router-link to="/orderTracking">
                          <button class="btn btn-primary mr-2"><i class="fas fa-download"></i> &nbsp;{{newLang.reciept}}</button>
                             <button class="btn btn-primary float-right"
-                                    :disabled="(statuses.OrderDelivered === previousOrderObject.Order.OrderStatusId)">
+                                    :disabled="(statuses.OrderDelivered !== previousOrderObject.OrderStatusId)">
                                 {{newLang.trackOrder}}
                             </button>
                         </router-link>
-                        <button class="btn btn-primary float-left" @click="reorder(previousOrderObject.Order.OrderId)"
-                                :disabled="(statuses.OrderDelivered !== previousOrderObject.Order.OrderStatusId)">
+                        <button  class="btn btn-primary float-left" @click="reorder(previousOrderObject.Id)">
                             {{newLang.reorder}}
                         </button>
                     </div>
@@ -158,6 +159,7 @@
                 scalesTitle: "Scales",
                 emptyScalesTitle: "No Scales",
                 isPreviousOrder: false,
+                isReviewSubmit: true,
                 mealBasePrice: 0,
                 otherCharges: 0,
                 orderTotalPrice: 0,
@@ -178,20 +180,20 @@
             calculateAddOnsPrice(addons) {
                 this.orderItems = addons;
                 this.addOnTotal = 0;
-                for(var i=0; i<this.orderItems.length; i++) {
-                    this.newAddons = this.orderItems[i].AddOns;
-                    console.log('orderItems,addons',this.orderItems[i],this.newAddons);
-                    for(var j=0; j<this.newAddons.length; j++) {
-                        console.log('addons',this.newAddons, this.newAddons[j].Price);
-                        this.otherCharges = this.addOnPrice += this.newAddons[j].Price;
-                    }
-                    this.addOnsPrices.push(this.addOnPrice);
-                    this.addOnTotal += this.addOnPrice;
-                    this.otherCharges = this.orderTotalPrice - this.otherCharges
-                    this.addOnPrice = 0;
+                // for(var i=0; i<this.orderItems.length; i++) {
+                //     this.newAddons = this.orderItems[i].AddOns;
+                //     console.log('orderItems,addons',this.orderItems[i],this.newAddons);
+                //     for(var j=0; j<this.newAddons.length; j++) {
+                //         console.log('addons',this.newAddons, this.newAddons[j].Price);
+                //         this.otherCharges = this.addOnPrice += this.newAddons[j].Price;
+                //     }
+                //     this.addOnsPrices.push(this.addOnPrice);
+                //     this.addOnTotal += this.addOnPrice;
+                //     this.otherCharges = this.orderTotalPrice - this.otherCharges
+                //     this.addOnPrice = 0;
 
 
-                }
+                // }
                 // for(var i=0; i<addons.length; i++) {
                 //     this.addOnPrice += addons[i].Price;
                 // }
@@ -217,33 +219,39 @@
                 })
             },
             decomposeObject() {
-                // this.previousOrderObject = obj;
+                this.previousOrderObject = this.obj;
                 console.log('here',this.previousOrderObject);
                 console.log('previousOrderObject', this.previousOrderObject,'obj',this.obj);
-                if(this.obj.Order.OrderStatusId === orderStatus.OrderDelivered) {
+                if(this.obj.IsReviewed) {
+                    this.isReviewSubmit = true;
+                    this.review = 'Review submitted already';
+                } else {
+                    this.isReviewSubmit = false;
+                } 
+                if(Number(this.obj.OrderStatusId) === orderStatus.OrderDelivered) {
                     this.previousOrderObject = this.obj;
                     console.log('previousOrderObject', this.previousOrderObject);
                     this.isPreviousOrder = true;
-                    this.orderTotalPrice = this.previousOrderObject.Order.TotalPrice;
-                    if(this.previousOrderObject.Order.OrderItems[0].AddOns.length > 0) {
-                        this.isAddons = true;
-                        this.addOns = this.previousOrderObject.Order.OrderItems[0].AddOns;
-                        this.calculateAddOnsPrice(this.previousOrderObject.Order.OrderItems);
-                        if(this.previousOrderObject.Order.OrderItems[0].CustomOption.length > 0) {
-                            this.isCustomOptions = true;
-                            this.customOptions = this.previousOrderObject.Order.OrderItems[0].CustomOption;
-                            if(this.previousOrderObject.Order.OrderItems[0].Scales.length > 0) {
-                                this.isScales = true;
-                                this.scales = this.previousOrderObject.Order.OrderItems[0].Scales;
-                            } else {
-                                this.isScales = false;
-                            }
-                        } else {
-                            this.isCustomOptions = false;
-                        }
-                    } else {
-                        this.isAddons = false;
-                    }
+                    this.orderTotalPrice = this.previousOrderObject.TotalPrice;
+                    // if(this.previousOrderObject.Meals[0].AddOns.length > 0) {
+                    //     this.isAddons = true;
+                    //     this.addOns = this.previousOrderObject.Order.OrderItems[0].AddOns;
+                    //     // this.calculateAddOnsPrice(this.previousOrderObject.Order.OrderItems);
+                    //     if(this.previousOrderObject.Order.OrderItems[0].CustomOption.length > 0) {
+                    //         this.isCustomOptions = true;
+                    //         this.customOptions = this.previousOrderObject.Order.OrderItems[0].CustomOption;
+                    //         if(this.previousOrderObject.Order.OrderItems[0].Scales.length > 0) {
+                    //             this.isScales = true;
+                    //             this.scales = this.previousOrderObject.Order.OrderItems[0].Scales;
+                    //         } else {
+                    //             this.isScales = false;
+                    //         }
+                    //     } else {
+                    //         this.isCustomOptions = false;
+                    //     }
+                    // } else {
+                    //     this.isAddons = false;
+                    // }
                 } else {
                     this.isPreviousOrder = false;
                     this.previousOrderObject = {};
@@ -266,8 +274,8 @@
                     loader: true
                 }).then(dialog => {
                     dialog.loading(true);
-                    reOrder(id).then(response => {
-                        if(response) {
+                    reOrder(id,localStorage.getItem('id')).then(response => {
+                        if(!response.HasError) {
                             this.showNotification('success',this.newLang.success,this.newLang.reorderSuccess);
                             this.$router.push('/currentOrder');
                         } else {
@@ -303,26 +311,34 @@
                             this.reviewObj.Rates = this.rating;
                             this.reviewObj.CustomerId = localStorage.getItem('id');
                             this.reviewObj.RestaurantId = resId;
-                            this.reviewObj.OrderID = orderId;
+                            this.reviewObj.OrderId = orderId;
                             submitReview(this.reviewObj).then(response => {
-                                if(response.hasErrors) {
+                                if(response.HasError) {
                                     this.showNotification('error',this.newLang.error,this.newLang.reviewSubmitError);
                                     dialog.loading(false);
+                                    this.isReviewSubmit = false;
+                                    dialog.close();
                                 } else {
                                     this.updateReview.OrderNumber = orderId;
-                                    updateReview(this.updateReview).then(response => {
-                                        if(response.hasErrors) {
-                                            this.showNotification('error',this.newLang.error,this.newLang.reviewSubmitError);
-                                            dialog.loading(false);
-                                        } 
-                                    }, error => {
-                                        this.showNotification('error',this.newLang.error,this.newLang.reviewSubmitError);
-                                        dialog.loading(false);
-                                    })
+                                    this.isReviewSubmit = true;
+                                    this.review = 'Review submitted already';
+                                     this.showNotification('success',this.newLang.success,'Review submitted');
+                                    dialog.loading(false);
+                                    dialog.close();
+                                    // updateReview(this.updateReview).then(response => {
+                                    //     if(response.hasErrors) {
+                                    //         this.showNotification('error',this.newLang.error,this.newLang.reviewSubmitError);
+                                    //         dialog.loading(false);
+                                    //     } 
+                                    // }, error => {
+                                    //     this.showNotification('error',this.newLang.error,this.newLang.reviewSubmitError);
+                                    //     dialog.loading(false);
+                                    // })
                                 }
                             }, error => {
                                 this.showNotification('error',this.newLang.error,this.newLang.reviewSubmitError);
                                 dialog.loading(false);
+                                dialog.close();
                             })
                         }).catch(() => {
                             this.showNotification('info',this.newLang.info,this.newLang.reviewCancelledError);

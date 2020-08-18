@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-2 px-1">
                     <div class="text-center">
-                        <img :src="baseURL + review.UrlImage" class="img image-size card-img rounded-circle img-fluid"/>
+                        <img :src="getImage(review.UrlImage)" @error="getImage('')" class="img image-size card-img rounded-circle img-fluid"/>
                         <p class="text-secondary ">15 Minutes Ago</p>
                     </div>
                 </div>
@@ -22,15 +22,34 @@
 </template>
 
 <script>
-    import {baseAddress} from "../../main";
+    import {baseAddress, defaultUserPic} from "../../main";
 
     export default {
         name: "review",
         props: ['review'],
         data() {
             return {
-                baseURL: baseAddress
+                baseURL: baseAddress,
+                image: ''
             }
+        },
+        methods: {
+            getImage(img) {
+                // console.log('paramImage',img);
+                if(img === '' || img === 'null' || img == null) {
+                    return this.image = defaultUserPic;
+                } else {
+                    if(localStorage.getItem("fbLogin") === "true") {
+                        if(localStorage.getItem("userChanged") === "true") {
+                            return this.image =  img;
+                        } else {
+                            return  img;
+                        }
+                    } else {
+                        return this.image =  img;
+                    }
+                }
+            },
         }
     }
 </script>
