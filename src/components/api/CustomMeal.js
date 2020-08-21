@@ -9,7 +9,7 @@ export function fetchMealById(id) {
 
 export function fetchRestaurantMealsById(resID, mealMenuID) {
     return service({
-        url: 'RestaurantMeal/'+ resID+ '?mealMainId='+ mealMenuID,
+        url: 'RestaurantMeal?restaurantId='+ resID+ '&mealMainId='+ mealMenuID,
         method: 'get'
     })
 }

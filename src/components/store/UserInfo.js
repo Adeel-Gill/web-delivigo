@@ -108,6 +108,7 @@ export const UserInfo = new Vuex.Store({
             localStorage.setItem('isLoggedOut',state.isLoggedOut);
             localStorage.setItem('id', null);
             localStorage.setItem("fbLogin", false);
+            localStorage.setItem('allLogout',true);
             localStorage.setItem('creationCounter', '0');
         },
         setOrderItems: (state, {customOption,addOn,scale,dishPrice}) => {

@@ -99,8 +99,8 @@
                                 </div>
                             </div>
                         </div>
+                        <button class="btn btn-primary ml-2" @click="openReceipt(previousOrderObject.ReceiptUrl)"><i class="fas fa-download"></i> &nbsp;{{newLang.reciept}}</button>
                         <router-link to="/orderTracking">
-                         <button class="btn btn-primary mr-2"><i class="fas fa-download"></i> &nbsp;{{newLang.reciept}}</button>
                             <button class="btn btn-primary float-right"
                                     :disabled="(statuses.OrderDelivered !== previousOrderObject.OrderStatusId)">
                                 {{newLang.trackOrder}}
@@ -177,6 +177,10 @@
             }
         },
         methods: {
+            openReceipt(url) {
+                window.open( 
+              url, "_blank");
+            },
             calculateAddOnsPrice(addons) {
                 this.orderItems = addons;
                 this.addOnTotal = 0;

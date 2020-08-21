@@ -526,8 +526,11 @@
                         loader: true
                     })
                     .then(dialog => {
-                        dialog.loading = false;
+                        // dialog.loading = false;
                         this.signOut();
+                        dialog.loading(false);
+                        dialog.close();
+                        
                     })
             },
             signOut() {
@@ -535,6 +538,7 @@
                 this.$store.dispatch('cleanToken');
                 // this.$store.dispatch('clearCart');
                 this.showNotification('success',this.newLang.success,this.newLang.signOutSuccess);
+                this.$router.push({path:'/'});
                 // this.$router.go();
                 } else {
                 this.$dialog.confirm(this.newLang.cartNotEmpty, {
@@ -543,9 +547,11 @@
                     dialog.loading(true);
                     this.$store.dispatch('cleanToken');
                     // this.$store.dispatch('clearCart');
+
                     this.showNotification('success',this.newLang.success,this.newLang.signOutSuccess);
                     dialog.loading(false);
                     dialog.close();
+                    // this.$router.push({path:'/'});
                     // this.$router.go();
                 }).catch(() => {
                     this.openDialog();

@@ -173,7 +173,7 @@
                     <div class="col-12 py-0 px-4">
                         <div class="card card-block w-100">
                             <div class="card-body">
-                                <p class="m-0">{{userData.FullName}}</p>
+                                <p class="m-0">{{userData.FirstName + ' ' + userData.LastName }}</p>
                             </div>
                         </div>
                     </div>
@@ -1045,9 +1045,13 @@
             },
             async fetchRestaurantMealById(resId, mealId) {
                 console.log('bothIDs'+resId+mealId);
-                fetchRestaurantMealsById(resId, mealId).then(response => {
-                    this.$root.$emit('popularFood',response.Meals);
-                    this.$root.$emit('isCustomMeal', true);
+               fetchRestaurantMealsById(resId, mealId).then(response => {
+                    if(!response.HasError) {
+                        this.$root.$emit('popularFood',response.result);
+                        this.$root.$emit('isCustomMeal', true);
+                    }else {
+                        this.showNotification('error','Error','Error occurred please try later');S
+                    }
                 }, error => {
                     console.log(error);
                     this.showNotification('error','Error','Error occurred please try later');

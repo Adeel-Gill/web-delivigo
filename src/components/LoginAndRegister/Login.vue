@@ -219,6 +219,9 @@
                 // this.payload = JSON.parse(localStorage.getItem("payload"));
                 // if()
                 console.log("hereAt");
+                // if(localStorage.getItem("isFB") === "true") {
+                //     local
+                // }
                 [localStorage.getItem("isFB") === "true"? this.sdkLoaded(JSON.parse(localStorage.getItem("payload"))): ""];
                 // [localStorage.getItem("isFB") === "true"? this.sdkLoaded(JSON.parse(localStorage.getItem("payload"))): ""];
             },
@@ -232,7 +235,9 @@
                 });
             },
             getUserData() {
-                EventBus.$emit('StartOverlay', true);
+
+                if(localStorage.getItem('allLogout') === 'false') {
+                    EventBus.$emit('StartOverlay', true);
                 this.FB.api('/me', 'GET', { fields: 'id,name,first_name,last_name,email,picture.type(large)' },
                     userInformation => {
                     console.log("userInfo",userInformation);
@@ -243,6 +248,7 @@
                             this.fbUserData.FacebookUId = this.fbUserData.Password = userInformation.id;
                             this.fbUserData.Email = userInformation.email;
                             this.fbUserData.UrlImage = userInformation.picture.data.url;
+                            
                             facebookAPILogin(this.fbUserData).then(response => {
                                 if(!response.HasError) {
                                     if(localStorage.getItem('isRes')==='false') {
@@ -296,6 +302,7 @@
                     }
                 )
                 EventBus.$emit('StartOverlay', false);
+                } 
             },
             sdkLoaded(payload) {
                 this.isConnected = payload.isConnected;
@@ -312,6 +319,7 @@
             },
             onLogout() {
                 this.isConnected = false;
+                localStorage.getItem('allLogout',false);
             },
             checkEmail() {
                 if(validEmail(this.userData.Email)) {
@@ -366,6 +374,7 @@
             }
         },
         mounted() {
+            localStorage.getItem('allLogout',true);
             this.loadSDK();
         }
 

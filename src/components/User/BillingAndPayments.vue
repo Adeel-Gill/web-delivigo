@@ -401,7 +401,7 @@
                                     localStorage.setItem('setOnce', true);
                                 }
                                 this.setOnce = true;
-                            },200);
+                            },1000);
                         }
                     }
                 }, error => {

@@ -3,7 +3,7 @@ import {service} from "../util/request";
 
 export function fetchRestaurantsByCategory(name) {
     return service({
-        url: 'RestaurantByCategoryName?categoryName='+ name,
+        url: 'RestaurntsByCategoryName?categoryName='+ name,
         method: 'get',
     })
 }

@@ -239,7 +239,8 @@ import VFacebookLogin from 'vue-facebook-login-component'
             getUserData() {
                 console.log("FBObject",this.FB);
                 console.log("Payload",this.payload);
-                EventBus.$emit('StartOverlay', true);
+                if(localStorage.getItem('allLogout') === 'false') {
+ EventBus.$emit('StartOverlay', true);
                 this.FB.api('/me', 'GET', { fields: 'id,name,first_name,last_name,email,picture.type(large)' },
                     userInformation => {
                     console.log("userInfo",userInformation);
@@ -302,6 +303,7 @@ import VFacebookLogin from 'vue-facebook-login-component'
                     }
                 )
                 EventBus.$emit('StartOverlay', false);
+                }
             },
             loadSDK() {
                 this.payload = JSON.parse(localStorage.getItem("payload"));
@@ -323,6 +325,7 @@ import VFacebookLogin from 'vue-facebook-login-component'
             },
             onLogout() {
                 this.isConnected = false;
+                localStorage.setItem('allLogout',false);
             },
             //validation code start
             checkName() {

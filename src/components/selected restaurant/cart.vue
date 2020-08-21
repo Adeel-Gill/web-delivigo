@@ -902,7 +902,7 @@
         async fetchRestaurantMealById(resId, mealId) {
                 console.log('bothIDs'+resId+mealId);
             fetchRestaurantMealsById(resId, mealId).then(response => {
-                this.$root.$emit('popularFood',response.Meals);
+                this.$root.$emit('popularFood',response.restaurant);
                 this.$root.$emit('isCustomMeal', true);
             }, error => {
                 console.log(error);

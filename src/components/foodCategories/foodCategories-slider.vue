@@ -1,5 +1,5 @@
 <template>
-    <div class="catagory w-100" @click = "emitName()">
+    <div class="catagory w-100" @click = "emitName(foodCategories.Name)">
         <router-link to="/foodFilter" >
             <div  class="card-image">
                 <img :src="`${getImage(foodCategories.ImageUrl)}`" @error="`${getImage('')}`"/>
@@ -37,8 +37,8 @@
             this.generateRandom();
         },
         methods: {
-            emitName() {
-                EventBus.$emit('foodCategoryName',this.foodCategories.Name);
+            emitName(name) {
+                EventBus.$emit('foodCategoryName',name);
             },
             getImage(img) {
                 console.log('paramImage',img);

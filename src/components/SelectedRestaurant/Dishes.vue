@@ -32,7 +32,7 @@
                         <div>
                             <span class="float-left">{{addon.Name}}</span>
                             <span class="float-left">&&nbsp (+ €{{addon.Price}}.00)</span>
-                            <span class="float-right"><input type="checkbox" @change="setAddOnOption(index,addon.Id)"
+                            <span class="float-right"><input type="checkbox" @change="setAddOnOption(index,addon.Id)" :checked="addon.IsSelected"
                                                              name="extra" ref="addOn"  ></span>
                             <div class="clear"></div>
                         </div>
@@ -45,7 +45,7 @@
                             <div style="margin-right: 30px; margin-left: 30px" v-for="(option, index) in scale.Options" :key="option.Id">
                                 <div class="clear"></div>
                                 <span class="float-left">{{option.Name}} - €{{option.Value}}</span>
-                                <span class="float-right"><input type="radio" @change="setScaleOptions(scaleIndex, index, scale.UnitPrice, option.Value)"
+                                <span class="float-right"><input type="radio" @change="setScaleOptions(scaleIndex, index, scale.UnitPrice, option.Value)" :checked="option.IsSelected"
                                                                  name="extra" :value="option.Name" ></span>
                             </div>
                             <div class="clear"></div>
@@ -110,6 +110,7 @@
                 cartItems: [],
                 image: '',
                 baseUrl: '',
+                addOnSelected: false,
                 selected: [], // Must be an array reference!
                 isCustomMeal: null,
                 price: this.$store.state.totalPrice,
@@ -171,7 +172,7 @@
             ])
         },
         methods: {
-            setAddOnOption(id,addonId) {
+            setAddOnOption(id,addonId,addOn) {
                 console.log('inside here',id,addonId);
                 this.$store.dispatch('setAddOnOption', {
                     id: id,
@@ -261,6 +262,7 @@
 
             },
             setMealObject(obj) {
+                // this.quantity = 
                 console.log('start',obj);
                 this.meal.CustomerId = localStorage.getItem('id');
                 this.meal.Meal.Id = obj.meal.Id;
@@ -273,7 +275,7 @@
                 this.meal.Meal.IsFeatured = true;
                 this.meal.Meal.IsCustomDish = true;
                 this.meal.Meal.IsAvailable = true;
-                this.meal.Meal.Quantity = this.quantity;
+                this.meal.Meal.Quantity = this.$store.state.quantity;
                 this.meal.Meal.MealMainId = obj.meal.MealMainId;
                 this.meal.Meal.Description = obj.meal.Description;
                 this.meal.Meal.Discount = obj.meal.Discount;
@@ -402,7 +404,9 @@
             },
             async displayDish(dishId){
                 this.$store.dispatch('clearOrderItems');
+                this.addOnSelected = false;
                 fetchMealById(dishId).then(response => {
+                    if(!response.hasError) {
                     if(this.checkObjectResponse(response.result.meal,'dish detail')) {
                         this.dishObj = response.result;
                         this.dishDetail = response.result.meal;
@@ -415,25 +419,34 @@
                             addOn:this.newAddOnIds,
                             scale:this.newScales,
                             dishPrice: this.dishPrice});
+                        // this.$store.dispatch('clearOrderItems')
                         console.log('afterSet',this.$store.state.newCustomOptions,this.$store.state.newAddOnIds,this.$store.state.newScales);
                     }
-                    if(this.checkArrayResponse(response.result.addOns,'addons')) {
-                        this.addOns = respons.result.addOns;
-                        console.log('newAddOns', this.addOns);
+                        if(this.checkArrayResponse(response.result.addOns,'addons')) {
+                            this.addOns = response.result.addOns;
+                            console.log('newAddOns', this.addOns);
+                        }
+                        if(this.checkArrayResponse(response.result.CustomOptions, 'custom options')) {
+                            this.customOptions = response.result.CustomOptions;
+                        }
+                        document.getElementById("display-dish").style.display = "block";
+                    } else {
+                        this.showNotification('error','Error','Error occurred please try later!');
+                        document.getElementById("display-dish").style.display = "none";
                     }
-                    if(this.checkArrayResponse(response.result.CustomOptions, 'custom options')) {
-                        this.customOptions = response.result.CustomOptions;
-                    }
+                    
 
                 }, error => {
                     console.log(error);
                     this.showNotification('error','Error','Error occurred please try later!');
+                    document.getElementById("display-dish").style.display = "none";
                 })
-                document.getElementById("display-dish").style.display = "block";
+                
             },
             hideDish() {
                 console.log('here');
                 document.getElementById("display-dish").style.display = "none";
+                this.$store.dispatch('clearOrderItems');
             },
             getImage(img) {
                 if(img === '' || img === 'null' || img == null) {

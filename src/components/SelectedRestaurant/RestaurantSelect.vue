@@ -115,7 +115,7 @@
                     this.$root.$emit('mealMenu', response.result.MealMenu);
                     this.$root.$emit('popularFood', response.result.Popular);
                     this.$root.$emit('restaurant', response.result.Restaurant);
-                    this.$root.$emit('tags', response.result.RestaurantTag);
+                    this.$root.$emit('tags', response.result.RestaurantTags);
                     this.$root.$emit('restaurantImages', response.result.RestaurantImagesURL);
                     this.$root.$emit('isCustomMeal', false);
 
