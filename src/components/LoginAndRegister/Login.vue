@@ -1,5 +1,5 @@
 <template>
-    <div class="pl-5 m-top">
+    <div class="pl-md-5 pl-0  m-top">
         <div class="row">
             <div class="col-12 px-5">
             <form action="" v-on:submit.prevent class="myProfile">

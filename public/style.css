@@ -384,7 +384,7 @@ button:disabled{
 
     .form-control{
         font-size:18px !important;
-        width: 100% !important;
+        /*width: 100% !important;*/
         height: 40px !important;
     }
 
