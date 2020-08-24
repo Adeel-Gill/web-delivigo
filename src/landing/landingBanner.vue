@@ -21,25 +21,32 @@
             <div id="map" style="display: none;"></div>
                 <div class="container">
                     <div class="row">
-                <div class="col-md-10 col-12 py-0">
-                    <div class="row">
-                        <div class="col-11 p-0">
-                    <div id="geocoder" class="geocoder d-inline-block" style="width: 100%;" @select="showValues"></div></div>
-                        <div class="col-1 p-0">
-                    <button class="btn-location" @click="getAddress">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" id="ic-locate-round">
-                            <g fill="none" fill-rule="evenodd">
-                                <path stroke-width="2" stroke="#fff" d="M11.5 22.5v-2.986l.471-.028a8.001 8.001 0 0 0 7.515-7.515l.028-.471H22.5h-2.986l-.028-.471a8.001 8.001 0 0 0-7.515-7.515l-.471-.028V.5v2.986l-.471.028a8.001 8.001 0 0 0-7.515 7.515l-.028.471H.5h2.986l.028.471a8.001 8.001 0 0 0 7.515 7.515l.471.028V22.5z"></path>
-                                <circle cx="11.5" cy="11.5" r="4" stroke-width="2" stroke="#fff"></circle>
-                                <circle cx="11.5" cy="11.5" r="1" stroke-width="2" fill="#fff"></circle> //#999898
-                            </g>
-                        </svg>
-                    </button></div>
-                    </div>
-                </div>
+                        <div class="col-lg-10 col-12 py-0">
+                            <div class="row">
+                                <div class="col-11 p-0">
+                                    <div id="geocoder" class="geocoder d-inline-block" style="width: 100%;"
+                                         @select="showValues"></div>
+                                </div>
+                                <div class="col-1 p-0">
+                                    <button class="btn-location" @click="getAddress">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25"
+                                             id="ic-locate-round">
+                                            <g fill="none" fill-rule="evenodd">
+                                                <path stroke-width="2" stroke="#fff"
+                                                      d="M11.5 22.5v-2.986l.471-.028a8.001 8.001 0 0 0 7.515-7.515l.028-.471H22.5h-2.986l-.028-.471a8.001 8.001 0 0 0-7.515-7.515l-.471-.028V.5v2.986l-.471.028a8.001 8.001 0 0 0-7.515 7.515l-.028.471H.5h2.986l.028.471a8.001 8.001 0 0 0 7.515 7.515l.471.028V22.5z"></path>
+                                                <circle cx="11.5" cy="11.5" r="4" stroke-width="2"
+                                                        stroke="#fff"></circle>
+                                                <circle cx="11.5" cy="11.5" r="1" stroke-width="2" fill="#fff"></circle>
+                                                //#999898
+                                            </g>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
 <!--            <b-form-input v-model="text" placeholder="I Would like to eat...."></b-form-input>-->
-            <div class="col-md-2 col-12 p-0 btn-overlay">
+            <div class="col-lg-2 col-12 p-0 btn-overlay">
 
             <b-button class="btn-search" @click="navigateTo">{{newLang.searchButton}}</b-button>
             </div>
@@ -419,7 +426,7 @@
     }
 }
 
-@media screen and (max-width: 760px) and (min-width: 576px) {
+@media screen and (max-width: 768px) and (min-width: 576px) {
     .btn-search{
         font-size: 22px;
         line-height: 25px;
@@ -448,7 +455,7 @@
     }
 }
 
-@media screen and (max-width: 960px) and (min-width: 760px) {
+@media screen and (max-width: 992px) and (min-width: 768px) {
     .banner-caption h1{
         font-size: 62px;
     }

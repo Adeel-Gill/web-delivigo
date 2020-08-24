@@ -10,8 +10,8 @@
                             <div class="app-download">
                                 <h3>{{newLang.gotApp}}</h3>
                                 <p>{{newLang.getYours}}</p>
-                                <a href="#" class="margin-right-10px"><img :src="download.iphone" /></a>
-                                <a href="#"><img :src="download.android" /></a>
+                                <a href=""><img :src="download.iphone" /></a>
+                                <a href=""><img :src="download.android" /></a>
                             </div>
                         </div>
                     </div>
@@ -225,7 +225,7 @@ export default {
 .app-download a {
     display: inline-block;
 }
-.margin-right-10px{
+.app-download :first-child {
     margin-right: 10px;
 }
 .social{
@@ -266,6 +266,23 @@ export default {
 .payment img{
     display: inline-block;
     width: 50px;
+}
+@media screen and (max-width: 1200px) and (min-width: 768px) {
+    .app-download a{
+        display: block;
+    }
+    .app-download a:last-child{
+        margin-top: 10px;
+    }
+    .app-download a:first-child{
+        margin-right: 0;
+    }
+
+}
+@media screen and (max-width: 767px) {
+    .quickLinks{
+        display: block;
+    }
 }
 /*.downloads{
     display: none;
