@@ -1,10 +1,10 @@
 <template>
     <div class="restaurnt-dishes">
-        <b-modal id="dish-detail" hide-header hide-footer centered scrollable size="lg">
+        <b-modal id="dish-detail" hide-header hide-footer centered scrollable size="md">
             <div class="show-dish-details">
                 <a  class="close" @click="hideDish"></a>
                 <div class="dish-detail-image" style="margin-top: 25px">
-                    &lt;!&ndash; <img :src="`${getImage(dishDetail.ImageUrl)}`" @error="getImage('')"> &ndash;&gt;
+                   <!-- &lt;!&ndash; <img :src="`${getImage(dishDetail.ImageUrl)}`" @error="getImage('')"> &ndash;&gt;-->
                     <img :src="getImage(dishDetail.ImageUrl)" @error="getImage('')">
                 </div>
                 <div class="dish-detail-about">
