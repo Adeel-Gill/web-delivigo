@@ -1,9 +1,74 @@
 <template>
     <div class="restaurnt-dishes">
-        <div class="show-dish-details" id="display-dish" >
+        <b-modal id="dish-detail" hide-header hide-footer centered scrollable size="lg">
+            <div class="show-dish-details">
+                <a  class="close" @click="hideDish"></a>
+                <div class="dish-detail-image" style="margin-top: 25px">
+                    &lt;!&ndash; <img :src="`${getImage(dishDetail.ImageUrl)}`" @error="getImage('')"> &ndash;&gt;
+                    <img :src="getImage(dishDetail.ImageUrl)" @error="getImage('')">
+                </div>
+                <div class="dish-detail-about">
+                    <div class="dish-name-descp">
+                        <h4>{{dishDetail.Name}}</h4>
+                        <p>{{dishDetail.Description}}</p>
+                    </div>
+                    <div class="extra-order">
+                        <h6>{{newLang.gliExtraOptions}}</h6>
+                        <div class="extra-checkbox" v-for="(customOption, customIndex)  in customOptions" v-bind:key="customOption">
+                            <div>
+
+                                <h5 class="float-left">{{customOption.Name}}</h5>
+                                <div style="margin-right: 30px; margin-left: 30px" v-for="(option,index) in customOption.Options" :key="option.Id">
+                                    <div class="clear"></div>
+
+                                    <span class="float-left">{{option.Name}}</span>
+                                    <span class="float-right"><input type="checkbox" @change="setCustomOptions(customIndex,index)" :checked="option.IsSelected"
+                                                                     name="extra" :value="option.Name" ></span>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <h6>{{newLang.gliExtraAddOn}}</h6>
+                        <div class="extra-checkbox" v-for="(addon, index) in addOns" v-bind:key="addon.Id">
+                            <div>
+                                <span class="float-left">{{addon.Name}}</span>
+                                <span class="float-left">&&nbsp (+ €{{addon.Price}}.00)</span>
+                                <span class="float-right"><input type="checkbox" @change="setAddOnOption(index,addon.Id)" :checked="addon.IsSelected"
+                                                                 name="extra" ref="addOn"  ></span>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <h6>{{newLang.gliExtraScale}}</h6>
+                        <div class="extra-checkbox" v-for="(scale, scaleIndex) in scales" v-bind:key="scale.Id">
+                            <div>
+                                <span class="float-left">{{scale.Name}} </span>
+                                <span class="float-right">€{{scale.UnitPrice}}.00 {{newLang.perScale}}</span>
+                                <div style="margin-right: 30px; margin-left: 30px" v-for="(option, index) in scale.Options" :key="option.Id">
+                                    <div class="clear"></div>
+                                    <span class="float-left">{{option.Name}} - €{{option.Value}}</span>
+                                    <span class="float-right"><input type="radio" @change="setScaleOptions(scaleIndex, index, scale.UnitPrice, option.Value)" :checked="option.IsSelected"
+                                                                     name="extra" :value="option.Name" ></span>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quantity-toggle">
+                        <button class="btn" @click="decrement(dishDetail.Price)">&mdash;</button>
+                        <input type="text" :value="getQuantity" readonly>
+                        <button class="btn" @click="increment(dishDetail.Price)">&#xff0b;</button>
+                    </div>
+                    <div class="add-item-btn">
+                        <button class="btn" @click="saveToCart()" >{{newLang.addItem}} -  € {{getTotalPrice}}.00</button>
+                    </div>
+                </div>
+            </div>
+        </b-modal>
+
+        <!--<div class="show-dish-details" id="display-dish" >
             <a  class="close" @click="hideDish"></a>
             <div class="dish-detail-image" style="margin-top: 25px">
-                <!-- <img :src="`${getImage(dishDetail.ImageUrl)}`" @error="getImage('')"> -->
+                &lt;!&ndash; <img :src="`${getImage(dishDetail.ImageUrl)}`" @error="getImage('')"> &ndash;&gt;
                 <img :src="getImage(dishDetail.ImageUrl)" @error="getImage('')">
             </div>
             <div class="dish-detail-about">
@@ -61,7 +126,7 @@
                     <button class="btn" @click="saveToCart()" >{{newLang.addItem}} -  € {{getTotalPrice}}.00</button>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="dishes"  v-for="select in selected" :key="select.Id" @click="displayDish(select.Id)">
             <div class="dish-selection" >
                 <div class="dish-image">
@@ -429,23 +494,27 @@
                         if(this.checkArrayResponse(response.result.CustomOptions, 'custom options')) {
                             this.customOptions = response.result.CustomOptions;
                         }
-                        document.getElementById("display-dish").style.display = "block";
+                        // document.getElementById("display-dish").style.display = "block";
+                        this.$bvModal.show('dish-detail');
                     } else {
                         this.showNotification('error','Error','Error occurred please try later!');
-                        document.getElementById("display-dish").style.display = "none";
+                        // document.getElementById("display-dish").style.display = "none";
+                        this.$bvModal.hide('dish-detail');
                     }
                     
 
                 }, error => {
                     console.log(error);
                     this.showNotification('error','Error','Error occurred please try later!');
-                    document.getElementById("display-dish").style.display = "none";
+                    // document.getElementById("display-dish").style.display = "none";
+                    this.$bvModal.hide('dish-detail');
                 })
                 
             },
             hideDish() {
                 console.log('here');
-                document.getElementById("display-dish").style.display = "none";
+                // document.getElementById("display-dish").style.display = "none";
+                this.$bvModal.hide('dish-detail');
                 this.$store.dispatch('clearOrderItems');
             },
             getImage(img) {
@@ -545,7 +614,7 @@
         clear: both;
     }
     #display-dish{
-        display: none;
+        /*display: none;*/
     }
     .show-dish-details {
         box-shadow: 0px 0px 7px 7px rgba(0, 0, 0, 0.1);
