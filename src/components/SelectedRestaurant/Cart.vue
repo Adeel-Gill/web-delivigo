@@ -1330,6 +1330,7 @@
     @media screen and (max-width: 960px) and (min-width: 760px){
         .slected-bg{
             height:550px ;
+            background-size: 100% 100%;
             border-radius: 0px 500px 500px 0;
         }
         .card-width{
@@ -1339,6 +1340,7 @@
     @media screen and (max-width: 760px) and (min-width: 576px){
         .slected-bg{
             height:500px ;
+            background-size: 100% 100%;
             border-radius: 0px 450px 450px 0;
         }
         .card-width{
@@ -1357,6 +1359,7 @@
     @media screen and (max-width: 576px) and (min-width: 430px){
         .slected-bg{
             height:450px ;
+            background-size: 100% 100%;
             border-radius: 0px 400px 400px 0;
         }
         .card-width{
@@ -1382,6 +1385,7 @@
     @media screen and (max-width: 430px) and (min-width: 380px){
         .slected-bg{
             height:400px ;
+            background-size: 100% 100%;
             border-radius: 0px 350px 350px 0;
         }
         .food-type{
@@ -1418,6 +1422,11 @@
         }
     }
     @media screen and (max-width: 380px) {
+        .slected-bg{
+            height:400px ;
+            border-radius: 0px 350px 350px 0;
+            background-size: 100% 100%;
+        }
         .card-width{
             width: 120px !important;
         }

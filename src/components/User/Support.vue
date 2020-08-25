@@ -1,5 +1,5 @@
 <template>
-    <div class="container--fluid">
+    <div class="container--fluid mt-5">
         <div class="col-12 col-md-9 p-0">
             <div class="head-sec" v-if="isChat">
                 <h1>Hello There</h1>
@@ -285,7 +285,7 @@ import 'signalr';
         /*background-color: #CECECF;*/
         /*height: 400px;*/
         position: relative;
-        /*top: -50px;*/
+        /*top: 37px;*/
     }
     .agent-pic{
         /*margin-right: 30px;*/
@@ -314,6 +314,7 @@ import 'signalr';
 .card{
     height: 500px;
     border-radius: 15px !important;
+
     /*background-color: rgba(0,0,0,0.4) !important;*/
     /*background: #7F7FD5;
     background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
@@ -498,6 +499,8 @@ import 'signalr';
     background-color: #78e08f;
     padding: 10px;
     position: relative;
+    min-width: 100px;
+    min-height: 25px;
 }
 .msg_time{
     position: absolute;
@@ -556,6 +559,25 @@ import 'signalr';
 @media(max-width: 576px){
     .contacts_card{
         margin-bottom: 15px !important;
+    }
+    .card-footer{
+        padding: 15px 10px;
+    }
+    .send_btn {
+        padding:0 5px
+    }
+    .attach_btn {
+        display: block;
+        text-align: center;
+    }
+    .attach_btn i{
+        display: block;
+    }
+    .attach_btn i:first-child {
+        padding-right: 0;
+    }
+    .attach_btn i:last-child{
+        margin-top: 5px;
     }
 }
 

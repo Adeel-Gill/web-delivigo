@@ -32,9 +32,6 @@
     clear: both;
 }
 
-.container {
-    width: 90% !important;
-}
 .bg-topbar{
     background-image: url('/public/images/topbar-bg.png') !important;
     background-color: transparent;
@@ -374,7 +371,7 @@ button:disabled{
 }
 
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 575px) {
     #carousel-1 .carousel-caption{
         top: 6%;
     }
@@ -384,7 +381,7 @@ button:disabled{
 
     .form-control{
         font-size:18px !important;
-        width: 100% !important;
+        /*width: 100% !important;*/
         height: 40px !important;
     }
 
@@ -407,6 +404,9 @@ button:disabled{
     }
     #price-filter ul.dropdown-menu {
         right: unset;
+    }
+    #dropdown ul.dropdown-menu{
+        width: 100%;
     }
 }
 @media screen and (max-width: 400px) {

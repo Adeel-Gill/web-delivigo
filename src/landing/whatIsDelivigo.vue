@@ -3,11 +3,11 @@
         <div class="container">
             <div class="card">
         <div class="row m-0">
-            <div class="col-md-4 col-12 text-justify" style="padding:105px 50px 50px 50px;">
+            <div class="col-lg-4 col-12 text-justify" style="padding:105px 50px 50px 50px;">
                 <h1>{{newLang.whatIs}}&nbsp;DeliviGo?</h1> <br>
                 <p>{{newLang.delivigoDetail}}</p>
             </div>
-            <div class="col-md-8 col-12 py-5 pr-md-5 pl-md-0">
+            <div class="col-lg-8 col-12 py-5 pr-lg-5 pl-lg-0 mx-auto">
                 <video src="/images/delivigo_promotional_video_lr.mp4" poster="/images/video-poster.png" controls muted></video>
             </div>
         </div>
@@ -34,7 +34,7 @@
 }
     video{
         width: 100%;
-        height: 100%;
+        height: auto;
         border-radius: 14px 14px 5px 5px;
         border: none;
     }

@@ -109,4 +109,15 @@
     .col-md-1{
         margin-left: -70px;
     }
+    @media screen  and (max-width: 768px) {
+        .side-image {
+            transform: none;
+            height: auto;
+            width: 80%;
+            margin: unset;
+        }
+        .img-shadow{
+            text-align: center;
+        }
+    }
 </style>

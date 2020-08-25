@@ -2,10 +2,12 @@
     <div>
         <vue-drawer-layout
                 ref="drawer"
-                drawer-position="right"
-                reverse="true"
-                drawer-width="100"
-                drawer-height="100"
+                :drawer-position="right"
+                :reverse="true"
+                :content-drawable="true"
+                :enable="false"
+                :drawer-width="320"
+                :drawable-distance="320"
                 @mask-click="handleMaskClick">
             <div class="drawer" slot="drawer">
                 <div @click = "handleToggleDrawer" style="margin-top: 60px; margin-right: 50px" >
