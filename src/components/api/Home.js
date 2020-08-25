@@ -1,8 +1,10 @@
 import {service} from "../util/request";
 
 export function fetchAllFilterData(city,long,lat,min,max,sort,food) {
+    console.log('inside,,,,,',city);
     return service({
-        url: `Home?city=${city}&longitude=${long}&latitude=${lat}&min=${min}&max=${max}&sort=${sort}&food=${food}`,
+        url: `HomeFilter`,
+        // url: `Home?cityName=${city}&longitude=${long}&latitude=${lat}&min=${min}&max=${max}&sort=${sort}&food=${food}`,
         method: 'get',
     })
 }

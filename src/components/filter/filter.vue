@@ -71,7 +71,7 @@ import sort from "./select-options/sort";
 import food from "./select-options/food";
 import price from "./select-options/price";
 import emptyError from "../error/emptyError";
-import {fetchAllData} from "../api/Home";
+import {fetchAllFilterData} from "../api/Home";
 import {EventBus} from "../../main";
 import {lang} from "../lang/lang";
 export default {
@@ -125,7 +125,7 @@ export default {
             this.foodName = '';
             this.sort = null;
             EventBus.$emit("resetFilter","");
-            this.fetchAllData();
+            this.fetchAllFilterData();
             this.checkLang();
             this.resetCount+= 1;
             this.isVisible = false;
@@ -135,13 +135,13 @@ export default {
           this.foodName = food.replace(/\s+/g, '');
           console.log("foodNameHere",this.foodName);
         //   this.foodName = this.food;
-          this.fetchAllData();
+          this.fetchAllFilterData();
           this.isVisible = true;
         },
         callSortAPI(sort) {
           console.log(sort);
           this.sort = sort;
-          this.fetchAllData();
+          this.fetchAllFilterData();
           this.isVisible = true;
         },
         callAPI(value) {
@@ -149,7 +149,7 @@ export default {
             this.min = value[0];
             this.max = value[1];
             console.log(this.min,this.max);
-            this.fetchAllData();
+            this.fetchAllFilterData();
             this.isVisible = true;
         },
         changeHeader() {
@@ -167,12 +167,13 @@ export default {
         unChangeFooter(){
             this.$eventBus.$emit('checkFooter', 'default');
         },
-        async fetchAllData() {
+        async fetchAllFilterData() {
                 this.city = this.$route.query.city;
+                console.log('city', this.city);
                 this.longitude = this.$route.query.longitude;
                 this.latitude = this.$route.query.latitude;
                 console.log(this.min,this.max);
-                fetchAllData().then(response => {
+                fetchAllFilterData(this.city, this.longitude,this.latitude,this.min,this.max,this.sort,this.food).then(response => {
                     if(response != null) {
                         this.fetchedData = response.result;
                         if(response.result.NewOpen.length>0) {
@@ -259,7 +260,7 @@ export default {
             // this.fetchResturantsData();
             this.checkLang();
             EventBus.$emit("changeNewLang", "");
-            // this.fetchAllData();
+            // this.fetchAllFilterData();
              this.newCount += 1;
             this.fetchedData = {};
             this.resetCount += 1;
@@ -267,7 +268,7 @@ export default {
         },
     },
     created() {
-        this.fetchAllData();
+        this.fetchAllFilterData();
         this.checkLang();
         EventBus.$on("changeLang", () => {
             this.changeTheLang();
