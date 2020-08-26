@@ -106,7 +106,7 @@
                 <h2 class="sec-heading mb-2"><i class="far fa-calendar-check"></i> {{newLang.scheduleOrder}}&nbsp;<i class="fas fa-plus"></i></h2>
                 <VueCtkDateTimePicker
                         v-model="time"
-                        only-time="true"
+                        :only-time="true"
                         :label="newLang.selectTime"
                         output-format="hh:mm:ss"
                         format="hh:mm a"></VueCtkDateTimePicker>
@@ -774,6 +774,28 @@
                         } else {
                             this.allCards = [];
                             this.allCards = response.result;
+                            $(document).ready(function(){
+                                $('.owl-carousel2').owlCarousel({
+                                    loop:true,
+                                    dots: false,
+                                    autoplay:false,
+                                    responsiveClass:false,
+                                    margin:20,
+                                    nav:false,
+                                    lazyLoad:true,
+                                    responsive:{
+                                        0:{
+                                            items:1
+                                        },
+                                        600:{
+                                            items:2
+                                        },
+                                        1000:{
+                                            items:2
+                                        }
+                                    }
+                                });
+                            });
                             this.showNotification('success','Success','Card is default now and shown!');
                             this.disablePlaceOrder = false;
                             // retrieveCustomerAllCards(Number(localStorage.getItem('id'))).then(response => {
@@ -811,6 +833,28 @@
                         } else {
                                 this.allAddresses = [];
                                 this.allAddresses = response.result;
+                                $(document).ready(function(){
+                                    $('.owl-carousel').owlCarousel({
+                                        loop:true,
+                                        dots: false,
+                                        autoplay:false,
+                                        responsiveClass:false,
+                                        margin:20,
+                                        nav:false,
+                                        lazyLoad:true,
+                                        responsive:{
+                                            0:{
+                                                items:1
+                                            },
+                                            600:{
+                                                items:2
+                                            },
+                                            1000:{
+                                                items:2
+                                            }
+                                        }
+                                    });
+                                });
                                 this.setAddressID(this.allAddresses[0]);
                                 this.showNotification('success','Success','Address is default and shown!');
                                 console.log('isDelivery',this.isDelivery);
