@@ -7,9 +7,9 @@
                 <div class="row pt-3">
                     <div class="col-12 col-md-3">
                         <div class="download">
+                            <h3>{{newLang.gotApp}}</h3>
+                            <p>{{newLang.getYours}}</p>
                             <div class="app-download">
-                                <h3>{{newLang.gotApp}}</h3>
-                                <p>{{newLang.getYours}}</p>
                                 <a href=""><img :src="download.iphone" /></a>
                                 <a href=""><img :src="download.android" /></a>
                             </div>
@@ -206,7 +206,7 @@ export default {
     width: 100%;
     align-items: center;
 }
-.app-download h3 {
+.download h3 {
     /*font-family: "PantonSemi";*/
     font-weight: 500;
     font-size: 30px;
@@ -214,7 +214,7 @@ export default {
     margin: 0;
     color:#2875b3;
 }
-.app-download p {
+.download p {
     /*font-family: "Roboto";*/
     color: #cccccc;
     font-size: 18px;
@@ -225,7 +225,7 @@ export default {
 .app-download a {
     display: inline-block;
 }
-.app-download :first-child {
+.app-download a:first-child {
     margin-right: 10px;
 }
 .social{
