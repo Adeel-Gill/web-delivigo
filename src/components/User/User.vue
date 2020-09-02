@@ -1,7 +1,7 @@
 <template>
     <div class="col-12 p-0" style="min-height: 409px;">
         <app-side-nav :newLang = local></app-side-nav>
-        <main id="page-wrap">
+        <main id="page-wrap" class="mt-5">
         <router-view @changeTheCounter = "checking" :newLang = local></router-view>
         </main>
     </div>
