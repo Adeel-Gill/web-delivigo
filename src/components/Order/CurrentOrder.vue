@@ -1,7 +1,7 @@
 <template>
     <div>
             <div v-if="isEmpty">
-                <div class="card mb-5" v-if="isCurrentOrder">
+                <div class="card mb-5" v-if="getLocalAll70()">
                     <div class="card-body">
                         <div class="row mx-3 mt-3">
                             <div class="col-md-6">
@@ -198,7 +198,7 @@
             decomposeObject() {
                 // // this.currentOrderObject = obj;
                 // console.log('currentOrderObject', this.currentOrderObject);
-                if(this.obj.OrderStatusId !== 70) {
+                if(Number(this.obj.OrderStatusId) !== 70) {
                     this.currentOrderObject = this.obj;
                     this.isCurrentOrder = true;
                 }
@@ -236,9 +236,9 @@
                 console.log('insidelocal70',localStorage.getItem('all70'));
                 if(localStorage.getItem('all70') === 'true') {
                     console.log('here');
-                    return true;
-                } else {
                     return false;
+                } else {
+                    return true;
                 }
             }
         },

@@ -143,7 +143,7 @@
                     </div>
                     <div class="col-12 p-0">
                         <div class="owl-carousel owl-theme">
-                            <div v-for="address in allAddresses" :class="['card-width']" :key="address.Id">
+                            <div v-for="(address,index) in allAddresses" :class="['card-width']" :key="index">
                                 <div>
                                     <div class="card card-block">
                                         <div class="card-body">
@@ -187,7 +187,7 @@
 
                     <div class="col-12 p-0">
                         <div class="owl-carousel2 owl-theme">
-                            <div v-for="card in allCards" :class="['card-width']" :key="card.Id">
+                            <div v-for="(card,index) in allCards" :class="['card-width']" :key="index">
                                 <div id="a123" >
                                     <div class="card card-block">
                                         <div class="card-body">
@@ -463,6 +463,10 @@
         mounted() {
              this.setCount();
              this.hideToggle();
+             document.getElementsByClassName('drawer-layout')[0].style.display = 'none';
+             document.getElementsByClassName('drawer-layout')[0].style.display = 'none';
+             document.getElementsByClassName('drawer-layout')[0].style.display = 'none';
+             document.getElementsByClassName('drawer-layout')[0].style.display = 'none';
         },
         methods: {
             setCount() {

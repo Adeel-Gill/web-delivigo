@@ -901,9 +901,15 @@
         },
         async fetchRestaurantMealById(resId, mealId) {
                 console.log('bothIDs'+resId+mealId);
+
             fetchRestaurantMealsById(resId, mealId).then(response => {
-                this.$root.$emit('popularFood',response.restaurant);
-                this.$root.$emit('isCustomMeal', true);
+                if(!response.HasError) {
+                    this.$root.$emit('popularFood',response.result);
+                    this.$root.$emit('isCustomMeal', true);
+                }else {
+                    this.showNotification('error','Error','Error occurred please try later');S
+                }
+                
             }, error => {
                 console.log(error);
                 this.showNotification('error','Error','Error occurred please try later');

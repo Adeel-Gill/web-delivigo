@@ -29,7 +29,7 @@
                     <router-link to="/searchPhone" >Forgot Password? </router-link>
                 </div>
                 <div class="button text-center">
-                    <button type="submit" @click="checkCredentials" :disabled="false" class="btn btn-submit">{{newLang.signin}}</button>
+                    <button type="submit" @click="checkCredentials" :disabled="disableSubmit" class="btn btn-submit">{{newLang.signin}}</button>
                     <span class="or">OR</span>
                     <facebook-login class="fb p-0 mt-3"
                                     appId="649127768995419"

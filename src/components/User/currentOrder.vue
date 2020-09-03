@@ -1,10 +1,16 @@
 <template>
     <div>
-        <app-current-order v-for="orders in allOrders" :key="orders.Id"
+        <div v-if="allOrders.length"> 
+            <app-current-order v-for="orders in allOrders" :key="orders.Id"
                            :currentOrder="orders"
                            :all70="getLocalAll70()"
                            :newLang = newLang
                            :is-empty-array="allOrders.length>0"></app-current-order>
+        </div>
+        <div v-else>
+            <app-empty-error :custom-message="'No active orders available to show'"></app-empty-error>
+        </div>
+        
     </div>
 
 </template>
@@ -13,6 +19,8 @@
     import CurrentOrder from "../Order/CurrentOrder";
     import {getOrderHistory} from "../api/OrderHistory";
     import {orderStatus} from "../Order/OrderStatus";
+    import noItemError from "../error/noItemError";
+    
 
     export default {
         name: "currentOrder",
@@ -25,7 +33,8 @@
             }
         },
         components: {
-            appCurrentOrder: CurrentOrder
+            appCurrentOrder: CurrentOrder,
+            appEmptyError: noItemError
         },
         methods: {
             getCurrentOrders() {

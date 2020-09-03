@@ -182,7 +182,7 @@ import 'signalr';
                    this.connection =  $.hubConnection('https://www.delivigo.com');
                    this.proxy = this.connection.createHubProxy('requestLog');
                    this.proxy.on('sendPrivateMessage', (id, name, userType, message) => {
-                        if(userType === 'customerservice') {
+                        if(userType.toLowerCase() === 'customerservice') {
                             this.allMessages.push({
                                 'id': id,
                                 'type': 'r',

@@ -81,7 +81,7 @@
                             <h4><i class="fas fa-motorcycle"></i> {{local.delivery}}</h4>
                         </div>
                         <div class="card-body"> 
-                            <h5 class="card-title">{{orderObject.Order.EtaTime}}~{{Number(orderObject.Order.EtaTime) + 5}} {{local.mins}}</h5>
+                            <h5 class="card-title">{{orderObject.Order.ETATime}}~{{Number(orderObject.Order.ETATime) + 5}} {{local.mins}}</h5>
                             <p class="card-text">{{local.yourFood}}</p>
                             <button type="button" class="btn btn-lg btn-block btn-primary"
                                     :disabled="Number(orderObject.Order.OrderStatusId) !== statuses.OrderDelivered">{{local.grabIt}}</button>

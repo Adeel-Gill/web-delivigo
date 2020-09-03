@@ -309,7 +309,11 @@
                     })
             },
             saveToCart() {
-                if(this.cartItems.length <= 0) {
+                if(localStorage.getItem('id') == null || localStorage.getItem('id') === 'null' || localStorage.getItem('id')==='undefined') {
+                    this.$router.push({path:'/signin'});
+                    this.showNotification('info','Info','Please login first to start ordering food');
+                } else {
+                     if(this.cartItems.length <= 0) {
                     console.log('received',);
                     this.resetMealObject();
                     this.setMealObject(this.dishObj);
@@ -385,6 +389,8 @@
                 }
                 this.$root.$emit("itemAddedToCart");
                 localStorage.setItem("items", this.$store.state.cartData.length);
+                }
+               
             },
             checkArrayResponse(arr,type) {
                 if(arr.length>0) {
