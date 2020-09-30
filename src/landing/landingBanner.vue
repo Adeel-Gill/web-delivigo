@@ -297,7 +297,7 @@
     letter-spacing: 1px;
     /*font-family: "H.H. Samuel";*/
     font-family: "HH-Samuel",sans-serif !important;
-    display: inline-block;
+    /*display: inline-block;*/
 }
 .banner-caption p {
     font-family: "HH-Samuel",sans-serif;
