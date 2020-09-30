@@ -9,13 +9,13 @@
                         <h6 style="display: block;" class="text-truncate">{{newRestaurant.Name}}</h6>
                     </div>
                     <div class="col-4 padding-top-botom">
-                        <p class="padding-top font-size-9"><i class="fas fa-star"></i> {{newRestaurant.Rating}}</p>
+                        <p class="padding-top font-size-9"><i class="fas fa-star"></i> {{Number(newRestaurant.Rating).toFixed(2)}}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-5 padding-top-botom">
                         <p class="font-light text-truncate" style="display: block;">{{newRestaurant.TagLine}}</p>
-                    </div>
+                    </div >
                     <div class="col-3 padding-top-botom">
                         <i >{{newRestaurant.ApproximateCostPerPerson}}</i>
                     </div>

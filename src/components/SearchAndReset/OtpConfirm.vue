@@ -44,7 +44,7 @@ export default {
             otp: '',
             code: '',
             otpObj: {
-                'Mobile': '',
+                'MobileNumber': '',
                 'Otp': ''
             }
         }
@@ -52,7 +52,7 @@ export default {
     watch: {
         code() {
             if(this.code.length === 4) {
-                this.otpObj.Mobile = this.mobile;
+                this.otpObj.MobileNumber = this.mobile;
                 this.otpObj.Otp = this.code;
                 confirmOtp(this.otpObj).then(response => {
                     if(response.HasError) {
@@ -74,7 +74,7 @@ export default {
     },
     methods:{
         resendOtp(){
-            this.otpObj.Mobile = this.mobile;
+            this.otpObj.MobileNumber = this.mobile;
             resendOtp(this.otpObj).then(response => {
                 if(response.HasError) {
                     this.showNotification('error','Error','Otp resend failed');

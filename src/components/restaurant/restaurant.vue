@@ -10,7 +10,7 @@
                                 <h6 style="display: block;" class="text-truncate">{{restaurant.Name}}</h6>
                             </div>
                             <div class="col-4 padding-top-botom">
-                                <p class="padding-top font-size-9"><i class="fas fa-star"></i> {{restaurant.Rating}}</p>
+                                <p class="padding-top font-size-9"><i class="fas fa-star"></i> {{restaurant.Rating?restaurant.Rating.toFixed(2):0}}</p>
                             </div>
                         </div>
                         <div class="row">

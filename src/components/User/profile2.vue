@@ -59,7 +59,7 @@
                                 id="number" 
                                 v-else
                                 v-on:input="checkMobileNumber()"
-                                v-model="user.mobile"  
+                                v-model="user.MobileNumber"  
                                 >
                                 <label class="errorMessage" id="numberError"></label>
                             </div>
@@ -159,7 +159,7 @@
                     firstName: '',
                     lastName: '',
                     fullName: '',
-                    mobile: '',
+                    MobileNumber: '',
                     deviceToken: 'web',
                     deviceType: 'web',
                     deviceUniqueCode: 'web',
@@ -169,7 +169,7 @@
             isImageFile: true,
             imageCheck: false,
             updateUserData: {
-                Mobile: "",
+                MobileNumber: "",
                 FirstName: "",
                 LastName: "",
                 FullName: "",
@@ -181,7 +181,7 @@
         methods:{
             updateUser() {
                 if(this.nameCheck || this.numberCheck) {
-                    this.updateUserData.Mobile = this.user.mobile;
+                    this.updateUserData.MobileNumber = this.user.MobileNumber;
                     this.updateUserData.FullName = this.user.fullName;
                     this.updateUserData.UrlImage = localStorage.getItem("userProfile");
                     this.updateUserData.Id = localStorage.getItem("id");
@@ -257,7 +257,7 @@
             enableEditable() {
                 this.changeValidated();
                 this.user.fullName = this.userData.FullName;
-                this.user.mobile = this.userData.Mobile;
+                this.user.MobileNumber = this.userData.Mobile;
                 this.isEditable = !this.isEditable;
             },
             disableEditable() {
@@ -447,24 +447,24 @@
             },
             checkMobileNumber() {
                 var res = false;
-                if(this.user.mobile === "") {
+                if(this.user.MobileNumber === "") {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberEmptyError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                }else if(this.user.mobile[0] !== '+') {
+                }else if(this.user.MobileNumber[0] !== '+') {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberFormatError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
                 }
-                // else if(!this.user.mobile.match(/^[0-9]+$/)) {
+                // else if(!this.user.MobileNumber.match(/^[0-9]+$/)) {
                 //     document.getElementById('numberError').style.visibility = "visible";
                 //     document.getElementById('numberError').innerHTML = this.newLang.numberWrongInpur;
                 //     document.getElementById('number').style.borderColor = "red";
                 //     this.numberCheck = false;
                 // } 
-                else if(this.user.mobile.length < 11) {
+                else if(this.user.MobileNumber.length < 11) {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberLengthError;
                     document.getElementById('number').style.borderColor = "red";
@@ -488,7 +488,7 @@
                 document.getElementById('nameError').innerHTML = "";
                 document.getElementById('name').style.borderColor = "grey";
                 document.getElementById('name').value = "";
-                this.user.fullName = this.user.mobile = "";
+                this.user.fullName = this.user.MobileNumber = "";
                 this.disableSave = true;
                 
             },

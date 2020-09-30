@@ -11,7 +11,7 @@
                         <!-- <div class="input-group-prepend">
                             <span class="input-group-text" id="plusSign">+</span>
                         </div> -->
-                        <input type="text" class="form-control" v-model="numberObj.Mobile" v-on:input="checkMobileNumber" id="number" placeholder="+352 74638333" aria-label="Phone Number" aria-describedby="plusSign"><br>
+                        <input type="text" class="form-control" v-model="numberObj.MobileNumber" v-on:input="checkMobileNumber" id="number" placeholder="+352 74638333" aria-label="Phone Number" aria-describedby="plusSign"><br>
                         
                     </div>
                     <div class="w-50 mx-auto">
@@ -54,7 +54,7 @@ export default {
             isDisabled: true,
             local: lang.en,
             numberObj: {
-                "Mobile": ''
+                "MobileNumber": ''
             }
         }
     },
@@ -71,7 +71,7 @@ export default {
                 if(response.HasError) {
                     this.showNotification('error', 'Error', 'Error occurred please try later!')
                 } else {
-                    localStorage.setItem('mobileNumber', this.numberObj.Mobile);
+                    localStorage.setItem('mobileNumber', this.numberObj.MobileNumber);
                     localStorage.setItem('isRegOtp', 'true');
                     this.$router.push({path: '/resetPassword'});
                 }
@@ -81,7 +81,7 @@ export default {
         },
         checkMobileNumber() {
                 var res = false;
-                if(this.numberObj.Mobile === "") {
+                if(this.numberObj.MobileNumber === "") {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.local.numberEmptyError;
                     document.getElementById('number').style.borderColor = "red";
@@ -91,12 +91,12 @@ export default {
                     document.getElementById('numberError').innerHTML = this.newLang.numberWrongInpur;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                }*/ else if(this.numberObj.Mobile[0] !== '+') {
+                }*/ else if(this.numberObj.MobileNumber[0] !== '+') {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.local.numberFormatError;
                     document.getElementById('number').style.borderColor = "red";
                     this.isDisabled = true;
-                } else if(this.numberObj.Mobile.length < 11) {
+                } else if(this.numberObj.MobileNumber.length < 11) {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.local.numberLengthError;
                     document.getElementById('number').style.borderColor = "red";

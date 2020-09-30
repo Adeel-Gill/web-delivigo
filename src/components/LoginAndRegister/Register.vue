@@ -22,7 +22,7 @@
                     <div class="col-sm-10">
                         <input type="text"
                                class="form-control"
-                               v-model="userData.Mobile"
+                               v-model="userData.MobileNumber"
                                placeholder="e.g +3121234123"
                                v-on:input="checkMobileNumber()"
                                id="number" required>
@@ -128,7 +128,7 @@ import VFacebookLogin from 'vue-facebook-login-component'
                     FirstName: '',
                     LastName: '',
                     FullName: '',
-                    Mobile: '',
+                    MobileNumber: '',
                     Email: '',
                     Password: '',
                     DeviceToken: 'web',
@@ -199,7 +199,7 @@ import VFacebookLogin from 'vue-facebook-login-component'
                         if(!response.HasError) {
                             this.showNotification('success',this.newLang.success,this.newLang.signUpSucces);
                             // EventBus.$emit('userImage',baseAddress+response.ImageUrl);
-                            localStorage.setItem('mobileNumber', this.userData.Mobile);
+                            localStorage.setItem('mobileNumber', this.userData.MobileNumber);
                             localStorage.setItem('isRegOtp', 'true');
                             this.$router.push({path:'/confirmOtp'});
                         } else {
@@ -216,7 +216,7 @@ import VFacebookLogin from 'vue-facebook-login-component'
             },
             checkObject() {
                 if( this.userData.FullName != '' &&
-                    this.userData.Mobile != '' &&
+                    this.userData.MobileNumber != '' &&
                     this.userData.Email !='' &&
                     this.userData.Password !='' &&
                     this.$refs.termsChecked.checked != false) {
@@ -356,22 +356,22 @@ import VFacebookLogin from 'vue-facebook-login-component'
             },
             checkMobileNumber() {
                 var res = false;
-                if(this.userData.Mobile === "") {
+                if(this.userData.MobileNumber === "") {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberEmptyError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                }/*else if(!this.userData.Mobile.match(/^[0-9]+$/)) {
+                }/*else if(!this.userData.MobileNumber.match(/^[0-9]+$/)) {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberWrongInpur;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                }*/ else if(this.userData.Mobile[0] !== '+') {
+                }*/ else if(this.userData.MobileNumber[0] !== '+') {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberFormatError;
                     document.getElementById('number').style.borderColor = "red";
                     this.numberCheck = false;
-                } else if(this.userData.Mobile.length < 11) {
+                } else if(this.userData.MobileNumber.length < 11) {
                     document.getElementById('numberError').style.visibility = "visible";
                     document.getElementById('numberError').innerHTML = this.newLang.numberLengthError;
                     document.getElementById('number').style.borderColor = "red";
