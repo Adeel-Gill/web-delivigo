@@ -25,9 +25,6 @@
                                     </div>
                                 </div>
                             </div>
-<!--                            <div>-->
-<!--                                {{showObject(currentOrderObject)}}-->
-<!--                            </div>-->
                             <div class="col-md-6">
                                 <div class="collapse-tab" role="tablist"  v-for="(orderItem, itemIndex) in currentOrderObject.Meals[0].Items" :key="itemIndex">
                                     <div class="line">
@@ -52,7 +49,6 @@
                                         <div v-if="orderItem.AddOns.length > 0" >
                                             <div class="px-1 ml-1 collapse-head" role="tab">
                                                 <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{newLang.addOnTitle}}</a>
-<!--                                                <span class="float-right">$44</span>-->
                                                 <span class="float-right">${{orderItem.AddOnTotal}}</span>
                                     </div>
                                             <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
@@ -63,11 +59,6 @@
                                                 </div>
                                             </b-collapse>
                                         </div>
-<!--                                        <div v-else>-->
-<!--                                            <div class="px-1 ml-1 collapse-head" role="tab">-->
-<!--                                                <a v-b-toggle.accordion-2><div class="numberCircle">2</div>{{emptyAddOnTitle}}</a>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
                                     </div>
 
                                     <div class="line">
@@ -86,11 +77,6 @@
                                                 </div>
                                             </b-collapse>
                                         </div>
-<!--                                        <div v-else>-->
-<!--                                            <div class="px-1 ml-1 collapse-head" role="tab">-->
-<!--                                                <a v-b-toggle.accordion-3><div class="numberCircle">3</div>{{emptyScalesTitle}}</a>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
                                     </div>
                                 </div>
                                 <div class="total">
@@ -108,15 +94,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="float-right">
-                        <button class="btn btn-primary mr-2"><i class="fas fa-download"></i> &nbsp;Receipt</button>
-                        <router-link :to="{path:'/orderTracking/'+currentOrderObject.Order.OrderId,query:{cusID:currentOrderObject.Customer.CustomerId}}">
-                            <button class="btn btn-primary"
-                                    :disabled="(statuses.OrderDelivered === currentOrderObject.Order.OrderStatusId)">
-                                Track Order
-                            </button>
-                        </router-link>
-                        </div>-->
                     </div>
 
                 </div>
