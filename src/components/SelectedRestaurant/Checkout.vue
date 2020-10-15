@@ -7,7 +7,7 @@
                     <p class="text-muted">{{local.showingLocation}}</p>
                 </div>
                 <div class="w-100">
-                    <app-custom-map :cus="cusData" :res="resData" :driver="driverData"></app-custom-map>
+                    <app-custom-map :cus="cusData" :res="resData" :allData="alldata" :driver="driverData"></app-custom-map>
                     <!--                    <img src="../../../public/images/map.png" class="img-fluid" alt="map image">-->
                 </div>
                 <div class="row mx-auto map-add mt-4">
@@ -122,17 +122,26 @@
                 statuses: orderStatus,
                 progress: 0,
                 statusText: '',
+                alldata: [],
+                data: {
+                    "longitude": 0,
+                    "latitude": 0,
+                    "type": ""
+                },
                 cusData: {
                     "longitude": 0,
                     "latitude": 0,
+                    "type": "cus"
                 },
                 resData: {
                     "longitude": 0,
                     "latitude": 0,
+                    "type": "res"
                 },
                 driverData: {
                     "longitude": 0,
                     "latitude": 0,
+                    "type": "drv"
                 },
                 local: lang.en,
             }
@@ -143,11 +152,14 @@
                     this.orderObject = response.result[0];
                     this.cusData.longitude = this.orderObject.Order.Longitude;
                     this.cusData.latitude = this.orderObject.Order.Latitude;
+                    this.alldata.push(this.cusData);
                     this.resData.longitude = this.orderObject.Restaurant.Longitude;
                     this.resData.latitude = this.orderObject.Restaurant.Latitude;
+                    this.alldata.push(this.resData);
                     if(this.orderObject.Driver) {
                     this.driverData.longitude = this.orderObject.Driver.Longitude;
                     this.driverData.latitude = this.orderObject.Driver.Latitude;
+                    this.alldata.push(this.driverData);
                     }
                    console.log(this.cusData, this.resData);
                     switch (Number(this.orderObject.Order.OrderStatusId)) {

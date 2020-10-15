@@ -5,7 +5,7 @@
 <!--                <div class="display-block">&lt;!&ndash;v-bind:class="[isFooter? 'display-block': 'downloads' ]"&ndash;&gt;-->
             <div class="container">
                 <div class="row pt-3">
-                    <div class="col-12 col-md-3">
+                    <div class="col-12 col-md-4">
                         <div class="download">
                             <h3>{{newLang.gotApp}}</h3>
                             <p>{{newLang.getYours}}</p>
@@ -15,23 +15,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-3 infoLink">
+                    <div class="col-12 col-md-4 infoLink">
                         <div class="quickLinks">
                             <h4>{{newLang.information}}</h4>
                             <ul>
                                 <li><router-link to="/profile">{{newLang.myAccount}}</router-link>
                                 <li><router-link to="/currentOrder">{{newLang.orderHistory}}</router-link>
                                 <li><router-link to="/termsAndConditions?docType=t">{{newLang.termsAndCondition}}</router-link>
-                                <li><router-link to="/privacyPolicy?docType=p">{{newLang.privaryPolicy}}</router-link>
+                                <li><router-link to="/privacyPolicy?docType=p">{{newLang.privaryPolicy}}</router-link></li>
                                 <!-- <li><a href="#">My Account</a></li> -->
                                 <!-- <li><a href="#">Order History</a></li>
                                 <li><a href="#">Terms & Conditions</a></li>
                                 <li><a href="#">Privacy Policy</a></li> -->
-                                <li><a href="#">FAQ's</a></li>
+                                <!-- <li><a href="#">FAQ's</a></li> -->
                             </ul>
                         </div>
                     </div>
-                    <div class="col-12 col-md-3 infoLink">
+                    <!-- <div class="col-12 col-md-3 infoLink">
                         <div class="quickLinks">
                             <h4>{{newLang.helpfulLinks}}</h4>
                             <ul>
@@ -42,8 +42,8 @@
                                 <li><a href="#">{{newLang.couriers}}</a></li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-3 infoLink">
+                    </div> -->
+                    <div class="col-12 col-md-4 infoLink">
                         <div class="quickLinks">
                         <h4 class="pb-3">{{newLang.contactInfo}}</h4>
                         <p><i class="fas fa-phone pr-4"></i> +358 46 6334501</p>

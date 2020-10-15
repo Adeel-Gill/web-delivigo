@@ -53,6 +53,7 @@
             });
              this.map.on('load', () => {
                     let el = document.createElement('div');
+                //     switch()
                      el.className = 'marker';
                      console.log(el);
                      new mapboxgl.Marker()

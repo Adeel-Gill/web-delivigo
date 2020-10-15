@@ -15,7 +15,7 @@
                                 </div>
                                 <div class="">
                                     <div class="rating mt-4 mb-3">
-                                        <star-rating :rating="rating" v-model="rating" :read-only="isReviewSubmit"  :star-size="35" :rtl="true"></star-rating>
+                                        <star-rating :rating="rating" v-model="rating" :read-only="isReviewSubmit"  :star-size="35" :ltr="true" ></star-rating>
                                     </div>
                                     <div class="form-group">
                                         <textarea  class="form-control review" v-model="review" id="review" :disabled="isReviewSubmit" :placeholder="newLang.yourReview"></textarea>
@@ -101,12 +101,12 @@
                         </div>
                         <button class="btn btn-primary ml-2" @click="openReceipt(previousOrderObject.ReceiptUrl)"><i class="fas fa-download"></i> &nbsp;{{newLang.reciept}}</button>
                         <router-link to="/orderTracking">
-                            <button class="btn btn-primary float-right"
+                            <!-- <button class="btn btn-primary float-right"
                                     :disabled="(statuses.OrderDelivered !== previousOrderObject.OrderStatusId)">
                                 {{newLang.trackOrder}}
-                            </button>
+                            </button> -->
                         </router-link>
-                        <button  class="btn btn-primary float-left" @click="reorder(previousOrderObject.Id)">
+                        <button  class="btn btn-primary float-right" @click="reorder(previousOrderObject.Id)">
                             {{newLang.reorder}}
                         </button>
                     </div>
@@ -228,7 +228,8 @@
                 console.log('previousOrderObject', this.previousOrderObject,'obj',this.obj);
                 if(this.obj.IsReviewed) {
                     this.isReviewSubmit = true;
-                    this.review = 'Review submitted already';
+                    this.review = this.obj.Rating.Comments;
+                    this.rating = this.obj.Rating.Rates;
                 } else {
                     this.isReviewSubmit = false;
                 } 

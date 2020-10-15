@@ -15,11 +15,11 @@
                    <div class="row" v-else>
                        <app-empty-error></app-empty-error>
                    </div>
-                   <paginate
+                   <!-- <paginate
                            :page-count="total"
                            :container-class="'pagination'"
                            :click-handler="callAPI">
-                   </paginate>
+                   </paginate> -->
                </div>
            </div>
         </div>
@@ -68,10 +68,10 @@
             },
             fetchDiscountedRestaurants() {
               fetchDiscountedRestaurants(this.page,this.size).then(response => {
-                  if(response.result.length > 0) {
+                  if(response.result.Restaurant.length > 0) {
                       this.notEmpty = true;
-                      this.discounted = response.result;
-                      this.total = parseInt(this.getPageRange(response.Pagination.TotalRecords));
+                      this.discounted = response.result.Restaurant;
+                    //   this.total = parseInt(this.getPageRange(response.Pagination.TotalRecords));
                       this.showNotification('success',this.newLang.success,this.newLang.dealsAvailable);
                   } else {
                       this.notEmpty = false;

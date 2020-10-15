@@ -29,9 +29,9 @@
                         <div class="new my-3">
                             <button class="btn btn-outline-light" @click="establishConnection()">New Conversation</button>
                         </div>
-                        <div class="prev my-3">
+                        <!-- <div class="prev my-3">
                             <button class="btn text-light">See Previous</button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
