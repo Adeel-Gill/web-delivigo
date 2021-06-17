@@ -1,14 +1,14 @@
 <template>
     <div class="container--fluid">
         <div class="col-12 col-md-9 p-0">
-            <div class="head-sec" v-if="isChat">
+            <div class="head-sec">
                 <h1>Hello There</h1>
                 <p>Hello there and welcome to DeliviGo support
                     We are here to help!</p>
                 <div class="line"></div>
             </div>
             <div class="col-11 col-sm-8 mx-auto p-0">
-            <div class="conversation" v-if="isChat">
+            <div class="conversation">
                 <h2>Start a new conversation</h2>
                 <p>Typically replies in 10 mint</p>
 
@@ -27,7 +27,7 @@
 
                     <div class="buttons w-100">
                         <div class="new my-3">
-                            <button class="btn btn-outline-light" @click="establishConnection()">New Conversation</button>
+                            <button class="btn btn-outline-light">New Conversation</button>
                         </div>
                         <div class="prev my-3">
                             <button class="btn text-light">See Previous</button>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <div class="chat-sec" v-if="!isChat">
+            <div class="chat-sec">
                 <div class="col-md-12 chat">
                     <div class="card">
                         <div class="card-header msg_head">
@@ -88,8 +88,8 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -106,7 +106,6 @@ import 'signalr';
                 text: '',
                 id: 0,
                 name: '',
-                isChat: true,
                 officerName: '',
                 allMessages: [],
                 sentMessage: {
@@ -127,7 +126,7 @@ import 'signalr';
             
         },
         mounted() {
-        // this.establishConnection(); 
+        this.establishConnection(); 
         // this.proxy.on('sendPrivateMessage', (id, name, userType, message) => {
         //     console.log(id,name,userType,message);
         // })
@@ -137,7 +136,7 @@ import 'signalr';
         methods: {
             async startConnection() {
                 this.proxy.invoke('Connect',localStorage.getItem('name'),localStorage.getItem('id'), 'customer').then(response => {
-                        this.isChat = false;
+                    
                         this.showNotification('success', 'Success', 'Connection established successfully!');
                         localStorage.setItem('isConnection', 'true');
                     }).catch(error => {
@@ -159,7 +158,7 @@ import 'signalr';
                 if(!this.id) {
                     this.id = 0;
                 }
-                this.proxy.invoke('SendPrivateMessage', this.id, 'customerservice','customer', this.text).then(response => {
+                this.proxy.invoke('SendPrivateMessage', this.id, 'customer', this.text).then(response => {
                     this.sentMessage.message = this.text;
                     this.sentMessage.name = localStorage.getItem('name');
                     this.allMessages.push({
@@ -179,7 +178,7 @@ import 'signalr';
                 try {
                     // debugger;
                     
-                   this.connection =  $.hubConnection('https://www.delivigo.com');
+                   this.connection =  $.hubConnection('https://www.foodizza.com');
                    this.proxy = this.connection.createHubProxy('requestLog');
                    this.proxy.on('sendPrivateMessage', (id, name, userType, message) => {
                         if(userType === 'customerservice') {
